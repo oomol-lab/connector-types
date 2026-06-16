@@ -332,48 +332,6 @@ declare module "@oomol-lab/connector" {
         raw: Record<string, unknown>;
       };
     };
-    /** Fetch public TikTok comment replies through TikHub. Requires the /api/v1/tiktok/web/ TikHub path scope. */
-    "tikhub.fetch_tiktok_post_comment_replies": {
-      input: {
-        /**
-         * The TikTok post item ID.
-         * @minLength 1
-         */
-        itemId: string;
-        /**
-         * The TikTok comment ID.
-         * @minLength 1
-         */
-        commentId: string;
-        /** The page cursor. */
-        cursor?: number;
-        /** The number of replies to return. */
-        count?: number;
-        /** The current region code used by TikHub. */
-        currentRegion?: string;
-      };
-      output: {
-        /** The normalized TikHub response envelope. */
-        envelope: {
-          /** The status-like code returned in the TikHub response body. */
-          code?: number | null;
-          /** The TikHub request identifier when returned. */
-          requestId?: string | null;
-          /** The TikHub response message when returned. */
-          message?: string | null;
-          /** The TikHub router path reported by the response. */
-          router?: string | null;
-          /** The request parameters echoed by TikHub when returned. */
-          params?: Record<string, unknown> | null;
-        };
-        /** The raw data payload returned by TikHub. */
-        replies: unknown;
-        /** The raw data payload returned by TikHub. */
-        rawData: unknown;
-        /** The raw TikHub response payload. */
-        raw: Record<string, unknown>;
-      };
-    };
     /** Fetch public TikTok post comments through TikHub. Requires the /api/v1/tiktok/web/ TikHub path scope. */
     "tikhub.fetch_tiktok_post_comments": {
       input: {
@@ -1014,43 +972,6 @@ declare module "@oomol-lab/connector" {
         keyword: string;
         /** The page cursor. */
         cursor?: number;
-        /** The TikTok search ID from a previous response. */
-        searchId?: string;
-      };
-      output: {
-        /** The normalized TikHub response envelope. */
-        envelope: {
-          /** The status-like code returned in the TikHub response body. */
-          code?: number | null;
-          /** The TikHub request identifier when returned. */
-          requestId?: string | null;
-          /** The TikHub response message when returned. */
-          message?: string | null;
-          /** The TikHub router path reported by the response. */
-          router?: string | null;
-          /** The request parameters echoed by TikHub when returned. */
-          params?: Record<string, unknown> | null;
-        };
-        /** The raw data payload returned by TikHub. */
-        results: unknown;
-        /** The raw data payload returned by TikHub. */
-        rawData: unknown;
-        /** The raw TikHub response payload. */
-        raw: Record<string, unknown>;
-      };
-    };
-    /** Search public TikTok videos through TikHub without exposing upstream cookies. Requires the /api/v1/tiktok/web/ TikHub path scope. */
-    "tikhub.search_tiktok_videos": {
-      input: {
-        /**
-         * The TikTok search keyword.
-         * @minLength 1
-         */
-        keyword: string;
-        /** The number of videos to return. */
-        count?: number;
-        /** The page offset. */
-        offset?: number;
         /** The TikTok search ID from a previous response. */
         searchId?: string;
       };
