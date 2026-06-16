@@ -3,7 +3,24 @@
   "version": "0.0.0",
   "description": "Auto-generated type augmentation for @oomol-lab/connector. Import the per-provider subpath you use.",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oomol-lab/connector-types.git"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
   "sideEffects": false,
+  "files": [
+    "providers",
+    "meta.json"
+  ],
+  "scripts": {
+    "release:compute-version": "bun scripts/release/cli.ts compute-version",
+    "release:set-version": "bun scripts/release/cli.ts set-version",
+    "release:publish": "bun scripts/release/cli.ts publish",
+    "release:create-github-release": "bun scripts/release/cli.ts create-github-release"
+  },
   "exports": {
     "./*": {
       "types": "./providers/*.d.ts",
