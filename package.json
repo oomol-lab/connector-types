@@ -1,0 +1,24 @@
+{
+  "name": "@oomol-lab/connector-types",
+  "version": "0.1.0",
+  "description": "Auto-generated type augmentation for @oomol-lab/connector. Import the per-provider subpath you use.",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    "./*": {
+      "types": "./providers/*.d.ts",
+      "default": "./providers/*.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./providers/*.d.ts"
+      ]
+    }
+  },
+  "peerDependencies": {
+    "@oomol-lab/connector": ">=0.1.0"
+  },
+  "license": "MIT"
+}
