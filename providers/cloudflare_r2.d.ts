@@ -142,6 +142,45 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
+    /** List Cloudflare accounts visible to the current credential. */
+    "cloudflare_r2.list_accounts": {
+      input: {
+        /**
+         * The result page number.
+         * @exclusiveMinimum 0
+         */
+        page?: number;
+        /**
+         * The page size.
+         * @exclusiveMinimum 0
+         */
+        perPage?: number;
+      };
+      output: {
+        /** The visible Cloudflare accounts. */
+        accounts: Array<{
+          /** The Cloudflare account ID. */
+          id: string;
+          /** The Cloudflare account name. */
+          name?: string;
+          /** The Cloudflare account type. */
+          type?: string;
+        }>;
+        /** Cloudflare pagination metadata. */
+        resultInfo?: {
+          /** The current page number. */
+          page?: number;
+          /** The page size. */
+          perPage?: number;
+          /** The number of items in the current page. */
+          count?: number;
+          /** The total number of matching items. */
+          totalCount?: number;
+          /** The total number of pages. */
+          totalPages?: number;
+        };
+      };
+    };
     /** List the R2 buckets in a Cloudflare account. */
     "cloudflare_r2.list_buckets": {
       input: {

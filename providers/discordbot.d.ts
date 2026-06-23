@@ -399,10 +399,10 @@ declare module "@oomol-lab/connector" {
     "discordbot.create_guild_channel": {
       input: {
         /**
-         * The guild id.
+         * The guild id. Optional when the connection is installed to a Discord guild.
          * @minLength 1
          */
-        guild_id: string;
+        guild_id?: string;
         /**
          * The channel name.
          * @minLength 1
@@ -410,42 +410,39 @@ declare module "@oomol-lab/connector" {
          */
         name: string;
         /** The channel type. */
-        type?: number;
+        type?: number | null;
         /** The channel topic. */
-        topic?: string;
+        topic?: string | null;
         /** The bitrate. */
-        bitrate?: number;
+        bitrate?: number | null;
         /** The user limit. */
-        user_limit?: number;
+        user_limit?: number | null;
         /** The slowmode delay in seconds. */
-        rate_limit_per_user?: number;
+        rate_limit_per_user?: number | null;
         /** The channel position. */
-        position?: number;
+        position?: number | null;
         /** The permission overwrites. */
-        permission_overwrites?: Array<Record<string, unknown>>;
-        /**
-         * The parent channel id.
-         * @minLength 1
-         */
-        parent_id?: string;
+        permission_overwrites?: Array<Record<string, unknown>> | null;
+        /** The parent channel id. */
+        parent_id?: string | null;
         /** Whether the channel is NSFW. */
-        nsfw?: boolean;
+        nsfw?: boolean | null;
         /** The RTC region. */
-        rtc_region?: string;
+        rtc_region?: string | null;
         /** The video quality mode. */
-        video_quality_mode?: number;
+        video_quality_mode?: number | null;
         /** The default auto-archive duration. */
-        default_auto_archive_duration?: number;
+        default_auto_archive_duration?: number | null;
         /** The default reaction emoji payload. */
-        default_reaction_emoji?: Record<string, unknown>;
+        default_reaction_emoji?: Record<string, unknown> | null;
         /** The available forum tags. */
-        available_tags?: Array<Record<string, unknown>>;
+        available_tags?: Array<Record<string, unknown>> | null;
         /** The default sort order. */
-        default_sort_order?: number;
+        default_sort_order?: number | null;
         /** The default forum layout. */
-        default_forum_layout?: number;
+        default_forum_layout?: number | null;
         /** The default thread slowmode delay in seconds. */
-        default_thread_rate_limit_per_user?: number;
+        default_thread_rate_limit_per_user?: number | null;
       };
       output: {
         /** The channel id. */
@@ -525,9 +522,9 @@ declare module "@oomol-lab/connector" {
         /** Whether the role is mentionable. */
         mentionable?: boolean;
         /** The unicode emoji. */
-        unicode_emoji?: string;
+        unicode_emoji?: string | null;
         /** The role icon. */
-        icon?: string;
+        icon?: string | null;
       };
       output: Record<string, unknown>;
     };
@@ -545,11 +542,8 @@ declare module "@oomol-lab/connector" {
          * @maxLength 100
          */
         name: string;
-        /**
-         * The optional channel id.
-         * @minLength 1
-         */
-        channel_id?: string;
+        /** The optional channel id. */
+        channel_id?: string | null;
         /** The scheduled event description. */
         description?: string;
         /** The privacy level. */
@@ -561,9 +555,9 @@ declare module "@oomol-lab/connector" {
         /** The entity type. */
         entity_type: number;
         /** The entity metadata. */
-        entity_metadata?: Record<string, unknown>;
+        entity_metadata?: Record<string, unknown> | null;
         /** The recurrence rule. */
-        recurrence_rule?: Record<string, unknown>;
+        recurrence_rule?: Record<string, unknown> | null;
         /** The scheduled event image. */
         image?: string;
       };
@@ -658,6 +652,8 @@ declare module "@oomol-lab/connector" {
          * @maxItems 3
          */
         sticker_ids?: Array<string>;
+        /** The attachment metadata to include. */
+        attachments?: Array<Record<string, unknown>>;
         allowed_mentions?: {
           /**
            * The mention targets to parse automatically.
@@ -737,11 +733,8 @@ declare module "@oomol-lab/connector" {
         type?: number;
         /** Whether non-moderators can invite other users. */
         invitable?: boolean;
-        /**
-         * The slowmode delay in seconds.
-         * @minimum 0
-         */
-        rate_limit_per_user?: number;
+        /** The slowmode delay in seconds. */
+        rate_limit_per_user?: number | null;
         /** The applied forum tag ids. */
         applied_tags?: Array<string>;
         /** The starter message payload. */
@@ -782,11 +775,8 @@ declare module "@oomol-lab/connector" {
         name: string;
         /** The auto-archive duration. */
         auto_archive_duration?: number;
-        /**
-         * The slowmode delay in seconds.
-         * @minimum 0
-         */
-        rate_limit_per_user?: number;
+        /** The slowmode delay in seconds. */
+        rate_limit_per_user?: number | null;
       };
       output: {
         /** The channel id. */
@@ -2482,9 +2472,9 @@ declare module "@oomol-lab/connector" {
          */
         type: number;
         /** The allowed permission bitset. */
-        allow?: string;
+        allow?: string | null;
         /** The denied permission bitset. */
-        deny?: string;
+        deny?: string | null;
       };
       output: {
         /** The success flag. */
@@ -2694,21 +2684,17 @@ declare module "@oomol-lab/connector" {
         /** The channel type. */
         type?: number;
         /** The channel position. */
-        position?: number;
+        position?: number | null;
         /** The channel topic. */
-        topic?: string;
+        topic?: string | null;
         /** Whether the channel is NSFW. */
-        nsfw?: boolean;
-        /**
-         * The slowmode delay in seconds.
-         * @minimum 0
-         * @maximum 21600
-         */
-        rate_limit_per_user?: number;
+        nsfw?: boolean | null;
+        /** The slowmode delay in seconds. */
+        rate_limit_per_user?: number | null;
         /** The bitrate. */
-        bitrate?: number;
+        bitrate?: number | null;
         /** The user limit. */
-        user_limit?: number;
+        user_limit?: number | null;
         /** The permission overwrites. */
         permission_overwrites?: Array<{
           /**
@@ -2719,25 +2705,19 @@ declare module "@oomol-lab/connector" {
           /** The overwrite target type. */
           type: number;
           /** The allowed permission bitset. */
-          allow: string;
+          allow?: string | null;
           /** The denied permission bitset. */
-          deny: string;
+          deny?: string | null;
           [key: string]: unknown;
-        }>;
-        /**
-         * The parent channel id.
-         * @minLength 1
-         */
-        parent_id?: string;
-        /**
-         * The RTC region.
-         * @minLength 1
-         */
-        rtc_region?: string;
+        }> | null;
+        /** The parent channel id. */
+        parent_id?: string | null;
+        /** The RTC region. */
+        rtc_region?: string | null;
         /** The video quality mode. */
         video_quality_mode?: number;
         /** The default auto-archive duration. */
-        default_auto_archive_duration?: number;
+        default_auto_archive_duration?: number | null;
         /** The channel flags. */
         flags?: number;
         /** The available forum tags. */
@@ -2754,17 +2734,11 @@ declare module "@oomol-lab/connector" {
            */
           name: string;
           /** Whether the tag is moderated. */
-          moderated: boolean;
-          /**
-           * The optional emoji id.
-           * @minLength 1
-           */
-          emoji_id?: string;
-          /**
-           * The optional emoji name.
-           * @minLength 1
-           */
-          emoji_name?: string;
+          moderated?: boolean;
+          /** The optional emoji id. */
+          emoji_id?: string | null;
+          /** The optional emoji name. */
+          emoji_name?: string | null;
           [key: string]: unknown;
         }>;
         /** The default reaction emoji payload. */
@@ -2780,9 +2754,9 @@ declare module "@oomol-lab/connector" {
            */
           emoji_name?: string;
           [key: string]: unknown;
-        };
+        } | null;
         /** The default sort order. */
-        default_sort_order?: number;
+        default_sort_order?: number | null;
         /** The default forum layout. */
         default_forum_layout?: number;
         /**
@@ -2961,26 +2935,20 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         user_id: string;
-        /**
-         * The new nickname.
-         * @maxLength 32
-         */
-        nick?: string;
+        /** The new nickname. */
+        nick?: string | null;
         /** The role ids to assign. */
-        roles?: Array<string>;
+        roles?: Array<string> | null;
         /** Whether the member is muted. */
-        mute?: boolean;
+        mute?: boolean | null;
         /** Whether the member is deafened. */
-        deaf?: boolean;
-        /**
-         * The voice channel id.
-         * @minLength 1
-         */
-        channel_id?: string;
+        deaf?: boolean | null;
+        /** The voice channel id. */
+        channel_id?: string | null;
         /** The communication timeout timestamp. */
-        communication_disabled_until?: string;
+        communication_disabled_until?: string | null;
         /** The member flags. */
-        flags?: number;
+        flags?: number | null;
       };
       output: Record<string, unknown>;
     };
@@ -3011,9 +2979,9 @@ declare module "@oomol-lab/connector" {
         /** Whether the role is mentionable. */
         mentionable?: boolean;
         /** The unicode emoji. */
-        unicode_emoji?: string;
+        unicode_emoji?: string | null;
         /** The role icon. */
-        icon?: string;
+        icon?: string | null;
         /** The role colors payload. */
         colors?: Record<string, unknown>;
       };
@@ -3038,13 +3006,10 @@ declare module "@oomol-lab/connector" {
          * @maxLength 100
          */
         name?: string;
-        /**
-         * The optional channel id.
-         * @minLength 1
-         */
-        channel_id?: string;
+        /** The optional channel id. */
+        channel_id?: string | null;
         /** The scheduled event description. */
-        description?: string;
+        description?: string | null;
         /** The privacy level. */
         privacy_level?: number;
         /** The scheduled start time. */
@@ -3054,9 +3019,9 @@ declare module "@oomol-lab/connector" {
         /** The entity type. */
         entity_type?: number;
         /** The entity metadata. */
-        entity_metadata?: Record<string, unknown>;
+        entity_metadata?: Record<string, unknown> | null;
         /** The recurrence rule. */
-        recurrence_rule?: Record<string, unknown>;
+        recurrence_rule?: Record<string, unknown> | null;
         /** The scheduled event image. */
         image?: string;
         /** The scheduled event status. */
@@ -3079,17 +3044,18 @@ declare module "@oomol-lab/connector" {
         sticker_id: string;
         /**
          * The sticker name.
-         * @minLength 1
+         * @minLength 2
          * @maxLength 30
          */
         name?: string;
         /**
          * The sticker tags.
          * @minLength 1
+         * @maxLength 200
          */
         tags?: string;
         /** The sticker description. */
-        description?: string;
+        description?: string | null;
       };
       output: Record<string, unknown>;
     };
@@ -3126,13 +3092,10 @@ declare module "@oomol-lab/connector" {
          */
         guild_id: string;
         /** Whether the welcome screen is enabled. */
-        enabled?: boolean;
+        enabled?: boolean | null;
         /** The welcome screen description. */
-        description?: string;
-        /**
-         * The welcome screen channels.
-         * @maxItems 5
-         */
+        description?: string | null;
+        /** The welcome screen channels. */
         welcome_channels?: Array<{
           /**
            * The channel id.
@@ -3144,14 +3107,11 @@ declare module "@oomol-lab/connector" {
            * @minLength 1
            */
           description: string;
-          /**
-           * The optional emoji name.
-           * @minLength 1
-           */
-          emoji_name?: string;
+          /** The optional emoji name. */
+          emoji_name?: string | null;
           /** The optional emoji id. */
           emoji_id?: string | null;
-        }>;
+        }> | null;
       };
       output: Record<string, unknown>;
     };
@@ -3186,26 +3146,14 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         message_id: string;
-        /**
-         * The new message content.
-         * @maxLength 2000
-         */
-        content?: string;
-        /**
-         * The embeds to include.
-         * @maxItems 10
-         */
-        embeds?: Array<Record<string, unknown>>;
-        /**
-         * The components to include.
-         * @maxItems 5
-         */
-        components?: Array<Record<string, unknown>>;
-        /**
-         * The sticker ids to attach.
-         * @maxItems 3
-         */
-        sticker_ids?: Array<string>;
+        /** The new message content. */
+        content?: string | null;
+        /** The embeds to include. */
+        embeds?: Array<Record<string, unknown>> | null;
+        /** The components to include. */
+        components?: Array<Record<string, unknown>> | null;
+        /** The sticker ids to attach. */
+        sticker_ids?: Array<string> | null;
         allowed_mentions?: {
           /**
            * The mention targets to parse automatically.
@@ -3219,11 +3167,11 @@ declare module "@oomol-lab/connector" {
           /** Whether the replied user should be mentioned. */
           replied_user?: boolean;
           [key: string]: unknown;
-        };
+        } | null;
         /** The attachments to keep or replace. */
-        attachments?: Array<Record<string, unknown>>;
+        attachments?: Array<Record<string, unknown>> | null;
         /** The message flags. */
-        flags?: number;
+        flags?: number | null;
       };
       output: {
         /** The message id. */
@@ -3243,11 +3191,14 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         guild_id: string;
-        /**
-         * The new nickname.
-         * @maxLength 32
-         */
-        nick?: string;
+        /** The new nickname. */
+        nick?: string | null;
+        /** The guild member banner image. */
+        banner?: string | null;
+        /** The guild member avatar image. */
+        avatar?: string | null;
+        /** The guild member bio. */
+        bio?: string | null;
       };
       output: Record<string, unknown>;
     };
@@ -3281,7 +3232,7 @@ declare module "@oomol-lab/connector" {
         /** Whether the user is suppressed. */
         suppress?: boolean;
         /** The request-to-speak timestamp. */
-        request_to_speak_timestamp?: string;
+        request_to_speak_timestamp?: string | null;
       };
       output: {
         /** The success flag. */
