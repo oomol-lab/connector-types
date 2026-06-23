@@ -275,6 +275,46 @@ declare module "@oomol-lab/connector" {
           limits?: Record<string, unknown>;
           /** Durable Object migration metadata. */
           migrations?: Record<string, unknown>;
+          [key: string]: unknown;
+        };
+      };
+    };
+    /** List Cloudflare accounts visible to the current credential. */
+    "cloudflare_worker.list_accounts": {
+      input: {
+        /**
+         * The result page number.
+         * @exclusiveMinimum 0
+         */
+        page?: number;
+        /**
+         * The page size.
+         * @exclusiveMinimum 0
+         */
+        perPage?: number;
+      };
+      output: {
+        /** The visible Cloudflare accounts. */
+        accounts: Array<{
+          /** The Cloudflare account ID. */
+          id: string;
+          /** The Cloudflare account name. */
+          name?: string;
+          /** The Cloudflare account type. */
+          type?: string;
+        }>;
+        /** Cloudflare pagination metadata. */
+        resultInfo?: {
+          /** The current page number. */
+          page?: number;
+          /** The page size. */
+          perPage?: number;
+          /** The number of items in the current page. */
+          count?: number;
+          /** The total number of matching items. */
+          totalCount?: number;
+          /** The total number of pages. */
+          totalPages?: number;
         };
       };
     };
@@ -337,7 +377,7 @@ declare module "@oomol-lab/connector" {
         /** The list of Worker scripts. */
         scripts: Array<{
           /** The Worker script name. */
-          name: string;
+          name?: string;
           /** The Worker script tag identifier. */
           scriptTag?: string;
           /** The script creation timestamp. */
@@ -368,6 +408,7 @@ declare module "@oomol-lab/connector" {
           tags?: Array<string>;
           /** Worker observability configuration. */
           observability?: Record<string, unknown>;
+          [key: string]: unknown;
         }>;
         /** Cloudflare pagination metadata. */
         resultInfo?: {
@@ -502,6 +543,7 @@ declare module "@oomol-lab/connector" {
           limits?: Record<string, unknown>;
           /** Durable Object migration metadata. */
           migrations?: Record<string, unknown>;
+          [key: string]: unknown;
         };
       };
     };
@@ -531,7 +573,7 @@ declare module "@oomol-lab/connector" {
         /** A Cloudflare Worker script summary. */
         script: {
           /** The Worker script name. */
-          name: string;
+          name?: string;
           /** The Worker script tag identifier. */
           scriptTag?: string;
           /** The script creation timestamp. */
@@ -562,6 +604,7 @@ declare module "@oomol-lab/connector" {
           tags?: Array<string>;
           /** A free-form object accepted by the Cloudflare API. */
           observability?: Record<string, unknown>;
+          [key: string]: unknown;
         };
       };
     };
@@ -632,7 +675,7 @@ declare module "@oomol-lab/connector" {
         /** The matching Worker scripts. */
         scripts: Array<{
           /** The Worker script name. */
-          name: string;
+          name?: string;
           /** The Worker script tag identifier. */
           scriptTag?: string;
           /** The script creation timestamp. */
@@ -663,6 +706,7 @@ declare module "@oomol-lab/connector" {
           tags?: Array<string>;
           /** Worker observability configuration. */
           observability?: Record<string, unknown>;
+          [key: string]: unknown;
         }>;
         /** Cloudflare pagination metadata. */
         resultInfo?: {
@@ -793,7 +837,7 @@ declare module "@oomol-lab/connector" {
         /** A Cloudflare Worker script summary. */
         script: {
           /** The Worker script name. */
-          name: string;
+          name?: string;
           /** The Worker script tag identifier. */
           scriptTag?: string;
           /** The script creation timestamp. */
@@ -824,6 +868,7 @@ declare module "@oomol-lab/connector" {
           tags?: Array<string>;
           /** A free-form object accepted by the Cloudflare API. */
           observability?: Record<string, unknown>;
+          [key: string]: unknown;
         };
       };
     };

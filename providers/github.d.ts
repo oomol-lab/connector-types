@@ -441,6 +441,34 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
+    /** Create a label in a GitHub repository. */
+    "github.create_label": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The label name.
+         * @minLength 1
+         */
+        name: string;
+        /**
+         * The label color as a 6-character hex value without #.
+         * @pattern ^[0-9a-fA-F]{6}$
+         */
+        color: string;
+        /** The label description. */
+        description?: string;
+      };
+      output: Record<string, unknown>;
+    };
     /** Create or update a repository file through the GitHub contents API. Writing under .github/workflows may require GitHub workflow scope. */
     "github.create_or_update_file": {
       input: {
@@ -740,6 +768,101 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
+    /** Create a Git reference in a GitHub repository. */
+    "github.create_ref": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The fully qualified ref name, such as refs/heads/branch.
+         * @minLength 1
+         */
+        ref: string;
+        /**
+         * The SHA the ref should point to.
+         * @minLength 1
+         */
+        sha: string;
+      };
+      output: Record<string, unknown>;
+    };
+    /** Create a release in a GitHub repository. */
+    "github.create_release": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The tag name for the release.
+         * @minLength 1
+         */
+        tagName: string;
+        /** The branch or commit SHA to tag. */
+        targetCommitish?: string;
+        /** The release title. */
+        name?: string;
+        /** The release body. */
+        body?: string;
+        /** Whether to create a draft release. */
+        draft?: boolean;
+        /** Whether to mark the release as prerelease. */
+        prerelease?: boolean;
+        /** Whether GitHub should generate release notes. */
+        generateReleaseNotes?: boolean;
+        /** Whether this release should be marked latest. */
+        makeLatest?: "true" | "false" | "legacy";
+      };
+      output: Record<string, unknown>;
+    };
+    /** Create a repository for the authenticated GitHub user. */
+    "github.create_repository": {
+      input: {
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        name: string;
+        /** The repository description. */
+        description?: string;
+        /**
+         * The repository homepage URL.
+         * @format uri
+         */
+        homepage?: string;
+        /** Whether to create a private repository. */
+        private?: boolean;
+        /** Whether GitHub should create an initial commit. */
+        autoInit?: boolean;
+        /** Whether issues are enabled. */
+        hasIssues?: boolean;
+        /** Whether projects are enabled. */
+        hasProjects?: boolean;
+        /** Whether the wiki is enabled. */
+        hasWiki?: boolean;
+        /** Whether discussions are enabled. */
+        hasDiscussions?: boolean;
+        /** The .gitignore template name. */
+        gitignoreTemplate?: string;
+        /** The license template name. */
+        licenseTemplate?: string;
+      };
+      output: Record<string, unknown>;
+    };
     /** Delete a repository file through the GitHub contents API. Deleting under .github/workflows may require GitHub workflow scope. */
     "github.delete_file": {
       input: {
@@ -791,6 +914,25 @@ declare module "@oomol-lab/connector" {
         } | null;
         /** The resulting commit. */
         commit: Record<string, unknown>;
+      };
+    };
+    /** Delete a GitHub repository by owner and name. */
+    "github.delete_repository": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+      };
+      output: {
+        /** Whether the operation succeeded. */
+        ok: boolean;
       };
     };
     /** Get a GitHub branch by name. */
