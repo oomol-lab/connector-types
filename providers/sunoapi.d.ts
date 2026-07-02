@@ -1080,30 +1080,7 @@ declare module "@oomol-lab/connector" {
          * The uploaded audio URL.
          * @format uri
          */
-        uploadUrl?: string;
-        /**
-         * The local audio file path on the connector host.
-         * @minLength 1
-         */
-        localFilePath?: string;
-        /** The local audio file details used to upload a file from the connector host. */
-        file?: {
-          /**
-           * The local audio file path on the connector host.
-           * @minLength 1
-           */
-          path: string;
-          /**
-           * The file name sent to the SunoAPI upload endpoint.
-           * @minLength 1
-           */
-          fileName?: string;
-          /**
-           * The MIME type sent to the SunoAPI upload endpoint.
-           * @minLength 1
-           */
-          mimeType?: string;
-        };
+        uploadUrl: string;
         /** Whether to use custom mode. */
         customMode: boolean;
         /** Whether the output should be instrumental. */
@@ -1166,30 +1143,7 @@ declare module "@oomol-lab/connector" {
          * The uploaded audio URL.
          * @format uri
          */
-        uploadUrl?: string;
-        /**
-         * The local audio file path on the connector host.
-         * @minLength 1
-         */
-        localFilePath?: string;
-        /** The local audio file details used to upload a file from the connector host. */
-        file?: {
-          /**
-           * The local audio file path on the connector host.
-           * @minLength 1
-           */
-          path: string;
-          /**
-           * The file name sent to the SunoAPI upload endpoint.
-           * @minLength 1
-           */
-          fileName?: string;
-          /**
-           * The MIME type sent to the SunoAPI upload endpoint.
-           * @minLength 1
-           */
-          mimeType?: string;
-        };
+        uploadUrl: string;
         /** Whether to use custom parameters. */
         defaultParamFlag: boolean;
         /**
