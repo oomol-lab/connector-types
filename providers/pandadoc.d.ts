@@ -11,7 +11,7 @@ declare module "@oomol-lab/connector" {
          */
         document_id: string;
         /** The transit file uploaded as the attachment. */
-        file?: {
+        file: {
           /**
            * The filename used for the uploaded file.
            * @minLength 1
@@ -28,8 +28,6 @@ declare module "@oomol-lab/connector" {
            */
           s3key: string;
         };
-        /** Optional local file path used to upload the attachment directly. */
-        local_file_path?: string;
       };
       output: {
         /** The unique identifier of the attachment. */
@@ -75,8 +73,6 @@ declare module "@oomol-lab/connector" {
            */
           s3key: string;
         };
-        /** Optional local file path used to upload the source file directly. */
-        local_file_path?: string;
         /** Tags assigned to the document. */
         tags?: Array<string>;
         /** The PandaDoc workspace member who owns the document. */
@@ -224,8 +220,29 @@ declare module "@oomol-lab/connector" {
           /** Blocks that make up the template content. */
           blocks: Array<Record<string, unknown>>;
         };
-        /** Optional local file path of the PDF file used to create the template. */
-        file_path?: string;
+        /**
+         * Public HTTPS URL of the source PDF file used to create the template.
+         * @format uri
+         */
+        url?: string;
+        /** The transit file reference used to create the template. */
+        file?: {
+          /**
+           * The filename used for the uploaded file.
+           * @minLength 1
+           */
+          name: string;
+          /**
+           * The MIME type of the uploaded file.
+           * @minLength 1
+           */
+          mimetype: string;
+          /**
+           * The transit object key or absolute URL of the uploaded file content.
+           * @minLength 1
+           */
+          s3key: string;
+        };
       };
       output: {
         /** The unique identifier of the created template. */

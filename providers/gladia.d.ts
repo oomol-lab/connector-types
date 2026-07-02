@@ -310,11 +310,11 @@ declare module "@oomol-lab/connector" {
         resultUrl: string;
       };
     };
-    /** Upload an audio or video file up to 100 MiB to Gladia from a local file path, connector transit file, base64 content, or public URL. */
+    /** Upload an audio or video file up to 100 MiB from connector transit storage to Gladia. */
     "gladia.upload_file": {
       input: {
         /** A connector transit file to upload. */
-        file?: {
+        file: {
           /**
            * The source file name.
            * @minLength 1
@@ -337,27 +337,12 @@ declare module "@oomol-lab/connector" {
           s3url?: string;
         };
         /**
-         * The audio or video file content encoded as base64.
-         * @minLength 1
-         */
-        contentBase64?: string;
-        /**
-         * A public audio or video file URL to upload.
-         * @format uri
-         */
-        sourceUrl?: string;
-        /**
-         * A local file path on the connector host to upload.
-         * @minLength 1
-         */
-        localFilePath?: string;
-        /**
-         * Optional file name override for base64, URL, or local file sources.
+         * Optional file name override for the uploaded Gladia file.
          * @minLength 1
          */
         fileName?: string;
         /**
-         * Optional MIME type override for base64, URL, or local file sources.
+         * Optional MIME type override for the uploaded Gladia file.
          * @minLength 1
          */
         mimeType?: string;
