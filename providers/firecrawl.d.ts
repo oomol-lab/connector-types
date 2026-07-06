@@ -187,7 +187,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
-    /** Start a Firecrawl crawl job with compatibility fields accepted from the Composio crawl action. */
+    /** Start a Firecrawl crawl job with compatibility fields accepted from legacy crawl inputs. */
     "firecrawl.crawl": {
       input: {
         /** The seed URL for the crawl. */
@@ -401,7 +401,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
-    /** Compatibility alias of crawl_cancel for the Composio FIRECRAWL_CRAWL_DELETE action. */
+    /** Compatibility alias of crawl_cancel for the FIRECRAWL_CRAWL_DELETE action name. */
     "firecrawl.crawl_delete": {
       input: {
         /** The Firecrawl crawl job ID. */
@@ -1044,7 +1044,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
-    /** Compatibility alias of crawl_get for the Composio FIRECRAWL_GET_THE_STATUS_OF_A_CRAWL_JOB action. */
+    /** Compatibility alias of crawl_get for the FIRECRAWL_GET_THE_STATUS_OF_A_CRAWL_JOB action name. */
     "firecrawl.get_the_status_of_a_crawl_job": {
       input: {
         /** The Firecrawl crawl job ID. */
@@ -1121,7 +1121,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
-    /** Discover URLs from a website with Firecrawl's map endpoint using the Composio-compatible action name. */
+    /** Discover URLs from a website with Firecrawl's map endpoint using a legacy action name. */
     "firecrawl.map_multiple_urls_based_on_options": {
       input: {
         /** The root URL to map. */

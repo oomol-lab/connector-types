@@ -192,7 +192,7 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** Compatibility alias for Composio's cancel-booking-via-uid action. Cancels a booking by UID. */
+    /** Compatibility alias for the cancel-booking-via-uid action name. Cancels a booking by UID. */
     "cal.cancel_booking_via_uid": {
       input: {
         /**
@@ -758,7 +758,7 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** Compatibility alias for Composio's create-user-availability-schedule action. Creates a schedule. */
+    /** Compatibility alias for the create-user-availability-schedule action name. Creates a schedule. */
     "cal.create_user_availability_schedule": {
       input: {
         /**
@@ -987,7 +987,7 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** Compatibility alias for Composio's delete-event-type-by-id action. Deletes a Cal.com event type by ID. */
+    /** Compatibility alias for the delete-event-type-by-id action name. Deletes a Cal.com event type by ID. */
     "cal.delete_event_type_by_id": {
       input: {
         /** The numeric Cal.com event type ID. */
@@ -1039,7 +1039,7 @@ declare module "@oomol-lab/connector" {
         success: boolean;
       };
     };
-    /** Compatibility alias for Composio's delete-schedule-by-id action. Deletes a schedule. */
+    /** Compatibility alias for the delete-schedule-by-id action name. Deletes a schedule. */
     "cal.delete_schedule_by_id": {
       input: {
         /** The numeric Cal.com schedule ID. */
@@ -1050,7 +1050,7 @@ declare module "@oomol-lab/connector" {
         success: boolean;
       };
     };
-    /** Compatibility alias for Composio's fetch-all-bookings action. Lists bookings with optional filters and pagination. */
+    /** Compatibility alias for the fetch-all-bookings action name. Lists bookings with optional filters and pagination. */
     "cal.fetch_all_bookings": {
       input: {
         /**
@@ -1155,7 +1155,7 @@ declare module "@oomol-lab/connector" {
         nextCursor: string | null;
       };
     };
-    /** Compatibility alias for Composio's fetch-event-type-details action. Gets a single Cal.com event type by ID. */
+    /** Compatibility alias for the fetch-event-type-details action name. Gets a single Cal.com event type by ID. */
     "cal.fetch_event_type_details": {
       input: {
         /** The Cal.com event type ID, as a number or non-empty string. */
@@ -1200,7 +1200,7 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** Compatibility alias for Composio's fetch-schedule-by-id action. Gets a schedule by numeric ID. */
+    /** Compatibility alias for the fetch-schedule-by-id action name. Gets a schedule by numeric ID. */
     "cal.fetch_schedule_by_id": {
       input: {
         /** The numeric Cal.com schedule ID. */
@@ -1226,7 +1226,7 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** Compatibility action for Composio's get-available-slots-info. Returns available slots for a user, team, or event type. */
+    /** Compatibility action for the get-available-slots-info action name. Returns available slots for a user, team, or event type. */
     "cal.get_available_slots_info": {
       input: {
         /** The numeric Cal.com event type ID. */
@@ -1404,7 +1404,7 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** Compatibility alias for Composio's get-booking-references action. Lists booking references. */
+    /** Compatibility alias for the get-booking-references action name. Lists booking references. */
     "cal.get_booking_references": {
       input: {
         /**
@@ -1452,7 +1452,7 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** Compatibility alias for Composio's get-default-schedule-details action. Returns the default schedule for the authenticated user. */
+    /** Compatibility alias for the get-default-schedule-details action name. Returns the default schedule for the authenticated user. */
     "cal.get_default_schedule_details": {
       input: Record<string, never>;
       output: {
@@ -1994,7 +1994,7 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** Compatibility alias for Composio's post-new-booking-request action. Creates a booking. */
+    /** Compatibility alias for the post-new-booking-request action name. Creates a booking. */
     "cal.post_new_booking_request": {
       input: {
         /**
@@ -2338,7 +2338,7 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** Compatibility alias for Composio's reschedule-booking-by-uid action. Reschedules a booking by UID. */
+    /** Compatibility alias for the reschedule-booking-by-uid action name. Reschedules a booking by UID. */
     "cal.reschedule_booking_by_uid": {
       input: {
         /**
@@ -2481,7 +2481,7 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** Compatibility alias for Composio's retrieve-booking-details-by-uid action. Gets a booking by UID. */
+    /** Compatibility alias for the retrieve-booking-details-by-uid action name. Gets a booking by UID. */
     "cal.retrieve_booking_details_by_uid": {
       input: {
         /**
@@ -2613,7 +2613,7 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** Compatibility alias for Composio's retrieve-calendar-busy-times action. Returns busy ranges for specific calendars. */
+    /** Compatibility alias for the retrieve-calendar-busy-times action name. Returns busy ranges for specific calendars. */
     "cal.retrieve_calendar_busy_times": {
       input: {
         /** The IANA time zone used for this request. */
@@ -2653,7 +2653,7 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** Compatibility alias for Composio's retrieve-calendar-list action. Lists connected calendars and the selected destination calendar. */
+    /** Compatibility alias for the retrieve-calendar-list action name. Lists connected calendars and the selected destination calendar. */
     "cal.retrieve_calendar_list": {
       input: Record<string, never>;
       output: {
@@ -2724,7 +2724,7 @@ declare module "@oomol-lab/connector" {
         } | null;
       };
     };
-    /** Compatibility alias for Composio's retrieve-event-type-by-id action. Gets a single Cal.com event type by ID. */
+    /** Compatibility alias for the retrieve-event-type-by-id action name. Gets a single Cal.com event type by ID. */
     "cal.retrieve_event_type_by_id": {
       input: {
         /** The Cal.com event type ID, as a number or non-empty string. */
@@ -2769,7 +2769,7 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** Compatibility alias for Composio's retrieve-my-information action. Returns the authenticated Cal.com user's profile. */
+    /** Compatibility alias for the retrieve-my-information action name. Returns the authenticated Cal.com user's profile. */
     "cal.retrieve_my_information": {
       input: Record<string, never>;
       output: {
@@ -2802,7 +2802,7 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** Compatibility alias for Composio's retrieve-schedules-list action. Lists schedules for the authenticated user. */
+    /** Compatibility alias for the retrieve-schedules-list action name. Lists schedules for the authenticated user. */
     "cal.retrieve_schedules_list": {
       input: Record<string, never>;
       output: {
@@ -2827,7 +2827,7 @@ declare module "@oomol-lab/connector" {
         nextCursor: string | null;
       };
     };
-    /** Compatibility alias for Composio's update-destination-calendar-integration action. Updates the destination calendar used for created events. */
+    /** Compatibility alias for the update-destination-calendar-integration action name. Updates the destination calendar used for created events. */
     "cal.update_destination_calendar_integration": {
       input: {
         /**
@@ -3007,7 +3007,7 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** Compatibility alias for Composio's update-schedule-by-id action. Updates a schedule. */
+    /** Compatibility alias for the update-schedule-by-id action name. Updates a schedule. */
     "cal.update_schedule_by_id": {
       input: {
         /** The numeric Cal.com schedule ID. */
@@ -3057,7 +3057,7 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** Compatibility alias for Composio's update-user-profile-details action. Updates the authenticated Cal.com user's profile. */
+    /** Compatibility alias for the update-user-profile-details action name. Updates the authenticated Cal.com user's profile. */
     "cal.update_user_profile_details": {
       input: {
         /** The display name to set on the profile. */

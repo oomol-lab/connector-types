@@ -2,7 +2,7 @@ import "@oomol-lab/connector";
 
 declare module "@oomol-lab/connector" {
   interface ActionRegistry {
-    /** Get the remaining Wiza API credit balances for the connected account, matching the WIZA_GET_CREDITS Composio tool. */
+    /** Get the remaining Wiza API credit balances for the connected account. */
     "wiza.get_credits": {
       input: Record<string, never>;
       output: {
@@ -21,7 +21,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
-    /** Get the status and results of a Wiza individual reveal by ID, matching the WIZA_GET_INDIVIDUAL_REVEAL Composio tool. */
+    /** Get the status and results of a Wiza individual reveal by ID. */
     "wiza.get_individual_reveal": {
       input: {
         /**
@@ -46,7 +46,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
-    /** Get the status and details of a Wiza list by ID, matching the WIZA_GET_LIST Composio tool. */
+    /** Get the status and details of a Wiza list by ID. */
     "wiza.get_list": {
       input: {
         /**
@@ -71,7 +71,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
-    /** Search Wiza prospects with a filters object, matching the WIZA_PROSPECT_SEARCH Composio tool. */
+    /** Search Wiza prospects with a filters object. */
     "wiza.prospect_search": {
       input: {
         /** The Wiza prospect search filters object, such as job title, location, company, industry, headcount, or other filters supported by Wiza. */
@@ -99,7 +99,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
-    /** Start a Wiza individual reveal for real-time single contact enrichment, matching the WIZA_START_INDIVIDUAL_REVEAL Composio tool. */
+    /** Start a Wiza individual reveal for real-time single contact enrichment. */
     "wiza.start_individual_reveal": {
       input: {
         /** The Wiza individual reveal contact input. Provide an email, a LinkedIn profile URL, or a name with company or domain. */

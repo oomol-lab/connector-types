@@ -4094,7 +4094,7 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** Search GitHub issues and pull requests with raw GitHub search syntax or structured filters close to Composio pull-request search. */
+    /** Search GitHub issues and pull requests with raw GitHub search syntax or structured filters. */
     "github.search_issues_and_pull_requests": {
       input: {
         /**

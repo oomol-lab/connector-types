@@ -2585,7 +2585,7 @@ declare module "@oomol-lab/connector" {
         name?: string;
         /** New project colors. */
         color?: string;
-        /** Project status field for compatible toolkits. */
+        /** Project status field. */
         state?: "backlog" | "planned" | "started" | "paused" | "completed" | "canceled";
         /** The unique identifier of the new project leader. */
         lead_id?: string;
