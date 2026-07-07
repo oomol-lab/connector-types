@@ -2,14 +2,18 @@ import "@oomol-lab/connector";
 
 declare module "@oomol-lab/connector" {
   interface ActionRegistry {
-    /** Fetch a Brandfetch brand profile from a domain, Brand ID, ISIN, or stock ticker identifier. */
+    /** Fetch a Brandfetch brand profile using an explicit domain, ticker, ISIN, crypto symbol, or Brand ID lookup. */
     "brandfetch.get_brand": {
       input: {
         /**
-         * The identifier to look up, such as a domain, Brand ID, ISIN, or stock ticker.
+         * The identifier value matching `lookupType`, such as a domain, stock ticker, ISIN, crypto symbol, or Brand ID.
          * @minLength 1
          */
         identifier: string;
+        /** The identifier type to use. Use `domain` for website domains to avoid naming collisions. */
+        lookupType: "domain" | "ticker" | "isin" | "crypto" | "brand_id";
+        /** Whether Brandfetch may return brands flagged as NSFW. */
+        allowNsfw?: boolean;
       };
       output: {
         /** The Brandfetch brand identifier. */
