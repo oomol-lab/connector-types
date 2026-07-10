@@ -2,7 +2,7 @@ import "@oomol-lab/connector";
 
 declare module "@oomol-lab/connector" {
   interface ActionRegistry {
-    /** Activate a Monday Workform so it starts accepting submissions. */
+    /** Activate a monday Workform so it starts accepting submissions. */
     "monday.activate_form": {
       input: {
         /**
@@ -18,13 +18,13 @@ declare module "@oomol-lab/connector" {
         active: boolean;
       };
     };
-    /** Add Monday teams to a board as subscribers or owners. */
+    /** Add monday teams to a board as subscribers or owners. */
     "monday.add_teams_to_board": {
       input: {
         /** The board that should receive the teams. */
         board_id: string | number;
         /**
-         * The membership role that Monday should assign on the board.
+         * The membership role that monday should assign on the board.
          * @default "subscriber"
          */
         kind: "owner" | "subscriber";
@@ -35,25 +35,25 @@ declare module "@oomol-lab/connector" {
         team_ids: Array<string | number | -1>;
       };
       output: {
-        /** The teams returned by Monday after the mutation. */
+        /** The teams returned by monday after the mutation. */
         teams: Array<{
-          /** The Monday team identifier. */
+          /** The monday team identifier. */
           id: string;
-          /** The Monday team name. */
+          /** The monday team name. */
           name?: string;
-          /** The Monday team avatar URL. */
+          /** The monday team avatar URL. */
           picture_url?: string;
           [key: string]: unknown;
         }>;
       };
     };
-    /** Add Monday users to a board as subscribers or owners. */
+    /** Add monday users to a board as subscribers or owners. */
     "monday.add_users_to_board": {
       input: {
         /** The board that should receive the users. */
         board_id: string | number;
         /**
-         * The membership role that Monday should assign on the board.
+         * The membership role that monday should assign on the board.
          * @default "subscriber"
          */
         kind: "owner" | "subscriber";
@@ -64,29 +64,29 @@ declare module "@oomol-lab/connector" {
         user_ids: Array<string | number>;
       };
       output: {
-        /** The users returned by Monday after the mutation. */
+        /** The users returned by monday after the mutation. */
         users: Array<{
-          /** The Monday user identifier. */
+          /** The monday user identifier. */
           id: string;
-          /** The Monday user name. */
+          /** The monday user name. */
           name?: string;
-          /** The Monday user email address. */
+          /** The monday user email address. */
           email?: string;
-          /** Whether the Monday user is enabled. */
+          /** Whether the monday user is enabled. */
           enabled?: boolean;
-          /** Whether the Monday user is a guest. */
+          /** Whether the monday user is a guest. */
           is_guest?: boolean;
-          /** The Monday user creation date. */
+          /** The monday user creation date. */
           created_at?: string;
           /** The account that owns the user. */
           account?: {
-            /** The Monday account identifier. */
+            /** The monday account identifier. */
             id: string;
-            /** The Monday account name. */
+            /** The monday account name. */
             name?: string;
-            /** The Monday account slug. */
+            /** The monday account slug. */
             slug?: string;
-            /** The Monday account tier. */
+            /** The monday account tier. */
             tier?: string;
             [key: string]: unknown;
           };
@@ -94,29 +94,29 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** Archive a Monday board. */
+    /** Archive a monday board. */
     "monday.archive_board": {
       input: {
         /** The board identifier to archive. */
         board_id: string | number;
       };
       output: {
-        /** The archived Monday board identifier. */
+        /** The archived monday board identifier. */
         archivedBoardId: string;
       };
     };
-    /** Archive a Monday item. */
+    /** Archive a monday item. */
     "monday.archive_item": {
       input: {
-        /** The Monday item that should be archived. */
+        /** The monday item that should be archived. */
         item_id: string | number;
       };
       output: {
-        /** The archived Monday item identifier. */
+        /** The archived monday item identifier. */
         archivedItemId: string;
       };
     };
-    /** Assign users to a Monday department on an enterprise account. */
+    /** Assign users to a monday department on an enterprise account. */
     "monday.assign_department_members": {
       input: {
         /** The department that should receive the members. */
@@ -128,57 +128,57 @@ declare module "@oomol-lab/connector" {
         user_ids: Array<string | number>;
       };
       output: {
-        /** The users that Monday assigned successfully. */
+        /** The users that monday assigned successfully. */
         successfulUsers: Array<{
-          /** The Monday user identifier. */
+          /** The monday user identifier. */
           id: string;
-          /** The Monday user name. */
+          /** The monday user name. */
           name?: string;
-          /** The Monday user email address. */
+          /** The monday user email address. */
           email?: string;
-          /** Whether the Monday user is enabled. */
+          /** Whether the monday user is enabled. */
           enabled?: boolean;
-          /** Whether the Monday user is a guest. */
+          /** Whether the monday user is a guest. */
           is_guest?: boolean;
-          /** The Monday user creation date. */
+          /** The monday user creation date. */
           created_at?: string;
           /** The account that owns the user. */
           account?: {
-            /** The Monday account identifier. */
+            /** The monday account identifier. */
             id: string;
-            /** The Monday account name. */
+            /** The monday account name. */
             name?: string;
-            /** The Monday account slug. */
+            /** The monday account slug. */
             slug?: string;
-            /** The Monday account tier. */
+            /** The monday account tier. */
             tier?: string;
             [key: string]: unknown;
           };
           [key: string]: unknown;
         }>;
-        /** The users that Monday could not assign. */
+        /** The users that monday could not assign. */
         failedUsers: Array<{
-          /** The Monday user identifier. */
+          /** The monday user identifier. */
           id: string;
-          /** The Monday user name. */
+          /** The monday user name. */
           name?: string;
-          /** The Monday user email address. */
+          /** The monday user email address. */
           email?: string;
-          /** Whether the Monday user is enabled. */
+          /** Whether the monday user is enabled. */
           enabled?: boolean;
-          /** Whether the Monday user is a guest. */
+          /** Whether the monday user is a guest. */
           is_guest?: boolean;
-          /** The Monday user creation date. */
+          /** The monday user creation date. */
           created_at?: string;
           /** The account that owns the user. */
           account?: {
-            /** The Monday account identifier. */
+            /** The monday account identifier. */
             id: string;
-            /** The Monday account name. */
+            /** The monday account name. */
             name?: string;
-            /** The Monday account slug. */
+            /** The monday account slug. */
             slug?: string;
-            /** The Monday account tier. */
+            /** The monday account tier. */
             tier?: string;
             [key: string]: unknown;
           };
@@ -186,90 +186,90 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** Change a Monday item's position on the same board. */
+    /** Change a monday item's position on the same board. */
     "monday.change_item_position": {
       input: {
-        /** The Monday item that should be repositioned. */
+        /** The monday item that should be repositioned. */
         item_id: string | number;
-        /** The target group where Monday should place the item. */
+        /** The target group where monday should place the item. */
         group_id?: string | number;
-        /** Whether Monday should place the item at the top of the target group. */
+        /** Whether monday should place the item at the top of the target group. */
         group_top?: boolean;
-        /** The item on the same board that Monday should position against. */
+        /** The item on the same board that monday should position against. */
         relative_to?: string | number;
         /** Where to place the item relative to another item. */
         position_relative_method?: "before_at" | "after_at";
       };
       output: {
-        /** The Monday item returned by the create_item mutation. */
+        /** The monday item returned by the create_item mutation. */
         item: {
-          /** The Monday item identifier. */
+          /** The monday item identifier. */
           id: string;
-          /** The Monday item name. */
+          /** The monday item name. */
           name?: string;
-          /** The Monday item state. */
+          /** The monday item state. */
           state?: string;
-          /** The Monday item URL. */
+          /** The monday item URL. */
           url?: string;
-          /** The Monday item creation time. */
+          /** The monday item creation time. */
           created_at?: string;
-          /** The Monday item update time. */
+          /** The monday item update time. */
           updated_at?: string;
-          /** The parent item of a Monday subitem. */
+          /** The parent item of a monday subitem. */
           parent_item?: {
-            /** The parent Monday item identifier. */
+            /** The parent monday item identifier. */
             id: string;
-            /** The parent Monday item name. */
+            /** The parent monday item name. */
             name?: string;
             [key: string]: unknown;
           };
           /** The group that contains the item. */
           group?: {
-            /** The Monday group identifier. */
+            /** The monday group identifier. */
             id: string;
-            /** The Monday group title. */
+            /** The monday group title. */
             title?: string;
-            /** The Monday group color. */
+            /** The monday group color. */
             color?: string;
-            /** The Monday group position. */
+            /** The monday group position. */
             position?: string;
-            /** Whether the Monday group is archived. */
+            /** Whether the monday group is archived. */
             archived?: boolean;
-            /** Whether the Monday group is deleted. */
+            /** Whether the monday group is deleted. */
             deleted?: boolean;
             [key: string]: unknown;
           };
           /** The board that contains the item. */
           board?: {
-            /** The Monday board identifier. */
+            /** The monday board identifier. */
             id: string;
-            /** The Monday board name. */
+            /** The monday board name. */
             name?: string;
-            /** The Monday board state. */
+            /** The monday board state. */
             state?: string;
-            /** The Monday board kind. */
+            /** The monday board kind. */
             board_kind?: string;
             /** The user's permissions on the board. */
             permissions?: string;
-            /** The Monday board description. */
+            /** The monday board description. */
             description?: string;
-            /** The Monday board communication summary. */
+            /** The monday board communication summary. */
             communication?: string;
-            /** The Monday board item nickname. */
+            /** The monday board item nickname. */
             item_nickname?: string;
-            /** The Monday board URL. */
+            /** The monday board URL. */
             url?: string;
             /** The workspace that contains the board. */
             workspace?: {
-              /** The Monday workspace identifier. */
+              /** The monday workspace identifier. */
               id: string;
-              /** The Monday workspace name. */
+              /** The monday workspace name. */
               name?: string;
-              /** The Monday workspace kind. */
+              /** The monday workspace kind. */
               kind?: string;
-              /** The Monday workspace state. */
+              /** The monday workspace state. */
               state?: string;
-              /** The Monday workspace description. */
+              /** The monday workspace description. */
               description?: string;
               [key: string]: unknown;
             };
@@ -277,49 +277,49 @@ declare module "@oomol-lab/connector" {
           };
           /** The user who created the item. */
           creator?: {
-            /** The Monday user identifier. */
+            /** The monday user identifier. */
             id: string;
-            /** The Monday user name. */
+            /** The monday user name. */
             name?: string;
-            /** The Monday user email address. */
+            /** The monday user email address. */
             email?: string;
-            /** Whether the Monday user is enabled. */
+            /** Whether the monday user is enabled. */
             enabled?: boolean;
-            /** Whether the Monday user is a guest. */
+            /** Whether the monday user is a guest. */
             is_guest?: boolean;
-            /** The Monday user creation date. */
+            /** The monday user creation date. */
             created_at?: string;
             /** The account that owns the user. */
             account?: {
-              /** The Monday account identifier. */
+              /** The monday account identifier. */
               id: string;
-              /** The Monday account name. */
+              /** The monday account name. */
               name?: string;
-              /** The Monday account slug. */
+              /** The monday account slug. */
               slug?: string;
-              /** The Monday account tier. */
+              /** The monday account tier. */
               tier?: string;
               [key: string]: unknown;
             };
             [key: string]: unknown;
           };
-          /** The Monday item column values. */
+          /** The monday item column values. */
           column_values?: Array<{
-            /** The Monday column identifier. */
+            /** The monday column identifier. */
             id?: string;
             text?: string | null;
-            /** The Monday column type. */
+            /** The monday column type. */
             type?: string;
             value?: string | null;
             [key: string]: unknown;
           }>;
-          /** The nested subitems of a Monday item. */
+          /** The nested subitems of a monday item. */
           subitems?: Array<unknown>;
           [key: string]: unknown;
         };
       };
     };
-    /** Change multiple Monday column values in one mutation using the official JSON payload shape. */
+    /** Change multiple monday column values in one mutation using the official JSON payload shape. */
     "monday.change_multiple_column_values": {
       input: {
         /** The board that contains the item to update. */
@@ -328,79 +328,79 @@ declare module "@oomol-lab/connector" {
         item_id: string | number;
         /** The updated column values. */
         column_values: string | Record<string, unknown>;
-        /** Whether Monday should create missing status or dropdown labels. */
+        /** Whether monday should create missing status or dropdown labels. */
         create_labels_if_missing?: boolean;
       };
       output: {
-        /** The Monday item returned by the column value mutation. */
+        /** The monday item returned by the column value mutation. */
         item: {
-          /** The Monday item identifier. */
+          /** The monday item identifier. */
           id: string;
-          /** The Monday item name. */
+          /** The monday item name. */
           name?: string;
-          /** The Monday item state. */
+          /** The monday item state. */
           state?: string;
-          /** The Monday item URL. */
+          /** The monday item URL. */
           url?: string;
-          /** The Monday item creation time. */
+          /** The monday item creation time. */
           created_at?: string;
-          /** The Monday item update time. */
+          /** The monday item update time. */
           updated_at?: string;
-          /** The parent item of a Monday subitem. */
+          /** The parent item of a monday subitem. */
           parent_item?: {
-            /** The parent Monday item identifier. */
+            /** The parent monday item identifier. */
             id: string;
-            /** The parent Monday item name. */
+            /** The parent monday item name. */
             name?: string;
             [key: string]: unknown;
           };
           /** The group that contains the item. */
           group?: {
-            /** The Monday group identifier. */
+            /** The monday group identifier. */
             id: string;
-            /** The Monday group title. */
+            /** The monday group title. */
             title?: string;
-            /** The Monday group color. */
+            /** The monday group color. */
             color?: string;
-            /** The Monday group position. */
+            /** The monday group position. */
             position?: string;
-            /** Whether the Monday group is archived. */
+            /** Whether the monday group is archived. */
             archived?: boolean;
-            /** Whether the Monday group is deleted. */
+            /** Whether the monday group is deleted. */
             deleted?: boolean;
             [key: string]: unknown;
           };
           /** The board that contains the item. */
           board?: {
-            /** The Monday board identifier. */
+            /** The monday board identifier. */
             id: string;
-            /** The Monday board name. */
+            /** The monday board name. */
             name?: string;
-            /** The Monday board state. */
+            /** The monday board state. */
             state?: string;
-            /** The Monday board kind. */
+            /** The monday board kind. */
             board_kind?: string;
             /** The user's permissions on the board. */
             permissions?: string;
-            /** The Monday board description. */
+            /** The monday board description. */
             description?: string;
-            /** The Monday board communication summary. */
+            /** The monday board communication summary. */
             communication?: string;
-            /** The Monday board item nickname. */
+            /** The monday board item nickname. */
             item_nickname?: string;
-            /** The Monday board URL. */
+            /** The monday board URL. */
             url?: string;
             /** The workspace that contains the board. */
             workspace?: {
-              /** The Monday workspace identifier. */
+              /** The monday workspace identifier. */
               id: string;
-              /** The Monday workspace name. */
+              /** The monday workspace name. */
               name?: string;
-              /** The Monday workspace kind. */
+              /** The monday workspace kind. */
               kind?: string;
-              /** The Monday workspace state. */
+              /** The monday workspace state. */
               state?: string;
-              /** The Monday workspace description. */
+              /** The monday workspace description. */
               description?: string;
               [key: string]: unknown;
             };
@@ -408,49 +408,49 @@ declare module "@oomol-lab/connector" {
           };
           /** The user who created the item. */
           creator?: {
-            /** The Monday user identifier. */
+            /** The monday user identifier. */
             id: string;
-            /** The Monday user name. */
+            /** The monday user name. */
             name?: string;
-            /** The Monday user email address. */
+            /** The monday user email address. */
             email?: string;
-            /** Whether the Monday user is enabled. */
+            /** Whether the monday user is enabled. */
             enabled?: boolean;
-            /** Whether the Monday user is a guest. */
+            /** Whether the monday user is a guest. */
             is_guest?: boolean;
-            /** The Monday user creation date. */
+            /** The monday user creation date. */
             created_at?: string;
             /** The account that owns the user. */
             account?: {
-              /** The Monday account identifier. */
+              /** The monday account identifier. */
               id: string;
-              /** The Monday account name. */
+              /** The monday account name. */
               name?: string;
-              /** The Monday account slug. */
+              /** The monday account slug. */
               slug?: string;
-              /** The Monday account tier. */
+              /** The monday account tier. */
               tier?: string;
               [key: string]: unknown;
             };
             [key: string]: unknown;
           };
-          /** The Monday item column values. */
+          /** The monday item column values. */
           column_values?: Array<{
-            /** The Monday column identifier. */
+            /** The monday column identifier. */
             id?: string;
             text?: string | null;
-            /** The Monday column type. */
+            /** The monday column type. */
             type?: string;
             value?: string | null;
             [key: string]: unknown;
           }>;
-          /** The nested subitems of a Monday item. */
+          /** The nested subitems of a monday item. */
           subitems?: Array<unknown>;
           [key: string]: unknown;
         };
       };
     };
-    /** Change a Monday column value using the official simple string mutation. */
+    /** Change a monday column value using the official simple string mutation. */
     "monday.change_simple_column_value": {
       input: {
         /** The board that contains the item to update. */
@@ -464,79 +464,79 @@ declare module "@oomol-lab/connector" {
         column_id: string;
         /** The new simple string value for the column. */
         value: string;
-        /** Whether Monday should create missing status or dropdown labels. */
+        /** Whether monday should create missing status or dropdown labels. */
         create_labels_if_missing?: boolean;
       };
       output: {
-        /** The Monday item returned by the column value mutation. */
+        /** The monday item returned by the column value mutation. */
         item: {
-          /** The Monday item identifier. */
+          /** The monday item identifier. */
           id: string;
-          /** The Monday item name. */
+          /** The monday item name. */
           name?: string;
-          /** The Monday item state. */
+          /** The monday item state. */
           state?: string;
-          /** The Monday item URL. */
+          /** The monday item URL. */
           url?: string;
-          /** The Monday item creation time. */
+          /** The monday item creation time. */
           created_at?: string;
-          /** The Monday item update time. */
+          /** The monday item update time. */
           updated_at?: string;
-          /** The parent item of a Monday subitem. */
+          /** The parent item of a monday subitem. */
           parent_item?: {
-            /** The parent Monday item identifier. */
+            /** The parent monday item identifier. */
             id: string;
-            /** The parent Monday item name. */
+            /** The parent monday item name. */
             name?: string;
             [key: string]: unknown;
           };
           /** The group that contains the item. */
           group?: {
-            /** The Monday group identifier. */
+            /** The monday group identifier. */
             id: string;
-            /** The Monday group title. */
+            /** The monday group title. */
             title?: string;
-            /** The Monday group color. */
+            /** The monday group color. */
             color?: string;
-            /** The Monday group position. */
+            /** The monday group position. */
             position?: string;
-            /** Whether the Monday group is archived. */
+            /** Whether the monday group is archived. */
             archived?: boolean;
-            /** Whether the Monday group is deleted. */
+            /** Whether the monday group is deleted. */
             deleted?: boolean;
             [key: string]: unknown;
           };
           /** The board that contains the item. */
           board?: {
-            /** The Monday board identifier. */
+            /** The monday board identifier. */
             id: string;
-            /** The Monday board name. */
+            /** The monday board name. */
             name?: string;
-            /** The Monday board state. */
+            /** The monday board state. */
             state?: string;
-            /** The Monday board kind. */
+            /** The monday board kind. */
             board_kind?: string;
             /** The user's permissions on the board. */
             permissions?: string;
-            /** The Monday board description. */
+            /** The monday board description. */
             description?: string;
-            /** The Monday board communication summary. */
+            /** The monday board communication summary. */
             communication?: string;
-            /** The Monday board item nickname. */
+            /** The monday board item nickname. */
             item_nickname?: string;
-            /** The Monday board URL. */
+            /** The monday board URL. */
             url?: string;
             /** The workspace that contains the board. */
             workspace?: {
-              /** The Monday workspace identifier. */
+              /** The monday workspace identifier. */
               id: string;
-              /** The Monday workspace name. */
+              /** The monday workspace name. */
               name?: string;
-              /** The Monday workspace kind. */
+              /** The monday workspace kind. */
               kind?: string;
-              /** The Monday workspace state. */
+              /** The monday workspace state. */
               state?: string;
-              /** The Monday workspace description. */
+              /** The monday workspace description. */
               description?: string;
               [key: string]: unknown;
             };
@@ -544,49 +544,49 @@ declare module "@oomol-lab/connector" {
           };
           /** The user who created the item. */
           creator?: {
-            /** The Monday user identifier. */
+            /** The monday user identifier. */
             id: string;
-            /** The Monday user name. */
+            /** The monday user name. */
             name?: string;
-            /** The Monday user email address. */
+            /** The monday user email address. */
             email?: string;
-            /** Whether the Monday user is enabled. */
+            /** Whether the monday user is enabled. */
             enabled?: boolean;
-            /** Whether the Monday user is a guest. */
+            /** Whether the monday user is a guest. */
             is_guest?: boolean;
-            /** The Monday user creation date. */
+            /** The monday user creation date. */
             created_at?: string;
             /** The account that owns the user. */
             account?: {
-              /** The Monday account identifier. */
+              /** The monday account identifier. */
               id: string;
-              /** The Monday account name. */
+              /** The monday account name. */
               name?: string;
-              /** The Monday account slug. */
+              /** The monday account slug. */
               slug?: string;
-              /** The Monday account tier. */
+              /** The monday account tier. */
               tier?: string;
               [key: string]: unknown;
             };
             [key: string]: unknown;
           };
-          /** The Monday item column values. */
+          /** The monday item column values. */
           column_values?: Array<{
-            /** The Monday column identifier. */
+            /** The monday column identifier. */
             id?: string;
             text?: string | null;
-            /** The Monday column type. */
+            /** The monday column type. */
             type?: string;
             value?: string | null;
             [key: string]: unknown;
           }>;
-          /** The nested subitems of a Monday item. */
+          /** The nested subitems of a monday item. */
           subitems?: Array<unknown>;
           [key: string]: unknown;
         };
       };
     };
-    /** Clear department assignments from Monday users on an enterprise account. */
+    /** Clear department assignments from monday users on an enterprise account. */
     "monday.clear_users_department": {
       input: {
         /**
@@ -598,27 +598,27 @@ declare module "@oomol-lab/connector" {
       output: {
         /** The users whose department assignment was cleared. */
         clearedUsers: Array<{
-          /** The Monday user identifier. */
+          /** The monday user identifier. */
           id: string;
-          /** The Monday user name. */
+          /** The monday user name. */
           name?: string;
-          /** The Monday user email address. */
+          /** The monday user email address. */
           email?: string;
-          /** Whether the Monday user is enabled. */
+          /** Whether the monday user is enabled. */
           enabled?: boolean;
-          /** Whether the Monday user is a guest. */
+          /** Whether the monday user is a guest. */
           is_guest?: boolean;
-          /** The Monday user creation date. */
+          /** The monday user creation date. */
           created_at?: string;
           /** The account that owns the user. */
           account?: {
-            /** The Monday account identifier. */
+            /** The monday account identifier. */
             id: string;
-            /** The Monday account name. */
+            /** The monday account name. */
             name?: string;
-            /** The Monday account slug. */
+            /** The monday account slug. */
             slug?: string;
-            /** The Monday account tier. */
+            /** The monday account tier. */
             tier?: string;
             [key: string]: unknown;
           };
@@ -626,7 +626,7 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** Create a Monday board with the official create_board mutation. */
+    /** Create a monday board with the official create_board mutation. */
     "monday.create_board": {
       input: {
         /**
@@ -642,37 +642,37 @@ declare module "@oomol-lab/connector" {
         empty?: boolean;
       };
       output: {
-        /** The Monday board returned by the create_board mutation. */
+        /** The monday board returned by the create_board mutation. */
         board: {
-          /** The Monday board identifier. */
+          /** The monday board identifier. */
           id: string;
-          /** The Monday board name. */
+          /** The monday board name. */
           name?: string;
-          /** The Monday board state. */
+          /** The monday board state. */
           state?: string;
-          /** The Monday board kind. */
+          /** The monday board kind. */
           board_kind?: string;
           /** The user's permissions on the board. */
           permissions?: string;
-          /** The Monday board description. */
+          /** The monday board description. */
           description?: string;
-          /** The Monday board communication summary. */
+          /** The monday board communication summary. */
           communication?: string;
-          /** The Monday board item nickname. */
+          /** The monday board item nickname. */
           item_nickname?: string;
-          /** The Monday board URL. */
+          /** The monday board URL. */
           url?: string;
           /** The workspace that contains the board. */
           workspace?: {
-            /** The Monday workspace identifier. */
+            /** The monday workspace identifier. */
             id: string;
-            /** The Monday workspace name. */
+            /** The monday workspace name. */
             name?: string;
-            /** The Monday workspace kind. */
+            /** The monday workspace kind. */
             kind?: string;
-            /** The Monday workspace state. */
+            /** The monday workspace state. */
             state?: string;
-            /** The Monday workspace description. */
+            /** The monday workspace description. */
             description?: string;
             [key: string]: unknown;
           };
@@ -680,7 +680,7 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** Create a Monday column on an existing board. */
+    /** Create a monday column on an existing board. */
     "monday.create_column": {
       input: {
         /** The board where the column should be created. */
@@ -691,7 +691,7 @@ declare module "@oomol-lab/connector" {
          */
         title: string;
         /**
-         * The Monday column type to create.
+         * The monday column type to create.
          * @minLength 1
          */
         column_type: string;
@@ -707,29 +707,29 @@ declare module "@oomol-lab/connector" {
         description?: string;
       };
       output: {
-        /** The Monday column returned by the create_column mutation. */
+        /** The monday column returned by the create_column mutation. */
         column: {
-          /** The Monday column identifier. */
+          /** The monday column identifier. */
           id: string;
-          /** The Monday column title. */
+          /** The monday column title. */
           title?: string;
-          /** The Monday column type. */
+          /** The monday column type. */
           type?: string;
-          /** The Monday column description. */
+          /** The monday column description. */
           description?: string;
-          /** Whether the Monday column is archived. */
+          /** Whether the monday column is archived. */
           archived?: boolean;
-          /** The Monday column revision value. */
+          /** The monday column revision value. */
           revision?: string;
-          /** The Monday column width in pixels. */
+          /** The monday column width in pixels. */
           width?: number;
-          /** The Monday column settings payload. */
+          /** The monday column settings payload. */
           settings?: Record<string, unknown>;
           [key: string]: unknown;
         };
       };
     };
-    /** Create a Monday dashboard with the official dashboard mutation. */
+    /** Create a monday dashboard with the official dashboard mutation. */
     "monday.create_dashboard": {
       input: {
         /**
@@ -750,11 +750,11 @@ declare module "@oomol-lab/connector" {
         board_folder_id?: string | number;
       };
       output: {
-        /** The dashboard returned by Monday. */
+        /** The dashboard returned by monday. */
         dashboard: {
-          /** The Monday dashboard identifier. */
+          /** The monday dashboard identifier. */
           id: string;
-          /** The Monday dashboard name. */
+          /** The monday dashboard name. */
           name?: string;
           /** The workspace that owns the dashboard. */
           workspace_id?: string;
@@ -766,10 +766,10 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** Create a Monday department on an enterprise account. */
+    /** Create a monday department on an enterprise account. */
     "monday.create_department": {
       input: {
-        /** The department data passed to Monday. */
+        /** The department data passed to monday. */
         data: {
           /**
            * The department name.
@@ -784,11 +784,11 @@ declare module "@oomol-lab/connector" {
         };
       };
       output: {
-        /** The department returned by Monday. */
+        /** The department returned by monday. */
         department: {
-          /** The Monday department identifier. */
+          /** The monday department identifier. */
           id: string;
-          /** The Monday department name. */
+          /** The monday department name. */
           name: string;
           /** The number of seats reserved for the department. */
           reserved_seats: number;
@@ -796,27 +796,27 @@ declare module "@oomol-lab/connector" {
           assigned_seats: number;
           /** The users assigned to the department. */
           members: Array<{
-            /** The Monday user identifier. */
+            /** The monday user identifier. */
             id: string;
-            /** The Monday user name. */
+            /** The monday user name. */
             name?: string;
-            /** The Monday user email address. */
+            /** The monday user email address. */
             email?: string;
-            /** Whether the Monday user is enabled. */
+            /** Whether the monday user is enabled. */
             enabled?: boolean;
-            /** Whether the Monday user is a guest. */
+            /** Whether the monday user is a guest. */
             is_guest?: boolean;
-            /** The Monday user creation date. */
+            /** The monday user creation date. */
             created_at?: string;
             /** The account that owns the user. */
             account?: {
-              /** The Monday account identifier. */
+              /** The monday account identifier. */
               id: string;
-              /** The Monday account name. */
+              /** The monday account name. */
               name?: string;
-              /** The Monday account slug. */
+              /** The monday account slug. */
               slug?: string;
-              /** The Monday account tier. */
+              /** The monday account tier. */
               tier?: string;
               [key: string]: unknown;
             };
@@ -824,27 +824,27 @@ declare module "@oomol-lab/connector" {
           }>;
           /** The users who own the department. */
           owners: Array<{
-            /** The Monday user identifier. */
+            /** The monday user identifier. */
             id: string;
-            /** The Monday user name. */
+            /** The monday user name. */
             name?: string;
-            /** The Monday user email address. */
+            /** The monday user email address. */
             email?: string;
-            /** Whether the Monday user is enabled. */
+            /** Whether the monday user is enabled. */
             enabled?: boolean;
-            /** Whether the Monday user is a guest. */
+            /** Whether the monday user is a guest. */
             is_guest?: boolean;
-            /** The Monday user creation date. */
+            /** The monday user creation date. */
             created_at?: string;
             /** The account that owns the user. */
             account?: {
-              /** The Monday account identifier. */
+              /** The monday account identifier. */
               id: string;
-              /** The Monday account name. */
+              /** The monday account name. */
               name?: string;
-              /** The Monday account slug. */
+              /** The monday account slug. */
               slug?: string;
-              /** The Monday account tier. */
+              /** The monday account tier. */
               tier?: string;
               [key: string]: unknown;
             };
@@ -853,58 +853,58 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** Create a Monday doc in a workspace or document column location. */
+    /** Create a monday doc in a workspace or document column location. */
     "monday.create_doc": {
       input: {
-        /** The official Monday create_doc location object. */
+        /** The official monday create_doc location object. */
         location: Record<string, unknown>;
       };
       output: {
-        /** The Monday doc returned by the create_doc mutation. */
+        /** The monday doc returned by the create_doc mutation. */
         doc: {
-          /** The Monday document identifier. */
+          /** The monday document identifier. */
           id: string;
-          /** The Monday document object identifier. */
+          /** The monday document object identifier. */
           object_id?: string;
-          /** The Monday document name. */
+          /** The monday document name. */
           name?: string;
-          /** The Monday document kind. */
+          /** The monday document kind. */
           doc_kind?: string;
-          /** The Monday document creation time. */
+          /** The monday document creation time. */
           created_at?: string;
-          /** The Monday document update time. */
+          /** The monday document update time. */
           updated_at?: string;
-          /** The Monday document URL. */
+          /** The monday document URL. */
           url?: string;
-          /** The Monday document relative URL. */
+          /** The monday document relative URL. */
           relative_url?: string;
-          /** The Monday document folder identifier. */
+          /** The monday document folder identifier. */
           doc_folder_id?: string;
-          /** The Monday document settings payload. */
+          /** The monday document settings payload. */
           settings?: Record<string, unknown>;
           /** The user who created the document. */
           created_by?: {
-            /** The Monday user identifier. */
+            /** The monday user identifier. */
             id: string;
-            /** The Monday user name. */
+            /** The monday user name. */
             name?: string;
-            /** The Monday user email address. */
+            /** The monday user email address. */
             email?: string;
-            /** Whether the Monday user is enabled. */
+            /** Whether the monday user is enabled. */
             enabled?: boolean;
-            /** Whether the Monday user is a guest. */
+            /** Whether the monday user is a guest. */
             is_guest?: boolean;
-            /** The Monday user creation date. */
+            /** The monday user creation date. */
             created_at?: string;
             /** The account that owns the user. */
             account?: {
-              /** The Monday account identifier. */
+              /** The monday account identifier. */
               id: string;
-              /** The Monday account name. */
+              /** The monday account name. */
               name?: string;
-              /** The Monday account slug. */
+              /** The monday account slug. */
               slug?: string;
-              /** The Monday account tier. */
+              /** The monday account tier. */
               tier?: string;
               [key: string]: unknown;
             };
@@ -914,22 +914,22 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** Create a Monday Workform and its destination responses board. */
+    /** Create a monday Workform and its destination responses board. */
     "monday.create_form": {
       input: {
-        /** The workspace where Monday should create the form. */
+        /** The workspace where monday should create the form. */
         destination_workspace_id: string | number;
-        /** The folder where Monday should create the form. */
+        /** The folder where monday should create the form. */
         destination_folder_id?: string | number;
         /**
-         * The folder name where Monday should create the form.
+         * The folder name where monday should create the form.
          * @minLength 1
          */
         destination_folder_name?: string;
         /** The board visibility for the responses board. */
         board_kind?: "private" | "public" | "share";
         /**
-         * The name of the responses board that Monday should create.
+         * The name of the responses board that monday should create.
          * @minLength 1
          */
         destination_name?: string;
@@ -955,7 +955,7 @@ declare module "@oomol-lab/connector" {
         board_subscriber_teams_ids?: Array<string | number>;
       };
       output: {
-        /** The created form returned by Monday. */
+        /** The created form returned by monday. */
         form: {
           /** The board that will receive form submissions. */
           boardId: string;
@@ -964,7 +964,7 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** Create a Monday group on an existing board. */
+    /** Create a monday group on an existing board. */
     "monday.create_group": {
       input: {
         /** The board where the group should be created. */
@@ -976,25 +976,25 @@ declare module "@oomol-lab/connector" {
         group_name: string;
       };
       output: {
-        /** The Monday group returned by the create_group mutation. */
+        /** The monday group returned by the create_group mutation. */
         group: {
-          /** The Monday group identifier. */
+          /** The monday group identifier. */
           id: string;
-          /** The Monday group title. */
+          /** The monday group title. */
           title?: string;
-          /** The Monday group color. */
+          /** The monday group color. */
           color?: string;
-          /** The Monday group position. */
+          /** The monday group position. */
           position?: string;
-          /** Whether the Monday group is archived. */
+          /** Whether the monday group is archived. */
           archived?: boolean;
-          /** Whether the Monday group is deleted. */
+          /** Whether the monday group is deleted. */
           deleted?: boolean;
           [key: string]: unknown;
         };
       };
     };
-    /** Create a Monday item on a board, optionally setting column values and position. */
+    /** Create a monday item on a board, optionally setting column values and position. */
     "monday.create_item": {
       input: {
         /** The board where the item should be created. */
@@ -1011,7 +1011,7 @@ declare module "@oomol-lab/connector" {
         item_name: string;
         /** The column values for the new item. */
         column_values?: string | Record<string, unknown>;
-        /** Whether Monday should create missing status or dropdown labels. */
+        /** Whether monday should create missing status or dropdown labels. */
         create_labels_if_missing?: boolean;
         /** The item whose position should anchor the newly created item. */
         relative_to?: string | number;
@@ -1019,75 +1019,75 @@ declare module "@oomol-lab/connector" {
         position_relative_method?: "before_at" | "after_at";
       };
       output: {
-        /** The Monday item returned by the create_item mutation. */
+        /** The monday item returned by the create_item mutation. */
         item: {
-          /** The Monday item identifier. */
+          /** The monday item identifier. */
           id: string;
-          /** The Monday item name. */
+          /** The monday item name. */
           name?: string;
-          /** The Monday item state. */
+          /** The monday item state. */
           state?: string;
-          /** The Monday item URL. */
+          /** The monday item URL. */
           url?: string;
-          /** The Monday item creation time. */
+          /** The monday item creation time. */
           created_at?: string;
-          /** The Monday item update time. */
+          /** The monday item update time. */
           updated_at?: string;
-          /** The parent item of a Monday subitem. */
+          /** The parent item of a monday subitem. */
           parent_item?: {
-            /** The parent Monday item identifier. */
+            /** The parent monday item identifier. */
             id: string;
-            /** The parent Monday item name. */
+            /** The parent monday item name. */
             name?: string;
             [key: string]: unknown;
           };
           /** The group that contains the item. */
           group?: {
-            /** The Monday group identifier. */
+            /** The monday group identifier. */
             id: string;
-            /** The Monday group title. */
+            /** The monday group title. */
             title?: string;
-            /** The Monday group color. */
+            /** The monday group color. */
             color?: string;
-            /** The Monday group position. */
+            /** The monday group position. */
             position?: string;
-            /** Whether the Monday group is archived. */
+            /** Whether the monday group is archived. */
             archived?: boolean;
-            /** Whether the Monday group is deleted. */
+            /** Whether the monday group is deleted. */
             deleted?: boolean;
             [key: string]: unknown;
           };
           /** The board that contains the item. */
           board?: {
-            /** The Monday board identifier. */
+            /** The monday board identifier. */
             id: string;
-            /** The Monday board name. */
+            /** The monday board name. */
             name?: string;
-            /** The Monday board state. */
+            /** The monday board state. */
             state?: string;
-            /** The Monday board kind. */
+            /** The monday board kind. */
             board_kind?: string;
             /** The user's permissions on the board. */
             permissions?: string;
-            /** The Monday board description. */
+            /** The monday board description. */
             description?: string;
-            /** The Monday board communication summary. */
+            /** The monday board communication summary. */
             communication?: string;
-            /** The Monday board item nickname. */
+            /** The monday board item nickname. */
             item_nickname?: string;
-            /** The Monday board URL. */
+            /** The monday board URL. */
             url?: string;
             /** The workspace that contains the board. */
             workspace?: {
-              /** The Monday workspace identifier. */
+              /** The monday workspace identifier. */
               id: string;
-              /** The Monday workspace name. */
+              /** The monday workspace name. */
               name?: string;
-              /** The Monday workspace kind. */
+              /** The monday workspace kind. */
               kind?: string;
-              /** The Monday workspace state. */
+              /** The monday workspace state. */
               state?: string;
-              /** The Monday workspace description. */
+              /** The monday workspace description. */
               description?: string;
               [key: string]: unknown;
             };
@@ -1095,49 +1095,49 @@ declare module "@oomol-lab/connector" {
           };
           /** The user who created the item. */
           creator?: {
-            /** The Monday user identifier. */
+            /** The monday user identifier. */
             id: string;
-            /** The Monday user name. */
+            /** The monday user name. */
             name?: string;
-            /** The Monday user email address. */
+            /** The monday user email address. */
             email?: string;
-            /** Whether the Monday user is enabled. */
+            /** Whether the monday user is enabled. */
             enabled?: boolean;
-            /** Whether the Monday user is a guest. */
+            /** Whether the monday user is a guest. */
             is_guest?: boolean;
-            /** The Monday user creation date. */
+            /** The monday user creation date. */
             created_at?: string;
             /** The account that owns the user. */
             account?: {
-              /** The Monday account identifier. */
+              /** The monday account identifier. */
               id: string;
-              /** The Monday account name. */
+              /** The monday account name. */
               name?: string;
-              /** The Monday account slug. */
+              /** The monday account slug. */
               slug?: string;
-              /** The Monday account tier. */
+              /** The monday account tier. */
               tier?: string;
               [key: string]: unknown;
             };
             [key: string]: unknown;
           };
-          /** The Monday item column values. */
+          /** The monday item column values. */
           column_values?: Array<{
-            /** The Monday column identifier. */
+            /** The monday column identifier. */
             id?: string;
             text?: string | null;
-            /** The Monday column type. */
+            /** The monday column type. */
             type?: string;
             value?: string | null;
             [key: string]: unknown;
           }>;
-          /** The nested subitems of a Monday item. */
+          /** The nested subitems of a monday item. */
           subitems?: Array<unknown>;
           [key: string]: unknown;
         };
       };
     };
-    /** Create a Monday subitem under an existing parent item. */
+    /** Create a monday subitem under an existing parent item. */
     "monday.create_subitem": {
       input: {
         /** The parent item where the subitem should be created. */
@@ -1149,79 +1149,79 @@ declare module "@oomol-lab/connector" {
         item_name: string;
         /** The column values for the new subitem. */
         column_values?: string | Record<string, unknown>;
-        /** Whether Monday should create missing status or dropdown labels. */
+        /** Whether monday should create missing status or dropdown labels. */
         create_labels_if_missing?: boolean;
       };
       output: {
-        /** The Monday item returned by the create_item mutation. */
+        /** The monday item returned by the create_item mutation. */
         item: {
-          /** The Monday item identifier. */
+          /** The monday item identifier. */
           id: string;
-          /** The Monday item name. */
+          /** The monday item name. */
           name?: string;
-          /** The Monday item state. */
+          /** The monday item state. */
           state?: string;
-          /** The Monday item URL. */
+          /** The monday item URL. */
           url?: string;
-          /** The Monday item creation time. */
+          /** The monday item creation time. */
           created_at?: string;
-          /** The Monday item update time. */
+          /** The monday item update time. */
           updated_at?: string;
-          /** The parent item of a Monday subitem. */
+          /** The parent item of a monday subitem. */
           parent_item?: {
-            /** The parent Monday item identifier. */
+            /** The parent monday item identifier. */
             id: string;
-            /** The parent Monday item name. */
+            /** The parent monday item name. */
             name?: string;
             [key: string]: unknown;
           };
           /** The group that contains the item. */
           group?: {
-            /** The Monday group identifier. */
+            /** The monday group identifier. */
             id: string;
-            /** The Monday group title. */
+            /** The monday group title. */
             title?: string;
-            /** The Monday group color. */
+            /** The monday group color. */
             color?: string;
-            /** The Monday group position. */
+            /** The monday group position. */
             position?: string;
-            /** Whether the Monday group is archived. */
+            /** Whether the monday group is archived. */
             archived?: boolean;
-            /** Whether the Monday group is deleted. */
+            /** Whether the monday group is deleted. */
             deleted?: boolean;
             [key: string]: unknown;
           };
           /** The board that contains the item. */
           board?: {
-            /** The Monday board identifier. */
+            /** The monday board identifier. */
             id: string;
-            /** The Monday board name. */
+            /** The monday board name. */
             name?: string;
-            /** The Monday board state. */
+            /** The monday board state. */
             state?: string;
-            /** The Monday board kind. */
+            /** The monday board kind. */
             board_kind?: string;
             /** The user's permissions on the board. */
             permissions?: string;
-            /** The Monday board description. */
+            /** The monday board description. */
             description?: string;
-            /** The Monday board communication summary. */
+            /** The monday board communication summary. */
             communication?: string;
-            /** The Monday board item nickname. */
+            /** The monday board item nickname. */
             item_nickname?: string;
-            /** The Monday board URL. */
+            /** The monday board URL. */
             url?: string;
             /** The workspace that contains the board. */
             workspace?: {
-              /** The Monday workspace identifier. */
+              /** The monday workspace identifier. */
               id: string;
-              /** The Monday workspace name. */
+              /** The monday workspace name. */
               name?: string;
-              /** The Monday workspace kind. */
+              /** The monday workspace kind. */
               kind?: string;
-              /** The Monday workspace state. */
+              /** The monday workspace state. */
               state?: string;
-              /** The Monday workspace description. */
+              /** The monday workspace description. */
               description?: string;
               [key: string]: unknown;
             };
@@ -1229,49 +1229,49 @@ declare module "@oomol-lab/connector" {
           };
           /** The user who created the item. */
           creator?: {
-            /** The Monday user identifier. */
+            /** The monday user identifier. */
             id: string;
-            /** The Monday user name. */
+            /** The monday user name. */
             name?: string;
-            /** The Monday user email address. */
+            /** The monday user email address. */
             email?: string;
-            /** Whether the Monday user is enabled. */
+            /** Whether the monday user is enabled. */
             enabled?: boolean;
-            /** Whether the Monday user is a guest. */
+            /** Whether the monday user is a guest. */
             is_guest?: boolean;
-            /** The Monday user creation date. */
+            /** The monday user creation date. */
             created_at?: string;
             /** The account that owns the user. */
             account?: {
-              /** The Monday account identifier. */
+              /** The monday account identifier. */
               id: string;
-              /** The Monday account name. */
+              /** The monday account name. */
               name?: string;
-              /** The Monday account slug. */
+              /** The monday account slug. */
               slug?: string;
-              /** The Monday account tier. */
+              /** The monday account tier. */
               tier?: string;
               [key: string]: unknown;
             };
             [key: string]: unknown;
           };
-          /** The Monday item column values. */
+          /** The monday item column values. */
           column_values?: Array<{
-            /** The Monday column identifier. */
+            /** The monday column identifier. */
             id?: string;
             text?: string | null;
-            /** The Monday column type. */
+            /** The monday column type. */
             type?: string;
             value?: string | null;
             [key: string]: unknown;
           }>;
-          /** The nested subitems of a Monday item. */
+          /** The nested subitems of a monday item. */
           subitems?: Array<unknown>;
           [key: string]: unknown;
         };
       };
     };
-    /** Create a Monday update on an item or as a reply to an existing update. */
+    /** Create a monday update on an item or as a reply to an existing update. */
     "monday.create_update": {
       input: {
         /** The item that should receive the update. */
@@ -1285,41 +1285,41 @@ declare module "@oomol-lab/connector" {
         body: string;
       };
       output: {
-        /** The Monday update returned by the create_update mutation. */
+        /** The monday update returned by the create_update mutation. */
         update: {
-          /** The Monday update identifier. */
+          /** The monday update identifier. */
           id: string;
-          /** The Monday update body. */
+          /** The monday update body. */
           body?: string;
-          /** The Monday update creation time. */
+          /** The monday update creation time. */
           created_at?: string;
-          /** The Monday update edit time. */
+          /** The monday update edit time. */
           edited_at?: string;
-          /** The Monday update update time. */
+          /** The monday update update time. */
           updated_at?: string;
           /** The user who created the update. */
           creator?: {
-            /** The Monday user identifier. */
+            /** The monday user identifier. */
             id: string;
-            /** The Monday user name. */
+            /** The monday user name. */
             name?: string;
-            /** The Monday user email address. */
+            /** The monday user email address. */
             email?: string;
-            /** Whether the Monday user is enabled. */
+            /** Whether the monday user is enabled. */
             enabled?: boolean;
-            /** Whether the Monday user is a guest. */
+            /** Whether the monday user is a guest. */
             is_guest?: boolean;
-            /** The Monday user creation date. */
+            /** The monday user creation date. */
             created_at?: string;
             /** The account that owns the user. */
             account?: {
-              /** The Monday account identifier. */
+              /** The monday account identifier. */
               id: string;
-              /** The Monday account name. */
+              /** The monday account name. */
               name?: string;
-              /** The Monday account slug. */
+              /** The monday account slug. */
               slug?: string;
-              /** The Monday account tier. */
+              /** The monday account tier. */
               tier?: string;
               [key: string]: unknown;
             };
@@ -1329,7 +1329,7 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** Deactivate a Monday Workform so it stops accepting submissions. */
+    /** Deactivate a monday Workform so it stops accepting submissions. */
     "monday.deactivate_form": {
       input: {
         /**
@@ -1345,18 +1345,18 @@ declare module "@oomol-lab/connector" {
         active: boolean;
       };
     };
-    /** Delete a Monday board. */
+    /** Delete a monday board. */
     "monday.delete_board": {
       input: {
         /** The board identifier to delete. */
         board_id: string | number;
       };
       output: {
-        /** The deleted Monday board identifier. */
+        /** The deleted monday board identifier. */
         deletedBoardId: string;
       };
     };
-    /** Delete a Monday column from an existing board. */
+    /** Delete a monday column from an existing board. */
     "monday.delete_column": {
       input: {
         /** The board that contains the column to delete. */
@@ -1368,11 +1368,11 @@ declare module "@oomol-lab/connector" {
         column_id: string;
       };
       output: {
-        /** The deleted Monday column identifier. */
+        /** The deleted monday column identifier. */
         deletedColumnId: string;
       };
     };
-    /** Delete a Monday dashboard. */
+    /** Delete a monday dashboard. */
     "monday.delete_dashboard": {
       input: {
         /** The dashboard identifier to delete. */
@@ -1381,11 +1381,11 @@ declare module "@oomol-lab/connector" {
       output: {
         /** The dashboard identifier that was deleted. */
         deletedDashboardId: string;
-        /** Whether Monday confirmed the dashboard deletion. */
+        /** Whether monday confirmed the dashboard deletion. */
         success: boolean;
       };
     };
-    /** Delete a Monday department on an enterprise account. */
+    /** Delete a monday department on an enterprise account. */
     "monday.delete_department": {
       input: {
         /** The department identifier to delete. */
@@ -1396,20 +1396,20 @@ declare module "@oomol-lab/connector" {
         deletedDepartmentId: string;
       };
     };
-    /** Delete an existing Monday doc. */
+    /** Delete an existing monday doc. */
     "monday.delete_doc": {
       input: {
         /** The unique identifier of the document to delete. */
         docId: string | number;
       };
       output: {
-        /** The deleted Monday document identifier. */
+        /** The deleted monday document identifier. */
         deletedDocId: string;
-        /** Whether Monday confirmed the document deletion. */
+        /** Whether monday confirmed the document deletion. */
         success?: boolean;
       };
     };
-    /** Delete a Monday group from an existing board. */
+    /** Delete a monday group from an existing board. */
     "monday.delete_group": {
       input: {
         /** The board that contains the group to delete. */
@@ -1421,22 +1421,22 @@ declare module "@oomol-lab/connector" {
         group_id: string;
       };
       output: {
-        /** The deleted Monday group identifier. */
+        /** The deleted monday group identifier. */
         deletedGroupId: string;
       };
     };
-    /** Delete a Monday item. */
+    /** Delete a monday item. */
     "monday.delete_item": {
       input: {
-        /** The Monday item that should be deleted. */
+        /** The monday item that should be deleted. */
         item_id: string | number;
       };
       output: {
-        /** The deleted Monday item identifier. */
+        /** The deleted monday item identifier. */
         deletedItemId: string;
       };
     };
-    /** Remove Monday user subscribers from a board. */
+    /** Remove monday user subscribers from a board. */
     "monday.delete_subscribers_from_board": {
       input: {
         /** The board that should remove the subscribers. */
@@ -1450,27 +1450,27 @@ declare module "@oomol-lab/connector" {
       output: {
         /** The users removed from the board. */
         users: Array<{
-          /** The Monday user identifier. */
+          /** The monday user identifier. */
           id: string;
-          /** The Monday user name. */
+          /** The monday user name. */
           name?: string;
-          /** The Monday user email address. */
+          /** The monday user email address. */
           email?: string;
-          /** Whether the Monday user is enabled. */
+          /** Whether the monday user is enabled. */
           enabled?: boolean;
-          /** Whether the Monday user is a guest. */
+          /** Whether the monday user is a guest. */
           is_guest?: boolean;
-          /** The Monday user creation date. */
+          /** The monday user creation date. */
           created_at?: string;
           /** The account that owns the user. */
           account?: {
-            /** The Monday account identifier. */
+            /** The monday account identifier. */
             id: string;
-            /** The Monday account name. */
+            /** The monday account name. */
             name?: string;
-            /** The Monday account slug. */
+            /** The monday account slug. */
             slug?: string;
-            /** The Monday account tier. */
+            /** The monday account tier. */
             tier?: string;
             [key: string]: unknown;
           };
@@ -1478,7 +1478,7 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** Remove Monday team subscribers from a board. */
+    /** Remove monday team subscribers from a board. */
     "monday.delete_teams_from_board": {
       input: {
         /** The board that should remove the teams. */
@@ -1492,107 +1492,107 @@ declare module "@oomol-lab/connector" {
       output: {
         /** The teams removed from the board. */
         teams: Array<{
-          /** The Monday team identifier. */
+          /** The monday team identifier. */
           id: string;
-          /** The Monday team name. */
+          /** The monday team name. */
           name?: string;
-          /** The Monday team avatar URL. */
+          /** The monday team avatar URL. */
           picture_url?: string;
           [key: string]: unknown;
         }>;
       };
     };
-    /** Delete an existing Monday update. */
+    /** Delete an existing monday update. */
     "monday.delete_update": {
       input: {
         /** The update identifier to delete. */
         id: string | number;
       };
       output: {
-        /** The deleted Monday update identifier. */
+        /** The deleted monday update identifier. */
         deletedUpdateId: string;
       };
     };
-    /** Duplicate a Monday item. */
+    /** Duplicate a monday item. */
     "monday.duplicate_item": {
       input: {
         /** The board that contains the item to duplicate. */
         board_id: string | number;
-        /** The Monday item that should be duplicated. */
+        /** The monday item that should be duplicated. */
         item_id: string | number;
-        /** Whether Monday should duplicate the item's updates. */
+        /** Whether monday should duplicate the item's updates. */
         with_updates?: boolean;
       };
       output: {
-        /** The Monday item returned by the create_item mutation. */
+        /** The monday item returned by the create_item mutation. */
         item: {
-          /** The Monday item identifier. */
+          /** The monday item identifier. */
           id: string;
-          /** The Monday item name. */
+          /** The monday item name. */
           name?: string;
-          /** The Monday item state. */
+          /** The monday item state. */
           state?: string;
-          /** The Monday item URL. */
+          /** The monday item URL. */
           url?: string;
-          /** The Monday item creation time. */
+          /** The monday item creation time. */
           created_at?: string;
-          /** The Monday item update time. */
+          /** The monday item update time. */
           updated_at?: string;
-          /** The parent item of a Monday subitem. */
+          /** The parent item of a monday subitem. */
           parent_item?: {
-            /** The parent Monday item identifier. */
+            /** The parent monday item identifier. */
             id: string;
-            /** The parent Monday item name. */
+            /** The parent monday item name. */
             name?: string;
             [key: string]: unknown;
           };
           /** The group that contains the item. */
           group?: {
-            /** The Monday group identifier. */
+            /** The monday group identifier. */
             id: string;
-            /** The Monday group title. */
+            /** The monday group title. */
             title?: string;
-            /** The Monday group color. */
+            /** The monday group color. */
             color?: string;
-            /** The Monday group position. */
+            /** The monday group position. */
             position?: string;
-            /** Whether the Monday group is archived. */
+            /** Whether the monday group is archived. */
             archived?: boolean;
-            /** Whether the Monday group is deleted. */
+            /** Whether the monday group is deleted. */
             deleted?: boolean;
             [key: string]: unknown;
           };
           /** The board that contains the item. */
           board?: {
-            /** The Monday board identifier. */
+            /** The monday board identifier. */
             id: string;
-            /** The Monday board name. */
+            /** The monday board name. */
             name?: string;
-            /** The Monday board state. */
+            /** The monday board state. */
             state?: string;
-            /** The Monday board kind. */
+            /** The monday board kind. */
             board_kind?: string;
             /** The user's permissions on the board. */
             permissions?: string;
-            /** The Monday board description. */
+            /** The monday board description. */
             description?: string;
-            /** The Monday board communication summary. */
+            /** The monday board communication summary. */
             communication?: string;
-            /** The Monday board item nickname. */
+            /** The monday board item nickname. */
             item_nickname?: string;
-            /** The Monday board URL. */
+            /** The monday board URL. */
             url?: string;
             /** The workspace that contains the board. */
             workspace?: {
-              /** The Monday workspace identifier. */
+              /** The monday workspace identifier. */
               id: string;
-              /** The Monday workspace name. */
+              /** The monday workspace name. */
               name?: string;
-              /** The Monday workspace kind. */
+              /** The monday workspace kind. */
               kind?: string;
-              /** The Monday workspace state. */
+              /** The monday workspace state. */
               state?: string;
-              /** The Monday workspace description. */
+              /** The monday workspace description. */
               description?: string;
               [key: string]: unknown;
             };
@@ -1600,49 +1600,49 @@ declare module "@oomol-lab/connector" {
           };
           /** The user who created the item. */
           creator?: {
-            /** The Monday user identifier. */
+            /** The monday user identifier. */
             id: string;
-            /** The Monday user name. */
+            /** The monday user name. */
             name?: string;
-            /** The Monday user email address. */
+            /** The monday user email address. */
             email?: string;
-            /** Whether the Monday user is enabled. */
+            /** Whether the monday user is enabled. */
             enabled?: boolean;
-            /** Whether the Monday user is a guest. */
+            /** Whether the monday user is a guest. */
             is_guest?: boolean;
-            /** The Monday user creation date. */
+            /** The monday user creation date. */
             created_at?: string;
             /** The account that owns the user. */
             account?: {
-              /** The Monday account identifier. */
+              /** The monday account identifier. */
               id: string;
-              /** The Monday account name. */
+              /** The monday account name. */
               name?: string;
-              /** The Monday account slug. */
+              /** The monday account slug. */
               slug?: string;
-              /** The Monday account tier. */
+              /** The monday account tier. */
               tier?: string;
               [key: string]: unknown;
             };
             [key: string]: unknown;
           };
-          /** The Monday item column values. */
+          /** The monday item column values. */
           column_values?: Array<{
-            /** The Monday column identifier. */
+            /** The monday column identifier. */
             id?: string;
             text?: string | null;
-            /** The Monday column type. */
+            /** The monday column type. */
             type?: string;
             value?: string | null;
             [key: string]: unknown;
           }>;
-          /** The nested subitems of a Monday item. */
+          /** The nested subitems of a monday item. */
           subitems?: Array<unknown>;
           [key: string]: unknown;
         };
       };
     };
-    /** Edit an existing Monday update. */
+    /** Edit an existing monday update. */
     "monday.edit_update": {
       input: {
         /** The update identifier to edit. */
@@ -1654,41 +1654,41 @@ declare module "@oomol-lab/connector" {
         body: string;
       };
       output: {
-        /** The Monday update returned by the edit_update mutation. */
+        /** The monday update returned by the edit_update mutation. */
         update: {
-          /** The Monday update identifier. */
+          /** The monday update identifier. */
           id: string;
-          /** The Monday update body. */
+          /** The monday update body. */
           body?: string;
-          /** The Monday update creation time. */
+          /** The monday update creation time. */
           created_at?: string;
-          /** The Monday update edit time. */
+          /** The monday update edit time. */
           edited_at?: string;
-          /** The Monday update update time. */
+          /** The monday update update time. */
           updated_at?: string;
           /** The user who created the update. */
           creator?: {
-            /** The Monday user identifier. */
+            /** The monday user identifier. */
             id: string;
-            /** The Monday user name. */
+            /** The monday user name. */
             name?: string;
-            /** The Monday user email address. */
+            /** The monday user email address. */
             email?: string;
-            /** Whether the Monday user is enabled. */
+            /** Whether the monday user is enabled. */
             enabled?: boolean;
-            /** Whether the Monday user is a guest. */
+            /** Whether the monday user is a guest. */
             is_guest?: boolean;
-            /** The Monday user creation date. */
+            /** The monday user creation date. */
             created_at?: string;
             /** The account that owns the user. */
             account?: {
-              /** The Monday account identifier. */
+              /** The monday account identifier. */
               id: string;
-              /** The Monday account name. */
+              /** The monday account name. */
               name?: string;
-              /** The Monday account slug. */
+              /** The monday account slug. */
               slug?: string;
-              /** The Monday account tier. */
+              /** The monday account tier. */
               tier?: string;
               [key: string]: unknown;
             };
@@ -1698,7 +1698,7 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** Find Monday items on a board by matching explicit column values. */
+    /** Find monday items on a board by matching explicit column values. */
     "monday.find_items_by_column_values": {
       input: {
         /** The board where matching items should be searched. */
@@ -1709,22 +1709,22 @@ declare module "@oomol-lab/connector" {
          */
         columns?: Array<{
           /**
-           * The Monday column identifier to filter by.
+           * The monday column identifier to filter by.
            * @minLength 1
            */
           column_id: string;
           /**
-           * The Monday column values to match.
+           * The monday column values to match.
            * @minItems 1
            */
           column_values: Array<string>;
         }>;
         /**
-         * The opaque Monday pagination cursor.
+         * The opaque monday pagination cursor.
          * @minLength 1
          */
         cursor?: string;
-        /** How Monday should scope hierarchy matches in the results. */
+        /** How monday should scope hierarchy matches in the results. */
         hierarchy_scope_config?: "allItems" | "parentItems";
         /**
          * The maximum number of matching items to return.
@@ -1736,75 +1736,75 @@ declare module "@oomol-lab/connector" {
       output: {
         /** The cursor for the next page, or null when the result set is exhausted. */
         cursor: string | null;
-        /** The Monday items returned in this page. */
+        /** The monday items returned in this page. */
         items: Array<{
-          /** The Monday item identifier. */
+          /** The monday item identifier. */
           id: string;
-          /** The Monday item name. */
+          /** The monday item name. */
           name?: string;
-          /** The Monday item state. */
+          /** The monday item state. */
           state?: string;
-          /** The Monday item URL. */
+          /** The monday item URL. */
           url?: string;
-          /** The Monday item creation time. */
+          /** The monday item creation time. */
           created_at?: string;
-          /** The Monday item update time. */
+          /** The monday item update time. */
           updated_at?: string;
-          /** The parent item of a Monday subitem. */
+          /** The parent item of a monday subitem. */
           parent_item?: {
-            /** The parent Monday item identifier. */
+            /** The parent monday item identifier. */
             id: string;
-            /** The parent Monday item name. */
+            /** The parent monday item name. */
             name?: string;
             [key: string]: unknown;
           };
           /** The group that contains the item. */
           group?: {
-            /** The Monday group identifier. */
+            /** The monday group identifier. */
             id: string;
-            /** The Monday group title. */
+            /** The monday group title. */
             title?: string;
-            /** The Monday group color. */
+            /** The monday group color. */
             color?: string;
-            /** The Monday group position. */
+            /** The monday group position. */
             position?: string;
-            /** Whether the Monday group is archived. */
+            /** Whether the monday group is archived. */
             archived?: boolean;
-            /** Whether the Monday group is deleted. */
+            /** Whether the monday group is deleted. */
             deleted?: boolean;
             [key: string]: unknown;
           };
           /** The board that contains the item. */
           board?: {
-            /** The Monday board identifier. */
+            /** The monday board identifier. */
             id: string;
-            /** The Monday board name. */
+            /** The monday board name. */
             name?: string;
-            /** The Monday board state. */
+            /** The monday board state. */
             state?: string;
-            /** The Monday board kind. */
+            /** The monday board kind. */
             board_kind?: string;
             /** The user's permissions on the board. */
             permissions?: string;
-            /** The Monday board description. */
+            /** The monday board description. */
             description?: string;
-            /** The Monday board communication summary. */
+            /** The monday board communication summary. */
             communication?: string;
-            /** The Monday board item nickname. */
+            /** The monday board item nickname. */
             item_nickname?: string;
-            /** The Monday board URL. */
+            /** The monday board URL. */
             url?: string;
             /** The workspace that contains the board. */
             workspace?: {
-              /** The Monday workspace identifier. */
+              /** The monday workspace identifier. */
               id: string;
-              /** The Monday workspace name. */
+              /** The monday workspace name. */
               name?: string;
-              /** The Monday workspace kind. */
+              /** The monday workspace kind. */
               kind?: string;
-              /** The Monday workspace state. */
+              /** The monday workspace state. */
               state?: string;
-              /** The Monday workspace description. */
+              /** The monday workspace description. */
               description?: string;
               [key: string]: unknown;
             };
@@ -1812,49 +1812,49 @@ declare module "@oomol-lab/connector" {
           };
           /** The user who created the item. */
           creator?: {
-            /** The Monday user identifier. */
+            /** The monday user identifier. */
             id: string;
-            /** The Monday user name. */
+            /** The monday user name. */
             name?: string;
-            /** The Monday user email address. */
+            /** The monday user email address. */
             email?: string;
-            /** Whether the Monday user is enabled. */
+            /** Whether the monday user is enabled. */
             enabled?: boolean;
-            /** Whether the Monday user is a guest. */
+            /** Whether the monday user is a guest. */
             is_guest?: boolean;
-            /** The Monday user creation date. */
+            /** The monday user creation date. */
             created_at?: string;
             /** The account that owns the user. */
             account?: {
-              /** The Monday account identifier. */
+              /** The monday account identifier. */
               id: string;
-              /** The Monday account name. */
+              /** The monday account name. */
               name?: string;
-              /** The Monday account slug. */
+              /** The monday account slug. */
               slug?: string;
-              /** The Monday account tier. */
+              /** The monday account tier. */
               tier?: string;
               [key: string]: unknown;
             };
             [key: string]: unknown;
           };
-          /** The Monday item column values. */
+          /** The monday item column values. */
           column_values?: Array<{
-            /** The Monday column identifier. */
+            /** The monday column identifier. */
             id?: string;
             text?: string | null;
-            /** The Monday column type. */
+            /** The monday column type. */
             type?: string;
             value?: string | null;
             [key: string]: unknown;
           }>;
-          /** The nested subitems of a Monday item. */
+          /** The nested subitems of a monday item. */
           subitems?: Array<unknown>;
           [key: string]: unknown;
         }>;
       };
     };
-    /** Retrieve the user and team memberships configured on a Monday board. */
+    /** Retrieve the user and team memberships configured on a monday board. */
     "monday.get_board_memberships": {
       input: {
         /** The board whose memberships should be retrieved. */
@@ -1873,35 +1873,35 @@ declare module "@oomol-lab/connector" {
       output: {
         /** The board whose memberships were queried. */
         board: {
-          /** The Monday board identifier. */
+          /** The monday board identifier. */
           id: string;
-          /** The Monday board name. */
+          /** The monday board name. */
           name?: string;
-          /** The Monday board state. */
+          /** The monday board state. */
           state?: string;
-          /** The Monday board kind. */
+          /** The monday board kind. */
           board_kind?: string;
           /** The user's permissions on the board. */
           permissions?: string;
-          /** The Monday board description. */
+          /** The monday board description. */
           description?: string;
-          /** The Monday board communication summary. */
+          /** The monday board communication summary. */
           communication?: string;
-          /** The Monday board item nickname. */
+          /** The monday board item nickname. */
           item_nickname?: string;
-          /** The Monday board URL. */
+          /** The monday board URL. */
           url?: string;
           /** The workspace that contains the board. */
           workspace?: {
-            /** The Monday workspace identifier. */
+            /** The monday workspace identifier. */
             id: string;
-            /** The Monday workspace name. */
+            /** The monday workspace name. */
             name?: string;
-            /** The Monday workspace kind. */
+            /** The monday workspace kind. */
             kind?: string;
-            /** The Monday workspace state. */
+            /** The monday workspace state. */
             state?: string;
-            /** The Monday workspace description. */
+            /** The monday workspace description. */
             description?: string;
             [key: string]: unknown;
           };
@@ -1909,27 +1909,27 @@ declare module "@oomol-lab/connector" {
         };
         /** The user owners of the board. */
         owners: Array<{
-          /** The Monday user identifier. */
+          /** The monday user identifier. */
           id: string;
-          /** The Monday user name. */
+          /** The monday user name. */
           name?: string;
-          /** The Monday user email address. */
+          /** The monday user email address. */
           email?: string;
-          /** Whether the Monday user is enabled. */
+          /** Whether the monday user is enabled. */
           enabled?: boolean;
-          /** Whether the Monday user is a guest. */
+          /** Whether the monday user is a guest. */
           is_guest?: boolean;
-          /** The Monday user creation date. */
+          /** The monday user creation date. */
           created_at?: string;
           /** The account that owns the user. */
           account?: {
-            /** The Monday account identifier. */
+            /** The monday account identifier. */
             id: string;
-            /** The Monday account name. */
+            /** The monday account name. */
             name?: string;
-            /** The Monday account slug. */
+            /** The monday account slug. */
             slug?: string;
-            /** The Monday account tier. */
+            /** The monday account tier. */
             tier?: string;
             [key: string]: unknown;
           };
@@ -1937,27 +1937,27 @@ declare module "@oomol-lab/connector" {
         }>;
         /** The user subscribers of the board. */
         subscribers: Array<{
-          /** The Monday user identifier. */
+          /** The monday user identifier. */
           id: string;
-          /** The Monday user name. */
+          /** The monday user name. */
           name?: string;
-          /** The Monday user email address. */
+          /** The monday user email address. */
           email?: string;
-          /** Whether the Monday user is enabled. */
+          /** Whether the monday user is enabled. */
           enabled?: boolean;
-          /** Whether the Monday user is a guest. */
+          /** Whether the monday user is a guest. */
           is_guest?: boolean;
-          /** The Monday user creation date. */
+          /** The monday user creation date. */
           created_at?: string;
           /** The account that owns the user. */
           account?: {
-            /** The Monday account identifier. */
+            /** The monday account identifier. */
             id: string;
-            /** The Monday account name. */
+            /** The monday account name. */
             name?: string;
-            /** The Monday account slug. */
+            /** The monday account slug. */
             slug?: string;
-            /** The Monday account tier. */
+            /** The monday account tier. */
             tier?: string;
             [key: string]: unknown;
           };
@@ -1965,53 +1965,53 @@ declare module "@oomol-lab/connector" {
         }>;
         /** The team owners of the board. */
         teamOwners: Array<{
-          /** The Monday team identifier. */
+          /** The monday team identifier. */
           id: string;
-          /** The Monday team name. */
+          /** The monday team name. */
           name?: string;
-          /** The Monday team avatar URL. */
+          /** The monday team avatar URL. */
           picture_url?: string;
           [key: string]: unknown;
         }>;
         /** The team subscribers of the board. */
         teamSubscribers: Array<{
-          /** The Monday team identifier. */
+          /** The monday team identifier. */
           id: string;
-          /** The Monday team name. */
+          /** The monday team name. */
           name?: string;
-          /** The Monday team avatar URL. */
+          /** The monday team avatar URL. */
           picture_url?: string;
           [key: string]: unknown;
         }>;
       };
     };
-    /** Retrieve the Monday user associated with the current personal API token. */
+    /** Retrieve the monday user associated with the current personal API token. */
     "monday.get_current_user": {
       input: Record<string, never>;
       output: {
-        /** The Monday user associated with the current API token. */
+        /** The monday user associated with the current API token. */
         user: {
-          /** The Monday user identifier. */
+          /** The monday user identifier. */
           id: string;
-          /** The Monday user name. */
+          /** The monday user name. */
           name?: string;
-          /** The Monday user email address. */
+          /** The monday user email address. */
           email?: string;
-          /** Whether the Monday user is enabled. */
+          /** Whether the monday user is enabled. */
           enabled?: boolean;
-          /** Whether the Monday user is a guest. */
+          /** Whether the monday user is a guest. */
           is_guest?: boolean;
-          /** The Monday user creation date. */
+          /** The monday user creation date. */
           created_at?: string;
           /** The account that owns the user. */
           account?: {
-            /** The Monday account identifier. */
+            /** The monday account identifier. */
             id: string;
-            /** The Monday account name. */
+            /** The monday account name. */
             name?: string;
-            /** The Monday account slug. */
+            /** The monday account slug. */
             slug?: string;
-            /** The Monday account tier. */
+            /** The monday account tier. */
             tier?: string;
             [key: string]: unknown;
           };
@@ -2019,7 +2019,7 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** Retrieve a Monday Workform by its unique form token. */
+    /** Retrieve a monday Workform by its unique form token. */
     "monday.get_form": {
       input: {
         /**
@@ -2029,7 +2029,7 @@ declare module "@oomol-lab/connector" {
         formToken: string;
       };
       output: {
-        /** The form returned by Monday. */
+        /** The form returned by monday. */
         form: {
           /** The form identifier. */
           id: string;
@@ -2093,11 +2093,11 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** Retrieve specific Monday items by ID. */
+    /** Retrieve specific monday items by ID. */
     "monday.get_items": {
       input: {
         /**
-         * The Monday item identifiers to retrieve.
+         * The monday item identifiers to retrieve.
          * @minItems 1
          */
         ids: Array<string | number>;
@@ -2118,75 +2118,75 @@ declare module "@oomol-lab/connector" {
         exclude_nonactive?: boolean;
       };
       output: {
-        /** The Monday items returned by the query. */
+        /** The monday items returned by the query. */
         items: Array<{
-          /** The Monday item identifier. */
+          /** The monday item identifier. */
           id: string;
-          /** The Monday item name. */
+          /** The monday item name. */
           name?: string;
-          /** The Monday item state. */
+          /** The monday item state. */
           state?: string;
-          /** The Monday item URL. */
+          /** The monday item URL. */
           url?: string;
-          /** The Monday item creation time. */
+          /** The monday item creation time. */
           created_at?: string;
-          /** The Monday item update time. */
+          /** The monday item update time. */
           updated_at?: string;
-          /** The parent item of a Monday subitem. */
+          /** The parent item of a monday subitem. */
           parent_item?: {
-            /** The parent Monday item identifier. */
+            /** The parent monday item identifier. */
             id: string;
-            /** The parent Monday item name. */
+            /** The parent monday item name. */
             name?: string;
             [key: string]: unknown;
           };
           /** The group that contains the item. */
           group?: {
-            /** The Monday group identifier. */
+            /** The monday group identifier. */
             id: string;
-            /** The Monday group title. */
+            /** The monday group title. */
             title?: string;
-            /** The Monday group color. */
+            /** The monday group color. */
             color?: string;
-            /** The Monday group position. */
+            /** The monday group position. */
             position?: string;
-            /** Whether the Monday group is archived. */
+            /** Whether the monday group is archived. */
             archived?: boolean;
-            /** Whether the Monday group is deleted. */
+            /** Whether the monday group is deleted. */
             deleted?: boolean;
             [key: string]: unknown;
           };
           /** The board that contains the item. */
           board?: {
-            /** The Monday board identifier. */
+            /** The monday board identifier. */
             id: string;
-            /** The Monday board name. */
+            /** The monday board name. */
             name?: string;
-            /** The Monday board state. */
+            /** The monday board state. */
             state?: string;
-            /** The Monday board kind. */
+            /** The monday board kind. */
             board_kind?: string;
             /** The user's permissions on the board. */
             permissions?: string;
-            /** The Monday board description. */
+            /** The monday board description. */
             description?: string;
-            /** The Monday board communication summary. */
+            /** The monday board communication summary. */
             communication?: string;
-            /** The Monday board item nickname. */
+            /** The monday board item nickname. */
             item_nickname?: string;
-            /** The Monday board URL. */
+            /** The monday board URL. */
             url?: string;
             /** The workspace that contains the board. */
             workspace?: {
-              /** The Monday workspace identifier. */
+              /** The monday workspace identifier. */
               id: string;
-              /** The Monday workspace name. */
+              /** The monday workspace name. */
               name?: string;
-              /** The Monday workspace kind. */
+              /** The monday workspace kind. */
               kind?: string;
-              /** The Monday workspace state. */
+              /** The monday workspace state. */
               state?: string;
-              /** The Monday workspace description. */
+              /** The monday workspace description. */
               description?: string;
               [key: string]: unknown;
             };
@@ -2194,49 +2194,49 @@ declare module "@oomol-lab/connector" {
           };
           /** The user who created the item. */
           creator?: {
-            /** The Monday user identifier. */
+            /** The monday user identifier. */
             id: string;
-            /** The Monday user name. */
+            /** The monday user name. */
             name?: string;
-            /** The Monday user email address. */
+            /** The monday user email address. */
             email?: string;
-            /** Whether the Monday user is enabled. */
+            /** Whether the monday user is enabled. */
             enabled?: boolean;
-            /** Whether the Monday user is a guest. */
+            /** Whether the monday user is a guest. */
             is_guest?: boolean;
-            /** The Monday user creation date. */
+            /** The monday user creation date. */
             created_at?: string;
             /** The account that owns the user. */
             account?: {
-              /** The Monday account identifier. */
+              /** The monday account identifier. */
               id: string;
-              /** The Monday account name. */
+              /** The monday account name. */
               name?: string;
-              /** The Monday account slug. */
+              /** The monday account slug. */
               slug?: string;
-              /** The Monday account tier. */
+              /** The monday account tier. */
               tier?: string;
               [key: string]: unknown;
             };
             [key: string]: unknown;
           };
-          /** The Monday item column values. */
+          /** The monday item column values. */
           column_values?: Array<{
-            /** The Monday column identifier. */
+            /** The monday column identifier. */
             id?: string;
             text?: string | null;
-            /** The Monday column type. */
+            /** The monday column type. */
             type?: string;
             value?: string | null;
             [key: string]: unknown;
           }>;
-          /** The nested subitems of a Monday item. */
+          /** The nested subitems of a monday item. */
           subitems?: Array<unknown>;
           [key: string]: unknown;
         }>;
       };
     };
-    /** Retrieve a filtered page of Monday board items using the official items_page query. */
+    /** Retrieve a filtered page of monday board items using the official items_page query. */
     "monday.get_items_page": {
       input: {
         /** The unique identifier of the board to query. */
@@ -2248,87 +2248,87 @@ declare module "@oomol-lab/connector" {
          */
         limit: number;
         /**
-         * The opaque Monday pagination cursor.
+         * The opaque monday pagination cursor.
          * @minLength 1
          */
         cursor?: string;
-        /** How Monday should scope hierarchy matches in the results. */
+        /** How monday should scope hierarchy matches in the results. */
         hierarchy_scope_config?: "allItems" | "parentItems";
-        /** The official Monday items_page query_params object. */
+        /** The official monday items_page query_params object. */
         query_params?: Record<string, unknown>;
       };
       output: {
         /** The cursor for the next page, or null when the result set is exhausted. */
         cursor: string | null;
-        /** The Monday items returned in this page. */
+        /** The monday items returned in this page. */
         items: Array<{
-          /** The Monday item identifier. */
+          /** The monday item identifier. */
           id: string;
-          /** The Monday item name. */
+          /** The monday item name. */
           name?: string;
-          /** The Monday item state. */
+          /** The monday item state. */
           state?: string;
-          /** The Monday item URL. */
+          /** The monday item URL. */
           url?: string;
-          /** The Monday item creation time. */
+          /** The monday item creation time. */
           created_at?: string;
-          /** The Monday item update time. */
+          /** The monday item update time. */
           updated_at?: string;
-          /** The parent item of a Monday subitem. */
+          /** The parent item of a monday subitem. */
           parent_item?: {
-            /** The parent Monday item identifier. */
+            /** The parent monday item identifier. */
             id: string;
-            /** The parent Monday item name. */
+            /** The parent monday item name. */
             name?: string;
             [key: string]: unknown;
           };
           /** The group that contains the item. */
           group?: {
-            /** The Monday group identifier. */
+            /** The monday group identifier. */
             id: string;
-            /** The Monday group title. */
+            /** The monday group title. */
             title?: string;
-            /** The Monday group color. */
+            /** The monday group color. */
             color?: string;
-            /** The Monday group position. */
+            /** The monday group position. */
             position?: string;
-            /** Whether the Monday group is archived. */
+            /** Whether the monday group is archived. */
             archived?: boolean;
-            /** Whether the Monday group is deleted. */
+            /** Whether the monday group is deleted. */
             deleted?: boolean;
             [key: string]: unknown;
           };
           /** The board that contains the item. */
           board?: {
-            /** The Monday board identifier. */
+            /** The monday board identifier. */
             id: string;
-            /** The Monday board name. */
+            /** The monday board name. */
             name?: string;
-            /** The Monday board state. */
+            /** The monday board state. */
             state?: string;
-            /** The Monday board kind. */
+            /** The monday board kind. */
             board_kind?: string;
             /** The user's permissions on the board. */
             permissions?: string;
-            /** The Monday board description. */
+            /** The monday board description. */
             description?: string;
-            /** The Monday board communication summary. */
+            /** The monday board communication summary. */
             communication?: string;
-            /** The Monday board item nickname. */
+            /** The monday board item nickname. */
             item_nickname?: string;
-            /** The Monday board URL. */
+            /** The monday board URL. */
             url?: string;
             /** The workspace that contains the board. */
             workspace?: {
-              /** The Monday workspace identifier. */
+              /** The monday workspace identifier. */
               id: string;
-              /** The Monday workspace name. */
+              /** The monday workspace name. */
               name?: string;
-              /** The Monday workspace kind. */
+              /** The monday workspace kind. */
               kind?: string;
-              /** The Monday workspace state. */
+              /** The monday workspace state. */
               state?: string;
-              /** The Monday workspace description. */
+              /** The monday workspace description. */
               description?: string;
               [key: string]: unknown;
             };
@@ -2336,53 +2336,53 @@ declare module "@oomol-lab/connector" {
           };
           /** The user who created the item. */
           creator?: {
-            /** The Monday user identifier. */
+            /** The monday user identifier. */
             id: string;
-            /** The Monday user name. */
+            /** The monday user name. */
             name?: string;
-            /** The Monday user email address. */
+            /** The monday user email address. */
             email?: string;
-            /** Whether the Monday user is enabled. */
+            /** Whether the monday user is enabled. */
             enabled?: boolean;
-            /** Whether the Monday user is a guest. */
+            /** Whether the monday user is a guest. */
             is_guest?: boolean;
-            /** The Monday user creation date. */
+            /** The monday user creation date. */
             created_at?: string;
             /** The account that owns the user. */
             account?: {
-              /** The Monday account identifier. */
+              /** The monday account identifier. */
               id: string;
-              /** The Monday account name. */
+              /** The monday account name. */
               name?: string;
-              /** The Monday account slug. */
+              /** The monday account slug. */
               slug?: string;
-              /** The Monday account tier. */
+              /** The monday account tier. */
               tier?: string;
               [key: string]: unknown;
             };
             [key: string]: unknown;
           };
-          /** The Monday item column values. */
+          /** The monday item column values. */
           column_values?: Array<{
-            /** The Monday column identifier. */
+            /** The monday column identifier. */
             id?: string;
             text?: string | null;
-            /** The Monday column type. */
+            /** The monday column type. */
             type?: string;
             value?: string | null;
             [key: string]: unknown;
           }>;
-          /** The nested subitems of a Monday item. */
+          /** The nested subitems of a monday item. */
           subitems?: Array<unknown>;
           [key: string]: unknown;
         }>;
       };
     };
-    /** Retrieve the next page of Monday items from an items_page cursor. */
+    /** Retrieve the next page of monday items from an items_page cursor. */
     "monday.get_next_items_page": {
       input: {
         /**
-         * The opaque Monday pagination cursor.
+         * The opaque monday pagination cursor.
          * @minLength 1
          */
         cursor: string;
@@ -2396,75 +2396,75 @@ declare module "@oomol-lab/connector" {
       output: {
         /** The cursor for the next page, or null when the result set is exhausted. */
         cursor: string | null;
-        /** The Monday items returned in this page. */
+        /** The monday items returned in this page. */
         items: Array<{
-          /** The Monday item identifier. */
+          /** The monday item identifier. */
           id: string;
-          /** The Monday item name. */
+          /** The monday item name. */
           name?: string;
-          /** The Monday item state. */
+          /** The monday item state. */
           state?: string;
-          /** The Monday item URL. */
+          /** The monday item URL. */
           url?: string;
-          /** The Monday item creation time. */
+          /** The monday item creation time. */
           created_at?: string;
-          /** The Monday item update time. */
+          /** The monday item update time. */
           updated_at?: string;
-          /** The parent item of a Monday subitem. */
+          /** The parent item of a monday subitem. */
           parent_item?: {
-            /** The parent Monday item identifier. */
+            /** The parent monday item identifier. */
             id: string;
-            /** The parent Monday item name. */
+            /** The parent monday item name. */
             name?: string;
             [key: string]: unknown;
           };
           /** The group that contains the item. */
           group?: {
-            /** The Monday group identifier. */
+            /** The monday group identifier. */
             id: string;
-            /** The Monday group title. */
+            /** The monday group title. */
             title?: string;
-            /** The Monday group color. */
+            /** The monday group color. */
             color?: string;
-            /** The Monday group position. */
+            /** The monday group position. */
             position?: string;
-            /** Whether the Monday group is archived. */
+            /** Whether the monday group is archived. */
             archived?: boolean;
-            /** Whether the Monday group is deleted. */
+            /** Whether the monday group is deleted. */
             deleted?: boolean;
             [key: string]: unknown;
           };
           /** The board that contains the item. */
           board?: {
-            /** The Monday board identifier. */
+            /** The monday board identifier. */
             id: string;
-            /** The Monday board name. */
+            /** The monday board name. */
             name?: string;
-            /** The Monday board state. */
+            /** The monday board state. */
             state?: string;
-            /** The Monday board kind. */
+            /** The monday board kind. */
             board_kind?: string;
             /** The user's permissions on the board. */
             permissions?: string;
-            /** The Monday board description. */
+            /** The monday board description. */
             description?: string;
-            /** The Monday board communication summary. */
+            /** The monday board communication summary. */
             communication?: string;
-            /** The Monday board item nickname. */
+            /** The monday board item nickname. */
             item_nickname?: string;
-            /** The Monday board URL. */
+            /** The monday board URL. */
             url?: string;
             /** The workspace that contains the board. */
             workspace?: {
-              /** The Monday workspace identifier. */
+              /** The monday workspace identifier. */
               id: string;
-              /** The Monday workspace name. */
+              /** The monday workspace name. */
               name?: string;
-              /** The Monday workspace kind. */
+              /** The monday workspace kind. */
               kind?: string;
-              /** The Monday workspace state. */
+              /** The monday workspace state. */
               state?: string;
-              /** The Monday workspace description. */
+              /** The monday workspace description. */
               description?: string;
               [key: string]: unknown;
             };
@@ -2472,49 +2472,49 @@ declare module "@oomol-lab/connector" {
           };
           /** The user who created the item. */
           creator?: {
-            /** The Monday user identifier. */
+            /** The monday user identifier. */
             id: string;
-            /** The Monday user name. */
+            /** The monday user name. */
             name?: string;
-            /** The Monday user email address. */
+            /** The monday user email address. */
             email?: string;
-            /** Whether the Monday user is enabled. */
+            /** Whether the monday user is enabled. */
             enabled?: boolean;
-            /** Whether the Monday user is a guest. */
+            /** Whether the monday user is a guest. */
             is_guest?: boolean;
-            /** The Monday user creation date. */
+            /** The monday user creation date. */
             created_at?: string;
             /** The account that owns the user. */
             account?: {
-              /** The Monday account identifier. */
+              /** The monday account identifier. */
               id: string;
-              /** The Monday account name. */
+              /** The monday account name. */
               name?: string;
-              /** The Monday account slug. */
+              /** The monday account slug. */
               slug?: string;
-              /** The Monday account tier. */
+              /** The monday account tier. */
               tier?: string;
               [key: string]: unknown;
             };
             [key: string]: unknown;
           };
-          /** The Monday item column values. */
+          /** The monday item column values. */
           column_values?: Array<{
-            /** The Monday column identifier. */
+            /** The monday column identifier. */
             id?: string;
             text?: string | null;
-            /** The Monday column type. */
+            /** The monday column type. */
             type?: string;
             value?: string | null;
             [key: string]: unknown;
           }>;
-          /** The nested subitems of a Monday item. */
+          /** The nested subitems of a monday item. */
           subitems?: Array<unknown>;
           [key: string]: unknown;
         }>;
       };
     };
-    /** List board-scoped Monday activity logs. */
+    /** List board-scoped monday activity logs. */
     "monday.list_activity_logs": {
       input: {
         /** The board whose activity logs should be retrieved. */
@@ -2529,7 +2529,7 @@ declare module "@oomol-lab/connector" {
         /** The group filters to apply to the activity log query. */
         group_ids?: Array<string>;
         /**
-         * A non-empty list of Monday identifiers.
+         * A non-empty list of monday identifiers.
          * @minItems 1
          */
         item_ids?: Array<string | number>;
@@ -2549,7 +2549,7 @@ declare module "@oomol-lab/connector" {
          */
         to?: string;
         /**
-         * A non-empty list of Monday identifiers.
+         * A non-empty list of monday identifiers.
          * @minItems 1
          */
         user_ids?: Array<string | number>;
@@ -2557,17 +2557,17 @@ declare module "@oomol-lab/connector" {
       output: {
         /** The activity log entries returned for the board. */
         activityLogs: Array<{
-          /** The Monday activity log identifier. */
+          /** The monday activity log identifier. */
           id: string;
-          /** The event name recorded by Monday. */
+          /** The event name recorded by monday. */
           event: string;
           /** The entity type affected by the event. */
           entity: string;
-          /** The event data payload serialized by Monday. */
+          /** The event data payload serialized by monday. */
           data: string;
           /** The user who triggered the event. */
           user_id: string;
-          /** The Monday account identifier. */
+          /** The monday account identifier. */
           account_id: string;
           /** The activity log creation timestamp. */
           created_at: string;
@@ -2575,57 +2575,57 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** Retrieve one or more Monday assets by asset ID. */
+    /** Retrieve one or more monday assets by asset ID. */
     "monday.list_assets": {
       input: {
         /**
-         * The Monday asset identifiers to retrieve.
+         * The monday asset identifiers to retrieve.
          * @minItems 1
          */
         ids: Array<string | number>;
       };
       output: {
-        /** The Monday assets returned by the query. */
+        /** The monday assets returned by the query. */
         assets: Array<{
-          /** The Monday asset identifier. */
+          /** The monday asset identifier. */
           id: string;
-          /** The Monday asset name. */
+          /** The monday asset name. */
           name?: string;
-          /** The Monday asset URL. */
+          /** The monday asset URL. */
           url?: string;
-          /** The Monday asset public URL. */
+          /** The monday asset public URL. */
           public_url?: string;
-          /** The Monday asset file extension. */
+          /** The monday asset file extension. */
           file_extension?: string;
-          /** The Monday asset file size in bytes. */
+          /** The monday asset file size in bytes. */
           file_size?: number;
-          /** The Monday asset creation time. */
+          /** The monday asset creation time. */
           created_at?: string;
-          /** The Monday asset thumbnail URL. */
+          /** The monday asset thumbnail URL. */
           url_thumbnail?: string;
           /** The user who uploaded the asset. */
           uploaded_by?: {
-            /** The Monday user identifier. */
+            /** The monday user identifier. */
             id: string;
-            /** The Monday user name. */
+            /** The monday user name. */
             name?: string;
-            /** The Monday user email address. */
+            /** The monday user email address. */
             email?: string;
-            /** Whether the Monday user is enabled. */
+            /** Whether the monday user is enabled. */
             enabled?: boolean;
-            /** Whether the Monday user is a guest. */
+            /** Whether the monday user is a guest. */
             is_guest?: boolean;
-            /** The Monday user creation date. */
+            /** The monday user creation date. */
             created_at?: string;
             /** The account that owns the user. */
             account?: {
-              /** The Monday account identifier. */
+              /** The monday account identifier. */
               id: string;
-              /** The Monday account name. */
+              /** The monday account name. */
               name?: string;
-              /** The Monday account slug. */
+              /** The monday account slug. */
               slug?: string;
-              /** The Monday account tier. */
+              /** The monday account tier. */
               tier?: string;
               [key: string]: unknown;
             };
@@ -2635,7 +2635,7 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** List account-level Monday audit logs on enterprise accounts. */
+    /** List account-level monday audit logs on enterprise accounts. */
     "monday.list_audit_logs": {
       input: {
         /**
@@ -2669,11 +2669,11 @@ declare module "@oomol-lab/connector" {
         end_time?: string;
       };
       output: {
-        /** The audit log entries returned by Monday. */
+        /** The audit log entries returned by monday. */
         auditLogs: Array<{
           /** The audit log timestamp. */
           timestamp: string;
-          /** The Monday account identifier. */
+          /** The monday account identifier. */
           account_id?: string;
           /** The audit event name. */
           event: string;
@@ -2697,27 +2697,27 @@ declare module "@oomol-lab/connector" {
           device_type?: string;
           /** The user tied to the audit event. */
           user?: {
-            /** The Monday user identifier. */
+            /** The monday user identifier. */
             id: string;
-            /** The Monday user name. */
+            /** The monday user name. */
             name?: string;
-            /** The Monday user email address. */
+            /** The monday user email address. */
             email?: string;
-            /** Whether the Monday user is enabled. */
+            /** Whether the monday user is enabled. */
             enabled?: boolean;
-            /** Whether the Monday user is a guest. */
+            /** Whether the monday user is a guest. */
             is_guest?: boolean;
-            /** The Monday user creation date. */
+            /** The monday user creation date. */
             created_at?: string;
             /** The account that owns the user. */
             account?: {
-              /** The Monday account identifier. */
+              /** The monday account identifier. */
               id: string;
-              /** The Monday account name. */
+              /** The monday account name. */
               name?: string;
-              /** The Monday account slug. */
+              /** The monday account slug. */
               slug?: string;
-              /** The Monday account tier. */
+              /** The monday account tier. */
               tier?: string;
               [key: string]: unknown;
             };
@@ -2727,7 +2727,7 @@ declare module "@oomol-lab/connector" {
           activity_metadata?: Record<string, unknown>;
           [key: string]: unknown;
         }>;
-        /** The pagination metadata returned by Monday. */
+        /** The pagination metadata returned by monday. */
         pagination?: {
           /** The current page number. */
           page: number;
@@ -2740,40 +2740,40 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** List the columns for a specific Monday board. */
+    /** List the columns for a specific monday board. */
     "monday.list_board_columns": {
       input: {
         /** The unique identifier of the board whose columns to list. */
         board_id: string | number;
       };
       output: {
-        /** The Monday board columns. */
+        /** The monday board columns. */
         columns: Array<{
-          /** The Monday column identifier. */
+          /** The monday column identifier. */
           id: string;
-          /** The Monday column title. */
+          /** The monday column title. */
           title?: string;
-          /** The Monday column type. */
+          /** The monday column type. */
           type?: string;
-          /** The Monday column description. */
+          /** The monday column description. */
           description?: string;
-          /** Whether the Monday column is archived. */
+          /** Whether the monday column is archived. */
           archived?: boolean;
-          /** The Monday column revision value. */
+          /** The monday column revision value. */
           revision?: string;
-          /** The Monday column width in pixels. */
+          /** The monday column width in pixels. */
           width?: number;
-          /** The Monday column settings payload. */
+          /** The monday column settings payload. */
           settings?: Record<string, unknown>;
           [key: string]: unknown;
         }>;
       };
     };
-    /** List Monday boards with official pagination and board-level filters. */
+    /** List monday boards with official pagination and board-level filters. */
     "monday.list_boards": {
       input: {
         /**
-         * A non-empty list of Monday identifiers.
+         * A non-empty list of monday identifiers.
          * @minItems 1
          */
         ids?: Array<string | number>;
@@ -2792,43 +2792,43 @@ declare module "@oomol-lab/connector" {
         /** The board visibility type. */
         board_kind?: "private" | "public" | "share";
         /**
-         * A non-empty list of Monday identifiers.
+         * A non-empty list of monday identifiers.
          * @minItems 1
          */
         workspace_ids?: Array<string | number>;
       };
       output: {
-        /** The Monday boards returned by the query. */
+        /** The monday boards returned by the query. */
         boards: Array<{
-          /** The Monday board identifier. */
+          /** The monday board identifier. */
           id: string;
-          /** The Monday board name. */
+          /** The monday board name. */
           name?: string;
-          /** The Monday board state. */
+          /** The monday board state. */
           state?: string;
-          /** The Monday board kind. */
+          /** The monday board kind. */
           board_kind?: string;
           /** The user's permissions on the board. */
           permissions?: string;
-          /** The Monday board description. */
+          /** The monday board description. */
           description?: string;
-          /** The Monday board communication summary. */
+          /** The monday board communication summary. */
           communication?: string;
-          /** The Monday board item nickname. */
+          /** The monday board item nickname. */
           item_nickname?: string;
-          /** The Monday board URL. */
+          /** The monday board URL. */
           url?: string;
           /** The workspace that contains the board. */
           workspace?: {
-            /** The Monday workspace identifier. */
+            /** The monday workspace identifier. */
             id: string;
-            /** The Monday workspace name. */
+            /** The monday workspace name. */
             name?: string;
-            /** The Monday workspace kind. */
+            /** The monday workspace kind. */
             kind?: string;
-            /** The Monday workspace state. */
+            /** The monday workspace state. */
             state?: string;
-            /** The Monday workspace description. */
+            /** The monday workspace description. */
             description?: string;
             [key: string]: unknown;
           };
@@ -2836,21 +2836,21 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** List Monday departments on enterprise accounts. */
+    /** List monday departments on enterprise accounts. */
     "monday.list_departments": {
       input: {
         /**
-         * A non-empty list of Monday identifiers.
+         * A non-empty list of monday identifiers.
          * @minItems 1
          */
         ids?: Array<string | number>;
       };
       output: {
-        /** The departments returned by Monday. */
+        /** The departments returned by monday. */
         departments: Array<{
-          /** The Monday department identifier. */
+          /** The monday department identifier. */
           id: string;
-          /** The Monday department name. */
+          /** The monday department name. */
           name: string;
           /** The number of seats reserved for the department. */
           reserved_seats: number;
@@ -2858,27 +2858,27 @@ declare module "@oomol-lab/connector" {
           assigned_seats: number;
           /** The users assigned to the department. */
           members: Array<{
-            /** The Monday user identifier. */
+            /** The monday user identifier. */
             id: string;
-            /** The Monday user name. */
+            /** The monday user name. */
             name?: string;
-            /** The Monday user email address. */
+            /** The monday user email address. */
             email?: string;
-            /** Whether the Monday user is enabled. */
+            /** Whether the monday user is enabled. */
             enabled?: boolean;
-            /** Whether the Monday user is a guest. */
+            /** Whether the monday user is a guest. */
             is_guest?: boolean;
-            /** The Monday user creation date. */
+            /** The monday user creation date. */
             created_at?: string;
             /** The account that owns the user. */
             account?: {
-              /** The Monday account identifier. */
+              /** The monday account identifier. */
               id: string;
-              /** The Monday account name. */
+              /** The monday account name. */
               name?: string;
-              /** The Monday account slug. */
+              /** The monday account slug. */
               slug?: string;
-              /** The Monday account tier. */
+              /** The monday account tier. */
               tier?: string;
               [key: string]: unknown;
             };
@@ -2886,27 +2886,27 @@ declare module "@oomol-lab/connector" {
           }>;
           /** The users who own the department. */
           owners: Array<{
-            /** The Monday user identifier. */
+            /** The monday user identifier. */
             id: string;
-            /** The Monday user name. */
+            /** The monday user name. */
             name?: string;
-            /** The Monday user email address. */
+            /** The monday user email address. */
             email?: string;
-            /** Whether the Monday user is enabled. */
+            /** Whether the monday user is enabled. */
             enabled?: boolean;
-            /** Whether the Monday user is a guest. */
+            /** Whether the monday user is a guest. */
             is_guest?: boolean;
-            /** The Monday user creation date. */
+            /** The monday user creation date. */
             created_at?: string;
             /** The account that owns the user. */
             account?: {
-              /** The Monday account identifier. */
+              /** The monday account identifier. */
               id: string;
-              /** The Monday account name. */
+              /** The monday account name. */
               name?: string;
-              /** The Monday account slug. */
+              /** The monday account slug. */
               slug?: string;
-              /** The Monday account tier. */
+              /** The monday account tier. */
               tier?: string;
               [key: string]: unknown;
             };
@@ -2915,21 +2915,21 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** List Monday docs by document, object, or workspace identifiers. */
+    /** List monday docs by document, object, or workspace identifiers. */
     "monday.list_docs": {
       input: {
         /**
-         * A non-empty list of Monday identifiers.
+         * A non-empty list of monday identifiers.
          * @minItems 1
          */
         ids?: Array<string | number>;
         /**
-         * A non-empty list of Monday identifiers.
+         * A non-empty list of monday identifiers.
          * @minItems 1
          */
         object_ids?: Array<string | number>;
         /**
-         * A non-empty list of Monday identifiers.
+         * A non-empty list of monday identifiers.
          * @minItems 1
          */
         workspace_ids?: Array<string | number>;
@@ -2943,55 +2943,55 @@ declare module "@oomol-lab/connector" {
          * @exclusiveMinimum 0
          */
         page?: number;
-        /** The order in which Monday should return documents. */
+        /** The order in which monday should return documents. */
         order_by?: "created_at" | "used_at";
       };
       output: {
-        /** The Monday docs returned by the query. */
+        /** The monday docs returned by the query. */
         docs: Array<{
-          /** The Monday document identifier. */
+          /** The monday document identifier. */
           id: string;
-          /** The Monday document object identifier. */
+          /** The monday document object identifier. */
           object_id?: string;
-          /** The Monday document name. */
+          /** The monday document name. */
           name?: string;
-          /** The Monday document kind. */
+          /** The monday document kind. */
           doc_kind?: string;
-          /** The Monday document creation time. */
+          /** The monday document creation time. */
           created_at?: string;
-          /** The Monday document update time. */
+          /** The monday document update time. */
           updated_at?: string;
-          /** The Monday document URL. */
+          /** The monday document URL. */
           url?: string;
-          /** The Monday document relative URL. */
+          /** The monday document relative URL. */
           relative_url?: string;
-          /** The Monday document folder identifier. */
+          /** The monday document folder identifier. */
           doc_folder_id?: string;
-          /** The Monday document settings payload. */
+          /** The monday document settings payload. */
           settings?: Record<string, unknown>;
           /** The user who created the document. */
           created_by?: {
-            /** The Monday user identifier. */
+            /** The monday user identifier. */
             id: string;
-            /** The Monday user name. */
+            /** The monday user name. */
             name?: string;
-            /** The Monday user email address. */
+            /** The monday user email address. */
             email?: string;
-            /** Whether the Monday user is enabled. */
+            /** Whether the monday user is enabled. */
             enabled?: boolean;
-            /** Whether the Monday user is a guest. */
+            /** Whether the monday user is a guest. */
             is_guest?: boolean;
-            /** The Monday user creation date. */
+            /** The monday user creation date. */
             created_at?: string;
             /** The account that owns the user. */
             account?: {
-              /** The Monday account identifier. */
+              /** The monday account identifier. */
               id: string;
-              /** The Monday account name. */
+              /** The monday account name. */
               name?: string;
-              /** The Monday account slug. */
+              /** The monday account slug. */
               slug?: string;
-              /** The Monday account tier. */
+              /** The monday account tier. */
               tier?: string;
               [key: string]: unknown;
             };
@@ -3001,7 +3001,7 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** List the groups for a specific Monday board. */
+    /** List the groups for a specific monday board. */
     "monday.list_groups": {
       input: {
         /** The unique identifier of the board whose groups to list. */
@@ -3013,109 +3013,109 @@ declare module "@oomol-lab/connector" {
         group_ids?: Array<string>;
       };
       output: {
-        /** The Monday groups returned by the query. */
+        /** The monday groups returned by the query. */
         groups: Array<{
-          /** The Monday group identifier. */
+          /** The monday group identifier. */
           id: string;
-          /** The Monday group title. */
+          /** The monday group title. */
           title?: string;
-          /** The Monday group color. */
+          /** The monday group color. */
           color?: string;
-          /** The Monday group position. */
+          /** The monday group position. */
           position?: string;
-          /** Whether the Monday group is archived. */
+          /** Whether the monday group is archived. */
           archived?: boolean;
-          /** Whether the Monday group is deleted. */
+          /** Whether the monday group is deleted. */
           deleted?: boolean;
           [key: string]: unknown;
         }>;
       };
     };
-    /** List Monday subitems for one or more parent items. */
+    /** List monday subitems for one or more parent items. */
     "monday.list_subitems_by_parent": {
       input: {
         /**
-         * The parent Monday item identifiers to inspect.
+         * The parent monday item identifiers to inspect.
          * @minItems 1
          */
         parent_item_ids: Array<string | number>;
       };
       output: {
-        /** The Monday parent items with nested subitems. */
+        /** The monday parent items with nested subitems. */
         parentItems: Array<{
-          /** The parent Monday item identifier. */
+          /** The parent monday item identifier. */
           id: string;
-          /** The parent Monday item name. */
+          /** The parent monday item name. */
           name?: string;
           /** The subitems that belong to the parent item. */
           subitems: Array<{
-            /** The Monday item identifier. */
+            /** The monday item identifier. */
             id: string;
-            /** The Monday item name. */
+            /** The monday item name. */
             name?: string;
-            /** The Monday item state. */
+            /** The monday item state. */
             state?: string;
-            /** The Monday item URL. */
+            /** The monday item URL. */
             url?: string;
-            /** The Monday item creation time. */
+            /** The monday item creation time. */
             created_at?: string;
-            /** The Monday item update time. */
+            /** The monday item update time. */
             updated_at?: string;
-            /** The parent item of a Monday subitem. */
+            /** The parent item of a monday subitem. */
             parent_item?: {
-              /** The parent Monday item identifier. */
+              /** The parent monday item identifier. */
               id: string;
-              /** The parent Monday item name. */
+              /** The parent monday item name. */
               name?: string;
               [key: string]: unknown;
             };
             /** The group that contains the item. */
             group?: {
-              /** The Monday group identifier. */
+              /** The monday group identifier. */
               id: string;
-              /** The Monday group title. */
+              /** The monday group title. */
               title?: string;
-              /** The Monday group color. */
+              /** The monday group color. */
               color?: string;
-              /** The Monday group position. */
+              /** The monday group position. */
               position?: string;
-              /** Whether the Monday group is archived. */
+              /** Whether the monday group is archived. */
               archived?: boolean;
-              /** Whether the Monday group is deleted. */
+              /** Whether the monday group is deleted. */
               deleted?: boolean;
               [key: string]: unknown;
             };
             /** The board that contains the item. */
             board?: {
-              /** The Monday board identifier. */
+              /** The monday board identifier. */
               id: string;
-              /** The Monday board name. */
+              /** The monday board name. */
               name?: string;
-              /** The Monday board state. */
+              /** The monday board state. */
               state?: string;
-              /** The Monday board kind. */
+              /** The monday board kind. */
               board_kind?: string;
               /** The user's permissions on the board. */
               permissions?: string;
-              /** The Monday board description. */
+              /** The monday board description. */
               description?: string;
-              /** The Monday board communication summary. */
+              /** The monday board communication summary. */
               communication?: string;
-              /** The Monday board item nickname. */
+              /** The monday board item nickname. */
               item_nickname?: string;
-              /** The Monday board URL. */
+              /** The monday board URL. */
               url?: string;
               /** The workspace that contains the board. */
               workspace?: {
-                /** The Monday workspace identifier. */
+                /** The monday workspace identifier. */
                 id: string;
-                /** The Monday workspace name. */
+                /** The monday workspace name. */
                 name?: string;
-                /** The Monday workspace kind. */
+                /** The monday workspace kind. */
                 kind?: string;
-                /** The Monday workspace state. */
+                /** The monday workspace state. */
                 state?: string;
-                /** The Monday workspace description. */
+                /** The monday workspace description. */
                 description?: string;
                 [key: string]: unknown;
               };
@@ -3123,43 +3123,43 @@ declare module "@oomol-lab/connector" {
             };
             /** The user who created the item. */
             creator?: {
-              /** The Monday user identifier. */
+              /** The monday user identifier. */
               id: string;
-              /** The Monday user name. */
+              /** The monday user name. */
               name?: string;
-              /** The Monday user email address. */
+              /** The monday user email address. */
               email?: string;
-              /** Whether the Monday user is enabled. */
+              /** Whether the monday user is enabled. */
               enabled?: boolean;
-              /** Whether the Monday user is a guest. */
+              /** Whether the monday user is a guest. */
               is_guest?: boolean;
-              /** The Monday user creation date. */
+              /** The monday user creation date. */
               created_at?: string;
               /** The account that owns the user. */
               account?: {
-                /** The Monday account identifier. */
+                /** The monday account identifier. */
                 id: string;
-                /** The Monday account name. */
+                /** The monday account name. */
                 name?: string;
-                /** The Monday account slug. */
+                /** The monday account slug. */
                 slug?: string;
-                /** The Monday account tier. */
+                /** The monday account tier. */
                 tier?: string;
                 [key: string]: unknown;
               };
               [key: string]: unknown;
             };
-            /** The Monday item column values. */
+            /** The monday item column values. */
             column_values?: Array<{
-              /** The Monday column identifier. */
+              /** The monday column identifier. */
               id?: string;
               text?: string | null;
-              /** The Monday column type. */
+              /** The monday column type. */
               type?: string;
               value?: string | null;
               [key: string]: unknown;
             }>;
-            /** The nested subitems of a Monday item. */
+            /** The nested subitems of a monday item. */
             subitems?: Array<unknown>;
             [key: string]: unknown;
           }>;
@@ -3167,36 +3167,36 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** List the members of a specific Monday team. */
+    /** List the members of a specific monday team. */
     "monday.list_team_members": {
       input: {
         /** The unique identifier of the team whose members to list. */
         team_id: string | number;
       };
       output: {
-        /** The Monday team members returned by the query. */
+        /** The monday team members returned by the query. */
         teamMembers: Array<{
-          /** The Monday user identifier. */
+          /** The monday user identifier. */
           id: string;
-          /** The Monday user name. */
+          /** The monday user name. */
           name?: string;
-          /** The Monday user email address. */
+          /** The monday user email address. */
           email?: string;
-          /** Whether the Monday user is enabled. */
+          /** Whether the monday user is enabled. */
           enabled?: boolean;
-          /** Whether the Monday user is a guest. */
+          /** Whether the monday user is a guest. */
           is_guest?: boolean;
-          /** The Monday user creation date. */
+          /** The monday user creation date. */
           created_at?: string;
           /** The account that owns the user. */
           account?: {
-            /** The Monday account identifier. */
+            /** The monday account identifier. */
             id: string;
-            /** The Monday account name. */
+            /** The monday account name. */
             name?: string;
-            /** The Monday account slug. */
+            /** The monday account slug. */
             slug?: string;
-            /** The Monday account tier. */
+            /** The monday account tier. */
             tier?: string;
             [key: string]: unknown;
           };
@@ -3204,11 +3204,11 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** List Monday teams with official filters and pagination. */
+    /** List monday teams with official filters and pagination. */
     "monday.list_teams": {
       input: {
         /**
-         * A non-empty list of Monday identifiers.
+         * A non-empty list of monday identifiers.
          * @minItems 1
          */
         ids?: Array<string | number>;
@@ -3224,23 +3224,23 @@ declare module "@oomol-lab/connector" {
         page?: number;
       };
       output: {
-        /** The Monday teams returned by the query. */
+        /** The monday teams returned by the query. */
         teams: Array<{
-          /** The Monday team identifier. */
+          /** The monday team identifier. */
           id: string;
-          /** The Monday team name. */
+          /** The monday team name. */
           name?: string;
-          /** The Monday team avatar URL. */
+          /** The monday team avatar URL. */
           picture_url?: string;
           [key: string]: unknown;
         }>;
       };
     };
-    /** List Monday replies for updates on one or more boards. */
+    /** List monday replies for updates on one or more boards. */
     "monday.list_update_replies": {
       input: {
         /**
-         * The Monday board identifiers whose replies should be listed.
+         * The monday board identifiers whose replies should be listed.
          * @minItems 1
          */
         board_ids: Array<string | number>;
@@ -3267,41 +3267,41 @@ declare module "@oomol-lab/connector" {
         page?: number;
       };
       output: {
-        /** The Monday replies returned by the query. */
+        /** The monday replies returned by the query. */
         replies: Array<{
-          /** The Monday reply identifier. */
+          /** The monday reply identifier. */
           id: string;
-          /** The Monday reply body. */
+          /** The monday reply body. */
           body?: string;
-          /** The Monday reply creation time. */
+          /** The monday reply creation time. */
           created_at?: string;
-          /** The Monday reply edit time. */
+          /** The monday reply edit time. */
           edited_at?: string;
-          /** The Monday reply kind. */
+          /** The monday reply kind. */
           kind?: string;
           /** The user who created the reply. */
           creator?: {
-            /** The Monday user identifier. */
+            /** The monday user identifier. */
             id: string;
-            /** The Monday user name. */
+            /** The monday user name. */
             name?: string;
-            /** The Monday user email address. */
+            /** The monday user email address. */
             email?: string;
-            /** Whether the Monday user is enabled. */
+            /** Whether the monday user is enabled. */
             enabled?: boolean;
-            /** Whether the Monday user is a guest. */
+            /** Whether the monday user is a guest. */
             is_guest?: boolean;
-            /** The Monday user creation date. */
+            /** The monday user creation date. */
             created_at?: string;
             /** The account that owns the user. */
             account?: {
-              /** The Monday account identifier. */
+              /** The monday account identifier. */
               id: string;
-              /** The Monday account name. */
+              /** The monday account name. */
               name?: string;
-              /** The Monday account slug. */
+              /** The monday account slug. */
               slug?: string;
-              /** The Monday account tier. */
+              /** The monday account tier. */
               tier?: string;
               [key: string]: unknown;
             };
@@ -3311,7 +3311,7 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** List Monday updates with optional date filtering. */
+    /** List monday updates with optional date filtering. */
     "monday.list_updates": {
       input: {
         /**
@@ -3331,41 +3331,41 @@ declare module "@oomol-lab/connector" {
         to_date?: string;
       };
       output: {
-        /** The Monday updates returned by the query. */
+        /** The monday updates returned by the query. */
         updates: Array<{
-          /** The Monday update identifier. */
+          /** The monday update identifier. */
           id: string;
-          /** The Monday update body. */
+          /** The monday update body. */
           body?: string;
-          /** The Monday update creation time. */
+          /** The monday update creation time. */
           created_at?: string;
-          /** The Monday update edit time. */
+          /** The monday update edit time. */
           edited_at?: string;
-          /** The Monday update update time. */
+          /** The monday update update time. */
           updated_at?: string;
           /** The user who created the update. */
           creator?: {
-            /** The Monday user identifier. */
+            /** The monday user identifier. */
             id: string;
-            /** The Monday user name. */
+            /** The monday user name. */
             name?: string;
-            /** The Monday user email address. */
+            /** The monday user email address. */
             email?: string;
-            /** Whether the Monday user is enabled. */
+            /** Whether the monday user is enabled. */
             enabled?: boolean;
-            /** Whether the Monday user is a guest. */
+            /** Whether the monday user is a guest. */
             is_guest?: boolean;
-            /** The Monday user creation date. */
+            /** The monday user creation date. */
             created_at?: string;
             /** The account that owns the user. */
             account?: {
-              /** The Monday account identifier. */
+              /** The monday account identifier. */
               id: string;
-              /** The Monday account name. */
+              /** The monday account name. */
               name?: string;
-              /** The Monday account slug. */
+              /** The monday account slug. */
               slug?: string;
-              /** The Monday account tier. */
+              /** The monday account tier. */
               tier?: string;
               [key: string]: unknown;
             };
@@ -3375,11 +3375,11 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** List Monday users with official root-level filters and pagination. */
+    /** List monday users with official root-level filters and pagination. */
     "monday.list_users": {
       input: {
         /**
-         * A non-empty list of Monday identifiers.
+         * A non-empty list of monday identifiers.
          * @minItems 1
          */
         ids?: Array<string | number>;
@@ -3389,7 +3389,7 @@ declare module "@oomol-lab/connector" {
          */
         emails?: Array<string>;
         /**
-         * A fuzzy name filter for Monday users.
+         * A fuzzy name filter for monday users.
          * @minLength 1
          */
         name?: string;
@@ -3405,29 +3405,29 @@ declare module "@oomol-lab/connector" {
         page?: number;
       };
       output: {
-        /** The Monday users returned by the query. */
+        /** The monday users returned by the query. */
         users: Array<{
-          /** The Monday user identifier. */
+          /** The monday user identifier. */
           id: string;
-          /** The Monday user name. */
+          /** The monday user name. */
           name?: string;
-          /** The Monday user email address. */
+          /** The monday user email address. */
           email?: string;
-          /** Whether the Monday user is enabled. */
+          /** Whether the monday user is enabled. */
           enabled?: boolean;
-          /** Whether the Monday user is a guest. */
+          /** Whether the monday user is a guest. */
           is_guest?: boolean;
-          /** The Monday user creation date. */
+          /** The monday user creation date. */
           created_at?: string;
           /** The account that owns the user. */
           account?: {
-            /** The Monday account identifier. */
+            /** The monday account identifier. */
             id: string;
-            /** The Monday account name. */
+            /** The monday account name. */
             name?: string;
-            /** The Monday account slug. */
+            /** The monday account slug. */
             slug?: string;
-            /** The Monday account tier. */
+            /** The monday account tier. */
             tier?: string;
             [key: string]: unknown;
           };
@@ -3435,11 +3435,11 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** List Monday workspaces with official filters and pagination. */
+    /** List monday workspaces with official filters and pagination. */
     "monday.list_workspaces": {
       input: {
         /**
-         * A non-empty list of Monday identifiers.
+         * A non-empty list of monday identifiers.
          * @minItems 1
          */
         ids?: Array<string | number>;
@@ -3461,26 +3461,26 @@ declare module "@oomol-lab/connector" {
         order_by?: "created_at";
       };
       output: {
-        /** The Monday workspaces returned by the query. */
+        /** The monday workspaces returned by the query. */
         workspaces: Array<{
-          /** The Monday workspace identifier. */
+          /** The monday workspace identifier. */
           id: string;
-          /** The Monday workspace name. */
+          /** The monday workspace name. */
           name?: string;
-          /** The Monday workspace kind. */
+          /** The monday workspace kind. */
           kind?: string;
-          /** The Monday workspace state. */
+          /** The monday workspace state. */
           state?: string;
-          /** The Monday workspace description. */
+          /** The monday workspace description. */
           description?: string;
           [key: string]: unknown;
         }>;
       };
     };
-    /** Move a Monday item to another board and target group. */
+    /** Move a monday item to another board and target group. */
     "monday.move_item_to_board": {
       input: {
-        /** The Monday item that should be moved. */
+        /** The monday item that should be moved. */
         item_id: string | number;
         /** The target board identifier. */
         board_id: string | number;
@@ -3502,75 +3502,75 @@ declare module "@oomol-lab/connector" {
         }>;
       };
       output: {
-        /** The Monday item returned by the create_item mutation. */
+        /** The monday item returned by the create_item mutation. */
         item: {
-          /** The Monday item identifier. */
+          /** The monday item identifier. */
           id: string;
-          /** The Monday item name. */
+          /** The monday item name. */
           name?: string;
-          /** The Monday item state. */
+          /** The monday item state. */
           state?: string;
-          /** The Monday item URL. */
+          /** The monday item URL. */
           url?: string;
-          /** The Monday item creation time. */
+          /** The monday item creation time. */
           created_at?: string;
-          /** The Monday item update time. */
+          /** The monday item update time. */
           updated_at?: string;
-          /** The parent item of a Monday subitem. */
+          /** The parent item of a monday subitem. */
           parent_item?: {
-            /** The parent Monday item identifier. */
+            /** The parent monday item identifier. */
             id: string;
-            /** The parent Monday item name. */
+            /** The parent monday item name. */
             name?: string;
             [key: string]: unknown;
           };
           /** The group that contains the item. */
           group?: {
-            /** The Monday group identifier. */
+            /** The monday group identifier. */
             id: string;
-            /** The Monday group title. */
+            /** The monday group title. */
             title?: string;
-            /** The Monday group color. */
+            /** The monday group color. */
             color?: string;
-            /** The Monday group position. */
+            /** The monday group position. */
             position?: string;
-            /** Whether the Monday group is archived. */
+            /** Whether the monday group is archived. */
             archived?: boolean;
-            /** Whether the Monday group is deleted. */
+            /** Whether the monday group is deleted. */
             deleted?: boolean;
             [key: string]: unknown;
           };
           /** The board that contains the item. */
           board?: {
-            /** The Monday board identifier. */
+            /** The monday board identifier. */
             id: string;
-            /** The Monday board name. */
+            /** The monday board name. */
             name?: string;
-            /** The Monday board state. */
+            /** The monday board state. */
             state?: string;
-            /** The Monday board kind. */
+            /** The monday board kind. */
             board_kind?: string;
             /** The user's permissions on the board. */
             permissions?: string;
-            /** The Monday board description. */
+            /** The monday board description. */
             description?: string;
-            /** The Monday board communication summary. */
+            /** The monday board communication summary. */
             communication?: string;
-            /** The Monday board item nickname. */
+            /** The monday board item nickname. */
             item_nickname?: string;
-            /** The Monday board URL. */
+            /** The monday board URL. */
             url?: string;
             /** The workspace that contains the board. */
             workspace?: {
-              /** The Monday workspace identifier. */
+              /** The monday workspace identifier. */
               id: string;
-              /** The Monday workspace name. */
+              /** The monday workspace name. */
               name?: string;
-              /** The Monday workspace kind. */
+              /** The monday workspace kind. */
               kind?: string;
-              /** The Monday workspace state. */
+              /** The monday workspace state. */
               state?: string;
-              /** The Monday workspace description. */
+              /** The monday workspace description. */
               description?: string;
               [key: string]: unknown;
             };
@@ -3578,52 +3578,52 @@ declare module "@oomol-lab/connector" {
           };
           /** The user who created the item. */
           creator?: {
-            /** The Monday user identifier. */
+            /** The monday user identifier. */
             id: string;
-            /** The Monday user name. */
+            /** The monday user name. */
             name?: string;
-            /** The Monday user email address. */
+            /** The monday user email address. */
             email?: string;
-            /** Whether the Monday user is enabled. */
+            /** Whether the monday user is enabled. */
             enabled?: boolean;
-            /** Whether the Monday user is a guest. */
+            /** Whether the monday user is a guest. */
             is_guest?: boolean;
-            /** The Monday user creation date. */
+            /** The monday user creation date. */
             created_at?: string;
             /** The account that owns the user. */
             account?: {
-              /** The Monday account identifier. */
+              /** The monday account identifier. */
               id: string;
-              /** The Monday account name. */
+              /** The monday account name. */
               name?: string;
-              /** The Monday account slug. */
+              /** The monday account slug. */
               slug?: string;
-              /** The Monday account tier. */
+              /** The monday account tier. */
               tier?: string;
               [key: string]: unknown;
             };
             [key: string]: unknown;
           };
-          /** The Monday item column values. */
+          /** The monday item column values. */
           column_values?: Array<{
-            /** The Monday column identifier. */
+            /** The monday column identifier. */
             id?: string;
             text?: string | null;
-            /** The Monday column type. */
+            /** The monday column type. */
             type?: string;
             value?: string | null;
             [key: string]: unknown;
           }>;
-          /** The nested subitems of a Monday item. */
+          /** The nested subitems of a monday item. */
           subitems?: Array<unknown>;
           [key: string]: unknown;
         };
       };
     };
-    /** Move a Monday item to another group on the same board. */
+    /** Move a monday item to another group on the same board. */
     "monday.move_item_to_group": {
       input: {
-        /** The Monday item that should be moved. */
+        /** The monday item that should be moved. */
         item_id: string | number;
         /**
          * The target group identifier.
@@ -3632,75 +3632,75 @@ declare module "@oomol-lab/connector" {
         group_id: string;
       };
       output: {
-        /** The Monday item returned by the create_item mutation. */
+        /** The monday item returned by the create_item mutation. */
         item: {
-          /** The Monday item identifier. */
+          /** The monday item identifier. */
           id: string;
-          /** The Monday item name. */
+          /** The monday item name. */
           name?: string;
-          /** The Monday item state. */
+          /** The monday item state. */
           state?: string;
-          /** The Monday item URL. */
+          /** The monday item URL. */
           url?: string;
-          /** The Monday item creation time. */
+          /** The monday item creation time. */
           created_at?: string;
-          /** The Monday item update time. */
+          /** The monday item update time. */
           updated_at?: string;
-          /** The parent item of a Monday subitem. */
+          /** The parent item of a monday subitem. */
           parent_item?: {
-            /** The parent Monday item identifier. */
+            /** The parent monday item identifier. */
             id: string;
-            /** The parent Monday item name. */
+            /** The parent monday item name. */
             name?: string;
             [key: string]: unknown;
           };
           /** The group that contains the item. */
           group?: {
-            /** The Monday group identifier. */
+            /** The monday group identifier. */
             id: string;
-            /** The Monday group title. */
+            /** The monday group title. */
             title?: string;
-            /** The Monday group color. */
+            /** The monday group color. */
             color?: string;
-            /** The Monday group position. */
+            /** The monday group position. */
             position?: string;
-            /** Whether the Monday group is archived. */
+            /** Whether the monday group is archived. */
             archived?: boolean;
-            /** Whether the Monday group is deleted. */
+            /** Whether the monday group is deleted. */
             deleted?: boolean;
             [key: string]: unknown;
           };
           /** The board that contains the item. */
           board?: {
-            /** The Monday board identifier. */
+            /** The monday board identifier. */
             id: string;
-            /** The Monday board name. */
+            /** The monday board name. */
             name?: string;
-            /** The Monday board state. */
+            /** The monday board state. */
             state?: string;
-            /** The Monday board kind. */
+            /** The monday board kind. */
             board_kind?: string;
             /** The user's permissions on the board. */
             permissions?: string;
-            /** The Monday board description. */
+            /** The monday board description. */
             description?: string;
-            /** The Monday board communication summary. */
+            /** The monday board communication summary. */
             communication?: string;
-            /** The Monday board item nickname. */
+            /** The monday board item nickname. */
             item_nickname?: string;
-            /** The Monday board URL. */
+            /** The monday board URL. */
             url?: string;
             /** The workspace that contains the board. */
             workspace?: {
-              /** The Monday workspace identifier. */
+              /** The monday workspace identifier. */
               id: string;
-              /** The Monday workspace name. */
+              /** The monday workspace name. */
               name?: string;
-              /** The Monday workspace kind. */
+              /** The monday workspace kind. */
               kind?: string;
-              /** The Monday workspace state. */
+              /** The monday workspace state. */
               state?: string;
-              /** The Monday workspace description. */
+              /** The monday workspace description. */
               description?: string;
               [key: string]: unknown;
             };
@@ -3708,52 +3708,52 @@ declare module "@oomol-lab/connector" {
           };
           /** The user who created the item. */
           creator?: {
-            /** The Monday user identifier. */
+            /** The monday user identifier. */
             id: string;
-            /** The Monday user name. */
+            /** The monday user name. */
             name?: string;
-            /** The Monday user email address. */
+            /** The monday user email address. */
             email?: string;
-            /** Whether the Monday user is enabled. */
+            /** Whether the monday user is enabled. */
             enabled?: boolean;
-            /** Whether the Monday user is a guest. */
+            /** Whether the monday user is a guest. */
             is_guest?: boolean;
-            /** The Monday user creation date. */
+            /** The monday user creation date. */
             created_at?: string;
             /** The account that owns the user. */
             account?: {
-              /** The Monday account identifier. */
+              /** The monday account identifier. */
               id: string;
-              /** The Monday account name. */
+              /** The monday account name. */
               name?: string;
-              /** The Monday account slug. */
+              /** The monday account slug. */
               slug?: string;
-              /** The Monday account tier. */
+              /** The monday account tier. */
               tier?: string;
               [key: string]: unknown;
             };
             [key: string]: unknown;
           };
-          /** The Monday item column values. */
+          /** The monday item column values. */
           column_values?: Array<{
-            /** The Monday column identifier. */
+            /** The monday column identifier. */
             id?: string;
             text?: string | null;
-            /** The Monday column type. */
+            /** The monday column type. */
             type?: string;
             value?: string | null;
             [key: string]: unknown;
           }>;
-          /** The nested subitems of a Monday item. */
+          /** The nested subitems of a monday item. */
           subitems?: Array<unknown>;
           [key: string]: unknown;
         };
       };
     };
-    /** Replace a Monday item description using markdown content. */
+    /** Replace a monday item description using markdown content. */
     "monday.set_item_description_content": {
       input: {
-        /** The Monday item whose description should be replaced. */
+        /** The monday item whose description should be replaced. */
         item_id: string | number;
         /**
          * The markdown content that should replace the current description.
@@ -3762,20 +3762,20 @@ declare module "@oomol-lab/connector" {
         markdown: string;
       };
       output: {
-        /** Whether Monday accepted the markdown replacement request. */
+        /** Whether monday accepted the markdown replacement request. */
         success: boolean;
-        /** The Monday error message when the markdown import fails. */
+        /** The monday error message when the markdown import fails. */
         error: string | null;
-        /** The Monday document block identifiers created from the markdown content. */
+        /** The monday document block identifiers created from the markdown content. */
         blockIds: Array<string>;
       };
     };
-    /** Update a Monday board attribute with the official update_board mutation. */
+    /** Update a monday board attribute with the official update_board mutation. */
     "monday.update_board": {
       input: {
         /** The board identifier to update. */
         board_id: string | number;
-        /** The Monday board attribute to update. */
+        /** The monday board attribute to update. */
         board_attribute: "communication" | "description" | "item_nickname" | "name";
         /**
          * The new value for the selected board attribute.
@@ -3784,37 +3784,37 @@ declare module "@oomol-lab/connector" {
         new_value: string;
       };
       output: {
-        /** The Monday board metadata returned by update_board. */
+        /** The monday board metadata returned by update_board. */
         board: {
-          /** The Monday board identifier. */
+          /** The monday board identifier. */
           id: string;
-          /** The Monday board name. */
+          /** The monday board name. */
           name?: string;
-          /** The Monday board state. */
+          /** The monday board state. */
           state?: string;
-          /** The Monday board kind. */
+          /** The monday board kind. */
           board_kind?: string;
           /** The user's permissions on the board. */
           permissions?: string;
-          /** The Monday board description. */
+          /** The monday board description. */
           description?: string;
-          /** The Monday board communication summary. */
+          /** The monday board communication summary. */
           communication?: string;
-          /** The Monday board item nickname. */
+          /** The monday board item nickname. */
           item_nickname?: string;
-          /** The Monday board URL. */
+          /** The monday board URL. */
           url?: string;
           /** The workspace that contains the board. */
           workspace?: {
-            /** The Monday workspace identifier. */
+            /** The monday workspace identifier. */
             id: string;
-            /** The Monday workspace name. */
+            /** The monday workspace name. */
             name?: string;
-            /** The Monday workspace kind. */
+            /** The monday workspace kind. */
             kind?: string;
-            /** The Monday workspace state. */
+            /** The monday workspace state. */
             state?: string;
-            /** The Monday workspace description. */
+            /** The monday workspace description. */
             description?: string;
             [key: string]: unknown;
           };
@@ -3822,7 +3822,7 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** Update a Monday column with the official update_column mutation. */
+    /** Update a monday column with the official update_column mutation. */
     "monday.update_column": {
       input: {
         /** The board that contains the column to update. */
@@ -3838,7 +3838,7 @@ declare module "@oomol-lab/connector" {
          */
         revision: string;
         /**
-         * The updated Monday column type.
+         * The updated monday column type.
          * @minLength 1
          */
         column_type: string;
@@ -3859,29 +3859,29 @@ declare module "@oomol-lab/connector" {
         width?: number;
       };
       output: {
-        /** The Monday column returned by the update_column mutation. */
+        /** The monday column returned by the update_column mutation. */
         column: {
-          /** The Monday column identifier. */
+          /** The monday column identifier. */
           id: string;
-          /** The Monday column title. */
+          /** The monday column title. */
           title?: string;
-          /** The Monday column type. */
+          /** The monday column type. */
           type?: string;
-          /** The Monday column description. */
+          /** The monday column description. */
           description?: string;
-          /** Whether the Monday column is archived. */
+          /** Whether the monday column is archived. */
           archived?: boolean;
-          /** The Monday column revision value. */
+          /** The monday column revision value. */
           revision?: string;
-          /** The Monday column width in pixels. */
+          /** The monday column width in pixels. */
           width?: number;
-          /** The Monday column settings payload. */
+          /** The monday column settings payload. */
           settings?: Record<string, unknown>;
           [key: string]: unknown;
         };
       };
     };
-    /** Update a Monday dashboard with the official dashboard mutation. */
+    /** Update a monday dashboard with the official dashboard mutation. */
     "monday.update_dashboard": {
       input: {
         /** The dashboard identifier to update. */
@@ -3899,11 +3899,11 @@ declare module "@oomol-lab/connector" {
         board_folder_id?: string | number;
       };
       output: {
-        /** The dashboard returned by Monday after the update. */
+        /** The dashboard returned by monday after the update. */
         dashboard: {
-          /** The Monday dashboard identifier. */
+          /** The monday dashboard identifier. */
           id: string;
-          /** The Monday dashboard name. */
+          /** The monday dashboard name. */
           name?: string;
           /** The workspace that owns the dashboard. */
           workspace_id?: string;
@@ -3915,7 +3915,7 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** Update a Monday department on an enterprise account. */
+    /** Update a monday department on an enterprise account. */
     "monday.update_department": {
       input: {
         /** The department identifier to update. */
@@ -3935,11 +3935,11 @@ declare module "@oomol-lab/connector" {
         };
       };
       output: {
-        /** The department returned by Monday. */
+        /** The department returned by monday. */
         department: {
-          /** The Monday department identifier. */
+          /** The monday department identifier. */
           id: string;
-          /** The Monday department name. */
+          /** The monday department name. */
           name: string;
           /** The number of seats reserved for the department. */
           reserved_seats: number;
@@ -3947,27 +3947,27 @@ declare module "@oomol-lab/connector" {
           assigned_seats: number;
           /** The users assigned to the department. */
           members: Array<{
-            /** The Monday user identifier. */
+            /** The monday user identifier. */
             id: string;
-            /** The Monday user name. */
+            /** The monday user name. */
             name?: string;
-            /** The Monday user email address. */
+            /** The monday user email address. */
             email?: string;
-            /** Whether the Monday user is enabled. */
+            /** Whether the monday user is enabled. */
             enabled?: boolean;
-            /** Whether the Monday user is a guest. */
+            /** Whether the monday user is a guest. */
             is_guest?: boolean;
-            /** The Monday user creation date. */
+            /** The monday user creation date. */
             created_at?: string;
             /** The account that owns the user. */
             account?: {
-              /** The Monday account identifier. */
+              /** The monday account identifier. */
               id: string;
-              /** The Monday account name. */
+              /** The monday account name. */
               name?: string;
-              /** The Monday account slug. */
+              /** The monday account slug. */
               slug?: string;
-              /** The Monday account tier. */
+              /** The monday account tier. */
               tier?: string;
               [key: string]: unknown;
             };
@@ -3975,27 +3975,27 @@ declare module "@oomol-lab/connector" {
           }>;
           /** The users who own the department. */
           owners: Array<{
-            /** The Monday user identifier. */
+            /** The monday user identifier. */
             id: string;
-            /** The Monday user name. */
+            /** The monday user name. */
             name?: string;
-            /** The Monday user email address. */
+            /** The monday user email address. */
             email?: string;
-            /** Whether the Monday user is enabled. */
+            /** Whether the monday user is enabled. */
             enabled?: boolean;
-            /** Whether the Monday user is a guest. */
+            /** Whether the monday user is a guest. */
             is_guest?: boolean;
-            /** The Monday user creation date. */
+            /** The monday user creation date. */
             created_at?: string;
             /** The account that owns the user. */
             account?: {
-              /** The Monday account identifier. */
+              /** The monday account identifier. */
               id: string;
-              /** The Monday account name. */
+              /** The monday account name. */
               name?: string;
-              /** The Monday account slug. */
+              /** The monday account slug. */
               slug?: string;
-              /** The Monday account tier. */
+              /** The monday account tier. */
               tier?: string;
               [key: string]: unknown;
             };
@@ -4004,7 +4004,7 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** Update the name of an existing Monday doc. */
+    /** Update the name of an existing monday doc. */
     "monday.update_doc_name": {
       input: {
         /** The unique identifier of the document to rename. */
@@ -4016,11 +4016,11 @@ declare module "@oomol-lab/connector" {
         name: string;
       };
       output: {
-        /** The updated Monday document name. */
+        /** The updated monday document name. */
         updatedDocName: string;
       };
     };
-    /** Update an existing Monday group attribute. */
+    /** Update an existing monday group attribute. */
     "monday.update_group": {
       input: {
         /** The board that contains the group to update. */
@@ -4030,7 +4030,7 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         group_id: string;
-        /** The Monday group attribute to update. */
+        /** The monday group attribute to update. */
         group_attribute: "color" | "position" | "relative_position_after" | "relative_position_before" | "title";
         /**
          * The new value for the selected group attribute.
@@ -4039,19 +4039,19 @@ declare module "@oomol-lab/connector" {
         new_value: string;
       };
       output: {
-        /** The Monday group returned by the update_group mutation. */
+        /** The monday group returned by the update_group mutation. */
         group: {
-          /** The Monday group identifier. */
+          /** The monday group identifier. */
           id: string;
-          /** The Monday group title. */
+          /** The monday group title. */
           title?: string;
-          /** The Monday group color. */
+          /** The monday group color. */
           color?: string;
-          /** The Monday group position. */
+          /** The monday group position. */
           position?: string;
-          /** Whether the Monday group is archived. */
+          /** Whether the monday group is archived. */
           archived?: boolean;
-          /** Whether the Monday group is deleted. */
+          /** Whether the monday group is deleted. */
           deleted?: boolean;
           [key: string]: unknown;
         };
