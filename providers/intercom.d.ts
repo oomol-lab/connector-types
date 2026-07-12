@@ -38,25 +38,39 @@ declare module "@oomol-lab/connector" {
         externalId?: string;
         /**
          * Primary email address for the Intercom contact.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email?: string;
-        /** Phone number for the Intercom contact. */
+        /**
+         * Phone number for the Intercom contact.
+         * @minLength 1
+         */
         phone?: string | null;
-        /** Display name for the Intercom contact. */
+        /**
+         * Display name for the Intercom contact.
+         * @minLength 1
+         */
         name?: string | null;
-        /** Avatar image URL for the Intercom contact. */
+        /**
+         * Avatar image URL for the Intercom contact.
+         * @format uri
+         */
         avatar?: string | null;
-        /** UNIX timestamp when the contact signed up. */
+        /**
+         * UNIX timestamp when the contact signed up.
+         * @minimum 0
+         */
         signedUpAt?: number | null;
-        /** UNIX timestamp when the contact was last seen. */
+        /**
+         * UNIX timestamp when the contact was last seen.
+         * @minimum 0
+         */
         lastSeenAt?: number | null;
-        /** Admin identifier assigned to the contact. */
+        /** Intercom admin identifier. */
         ownerId?: string | number | null;
         /** Whether the contact is unsubscribed from emails. */
         unsubscribedFromEmails?: boolean | null;
-        /** Intercom custom attributes to set on the contact. */
+        /** Intercom key-value object. */
         customAttributes?: Record<string, unknown> | null;
       };
       output: {
@@ -73,6 +87,36 @@ declare module "@oomol-lab/connector" {
       output: {
         /** Requested Intercom admin. */
         admin: Record<string, unknown>;
+      };
+    };
+    /** Get a single Intercom help center article by identifier. */
+    "intercom.get_article": {
+      input: {
+        /** Intercom resource identifier. */
+        articleId: string | number;
+      };
+      output: {
+        /** Requested Intercom article. */
+        article: Record<string, unknown>;
+      };
+    };
+    /** Get a single Intercom company by company ID or name. */
+    "intercom.get_company": {
+      input: {
+        /**
+         * Company identifier defined by you in Intercom.
+         * @minLength 1
+         */
+        companyId?: string;
+        /**
+         * Company name to look up in Intercom.
+         * @minLength 1
+         */
+        name?: string;
+      };
+      output: {
+        /** Requested Intercom company. */
+        company: Record<string, unknown>;
       };
     };
     /** Get a single Intercom contact by identifier. */
@@ -111,12 +155,31 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         conversationId: string;
-        /** How Intercom should render conversation message bodies in the response. */
+        /** How Intercom should render conversation message bodies. */
         displayAs?: "plaintext" | "html";
       };
       output: {
         /** Requested Intercom conversation. */
         conversation: Record<string, unknown>;
+      };
+    };
+    /** Read Intercom workspace, conversation, or grouped counts. */
+    "intercom.get_counts": {
+      input: {
+        /**
+         * Intercom count type to request, such as conversation.
+         * @minLength 1
+         */
+        type?: string;
+        /**
+         * Intercom count grouping to request, such as tag or segment.
+         * @minLength 1
+         */
+        count?: string;
+      };
+      output: {
+        /** Raw Intercom counts payload. */
+        counts: Record<string, unknown>;
       };
     };
     /** Get the currently authorized Intercom admin and workspace metadata. */
@@ -125,6 +188,34 @@ declare module "@oomol-lab/connector" {
       output: {
         /** Currently authorized Intercom admin. */
         admin: Record<string, unknown>;
+      };
+    };
+    /** Get the status of an Intercom asynchronous job. */
+    "intercom.get_job_status": {
+      input: {
+        /**
+         * Intercom job identifier.
+         * @minLength 1
+         */
+        jobId: string;
+      };
+      output: {
+        /** Intercom job status payload. */
+        job: Record<string, unknown>;
+      };
+    };
+    /** Get a single Intercom ticket by internal ticket identifier. */
+    "intercom.get_ticket": {
+      input: {
+        /**
+         * Internal Intercom ticket identifier.
+         * @minLength 1
+         */
+        ticketId: string;
+      };
+      output: {
+        /** Requested Intercom ticket. */
+        ticket: Record<string, unknown>;
       };
     };
     /** List Intercom admins for the current workspace. */
@@ -136,6 +227,83 @@ declare module "@oomol-lab/connector" {
       output: {
         /** Intercom admins returned for the current workspace. */
         admins: Array<Record<string, unknown>>;
+      };
+    };
+    /** List Intercom help center articles. */
+    "intercom.list_articles": {
+      input: {
+        /**
+         * Maximum number of Intercom records to return.
+         * @minimum 1
+         * @maximum 150
+         */
+        perPage?: number;
+        /**
+         * Opaque Intercom cursor returned from a previous paginated response.
+         * @minLength 1
+         */
+        startingAfter?: string;
+      };
+      output: {
+        /** Intercom articles returned for the current page. */
+        articles: Array<Record<string, unknown>>;
+        /** Normalized Intercom cursor pagination metadata. */
+        pagination: {
+          /** Whether Intercom reported another page of results. */
+          hasMore: boolean;
+          /** Cursor for the next Intercom page, or null when there is no next page. */
+          nextStartingAfter: string | null;
+          /** Current page number reported by Intercom, or null when omitted. */
+          page: number | null;
+          /** Current page size reported by Intercom, or null when omitted. */
+          perPage: number | null;
+          /** Total Intercom pages reported by the endpoint, or null when omitted. */
+          totalPages: number | null;
+          /** Total Intercom record count reported by the endpoint, or null when omitted. */
+          totalCount: number | null;
+        };
+      };
+    };
+    /** List Intercom companies with pagination. */
+    "intercom.list_companies": {
+      input: {
+        /**
+         * One-based Intercom page number to fetch.
+         * @minimum 1
+         */
+        page?: number;
+        /**
+         * Maximum number of Intercom records to return.
+         * @minimum 1
+         * @maximum 150
+         */
+        perPage?: number;
+        /** Order in which Intercom should return companies. */
+        order?: "asc" | "desc";
+        /**
+         * Opaque Intercom cursor returned from a previous paginated response.
+         * @minLength 1
+         */
+        startingAfter?: string;
+      };
+      output: {
+        /** Intercom companies returned for the current page. */
+        companies: Array<Record<string, unknown>>;
+        /** Normalized Intercom cursor pagination metadata. */
+        pagination: {
+          /** Whether Intercom reported another page of results. */
+          hasMore: boolean;
+          /** Cursor for the next Intercom page, or null when there is no next page. */
+          nextStartingAfter: string | null;
+          /** Current page number reported by Intercom, or null when omitted. */
+          page: number | null;
+          /** Current page size reported by Intercom, or null when omitted. */
+          perPage: number | null;
+          /** Total Intercom pages reported by the endpoint, or null when omitted. */
+          totalPages: number | null;
+          /** Total Intercom record count reported by the endpoint, or null when omitted. */
+          totalCount: number | null;
+        };
       };
     };
     /** List Intercom contacts with cursor-based pagination. */
@@ -156,7 +324,7 @@ declare module "@oomol-lab/connector" {
       output: {
         /** Intercom contacts returned for the current page. */
         contacts: Array<Record<string, unknown>>;
-        /** Pagination metadata for the contact list response. */
+        /** Normalized Intercom cursor pagination metadata. */
         pagination: {
           /** Whether Intercom reported another page of results. */
           hasMore: boolean;
@@ -191,7 +359,7 @@ declare module "@oomol-lab/connector" {
       output: {
         /** Intercom conversations returned for the current page. */
         conversations: Array<Record<string, unknown>>;
-        /** Pagination metadata for the conversation list response. */
+        /** Normalized Intercom cursor pagination metadata. */
         pagination: {
           /** Whether Intercom reported another page of results. */
           hasMore: boolean;
@@ -206,6 +374,48 @@ declare module "@oomol-lab/connector" {
           /** Total Intercom record count reported by the endpoint, or null when omitted. */
           totalCount: number | null;
         };
+      };
+    };
+    /** List recent Intercom data events for one user or lead. */
+    "intercom.list_events": {
+      input: {
+        /**
+         * User ID used to identify the Intercom user.
+         * @minLength 1
+         */
+        userId?: string;
+        /**
+         * Email address used to identify the Intercom user.
+         * @format email
+         */
+        email?: string;
+        /**
+         * Intercom user or lead identifier.
+         * @minLength 1
+         */
+        intercomUserId?: string;
+        /** Whether Intercom should return event summary data. */
+        summary?: boolean;
+        /**
+         * Maximum number of Intercom records to return.
+         * @minimum 1
+         * @maximum 150
+         */
+        perPage?: number;
+      };
+      output: {
+        /** Intercom events returned by the endpoint. */
+        events: Array<Record<string, unknown>>;
+        /** Raw Intercom event summary payload. */
+        eventSummary: Record<string, unknown>;
+      };
+    };
+    /** List all Intercom tags for the current workspace. */
+    "intercom.list_tags": {
+      input: Record<string, never>;
+      output: {
+        /** Intercom tags returned for the workspace. */
+        tags: Array<Record<string, unknown>>;
       };
     };
     /** Reopen an Intercom conversation. */
@@ -261,7 +471,7 @@ declare module "@oomol-lab/connector" {
     /** Search Intercom contacts with the official search DSL. */
     "intercom.search_contacts": {
       input: {
-        /** Intercom contact search DSL query object. */
+        /** Intercom key-value object. */
         query: Record<string, unknown>;
         /**
          * Maximum number of Intercom records to return.
@@ -278,7 +488,44 @@ declare module "@oomol-lab/connector" {
       output: {
         /** Intercom contacts returned by the search query. */
         contacts: Array<Record<string, unknown>>;
-        /** Pagination metadata for the contact search response. */
+        /** Normalized Intercom cursor pagination metadata. */
+        pagination: {
+          /** Whether Intercom reported another page of results. */
+          hasMore: boolean;
+          /** Cursor for the next Intercom page, or null when there is no next page. */
+          nextStartingAfter: string | null;
+          /** Current page number reported by Intercom, or null when omitted. */
+          page: number | null;
+          /** Current page size reported by Intercom, or null when omitted. */
+          perPage: number | null;
+          /** Total Intercom pages reported by the endpoint, or null when omitted. */
+          totalPages: number | null;
+          /** Total Intercom record count reported by the endpoint, or null when omitted. */
+          totalCount: number | null;
+        };
+      };
+    };
+    /** Search Intercom tickets with the official search DSL. */
+    "intercom.search_tickets": {
+      input: {
+        /** Intercom key-value object. */
+        query: Record<string, unknown>;
+        /**
+         * Maximum number of Intercom records to return.
+         * @minimum 1
+         * @maximum 150
+         */
+        perPage?: number;
+        /**
+         * Opaque Intercom cursor returned from a previous paginated response.
+         * @minLength 1
+         */
+        startingAfter?: string;
+      };
+      output: {
+        /** Intercom tickets returned by the search query. */
+        tickets: Array<Record<string, unknown>>;
+        /** Normalized Intercom cursor pagination metadata. */
         pagination: {
           /** Whether Intercom reported another page of results. */
           hasMore: boolean;
@@ -312,25 +559,39 @@ declare module "@oomol-lab/connector" {
         externalId?: string;
         /**
          * Primary email address for the Intercom contact.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email?: string;
-        /** Phone number for the Intercom contact. */
+        /**
+         * Phone number for the Intercom contact.
+         * @minLength 1
+         */
         phone?: string | null;
-        /** Display name for the Intercom contact. */
+        /**
+         * Display name for the Intercom contact.
+         * @minLength 1
+         */
         name?: string | null;
-        /** Avatar image URL for the Intercom contact. */
+        /**
+         * Avatar image URL for the Intercom contact.
+         * @format uri
+         */
         avatar?: string | null;
-        /** UNIX timestamp when the contact signed up. */
+        /**
+         * UNIX timestamp when the contact signed up.
+         * @minimum 0
+         */
         signedUpAt?: number | null;
-        /** UNIX timestamp when the contact was last seen. */
+        /**
+         * UNIX timestamp when the contact was last seen.
+         * @minimum 0
+         */
         lastSeenAt?: number | null;
-        /** Admin identifier assigned to the contact. */
+        /** Intercom admin identifier. */
         ownerId?: string | number | null;
         /** Whether the contact is unsubscribed from emails. */
         unsubscribedFromEmails?: boolean | null;
-        /** Intercom custom attributes to set on the contact. */
+        /** Intercom key-value object. */
         customAttributes?: Record<string, unknown> | null;
       };
       output: {
