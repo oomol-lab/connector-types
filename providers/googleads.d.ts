@@ -19,7 +19,7 @@ declare module "@oomol-lab/connector" {
          * Whether to add new users to the list or remove existing users.
          * @default "create"
          */
-        operation: "create" | "remove";
+        operation?: "create" | "remove";
       };
       output: {
         /** The submission status returned by the connector. */

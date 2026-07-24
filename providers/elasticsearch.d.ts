@@ -62,7 +62,7 @@ declare module "@oomol-lab/connector" {
          * Whether to return only primary shard information.
          * @default false
          */
-        includePrimaryShardsOnly: boolean;
+        includePrimaryShardsOnly?: boolean;
       };
       output: {
         /** The list of Elasticsearch index summaries. */
@@ -129,14 +129,14 @@ declare module "@oomol-lab/connector" {
          * @minimum 0
          * @default 0
          */
-        from: number;
+        from?: number;
         /**
          * The number of search results to return, capped at 1000.
          * @minimum 1
          * @maximum 1000
          * @default 10
          */
-        size: number;
+        size?: number;
         /**
          * Specific document source fields to return.
          * @minItems 1
@@ -146,7 +146,7 @@ declare module "@oomol-lab/connector" {
          * Whether to request highlights for the search query.
          * @default false
          */
-        highlight: boolean;
+        highlight?: boolean;
         /**
          * Sort order for search results.
          * @minItems 1
@@ -161,7 +161,7 @@ declare module "@oomol-lab/connector" {
            * The sort order for this field.
            * @default "asc"
            */
-          order: "asc" | "desc";
+          order?: "asc" | "desc";
         }>;
         /**
          * Exact term filters for specific field values.

@@ -7,7 +7,6 @@ declare module "@oomol-lab/connector" {
       input: {
         /**
          * Email address of the person to create a chat with.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email: string;
@@ -28,13 +27,11 @@ declare module "@oomol-lab/connector" {
         modified?: number;
         /**
          * Email address for the chat participant.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email?: string;
         /**
          * Normalized email address for the chat participant.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email_normalized?: string;
@@ -54,13 +51,11 @@ declare module "@oomol-lab/connector" {
           iden: string;
           /**
            * Email address of the Pushbullet account.
-           * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
            * @format email
            */
           email?: string;
           /**
            * Normalized email address of the Pushbullet account.
-           * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
            * @format email
            */
           email_normalized?: string;
@@ -211,7 +206,6 @@ declare module "@oomol-lab/connector" {
         device_iden?: string;
         /**
          * Email address to send the push to.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email?: string;
@@ -271,7 +265,6 @@ declare module "@oomol-lab/connector" {
         sender_iden?: string;
         /**
          * Email address of the sending user.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         sender_email?: string;
@@ -279,7 +272,6 @@ declare module "@oomol-lab/connector" {
         receiver_iden?: string;
         /**
          * Email address of the receiving user.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         receiver_email?: string;
@@ -369,13 +361,11 @@ declare module "@oomol-lab/connector" {
         iden: string;
         /**
          * Email address of the Pushbullet account.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email?: string;
         /**
          * Normalized email address of the Pushbullet account.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email_normalized?: string;
@@ -416,13 +406,11 @@ declare module "@oomol-lab/connector" {
           modified?: number;
           /**
            * Email address for the chat participant.
-           * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
            * @format email
            */
           email?: string;
           /**
            * Normalized email address for the chat participant.
-           * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
            * @format email
            */
           email_normalized?: string;
@@ -442,13 +430,11 @@ declare module "@oomol-lab/connector" {
             iden: string;
             /**
              * Email address of the Pushbullet account.
-             * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
              * @format email
              */
             email?: string;
             /**
              * Normalized email address of the Pushbullet account.
-             * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
              * @format email
              */
             email_normalized?: string;
@@ -576,7 +562,6 @@ declare module "@oomol-lab/connector" {
           sender_iden?: string;
           /**
            * Email address of the sending user.
-           * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
            * @format email
            */
           sender_email?: string;
@@ -584,7 +569,6 @@ declare module "@oomol-lab/connector" {
           receiver_iden?: string;
           /**
            * Email address of the receiving user.
-           * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
            * @format email
            */
           receiver_email?: string;
@@ -644,13 +628,11 @@ declare module "@oomol-lab/connector" {
         modified?: number;
         /**
          * Email address for the chat participant.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email?: string;
         /**
          * Normalized email address for the chat participant.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email_normalized?: string;
@@ -670,13 +652,11 @@ declare module "@oomol-lab/connector" {
           iden: string;
           /**
            * Email address of the Pushbullet account.
-           * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
            * @format email
            */
           email?: string;
           /**
            * Normalized email address of the Pushbullet account.
-           * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
            * @format email
            */
           email_normalized?: string;
@@ -836,7 +816,6 @@ declare module "@oomol-lab/connector" {
         sender_iden?: string;
         /**
          * Email address of the sending user.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         sender_email?: string;
@@ -844,7 +823,6 @@ declare module "@oomol-lab/connector" {
         receiver_iden?: string;
         /**
          * Email address of the receiving user.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         receiver_email?: string;

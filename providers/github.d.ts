@@ -125,6 +125,58 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
+    /** Add a collaborator to a GitHub repository or update their permission. */
+    "github.add_repository_collaborator": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The username.
+         * @minLength 1
+         */
+        username: string;
+        /** The permission to grant: pull, triage, push, maintain, admin, or a custom repository role name. */
+        permission?: string;
+      };
+      output: {
+        /** Whether a new repository invitation was created. */
+        invited: boolean;
+        /** The created repository invitation, or null when the user was already a collaborator. */
+        invitation: Record<string, unknown> | null;
+      };
+    };
+    /** Cancel a GitHub Actions workflow run. */
+    "github.cancel_workflow_run": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The workflow run ID.
+         * @exclusiveMinimum 0
+         */
+        runId: number;
+      };
+      output: {
+        /** Whether the cancellation was accepted. */
+        cancel_requested: boolean;
+      };
+    };
     /** Check whether a GitHub pull request has been merged. */
     "github.check_pull_request_merged": {
       input: {
@@ -147,6 +199,25 @@ declare module "@oomol-lab/connector" {
       output: {
         /** Whether the pull request has been merged. */
         merged: boolean;
+      };
+    };
+    /** Check whether the authenticated user has starred a GitHub repository. */
+    "github.check_repository_starred": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+      };
+      output: {
+        /** Whether the authenticated user has starred the repository. */
+        starred: boolean;
       };
     };
     /** Remove all labels from a GitHub issue. */
@@ -216,6 +287,7 @@ declare module "@oomol-lab/connector" {
           url?: string;
           /** The commit metadata object. */
           commit: Record<string, unknown>;
+          /** The commit author. */
           author?: {
             /** The user ID. */
             id: number;
@@ -229,6 +301,7 @@ declare module "@oomol-lab/connector" {
             type?: string;
             [key: string]: unknown;
           } | null;
+          /** The commit committer. */
           committer?: {
             /** The user ID. */
             id: number;
@@ -252,6 +325,69 @@ declare module "@oomol-lab/connector" {
         }>;
         /** The files changed in the comparison. */
         files: Array<Record<string, unknown>>;
+      };
+    };
+    /** Create a comment on a commit in a GitHub repository. */
+    "github.create_commit_comment": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The commit SHA.
+         * @minLength 1
+         */
+        commitSha: string;
+        /**
+         * The comment body.
+         * @minLength 1
+         */
+        body: string;
+        /** The relative file path to comment on. */
+        path?: string;
+        /**
+         * The line index in the diff to comment on.
+         * @exclusiveMinimum 0
+         */
+        position?: number;
+      };
+      output: {
+        /** The comment ID. */
+        id: number;
+        /** The comment body. */
+        body: string;
+        /** The comment URL. */
+        html_url: string;
+        /** The file path the comment applies to. */
+        path?: string | null;
+        /** The line index in the diff. */
+        position?: number | null;
+        /** The comment author. */
+        user?: {
+          /** The user ID. */
+          id: number;
+          /** The username. */
+          login: string;
+          /** The avatar URL. */
+          avatar_url?: string;
+          /** The profile URL. */
+          html_url?: string;
+          /** The account type. */
+          type?: string;
+          [key: string]: unknown;
+        } | null;
+        /** The creation timestamp. */
+        created_at?: string;
+        /** The last update timestamp. */
+        updated_at?: string;
+        [key: string]: unknown;
       };
     };
     /** Create a commit status for a GitHub commit SHA. */
@@ -433,11 +569,101 @@ declare module "@oomol-lab/connector" {
           /** The account type. */
           type?: string;
           [key: string]: unknown;
-        };
+        } | null;
         /** The creation timestamp. */
         created_at?: string;
         /** The last update timestamp. */
         updated_at?: string;
+        [key: string]: unknown;
+      };
+    };
+    /** Add a reaction to a GitHub issue comment. */
+    "github.create_issue_comment_reaction": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The comment ID.
+         * @exclusiveMinimum 0
+         */
+        commentId: number;
+        /** The reaction content. */
+        content: "+1" | "-1" | "laugh" | "confused" | "heart" | "hooray" | "rocket" | "eyes";
+      };
+      output: {
+        /** The reaction ID. */
+        id: number;
+        /** The reaction content. */
+        content: string;
+        /** The user who reacted. */
+        user?: {
+          /** The user ID. */
+          id: number;
+          /** The username. */
+          login: string;
+          /** The avatar URL. */
+          avatar_url?: string;
+          /** The profile URL. */
+          html_url?: string;
+          /** The account type. */
+          type?: string;
+          [key: string]: unknown;
+        } | null;
+        /** The creation timestamp. */
+        created_at?: string;
+        [key: string]: unknown;
+      };
+    };
+    /** Add a reaction to a GitHub issue. */
+    "github.create_issue_reaction": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The issue number.
+         * @exclusiveMinimum 0
+         */
+        issueNumber: number;
+        /** The reaction content. */
+        content: "+1" | "-1" | "laugh" | "confused" | "heart" | "hooray" | "rocket" | "eyes";
+      };
+      output: {
+        /** The reaction ID. */
+        id: number;
+        /** The reaction content. */
+        content: string;
+        /** The user who reacted. */
+        user?: {
+          /** The user ID. */
+          id: number;
+          /** The username. */
+          login: string;
+          /** The avatar URL. */
+          avatar_url?: string;
+          /** The profile URL. */
+          html_url?: string;
+          /** The account type. */
+          type?: string;
+          [key: string]: unknown;
+        } | null;
+        /** The creation timestamp. */
+        created_at?: string;
         [key: string]: unknown;
       };
     };
@@ -459,15 +685,62 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         name: string;
-        /**
-         * The label color as a 6-character hex value without #.
-         * @pattern ^[0-9a-fA-F]{6}$
-         */
+        /** The label color as a 6-character hex value without #. */
         color: string;
         /** The label description. */
         description?: string;
       };
       output: Record<string, unknown>;
+    };
+    /** Create a milestone in a GitHub repository. */
+    "github.create_milestone": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The milestone title.
+         * @minLength 1
+         */
+        title: string;
+        /** The milestone state. */
+        state?: "open" | "closed";
+        /** The milestone description. */
+        description?: string;
+        /**
+         * The milestone due date as an ISO 8601 timestamp.
+         * @format date-time
+         */
+        dueOn?: string;
+      };
+      output: {
+        /** The milestone ID. */
+        id?: number;
+        /** The milestone number. */
+        number: number;
+        /** The milestone title. */
+        title: string;
+        /** The milestone state. */
+        state: string;
+        /** The milestone description. */
+        description?: string | null;
+        /** The due date timestamp. */
+        due_on?: string | null;
+        /** The number of open issues. */
+        open_issues?: number;
+        /** The number of closed issues. */
+        closed_issues?: number;
+        /** The milestone URL. */
+        html_url?: string;
+        [key: string]: unknown;
+      };
     };
     /** Create or update a repository file through the GitHub contents API. Writing under .github/workflows may require GitHub workflow scope. */
     "github.create_or_update_file": {
@@ -663,7 +936,7 @@ declare module "@oomol-lab/connector" {
           /** The account type. */
           type?: string;
           [key: string]: unknown;
-        };
+        } | null;
         /** The review body. */
         body?: string | null;
         /** The review state. */
@@ -671,7 +944,7 @@ declare module "@oomol-lab/connector" {
         /** The review URL. */
         html_url?: string;
         /** The reviewed commit SHA. */
-        commit_id?: string;
+        commit_id?: string | null;
         /** The submission timestamp. */
         submitted_at?: string | null;
         [key: string]: unknown;
@@ -679,7 +952,7 @@ declare module "@oomol-lab/connector" {
     };
     /** Create a review comment on a GitHub pull request diff. */
     "github.create_pull_request_review_comment": {
-      input: ({
+      input: {
         /**
          * The repository owner.
          * @minLength 1
@@ -705,17 +978,11 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         commitId: string;
-      }) & ({
         /**
          * The file path to comment on.
          * @minLength 1
          */
         path: string;
-        /**
-         * The comment body.
-         * @minLength 1
-         */
-        body: string;
         /**
          * The line number in the diff.
          * @exclusiveMinimum 0
@@ -730,7 +997,7 @@ declare module "@oomol-lab/connector" {
         startLine?: number;
         /** The start side for multi-line comments. */
         startSide?: "LEFT" | "RIGHT";
-      });
+      };
       output: {
         /** The comment ID. */
         id: number;
@@ -751,7 +1018,7 @@ declare module "@oomol-lab/connector" {
           /** The account type. */
           type?: string;
           [key: string]: unknown;
-        };
+        } | null;
         /** The commit SHA the comment applies to. */
         commit_id?: string;
         /** The original commit SHA. */
@@ -760,10 +1027,13 @@ declare module "@oomol-lab/connector" {
         diff_hunk?: string;
         /** The comment URL. */
         html_url?: string;
+        /** The line number in the diff. */
         line?: number | null;
+        /** The start line for multi-line comments. */
         start_line?: number | null;
         /** The side of the diff. */
         side?: string;
+        /** The start side for multi-line comments. */
         start_side?: string | null;
         [key: string]: unknown;
       };
@@ -895,6 +1165,7 @@ declare module "@oomol-lab/connector" {
         branch?: string;
       };
       output: {
+        /** The deleted content entry. */
         content: {
           /** The content entry type. */
           type: "file" | "dir" | "symlink" | "submodule";
@@ -916,6 +1187,228 @@ declare module "@oomol-lab/connector" {
         commit: Record<string, unknown>;
       };
     };
+    /** Delete a GitHub issue comment by ID. */
+    "github.delete_issue_comment": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The comment ID.
+         * @exclusiveMinimum 0
+         */
+        commentId: number;
+      };
+      output: {
+        /** Whether the operation succeeded. */
+        ok: boolean;
+      };
+    };
+    /** Delete a GitHub label by name. */
+    "github.delete_label": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The label name.
+         * @minLength 1
+         */
+        name: string;
+      };
+      output: {
+        /** Whether the operation succeeded. */
+        ok: boolean;
+      };
+    };
+    /** Delete a GitHub milestone by number. */
+    "github.delete_milestone": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The milestone number.
+         * @exclusiveMinimum 0
+         */
+        milestoneNumber: number;
+      };
+      output: {
+        /** Whether the operation succeeded. */
+        ok: boolean;
+      };
+    };
+    /** Delete a pending GitHub pull request review and return the deleted review. */
+    "github.delete_pending_pull_request_review": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The pull request number.
+         * @exclusiveMinimum 0
+         */
+        pullNumber: number;
+        /**
+         * The review ID.
+         * @exclusiveMinimum 0
+         */
+        reviewId: number;
+      };
+      output: {
+        /** The review ID. */
+        id: number;
+        /** The reviewer. */
+        user?: {
+          /** The user ID. */
+          id: number;
+          /** The username. */
+          login: string;
+          /** The avatar URL. */
+          avatar_url?: string;
+          /** The profile URL. */
+          html_url?: string;
+          /** The account type. */
+          type?: string;
+          [key: string]: unknown;
+        } | null;
+        /** The review body. */
+        body?: string | null;
+        /** The review state. */
+        state?: string;
+        /** The review URL. */
+        html_url?: string;
+        /** The reviewed commit SHA. */
+        commit_id?: string | null;
+        /** The submission timestamp. */
+        submitted_at?: string | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Delete a GitHub pull request review comment by ID. */
+    "github.delete_pull_request_review_comment": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The comment ID.
+         * @exclusiveMinimum 0
+         */
+        commentId: number;
+      };
+      output: {
+        /** Whether the operation succeeded. */
+        ok: boolean;
+      };
+    };
+    /** Delete a Git reference in a GitHub repository. */
+    "github.delete_ref": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The fully qualified reference without the refs/ prefix, such as heads/main or tags/v1.0.0.
+         * @minLength 1
+         */
+        ref: string;
+      };
+      output: {
+        /** Whether the operation succeeded. */
+        ok: boolean;
+      };
+    };
+    /** Delete a GitHub release by numeric id. */
+    "github.delete_release": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The release ID.
+         * @exclusiveMinimum 0
+         */
+        releaseId: number;
+      };
+      output: {
+        /** Whether the operation succeeded. */
+        ok: boolean;
+      };
+    };
+    /** Delete a GitHub release asset by numeric id. */
+    "github.delete_release_asset": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The release asset ID.
+         * @exclusiveMinimum 0
+         */
+        assetId: number;
+      };
+      output: {
+        /** Whether the operation succeeded. */
+        ok: boolean;
+      };
+    };
     /** Delete a GitHub repository by owner and name. */
     "github.delete_repository": {
       input: {
@@ -933,6 +1426,227 @@ declare module "@oomol-lab/connector" {
       output: {
         /** Whether the operation succeeded. */
         ok: boolean;
+      };
+    };
+    /** Disable a GitHub Actions workflow. */
+    "github.disable_workflow": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /** The workflow ID or workflow file name, such as ci.yml. */
+        workflowId: string | number;
+      };
+      output: {
+        /** Whether the operation succeeded. */
+        ok: boolean;
+      };
+    };
+    /** Dismiss a GitHub pull request review. */
+    "github.dismiss_pull_request_review": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The pull request number.
+         * @exclusiveMinimum 0
+         */
+        pullNumber: number;
+        /**
+         * The review ID.
+         * @exclusiveMinimum 0
+         */
+        reviewId: number;
+        /**
+         * The dismissal reason message.
+         * @minLength 1
+         */
+        message: string;
+      };
+      output: {
+        /** The review ID. */
+        id: number;
+        /** The reviewer. */
+        user?: {
+          /** The user ID. */
+          id: number;
+          /** The username. */
+          login: string;
+          /** The avatar URL. */
+          avatar_url?: string;
+          /** The profile URL. */
+          html_url?: string;
+          /** The account type. */
+          type?: string;
+          [key: string]: unknown;
+        } | null;
+        /** The review body. */
+        body?: string | null;
+        /** The review state. */
+        state?: string;
+        /** The review URL. */
+        html_url?: string;
+        /** The reviewed commit SHA. */
+        commit_id?: string | null;
+        /** The submission timestamp. */
+        submitted_at?: string | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Trigger a GitHub Actions workflow dispatch event. */
+    "github.dispatch_workflow": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /** The workflow ID or workflow file name, such as ci.yml. */
+        workflowId: string | number;
+        /**
+         * The branch or tag name to run the workflow on.
+         * @minLength 1
+         */
+        ref: string;
+        /** The workflow inputs. All values must be strings. */
+        inputs?: Record<string, string>;
+      };
+      output: {
+        /** Whether the workflow dispatch was accepted. */
+        dispatched: boolean;
+      };
+    };
+    /** Enable a GitHub Actions workflow. */
+    "github.enable_workflow": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /** The workflow ID or workflow file name, such as ci.yml. */
+        workflowId: string | number;
+      };
+      output: {
+        /** Whether the operation succeeded. */
+        ok: boolean;
+      };
+    };
+    /** Fork a GitHub repository. Forking happens asynchronously, so the returned repository may not be immediately ready. */
+    "github.fork_repository": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /** The organization to fork into. */
+        organization?: string;
+        /** The name for the forked repository. */
+        name?: string;
+        /** Whether to fork only the default branch. */
+        defaultBranchOnly?: boolean;
+      };
+      output: {
+        /** The repository ID. */
+        id: number;
+        /** The repository name. */
+        name: string;
+        /** The full repository name including owner. */
+        full_name: string;
+        /** Whether the repository is private. */
+        private: boolean;
+        /** The repository URL. */
+        html_url: string;
+        /** The HTTPS clone URL. */
+        clone_url?: string;
+        /** The SSH clone URL. */
+        ssh_url?: string;
+        /** The repository description. */
+        description?: string | null;
+        /** The default branch name. */
+        default_branch?: string;
+        /** The repository visibility. */
+        visibility?: string;
+        /** Whether the repository is a fork. */
+        fork?: boolean;
+        /** A GitHub user summary. */
+        owner: {
+          /** The user ID. */
+          id: number;
+          /** The username. */
+          login: string;
+          /** The avatar URL. */
+          avatar_url?: string;
+          /** The profile URL. */
+          html_url?: string;
+          /** The account type. */
+          type?: string;
+          [key: string]: unknown;
+        };
+        [key: string]: unknown;
+      };
+    };
+    /** Generate release notes content for a GitHub release. */
+    "github.generate_release_notes": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The tag name for the release notes.
+         * @minLength 1
+         */
+        tagName: string;
+        /** The branch or commit SHA the tag targets. */
+        targetCommitish?: string;
+        /** The previous tag name to use as the starting point. */
+        previousTagName?: string;
+        /** The path to the release notes configuration file in the repository. */
+        configurationFilePath?: string;
+      };
+      output: {
+        /** The generated release name. */
+        name: string;
+        /** The generated release notes body in Markdown. */
+        body: string;
       };
     };
     /** Get a GitHub branch by name. */
@@ -992,6 +1706,7 @@ declare module "@oomol-lab/connector" {
         url?: string;
         /** The commit metadata object. */
         commit: Record<string, unknown>;
+        /** The commit author. */
         author?: {
           /** The user ID. */
           id: number;
@@ -1005,6 +1720,7 @@ declare module "@oomol-lab/connector" {
           type?: string;
           [key: string]: unknown;
         } | null;
+        /** The commit committer. */
         committer?: {
           /** The user ID. */
           id: number;
@@ -1081,7 +1797,7 @@ declare module "@oomol-lab/connector" {
     /** Get the current authenticated GitHub user profile. */
     "github.get_current_user": {
       input: Record<string, never>;
-      output: {
+      output: ({
         /** The user ID. */
         id: number;
         /** The username. */
@@ -1092,6 +1808,8 @@ declare module "@oomol-lab/connector" {
         html_url?: string;
         /** The account type. */
         type?: string;
+        [key: string]: unknown;
+      }) & ({
         /** The display name. */
         name?: string | null;
         /** The email address. */
@@ -1103,7 +1821,7 @@ declare module "@oomol-lab/connector" {
         /** The location. */
         location?: string | null;
         [key: string]: unknown;
-      };
+      });
     };
     /** Read a repository file and return both base64 and decoded text when available. */
     "github.get_file_contents": {
@@ -1126,9 +1844,9 @@ declare module "@oomol-lab/connector" {
         /** The branch, tag, or commit SHA. */
         ref?: string;
       };
-      output: {
-        /** The content type. */
-        type: "file";
+      output: ({
+        /** The content entry type. */
+        type: "file" | "dir" | "symlink" | "submodule";
         /** The file or directory name. */
         name: string;
         /** The file path. */
@@ -1141,13 +1859,18 @@ declare module "@oomol-lab/connector" {
         html_url?: string | null;
         /** The download URL. */
         download_url?: string | null;
+        [key: string]: unknown;
+      }) & ({
+        /** The content type. */
+        type: "file";
         /** The file content encoded as base64. */
         content_base64: string;
+        /** The decoded file content. */
         decoded_content: string | null;
         /** The content encoding. */
         encoding?: string;
         [key: string]: unknown;
-      };
+      });
     };
     /** Get a GitHub issue by number. */
     "github.get_issue": {
@@ -1228,6 +1951,84 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
+    /** Get a GitHub issue comment by ID. */
+    "github.get_issue_comment": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The comment ID.
+         * @exclusiveMinimum 0
+         */
+        commentId: number;
+      };
+      output: {
+        /** The comment ID. */
+        id: number;
+        /** The comment URL. */
+        html_url: string;
+        /** The comment body. */
+        body: string;
+        /** The comment author. */
+        user?: {
+          /** The user ID. */
+          id: number;
+          /** The username. */
+          login: string;
+          /** The avatar URL. */
+          avatar_url?: string;
+          /** The profile URL. */
+          html_url?: string;
+          /** The account type. */
+          type?: string;
+          [key: string]: unknown;
+        } | null;
+        /** The creation timestamp. */
+        created_at?: string;
+        /** The last update timestamp. */
+        updated_at?: string;
+        [key: string]: unknown;
+      };
+    };
+    /** Get a GitHub label by name. */
+    "github.get_label": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The label name.
+         * @minLength 1
+         */
+        name: string;
+      };
+      output: {
+        /** The label ID. */
+        id?: number;
+        /** The label name. */
+        name: string;
+        /** The label color hex code. */
+        color?: string;
+        /** The label description. */
+        description?: string | null;
+        [key: string]: unknown;
+      };
+    };
     /** Get the latest published release for a GitHub repository. */
     "github.get_latest_release": {
       input: {
@@ -1260,9 +2061,9 @@ declare module "@oomol-lab/connector" {
         /** The assets API URL. */
         assets_url?: string;
         /** The tarball download URL. */
-        tarball_url?: string;
+        tarball_url?: string | null;
         /** The zipball download URL. */
-        zipball_url?: string;
+        zipball_url?: string | null;
         /** The target branch or commit SHA. */
         target_commitish?: string;
         /** The release author. */
@@ -1283,6 +2084,47 @@ declare module "@oomol-lab/connector" {
         created_at?: string;
         /** The publication timestamp. */
         published_at?: string | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get a GitHub milestone by number. */
+    "github.get_milestone": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The milestone number.
+         * @exclusiveMinimum 0
+         */
+        milestoneNumber: number;
+      };
+      output: {
+        /** The milestone ID. */
+        id?: number;
+        /** The milestone number. */
+        number: number;
+        /** The milestone title. */
+        title: string;
+        /** The milestone state. */
+        state: string;
+        /** The milestone description. */
+        description?: string | null;
+        /** The due date timestamp. */
+        due_on?: string | null;
+        /** The number of open issues. */
+        open_issues?: number;
+        /** The number of closed issues. */
+        closed_issues?: number;
+        /** The milestone URL. */
+        html_url?: string;
         [key: string]: unknown;
       };
     };
@@ -1341,6 +2183,91 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
+    /** Get a GitHub pull request review by ID. */
+    "github.get_pull_request_review": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The pull request number.
+         * @exclusiveMinimum 0
+         */
+        pullNumber: number;
+        /**
+         * The review ID.
+         * @exclusiveMinimum 0
+         */
+        reviewId: number;
+      };
+      output: {
+        /** The review ID. */
+        id: number;
+        /** The reviewer. */
+        user?: {
+          /** The user ID. */
+          id: number;
+          /** The username. */
+          login: string;
+          /** The avatar URL. */
+          avatar_url?: string;
+          /** The profile URL. */
+          html_url?: string;
+          /** The account type. */
+          type?: string;
+          [key: string]: unknown;
+        } | null;
+        /** The review body. */
+        body?: string | null;
+        /** The review state. */
+        state?: string;
+        /** The review URL. */
+        html_url?: string;
+        /** The reviewed commit SHA. */
+        commit_id?: string | null;
+        /** The submission timestamp. */
+        submitted_at?: string | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get a Git reference in a GitHub repository. */
+    "github.get_ref": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The fully qualified reference without the refs/ prefix, such as heads/main or tags/v1.0.0.
+         * @minLength 1
+         */
+        ref: string;
+      };
+      output: {
+        /** The fully qualified reference name. */
+        ref: string;
+        /** The node ID. */
+        node_id?: string;
+        /** The API URL. */
+        url?: string;
+        /** The Git object the reference points to. */
+        object: Record<string, unknown>;
+        [key: string]: unknown;
+      };
+    };
     /** Get a GitHub release by numeric id. */
     "github.get_release": {
       input: {
@@ -1378,9 +2305,9 @@ declare module "@oomol-lab/connector" {
         /** The assets API URL. */
         assets_url?: string;
         /** The tarball download URL. */
-        tarball_url?: string;
+        tarball_url?: string | null;
         /** The zipball download URL. */
-        zipball_url?: string;
+        zipball_url?: string | null;
         /** The target branch or commit SHA. */
         target_commitish?: string;
         /** The release author. */
@@ -1401,6 +2328,63 @@ declare module "@oomol-lab/connector" {
         created_at?: string;
         /** The publication timestamp. */
         published_at?: string | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get a GitHub release asset by numeric id. */
+    "github.get_release_asset": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The release asset ID.
+         * @exclusiveMinimum 0
+         */
+        assetId: number;
+      };
+      output: {
+        /** The asset ID. */
+        id: number;
+        /** The asset file name. */
+        name: string;
+        /** The asset label. */
+        label?: string | null;
+        /** The asset state. */
+        state?: string;
+        /** The asset MIME type. */
+        content_type?: string;
+        /** The asset file size in bytes. */
+        size?: number;
+        /** The number of downloads. */
+        download_count?: number;
+        /** The browser download URL. */
+        browser_download_url?: string;
+        /** The asset uploader. */
+        uploader?: {
+          /** The user ID. */
+          id: number;
+          /** The username. */
+          login: string;
+          /** The avatar URL. */
+          avatar_url?: string;
+          /** The profile URL. */
+          html_url?: string;
+          /** The account type. */
+          type?: string;
+          [key: string]: unknown;
+        } | null;
+        /** The creation timestamp. */
+        created_at?: string;
+        /** The last update timestamp. */
+        updated_at?: string;
         [key: string]: unknown;
       };
     };
@@ -1441,9 +2425,9 @@ declare module "@oomol-lab/connector" {
         /** The assets API URL. */
         assets_url?: string;
         /** The tarball download URL. */
-        tarball_url?: string;
+        tarball_url?: string | null;
         /** The zipball download URL. */
-        zipball_url?: string;
+        zipball_url?: string | null;
         /** The target branch or commit SHA. */
         target_commitish?: string;
         /** The release author. */
@@ -1521,6 +2505,162 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
+    /** Get the repository permission level of a GitHub user. */
+    "github.get_repository_permission_for_user": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The username.
+         * @minLength 1
+         */
+        username: string;
+      };
+      output: {
+        /** The permission level. */
+        permission: string;
+        /** The role name. */
+        role_name?: string;
+        /** The user the permission applies to. */
+        user?: {
+          /** The user ID. */
+          id: number;
+          /** The username. */
+          login: string;
+          /** The avatar URL. */
+          avatar_url?: string;
+          /** The profile URL. */
+          html_url?: string;
+          /** The account type. */
+          type?: string;
+          [key: string]: unknown;
+        } | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get the README of a GitHub repository and return both base64 and decoded text when available. */
+    "github.get_repository_readme": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /** The branch, tag, or commit SHA. */
+        ref?: string;
+      };
+      output: ({
+        /** The content entry type. */
+        type: "file" | "dir" | "symlink" | "submodule";
+        /** The file or directory name. */
+        name: string;
+        /** The file path. */
+        path: string;
+        /** The content SHA. */
+        sha: string;
+        /** The file size in bytes. */
+        size?: number;
+        /** The content URL. */
+        html_url?: string | null;
+        /** The download URL. */
+        download_url?: string | null;
+        [key: string]: unknown;
+      }) & ({
+        /** The content type. */
+        type: "file";
+        /** The file content encoded as base64. */
+        content_base64: string;
+        /** The decoded file content. */
+        decoded_content: string | null;
+        /** The content encoding. */
+        encoding?: string;
+        [key: string]: unknown;
+      });
+    };
+    /** Get a GitHub user profile by username. */
+    "github.get_user": {
+      input: {
+        /**
+         * The username.
+         * @minLength 1
+         */
+        username: string;
+      };
+      output: ({
+        /** The user ID. */
+        id: number;
+        /** The username. */
+        login: string;
+        /** The avatar URL. */
+        avatar_url?: string;
+        /** The profile URL. */
+        html_url?: string;
+        /** The account type. */
+        type?: string;
+        [key: string]: unknown;
+      }) & ({
+        /** The display name. */
+        name?: string | null;
+        /** The email address. */
+        email?: string | null;
+        /** The bio. */
+        bio?: string | null;
+        /** The company. */
+        company?: string | null;
+        /** The location. */
+        location?: string | null;
+        /** The number of followers. */
+        followers?: number;
+        /** The number of users followed. */
+        following?: number;
+        /** The number of public repositories. */
+        public_repos?: number;
+        [key: string]: unknown;
+      });
+    };
+    /** Get a GitHub Actions workflow by ID or file name. */
+    "github.get_workflow": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /** The workflow ID or workflow file name, such as ci.yml. */
+        workflowId: string | number;
+      };
+      output: {
+        /** The workflow ID. */
+        id: number;
+        /** The workflow name. */
+        name: string;
+        /** The workflow file path. */
+        path: string;
+        /** The workflow state. */
+        state?: string;
+        /** The workflow URL. */
+        html_url?: string;
+        [key: string]: unknown;
+      };
+    };
     /** Get a GitHub workflow run by id. */
     "github.get_workflow_run": {
       input: {
@@ -1564,6 +2704,48 @@ declare module "@oomol-lab/connector" {
         /** The run number. */
         run_number?: number;
         [key: string]: unknown;
+      };
+    };
+    /** List available assignees for issues in a GitHub repository. */
+    "github.list_assignees": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The number of results per page.
+         * @minimum 1
+         * @maximum 100
+         */
+        perPage?: number;
+        /**
+         * The page number to fetch.
+         * @minimum 1
+         */
+        page?: number;
+      };
+      output: {
+        /** The available assignees. */
+        assignees: Array<{
+          /** The user ID. */
+          id: number;
+          /** The username. */
+          login: string;
+          /** The avatar URL. */
+          avatar_url?: string;
+          /** The profile URL. */
+          html_url?: string;
+          /** The account type. */
+          type?: string;
+          [key: string]: unknown;
+        }>;
       };
     };
     /** List activity events for a GitHub user and include private events when the authenticated credential belongs to that user. */
@@ -1784,6 +2966,71 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
+    /** List comments on a commit in a GitHub repository. */
+    "github.list_commit_comments": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The commit SHA.
+         * @minLength 1
+         */
+        commitSha: string;
+        /**
+         * The number of results per page.
+         * @minimum 1
+         * @maximum 100
+         */
+        perPage?: number;
+        /**
+         * The page number to fetch.
+         * @minimum 1
+         */
+        page?: number;
+      };
+      output: {
+        /** The list of commit comments. */
+        comments: Array<{
+          /** The comment ID. */
+          id: number;
+          /** The comment body. */
+          body: string;
+          /** The comment URL. */
+          html_url: string;
+          /** The file path the comment applies to. */
+          path?: string | null;
+          /** The line index in the diff. */
+          position?: number | null;
+          /** The comment author. */
+          user?: {
+            /** The user ID. */
+            id: number;
+            /** The username. */
+            login: string;
+            /** The avatar URL. */
+            avatar_url?: string;
+            /** The profile URL. */
+            html_url?: string;
+            /** The account type. */
+            type?: string;
+            [key: string]: unknown;
+          } | null;
+          /** The creation timestamp. */
+          created_at?: string;
+          /** The last update timestamp. */
+          updated_at?: string;
+          [key: string]: unknown;
+        }>;
+      };
+    };
     /** List commits in a GitHub repository with optional branch, path, author, and date filters. */
     "github.list_commits": {
       input: {
@@ -1832,6 +3079,7 @@ declare module "@oomol-lab/connector" {
           url?: string;
           /** The commit metadata object. */
           commit: Record<string, unknown>;
+          /** The commit author. */
           author?: {
             /** The user ID. */
             id: number;
@@ -1845,6 +3093,7 @@ declare module "@oomol-lab/connector" {
             type?: string;
             [key: string]: unknown;
           } | null;
+          /** The commit committer. */
           committer?: {
             /** The user ID. */
             id: number;
@@ -1959,7 +3208,7 @@ declare module "@oomol-lab/connector" {
             /** The account type. */
             type?: string;
             [key: string]: unknown;
-          };
+          } | null;
           /** The creation timestamp. */
           created_at?: string;
           /** The last update timestamp. */
@@ -2021,6 +3270,7 @@ declare module "@oomol-lab/connector" {
           };
           /** The event timestamp. */
           created_at?: string;
+          /** The associated commit SHA. */
           commit_id?: string | null;
           [key: string]: unknown;
         }>;
@@ -2124,7 +3374,98 @@ declare module "@oomol-lab/connector" {
           };
           /** The event timestamp. */
           created_at?: string;
+          /** The associated commit SHA. */
           commit_id?: string | null;
+          [key: string]: unknown;
+        }>;
+      };
+    };
+    /** List Git references matching a prefix in a GitHub repository. */
+    "github.list_matching_refs": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The reference prefix to match, such as heads/feature. The endpoint is not paginated and always returns all matching references.
+         * @minLength 1
+         */
+        ref: string;
+      };
+      output: {
+        /** The matching Git references. */
+        refs: Array<{
+          /** The fully qualified reference name. */
+          ref: string;
+          /** The node ID. */
+          node_id?: string;
+          /** The API URL. */
+          url?: string;
+          /** The Git object the reference points to. */
+          object: Record<string, unknown>;
+          [key: string]: unknown;
+        }>;
+      };
+    };
+    /** List milestones for a GitHub repository. */
+    "github.list_milestones": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /** The milestone state filter. */
+        state?: "open" | "closed" | "all";
+        /** The sort field. */
+        sort?: "due_on" | "completeness";
+        /** The sort direction. */
+        direction?: "asc" | "desc";
+        /**
+         * The number of results per page.
+         * @minimum 1
+         * @maximum 100
+         */
+        perPage?: number;
+        /**
+         * The page number to fetch.
+         * @minimum 1
+         */
+        page?: number;
+      };
+      output: {
+        /** The list of milestones. */
+        milestones: Array<{
+          /** The milestone ID. */
+          id?: number;
+          /** The milestone number. */
+          number: number;
+          /** The milestone title. */
+          title: string;
+          /** The milestone state. */
+          state: string;
+          /** The milestone description. */
+          description?: string | null;
+          /** The due date timestamp. */
+          due_on?: string | null;
+          /** The number of open issues. */
+          open_issues?: number;
+          /** The number of closed issues. */
+          closed_issues?: number;
+          /** The milestone URL. */
+          html_url?: string;
           [key: string]: unknown;
         }>;
       };
@@ -2134,6 +3475,137 @@ declare module "@oomol-lab/connector" {
       input: {
         /** The visibility filter. */
         visibility?: "all" | "public" | "private";
+        /** The sort field. */
+        sort?: "created" | "updated" | "pushed" | "full_name";
+        /** The sort direction. */
+        direction?: "asc" | "desc";
+        /**
+         * The number of results per page.
+         * @minimum 1
+         * @maximum 100
+         */
+        perPage?: number;
+        /**
+         * The page number to fetch.
+         * @minimum 1
+         */
+        page?: number;
+      };
+      output: {
+        /** The list of repositories. */
+        repositories: Array<{
+          /** The repository ID. */
+          id: number;
+          /** The repository name. */
+          name: string;
+          /** The full repository name including owner. */
+          full_name: string;
+          /** Whether the repository is private. */
+          private: boolean;
+          /** The repository URL. */
+          html_url: string;
+          /** The HTTPS clone URL. */
+          clone_url?: string;
+          /** The SSH clone URL. */
+          ssh_url?: string;
+          /** The repository description. */
+          description?: string | null;
+          /** The default branch name. */
+          default_branch?: string;
+          /** The repository visibility. */
+          visibility?: string;
+          /** Whether the repository is a fork. */
+          fork?: boolean;
+          /** A GitHub user summary. */
+          owner: {
+            /** The user ID. */
+            id: number;
+            /** The username. */
+            login: string;
+            /** The avatar URL. */
+            avatar_url?: string;
+            /** The profile URL. */
+            html_url?: string;
+            /** The account type. */
+            type?: string;
+            [key: string]: unknown;
+          };
+          [key: string]: unknown;
+        }>;
+      };
+    };
+    /** List repositories starred by the authenticated GitHub user. */
+    "github.list_my_starred_repositories": {
+      input: {
+        /** The sort field. */
+        sort?: "created" | "updated";
+        /** The sort direction. */
+        direction?: "asc" | "desc";
+        /**
+         * The number of results per page.
+         * @minimum 1
+         * @maximum 100
+         */
+        perPage?: number;
+        /**
+         * The page number to fetch.
+         * @minimum 1
+         */
+        page?: number;
+      };
+      output: {
+        /** The starred repositories. */
+        repositories: Array<{
+          /** The repository ID. */
+          id: number;
+          /** The repository name. */
+          name: string;
+          /** The full repository name including owner. */
+          full_name: string;
+          /** Whether the repository is private. */
+          private: boolean;
+          /** The repository URL. */
+          html_url: string;
+          /** The HTTPS clone URL. */
+          clone_url?: string;
+          /** The SSH clone URL. */
+          ssh_url?: string;
+          /** The repository description. */
+          description?: string | null;
+          /** The default branch name. */
+          default_branch?: string;
+          /** The repository visibility. */
+          visibility?: string;
+          /** Whether the repository is a fork. */
+          fork?: boolean;
+          /** A GitHub user summary. */
+          owner: {
+            /** The user ID. */
+            id: number;
+            /** The username. */
+            login: string;
+            /** The avatar URL. */
+            avatar_url?: string;
+            /** The profile URL. */
+            html_url?: string;
+            /** The account type. */
+            type?: string;
+            [key: string]: unknown;
+          };
+          [key: string]: unknown;
+        }>;
+      };
+    };
+    /** List repositories for a GitHub organization. */
+    "github.list_organization_repositories": {
+      input: {
+        /**
+         * The organization name.
+         * @minLength 1
+         */
+        org: string;
+        /** The repository type filter. */
+        type?: "all" | "public" | "private" | "forks" | "sources" | "member";
         /** The sort field. */
         sort?: "created" | "updated" | "pushed" | "full_name";
         /** The sort direction. */
@@ -2284,6 +3756,7 @@ declare module "@oomol-lab/connector" {
           url?: string;
           /** The commit metadata object. */
           commit: Record<string, unknown>;
+          /** The commit author. */
           author?: {
             /** The user ID. */
             id: number;
@@ -2297,6 +3770,7 @@ declare module "@oomol-lab/connector" {
             type?: string;
             [key: string]: unknown;
           } | null;
+          /** The commit committer. */
           committer?: {
             /** The user ID. */
             id: number;
@@ -2451,7 +3925,7 @@ declare module "@oomol-lab/connector" {
             /** The account type. */
             type?: string;
             [key: string]: unknown;
-          };
+          } | null;
           /** The commit SHA the comment applies to. */
           commit_id?: string;
           /** The original commit SHA. */
@@ -2460,10 +3934,13 @@ declare module "@oomol-lab/connector" {
           diff_hunk?: string;
           /** The comment URL. */
           html_url?: string;
+          /** The line number in the diff. */
           line?: number | null;
+          /** The start line for multi-line comments. */
           start_line?: number | null;
           /** The side of the diff. */
           side?: string;
+          /** The start side for multi-line comments. */
           start_side?: string | null;
           [key: string]: unknown;
         }>;
@@ -2517,7 +3994,7 @@ declare module "@oomol-lab/connector" {
             /** The account type. */
             type?: string;
             [key: string]: unknown;
-          };
+          } | null;
           /** The review body. */
           body?: string | null;
           /** The review state. */
@@ -2525,7 +4002,7 @@ declare module "@oomol-lab/connector" {
           /** The review URL. */
           html_url?: string;
           /** The reviewed commit SHA. */
-          commit_id?: string;
+          commit_id?: string | null;
           /** The submission timestamp. */
           submitted_at?: string | null;
           [key: string]: unknown;
@@ -2737,7 +4214,7 @@ declare module "@oomol-lab/connector" {
             /** The account type. */
             type?: string;
             [key: string]: unknown;
-          };
+          } | null;
           /** The creation timestamp. */
           created_at?: string;
           /** The last update timestamp. */
@@ -2791,9 +4268,9 @@ declare module "@oomol-lab/connector" {
           /** The assets API URL. */
           assets_url?: string;
           /** The tarball download URL. */
-          tarball_url?: string;
+          tarball_url?: string | null;
           /** The zipball download URL. */
-          zipball_url?: string;
+          zipball_url?: string | null;
           /** The target branch or commit SHA. */
           target_commitish?: string;
           /** The release author. */
@@ -2814,6 +4291,104 @@ declare module "@oomol-lab/connector" {
           created_at?: string;
           /** The publication timestamp. */
           published_at?: string | null;
+          [key: string]: unknown;
+        }>;
+      };
+    };
+    /** List collaborators of a GitHub repository. */
+    "github.list_repository_collaborators": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /** The collaborator affiliation filter. */
+        affiliation?: "outside" | "direct" | "all";
+        /** The permission level filter. */
+        permission?: "pull" | "triage" | "push" | "maintain" | "admin";
+        /**
+         * The number of results per page.
+         * @minimum 1
+         * @maximum 100
+         */
+        perPage?: number;
+        /**
+         * The page number to fetch.
+         * @minimum 1
+         */
+        page?: number;
+      };
+      output: {
+        /** The list of collaborators. */
+        collaborators: Array<({
+          /** The user ID. */
+          id: number;
+          /** The username. */
+          login: string;
+          /** The avatar URL. */
+          avatar_url?: string;
+          /** The profile URL. */
+          html_url?: string;
+          /** The account type. */
+          type?: string;
+          [key: string]: unknown;
+        }) & ({
+          /** The collaborator permissions. */
+          permissions?: Record<string, unknown>;
+          /** The collaborator role name. */
+          role_name?: string;
+          [key: string]: unknown;
+        })>;
+      };
+    };
+    /** List contributors to a GitHub repository. */
+    "github.list_repository_contributors": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /** Whether to include anonymous contributors. */
+        anon?: boolean;
+        /**
+         * The number of results per page.
+         * @minimum 1
+         * @maximum 100
+         */
+        perPage?: number;
+        /**
+         * The page number to fetch.
+         * @minimum 1
+         */
+        page?: number;
+      };
+      output: {
+        /** The list of contributors. */
+        contributors: Array<{
+          /** The number of contributions. */
+          contributions: number;
+          /** The username. */
+          login?: string;
+          /** The user ID. */
+          id?: number;
+          /** The avatar URL. */
+          avatar_url?: string;
+          /** The profile URL. */
+          html_url?: string;
+          /** The account type. */
+          type?: string;
           [key: string]: unknown;
         }>;
       };
@@ -2878,6 +4453,76 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
+    /** List forks of a GitHub repository. */
+    "github.list_repository_forks": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /** The sort field. */
+        sort?: "newest" | "oldest" | "stargazers" | "watchers";
+        /**
+         * The number of results per page.
+         * @minimum 1
+         * @maximum 100
+         */
+        perPage?: number;
+        /**
+         * The page number to fetch.
+         * @minimum 1
+         */
+        page?: number;
+      };
+      output: {
+        /** The list of forks. */
+        repositories: Array<{
+          /** The repository ID. */
+          id: number;
+          /** The repository name. */
+          name: string;
+          /** The full repository name including owner. */
+          full_name: string;
+          /** Whether the repository is private. */
+          private: boolean;
+          /** The repository URL. */
+          html_url: string;
+          /** The HTTPS clone URL. */
+          clone_url?: string;
+          /** The SSH clone URL. */
+          ssh_url?: string;
+          /** The repository description. */
+          description?: string | null;
+          /** The default branch name. */
+          default_branch?: string;
+          /** The repository visibility. */
+          visibility?: string;
+          /** Whether the repository is a fork. */
+          fork?: boolean;
+          /** A GitHub user summary. */
+          owner: {
+            /** The user ID. */
+            id: number;
+            /** The username. */
+            login: string;
+            /** The avatar URL. */
+            avatar_url?: string;
+            /** The profile URL. */
+            html_url?: string;
+            /** The account type. */
+            type?: string;
+            [key: string]: unknown;
+          };
+          [key: string]: unknown;
+        }>;
+      };
+    };
     /** List issue events across a GitHub repository. */
     "github.list_repository_issue_events": {
       input: {
@@ -2926,6 +4571,7 @@ declare module "@oomol-lab/connector" {
           };
           /** The event timestamp. */
           created_at?: string;
+          /** The associated commit SHA. */
           commit_id?: string | null;
           [key: string]: unknown;
         }>;
@@ -3065,6 +4711,179 @@ declare module "@oomol-lab/connector" {
           color?: string;
           /** The label description. */
           description?: string | null;
+          [key: string]: unknown;
+        }>;
+      };
+    };
+    /** List languages used in a GitHub repository with byte counts. */
+    "github.list_repository_languages": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+      };
+      output: {
+        /** The languages used in the repository keyed by language name. */
+        languages: Record<string, number>;
+      };
+    };
+    /** List users who starred a GitHub repository. */
+    "github.list_repository_stargazers": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The number of results per page.
+         * @minimum 1
+         * @maximum 100
+         */
+        perPage?: number;
+        /**
+         * The page number to fetch.
+         * @minimum 1
+         */
+        page?: number;
+      };
+      output: {
+        /** The users who starred the repository. */
+        stargazers: Array<{
+          /** The user ID. */
+          id: number;
+          /** The username. */
+          login: string;
+          /** The avatar URL. */
+          avatar_url?: string;
+          /** The profile URL. */
+          html_url?: string;
+          /** The account type. */
+          type?: string;
+          [key: string]: unknown;
+        }>;
+      };
+    };
+    /** List tags in a GitHub repository. */
+    "github.list_repository_tags": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The number of results per page.
+         * @minimum 1
+         * @maximum 100
+         */
+        perPage?: number;
+        /**
+         * The page number to fetch.
+         * @minimum 1
+         */
+        page?: number;
+      };
+      output: {
+        /** The list of tags. */
+        tags: Array<{
+          /** The tag name. */
+          name: string;
+          /** The commit the tag points to. */
+          commit: Record<string, unknown>;
+          /** The zipball download URL. */
+          zipball_url?: string;
+          /** The tarball download URL. */
+          tarball_url?: string;
+          [key: string]: unknown;
+        }>;
+      };
+    };
+    /** List topics of a GitHub repository. */
+    "github.list_repository_topics": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The number of results per page.
+         * @minimum 1
+         * @maximum 100
+         */
+        perPage?: number;
+        /**
+         * The page number to fetch.
+         * @minimum 1
+         */
+        page?: number;
+      };
+      output: {
+        /** The repository topic names. */
+        names: Array<string>;
+      };
+    };
+    /** List users watching a GitHub repository. */
+    "github.list_repository_watchers": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The number of results per page.
+         * @minimum 1
+         * @maximum 100
+         */
+        perPage?: number;
+        /**
+         * The page number to fetch.
+         * @minimum 1
+         */
+        page?: number;
+      };
+      output: {
+        /** The users watching the repository. */
+        watchers: Array<{
+          /** The user ID. */
+          id: number;
+          /** The username. */
+          login: string;
+          /** The avatar URL. */
+          avatar_url?: string;
+          /** The profile URL. */
+          html_url?: string;
+          /** The account type. */
+          type?: string;
           [key: string]: unknown;
         }>;
       };
@@ -3219,6 +5038,130 @@ declare module "@oomol-lab/connector" {
           public?: boolean;
           /** The event timestamp. */
           created_at?: string;
+          [key: string]: unknown;
+        }>;
+      };
+    };
+    /** List public repositories for a GitHub user. */
+    "github.list_user_repositories": {
+      input: {
+        /**
+         * The username.
+         * @minLength 1
+         */
+        username: string;
+        /** The repository type filter. */
+        type?: "all" | "owner" | "member";
+        /** The sort field. */
+        sort?: "created" | "updated" | "pushed" | "full_name";
+        /** The sort direction. */
+        direction?: "asc" | "desc";
+        /**
+         * The number of results per page.
+         * @minimum 1
+         * @maximum 100
+         */
+        perPage?: number;
+        /**
+         * The page number to fetch.
+         * @minimum 1
+         */
+        page?: number;
+      };
+      output: {
+        /** The list of repositories. */
+        repositories: Array<{
+          /** The repository ID. */
+          id: number;
+          /** The repository name. */
+          name: string;
+          /** The full repository name including owner. */
+          full_name: string;
+          /** Whether the repository is private. */
+          private: boolean;
+          /** The repository URL. */
+          html_url: string;
+          /** The HTTPS clone URL. */
+          clone_url?: string;
+          /** The SSH clone URL. */
+          ssh_url?: string;
+          /** The repository description. */
+          description?: string | null;
+          /** The default branch name. */
+          default_branch?: string;
+          /** The repository visibility. */
+          visibility?: string;
+          /** Whether the repository is a fork. */
+          fork?: boolean;
+          /** A GitHub user summary. */
+          owner: {
+            /** The user ID. */
+            id: number;
+            /** The username. */
+            login: string;
+            /** The avatar URL. */
+            avatar_url?: string;
+            /** The profile URL. */
+            html_url?: string;
+            /** The account type. */
+            type?: string;
+            [key: string]: unknown;
+          };
+          [key: string]: unknown;
+        }>;
+      };
+    };
+    /** List artifacts for a GitHub Actions workflow run. */
+    "github.list_workflow_run_artifacts": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The workflow run ID.
+         * @exclusiveMinimum 0
+         */
+        runId: number;
+        /** Filter artifacts by exact name. */
+        name?: string;
+        /**
+         * The number of results per page.
+         * @minimum 1
+         * @maximum 100
+         */
+        perPage?: number;
+        /**
+         * The page number to fetch.
+         * @minimum 1
+         */
+        page?: number;
+      };
+      output: {
+        /** The total number of artifacts. */
+        total_count: number;
+        /** The list of artifacts. */
+        artifacts: Array<{
+          /** The artifact ID. */
+          id: number;
+          /** The artifact name. */
+          name: string;
+          /** The artifact size in bytes. */
+          size_in_bytes?: number;
+          /** The archive download URL. */
+          archive_download_url?: string;
+          /** Whether the artifact has expired. */
+          expired?: boolean;
+          /** The creation timestamp. */
+          created_at?: string | null;
+          /** The expiration timestamp. */
+          expires_at?: string | null;
           [key: string]: unknown;
         }>;
       };
@@ -3418,6 +5361,7 @@ declare module "@oomol-lab/connector" {
         url?: string;
         /** The commit metadata object. */
         commit: Record<string, unknown>;
+        /** The commit author. */
         author?: {
           /** The user ID. */
           id: number;
@@ -3431,6 +5375,7 @@ declare module "@oomol-lab/connector" {
           type?: string;
           [key: string]: unknown;
         } | null;
+        /** The commit committer. */
         committer?: {
           /** The user ID. */
           id: number;
@@ -3690,6 +5635,30 @@ declare module "@oomol-lab/connector" {
         requested_teams: Array<Record<string, unknown>>;
       };
     };
+    /** Remove a collaborator from a GitHub repository. */
+    "github.remove_repository_collaborator": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The username.
+         * @minLength 1
+         */
+        username: string;
+      };
+      output: {
+        /** Whether the operation succeeded. */
+        ok: boolean;
+      };
+    };
     /** Rename a branch in a GitHub repository. */
     "github.rename_branch": {
       input: {
@@ -3722,6 +5691,27 @@ declare module "@oomol-lab/connector" {
         /** Whether the branch is protected. */
         protected?: boolean;
         [key: string]: unknown;
+      };
+    };
+    /** Replace all topics of a GitHub repository. */
+    "github.replace_repository_topics": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /** The full set of lowercase topic names to set on the repository. */
+        names: Array<string>;
+      };
+      output: {
+        /** The repository topic names after replacement. */
+        names: Array<string>;
       };
     };
     /** Reply to a top-level GitHub pull request review comment. */
@@ -3773,7 +5763,7 @@ declare module "@oomol-lab/connector" {
           /** The account type. */
           type?: string;
           [key: string]: unknown;
-        };
+        } | null;
         /** The commit SHA the comment applies to. */
         commit_id?: string;
         /** The original commit SHA. */
@@ -3782,10 +5772,13 @@ declare module "@oomol-lab/connector" {
         diff_hunk?: string;
         /** The comment URL. */
         html_url?: string;
+        /** The line number in the diff. */
         line?: number | null;
+        /** The start line for multi-line comments. */
         start_line?: number | null;
         /** The side of the diff. */
         side?: string;
+        /** The start side for multi-line comments. */
         start_side?: string | null;
         [key: string]: unknown;
       };
@@ -3914,6 +5907,32 @@ declare module "@oomol-lab/connector" {
       output: {
         /** Whether the operation succeeded. */
         ok: boolean;
+      };
+    };
+    /** Re-run failed jobs of a GitHub Actions workflow run. */
+    "github.rerun_failed_jobs": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The workflow run ID.
+         * @exclusiveMinimum 0
+         */
+        runId: number;
+        /** Whether to enable debug logging for the rerun. */
+        enableDebugLogging?: boolean;
+      };
+      output: {
+        /** Whether the rerun was requested. */
+        rerun_requested: boolean;
       };
     };
     /** Re-run a GitHub Actions workflow run. */
@@ -4052,6 +6071,7 @@ declare module "@oomol-lab/connector" {
           url?: string;
           /** The commit metadata object. */
           commit: Record<string, unknown>;
+          /** The commit author. */
           author?: {
             /** The user ID. */
             id: number;
@@ -4065,6 +6085,7 @@ declare module "@oomol-lab/connector" {
             type?: string;
             [key: string]: unknown;
           } | null;
+          /** The commit committer. */
           committer?: {
             /** The user ID. */
             id: number;
@@ -4431,6 +6452,25 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
+    /** Star a GitHub repository for the authenticated user. */
+    "github.star_repository": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+      };
+      output: {
+        /** Whether the operation succeeded. */
+        ok: boolean;
+      };
+    };
     /** Submit a pending GitHub pull request review. */
     "github.submit_pull_request_review": {
       input: {
@@ -4475,7 +6515,7 @@ declare module "@oomol-lab/connector" {
           /** The account type. */
           type?: string;
           [key: string]: unknown;
-        };
+        } | null;
         /** The review body. */
         body?: string | null;
         /** The review state. */
@@ -4483,7 +6523,7 @@ declare module "@oomol-lab/connector" {
         /** The review URL. */
         html_url?: string;
         /** The reviewed commit SHA. */
-        commit_id?: string;
+        commit_id?: string | null;
         /** The submission timestamp. */
         submitted_at?: string | null;
         [key: string]: unknown;
@@ -4534,6 +6574,25 @@ declare module "@oomol-lab/connector" {
         locked: false;
       };
     };
+    /** Unstar a GitHub repository for the authenticated user. */
+    "github.unstar_repository": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+      };
+      output: {
+        /** Whether the operation succeeded. */
+        ok: boolean;
+      };
+    };
     /** Update a GitHub issue by number. */
     "github.update_issue": {
       input: {
@@ -4562,6 +6621,10 @@ declare module "@oomol-lab/connector" {
         assignees?: Array<string>;
         /** The labels to set. */
         labels?: Array<string>;
+        /**
+         * The milestone number.
+         * @exclusiveMinimum 0
+         */
         milestone?: number | null;
       };
       output: {
@@ -4621,6 +6684,147 @@ declare module "@oomol-lab/connector" {
         } | string>;
         /** The linked pull request metadata. */
         pull_request?: Record<string, unknown>;
+        [key: string]: unknown;
+      };
+    };
+    /** Update a GitHub issue comment by ID. */
+    "github.update_issue_comment": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The comment ID.
+         * @exclusiveMinimum 0
+         */
+        commentId: number;
+        /**
+         * The new comment body.
+         * @minLength 1
+         */
+        body: string;
+      };
+      output: {
+        /** The comment ID. */
+        id: number;
+        /** The comment URL. */
+        html_url: string;
+        /** The comment body. */
+        body: string;
+        /** The comment author. */
+        user?: {
+          /** The user ID. */
+          id: number;
+          /** The username. */
+          login: string;
+          /** The avatar URL. */
+          avatar_url?: string;
+          /** The profile URL. */
+          html_url?: string;
+          /** The account type. */
+          type?: string;
+          [key: string]: unknown;
+        } | null;
+        /** The creation timestamp. */
+        created_at?: string;
+        /** The last update timestamp. */
+        updated_at?: string;
+        [key: string]: unknown;
+      };
+    };
+    /** Update a GitHub label by name. */
+    "github.update_label": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The label name.
+         * @minLength 1
+         */
+        name: string;
+        /** The new label name. */
+        newName?: string;
+        /** The label color as a 6-character hex value without #. */
+        color?: string;
+        /** The new label description. */
+        description?: string;
+      };
+      output: {
+        /** The label ID. */
+        id?: number;
+        /** The label name. */
+        name: string;
+        /** The label color hex code. */
+        color?: string;
+        /** The label description. */
+        description?: string | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Update a GitHub milestone by number. */
+    "github.update_milestone": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The milestone number.
+         * @exclusiveMinimum 0
+         */
+        milestoneNumber: number;
+        /** The new milestone title. */
+        title?: string;
+        /** The new milestone state. */
+        state?: "open" | "closed";
+        /** The new milestone description. */
+        description?: string;
+        /**
+         * The milestone due date as an ISO 8601 timestamp.
+         * @format date-time
+         */
+        dueOn?: string;
+      };
+      output: {
+        /** The milestone ID. */
+        id?: number;
+        /** The milestone number. */
+        number: number;
+        /** The milestone title. */
+        title: string;
+        /** The milestone state. */
+        state: string;
+        /** The milestone description. */
+        description?: string | null;
+        /** The due date timestamp. */
+        due_on?: string | null;
+        /** The number of open issues. */
+        open_issues?: number;
+        /** The number of closed issues. */
+        closed_issues?: number;
+        /** The milestone URL. */
+        html_url?: string;
         [key: string]: unknown;
       };
     };
@@ -4715,6 +6919,274 @@ declare module "@oomol-lab/connector" {
         message: string;
         /** The URL of the updated branch. */
         url: string;
+      };
+    };
+    /** Update a GitHub pull request review comment by ID. */
+    "github.update_pull_request_review_comment": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The comment ID.
+         * @exclusiveMinimum 0
+         */
+        commentId: number;
+        /**
+         * The new comment body.
+         * @minLength 1
+         */
+        body: string;
+      };
+      output: {
+        /** The comment ID. */
+        id: number;
+        /** The file path the comment applies to. */
+        path: string;
+        /** The comment body. */
+        body: string;
+        /** The comment author. */
+        user?: {
+          /** The user ID. */
+          id: number;
+          /** The username. */
+          login: string;
+          /** The avatar URL. */
+          avatar_url?: string;
+          /** The profile URL. */
+          html_url?: string;
+          /** The account type. */
+          type?: string;
+          [key: string]: unknown;
+        } | null;
+        /** The commit SHA the comment applies to. */
+        commit_id?: string;
+        /** The original commit SHA. */
+        original_commit_id?: string;
+        /** The diff hunk the comment applies to. */
+        diff_hunk?: string;
+        /** The comment URL. */
+        html_url?: string;
+        /** The line number in the diff. */
+        line?: number | null;
+        /** The start line for multi-line comments. */
+        start_line?: number | null;
+        /** The side of the diff. */
+        side?: string;
+        /** The start side for multi-line comments. */
+        start_side?: string | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Update a Git reference in a GitHub repository. */
+    "github.update_ref": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The fully qualified reference without the refs/ prefix, such as heads/main or tags/v1.0.0.
+         * @minLength 1
+         */
+        ref: string;
+        /**
+         * The SHA the ref should point to.
+         * @minLength 1
+         */
+        sha: string;
+        /** Whether to force the update when it is not a fast-forward. */
+        force?: boolean;
+      };
+      output: {
+        /** The fully qualified reference name. */
+        ref: string;
+        /** The node ID. */
+        node_id?: string;
+        /** The API URL. */
+        url?: string;
+        /** The Git object the reference points to. */
+        object: Record<string, unknown>;
+        [key: string]: unknown;
+      };
+    };
+    /** Update a GitHub release by numeric id. */
+    "github.update_release": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The release ID.
+         * @exclusiveMinimum 0
+         */
+        releaseId: number;
+        /** The tag name for the release. */
+        tagName?: string;
+        /** The branch or commit SHA to tag. */
+        targetCommitish?: string;
+        /** The release title. */
+        name?: string;
+        /** The release body. */
+        body?: string;
+        /** Whether the release is a draft. */
+        draft?: boolean;
+        /** Whether to mark the release as prerelease. */
+        prerelease?: boolean;
+        /** Whether this release should be marked latest. */
+        makeLatest?: "true" | "false" | "legacy";
+      };
+      output: {
+        /** The release ID. */
+        id: number;
+        /** The release tag name. */
+        tag_name: string;
+        /** The release name. */
+        name?: string | null;
+        /** The release body. */
+        body?: string | null;
+        /** Whether the release is a draft. */
+        draft?: boolean;
+        /** Whether the release is a prerelease. */
+        prerelease?: boolean;
+        /** The release URL. */
+        html_url?: string;
+        /** The assets API URL. */
+        assets_url?: string;
+        /** The tarball download URL. */
+        tarball_url?: string | null;
+        /** The zipball download URL. */
+        zipball_url?: string | null;
+        /** The target branch or commit SHA. */
+        target_commitish?: string;
+        /** The release author. */
+        author?: {
+          /** The user ID. */
+          id: number;
+          /** The username. */
+          login: string;
+          /** The avatar URL. */
+          avatar_url?: string;
+          /** The profile URL. */
+          html_url?: string;
+          /** The account type. */
+          type?: string;
+          [key: string]: unknown;
+        };
+        /** The creation timestamp. */
+        created_at?: string;
+        /** The publication timestamp. */
+        published_at?: string | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Update settings and metadata for a GitHub repository. */
+    "github.update_repository": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /** The new repository name. */
+        name?: string;
+        /** The new repository description. */
+        description?: string;
+        /**
+         * The repository homepage URL.
+         * @format uri
+         */
+        homepage?: string;
+        /** Whether the repository is private. */
+        private?: boolean;
+        /** The repository visibility. */
+        visibility?: "public" | "private";
+        /** The default branch name. */
+        defaultBranch?: string;
+        /** Whether issues are enabled. */
+        hasIssues?: boolean;
+        /** Whether projects are enabled. */
+        hasProjects?: boolean;
+        /** Whether the wiki is enabled. */
+        hasWiki?: boolean;
+        /** Whether discussions are enabled. */
+        hasDiscussions?: boolean;
+        /** Whether squash merging is allowed. */
+        allowSquashMerge?: boolean;
+        /** Whether merge commits are allowed. */
+        allowMergeCommit?: boolean;
+        /** Whether rebase merging is allowed. */
+        allowRebaseMerge?: boolean;
+        /** Whether auto-merge is allowed. */
+        allowAutoMerge?: boolean;
+        /** Whether head branches are deleted after merge. */
+        deleteBranchOnMerge?: boolean;
+        /** Whether the repository is archived. */
+        archived?: boolean;
+      };
+      output: {
+        /** The repository ID. */
+        id: number;
+        /** The repository name. */
+        name: string;
+        /** The full repository name including owner. */
+        full_name: string;
+        /** Whether the repository is private. */
+        private: boolean;
+        /** The repository URL. */
+        html_url: string;
+        /** The HTTPS clone URL. */
+        clone_url?: string;
+        /** The SSH clone URL. */
+        ssh_url?: string;
+        /** The repository description. */
+        description?: string | null;
+        /** The default branch name. */
+        default_branch?: string;
+        /** The repository visibility. */
+        visibility?: string;
+        /** Whether the repository is a fork. */
+        fork?: boolean;
+        /** A GitHub user summary. */
+        owner: {
+          /** The user ID. */
+          id: number;
+          /** The username. */
+          login: string;
+          /** The avatar URL. */
+          avatar_url?: string;
+          /** The profile URL. */
+          html_url?: string;
+          /** The account type. */
+          type?: string;
+          [key: string]: unknown;
+        };
+        [key: string]: unknown;
       };
     };
   }

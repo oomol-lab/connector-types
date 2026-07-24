@@ -50,6 +50,7 @@ declare module "@oomol-lab/connector" {
           type: string;
           /** The record name. */
           name: string;
+          /** The record content. */
           content?: string | null;
           /** The DNS TTL in seconds. */
           ttl?: number;
@@ -59,6 +60,7 @@ declare module "@oomol-lab/connector" {
           proxiable?: boolean;
           /** The record priority. */
           priority?: number;
+          /** The record comment. */
           comment?: string | null;
           /** The record tags. */
           tags?: Array<string>;
@@ -127,6 +129,7 @@ declare module "@oomol-lab/connector" {
           type: string;
           /** The record name. */
           name: string;
+          /** The record content. */
           content?: string | null;
           /** The DNS TTL in seconds. */
           ttl?: number;
@@ -136,6 +139,7 @@ declare module "@oomol-lab/connector" {
           proxiable?: boolean;
           /** The record priority. */
           priority?: number;
+          /** The record comment. */
           comment?: string | null;
           /** The record tags. */
           tags?: Array<string>;
@@ -186,6 +190,7 @@ declare module "@oomol-lab/connector" {
           nameServers?: Array<string>;
           /** The original name servers reported by Cloudflare. */
           originalNameServers?: Array<string>;
+          /** The Cloudflare account summary. */
           account?: {
             /** The Cloudflare account ID. */
             id?: string;
@@ -284,6 +289,7 @@ declare module "@oomol-lab/connector" {
           type: string;
           /** The record name. */
           name: string;
+          /** The record content. */
           content?: string | null;
           /** The DNS TTL in seconds. */
           ttl?: number;
@@ -293,6 +299,7 @@ declare module "@oomol-lab/connector" {
           proxiable?: boolean;
           /** The record priority. */
           priority?: number;
+          /** The record comment. */
           comment?: string | null;
           /** The record tags. */
           tags?: Array<string>;
@@ -373,6 +380,7 @@ declare module "@oomol-lab/connector" {
           nameServers?: Array<string>;
           /** The original name servers reported by Cloudflare. */
           originalNameServers?: Array<string>;
+          /** The Cloudflare account summary. */
           account?: {
             /** The Cloudflare account ID. */
             id?: string;
@@ -452,6 +460,7 @@ declare module "@oomol-lab/connector" {
           type: string;
           /** The record name. */
           name: string;
+          /** The record content. */
           content?: string | null;
           /** The DNS TTL in seconds. */
           ttl?: number;
@@ -461,6 +470,7 @@ declare module "@oomol-lab/connector" {
           proxiable?: boolean;
           /** The record priority. */
           priority?: number;
+          /** The record comment. */
           comment?: string | null;
           /** The record tags. */
           tags?: Array<string>;

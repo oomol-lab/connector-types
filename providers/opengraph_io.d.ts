@@ -146,6 +146,7 @@ declare module "@oomol-lab/connector" {
         };
         /** Whether the result came from cache. */
         cached?: boolean;
+        /** The ISO 8601 timestamp when the cached result was created. */
         createdAt?: string | null;
         /** Retry information returned by OpenGraph.io. */
         retryInfo?: Record<string, unknown>;
@@ -230,6 +231,7 @@ declare module "@oomol-lab/connector" {
         };
         /** Whether the result came from cache. */
         cached?: boolean;
+        /** The ISO 8601 timestamp when the cached result was created. */
         createdAt?: string | null;
         /** Retry information returned by OpenGraph.io. */
         retryInfo?: Record<string, unknown>;

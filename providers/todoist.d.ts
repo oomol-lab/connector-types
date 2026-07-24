@@ -101,7 +101,7 @@ declare module "@oomol-lab/connector" {
          * Todoist project name.
          * @minLength 1
          */
-        name: string;
+        name?: string;
         /** Todoist project description. */
         description?: string;
         /** Parent project ID, or null where the API supports clearing it. */
@@ -246,7 +246,7 @@ declare module "@oomol-lab/connector" {
          * Todoist task content.
          * @minLength 1
          */
-        content: string;
+        content?: string;
         /** Todoist task description. */
         description?: string;
         /**

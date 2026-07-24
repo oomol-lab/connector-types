@@ -7,7 +7,6 @@ declare module "@oomol-lab/connector" {
       input: {
         /**
          * Email address of the person.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email?: string;
@@ -15,7 +14,6 @@ declare module "@oomol-lab/connector" {
          * Phone number in E.164 format. The value must start with a plus sign followed by digits.
          * @minLength 2
          * @maxLength 16
-         * @pattern ^\+.*
          */
         phone_number?: string;
         /** Survey channel used to send the request. The default is email. */
@@ -41,7 +39,6 @@ declare module "@oomol-lab/connector" {
         last_sent_at?: number;
         /**
          * New email address used to update an existing person.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email_update?: string;
@@ -49,7 +46,6 @@ declare module "@oomol-lab/connector" {
          * New phone number used to update an existing person.
          * @minLength 2
          * @maxLength 16
-         * @pattern ^\+.*
          */
         phone_number_update?: string;
       };
@@ -60,7 +56,6 @@ declare module "@oomol-lab/connector" {
           id: string;
           /**
            * Email address of the person.
-           * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
            * @format email
            */
           email?: string;
@@ -75,7 +70,6 @@ declare module "@oomol-lab/connector" {
            * Phone number of the person in E.164 format.
            * @minLength 2
            * @maxLength 16
-           * @pattern ^\+.*
            */
           phone_number?: string;
           /**
@@ -88,9 +82,15 @@ declare module "@oomol-lab/connector" {
            * @minimum 0
            */
           last_responded_at?: number;
-          /** Unix timestamp indicating when the next survey is scheduled, or null when unavailable. */
+          /**
+           * Unix timestamp indicating when the next survey is scheduled, or null when unavailable.
+           * @minimum 0
+           */
           next_survey_scheduled_at?: number | null;
-          /** Unix timestamp indicating when a newly created or updated survey request is scheduled. */
+          /**
+           * Unix timestamp indicating when a newly created or updated survey request is scheduled.
+           * @minimum 0
+           */
           survey_scheduled_at?: number | null;
           /** Custom properties associated with the person. */
           properties?: Record<string, unknown>;
@@ -108,7 +108,6 @@ declare module "@oomol-lab/connector" {
         id?: string;
         /**
          * Email address of the person.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email?: string;
@@ -116,7 +115,6 @@ declare module "@oomol-lab/connector" {
          * Phone number in E.164 format. The value must start with a plus sign followed by digits.
          * @minLength 2
          * @maxLength 16
-         * @pattern ^\+.*
          */
         phone_number?: string;
       };
@@ -201,7 +199,6 @@ declare module "@oomol-lab/connector" {
           person_id: string;
           /**
            * Email address of the bounced person.
-           * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
            * @format email
            */
           email: string;
@@ -238,7 +235,6 @@ declare module "@oomol-lab/connector" {
         until?: number;
         /**
          * Email address of the person.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email?: string;
@@ -246,7 +242,6 @@ declare module "@oomol-lab/connector" {
          * Phone number in E.164 format. The value must start with a plus sign followed by digits.
          * @minLength 2
          * @maxLength 16
-         * @pattern ^\+.*
          */
         phone_number?: string;
         /**
@@ -262,7 +257,6 @@ declare module "@oomol-lab/connector" {
           id: string;
           /**
            * Email address of the person.
-           * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
            * @format email
            */
           email?: string;
@@ -277,7 +271,6 @@ declare module "@oomol-lab/connector" {
            * Phone number of the person in E.164 format.
            * @minLength 2
            * @maxLength 16
-           * @pattern ^\+.*
            */
           phone_number?: string;
           /**
@@ -290,9 +283,15 @@ declare module "@oomol-lab/connector" {
            * @minimum 0
            */
           last_responded_at?: number;
-          /** Unix timestamp indicating when the next survey is scheduled, or null when unavailable. */
+          /**
+           * Unix timestamp indicating when the next survey is scheduled, or null when unavailable.
+           * @minimum 0
+           */
           next_survey_scheduled_at?: number | null;
-          /** Unix timestamp indicating when a newly created or updated survey request is scheduled. */
+          /**
+           * Unix timestamp indicating when a newly created or updated survey request is scheduled.
+           * @minimum 0
+           */
           survey_scheduled_at?: number | null;
           /** Custom properties associated with the person. */
           properties?: Record<string, unknown>;
@@ -350,7 +349,6 @@ declare module "@oomol-lab/connector" {
         person_id?: string;
         /**
          * Email address of the person.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         person_email?: string;
@@ -370,7 +368,6 @@ declare module "@oomol-lab/connector" {
             id: string;
             /**
              * Email address of the person.
-             * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
              * @format email
              */
             email?: string;
@@ -385,7 +382,6 @@ declare module "@oomol-lab/connector" {
              * Phone number of the person in E.164 format.
              * @minLength 2
              * @maxLength 16
-             * @pattern ^\+.*
              */
             phone_number?: string;
             /**
@@ -398,9 +394,15 @@ declare module "@oomol-lab/connector" {
              * @minimum 0
              */
             last_responded_at?: number;
-            /** Unix timestamp indicating when the next survey is scheduled, or null when unavailable. */
+            /**
+             * Unix timestamp indicating when the next survey is scheduled, or null when unavailable.
+             * @minimum 0
+             */
             next_survey_scheduled_at?: number | null;
-            /** Unix timestamp indicating when a newly created or updated survey request is scheduled. */
+            /**
+             * Unix timestamp indicating when a newly created or updated survey request is scheduled.
+             * @minimum 0
+             */
             survey_scheduled_at?: number | null;
             /** Custom properties associated with the person. */
             properties?: Record<string, unknown>;
@@ -431,7 +433,6 @@ declare module "@oomol-lab/connector" {
             text: string;
             /**
              * Email address of the teammate who created the note.
-             * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
              * @format email
              */
             user_email: string;
@@ -454,9 +455,9 @@ declare module "@oomol-lab/connector" {
               /** Scale answer when the question type is scale. */
               scale?: number | null;
               /** Selected option payload when the question type is select_one. */
-              select_one?: unknown | null;
+              select_one?: unknown;
               /** Selected option payload when the question type is select_many. */
-              select_many?: unknown | null;
+              select_many?: unknown;
             };
             /** Question metadata for this answer. */
             question: {
@@ -506,7 +507,6 @@ declare module "@oomol-lab/connector" {
           person_id: string;
           /**
            * Email address of the unsubscribed person.
-           * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
            * @format email
            */
           email: string;
@@ -527,7 +527,6 @@ declare module "@oomol-lab/connector" {
       input: {
         /**
          * Email address of the person to unsubscribe.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         person_email: string;

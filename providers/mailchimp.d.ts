@@ -17,7 +17,6 @@ declare module "@oomol-lab/connector" {
         subscriber_hash?: string;
         /**
          * Subscriber email address used by Mailchimp to derive the subscriber hash.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email_address?: string;
@@ -42,7 +41,6 @@ declare module "@oomol-lab/connector" {
         subscriber_hash?: string;
         /**
          * Subscriber email address used by Mailchimp to derive the subscriber hash.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email_address?: string;
@@ -82,7 +80,6 @@ declare module "@oomol-lab/connector" {
         subscriber_hash?: string;
         /**
          * Subscriber email address used by Mailchimp to derive the subscriber hash.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email_address?: string;
@@ -135,7 +132,6 @@ declare module "@oomol-lab/connector" {
         subscriber_hash?: string;
         /**
          * Subscriber email address used by Mailchimp to derive the subscriber hash.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email_address?: string;
@@ -237,7 +233,6 @@ declare module "@oomol-lab/connector" {
         subscriber_hash?: string;
         /**
          * Subscriber email address used by Mailchimp to derive the subscriber hash.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email_address?: string;
@@ -284,7 +279,6 @@ declare module "@oomol-lab/connector" {
         subscriber_hash?: string;
         /**
          * Subscriber email address used by Mailchimp to derive the subscriber hash.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email_address?: string;
@@ -336,7 +330,6 @@ declare module "@oomol-lab/connector" {
         list_id: string;
         /**
          * Subscriber email address used by Mailchimp to derive the subscriber hash.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email_address: string;

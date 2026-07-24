@@ -91,9 +91,17 @@ declare module "@oomol-lab/connector" {
          * @minItems 1
          */
         types?: Array<string>;
-        /** The `[minLon, minLat, maxLon, maxLat]` bounding box. */
+        /**
+         * The `[minLon, minLat, maxLon, maxLat]` bounding box.
+         * @minItems 4
+         * @maxItems 4
+         */
         bbox?: [number, number, number, number];
-        /** A `[longitude, latitude]` coordinate pair. */
+        /**
+         * A `[longitude, latitude]` coordinate pair.
+         * @minItems 2
+         * @maxItems 2
+         */
         proximity?: [number, number];
       };
       output: {

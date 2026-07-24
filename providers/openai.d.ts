@@ -498,8 +498,11 @@ declare module "@oomol-lab/connector" {
           output_tokens_details?: Record<string, unknown>;
           [key: string]: unknown;
         };
+        /** The upstream error payload, when the response is incomplete. */
         error?: Record<string, unknown> | null;
+        /** The upstream incomplete details payload, if provided. */
         incomplete_details?: Record<string, unknown> | null;
+        /** The previous response ID referenced by this response. */
         previous_response_id?: string | null;
         /** Whether the response is stored by the upstream platform. */
         store?: boolean;
@@ -679,6 +682,7 @@ declare module "@oomol-lab/connector" {
         owned_by: string;
         /** The root model identifier for a derived model. */
         root?: string;
+        /** The immediate parent model identifier, if any. */
         parent?: string | null;
         /** The permission entries returned for the model. */
         permission?: Array<{
@@ -704,6 +708,7 @@ declare module "@oomol-lab/connector" {
           organization: string;
           /** Whether the permission blocks access. */
           is_blocking: boolean;
+          /** The optional permission group identifier. */
           group?: string | null;
           [key: string]: unknown;
         }>;
@@ -750,8 +755,11 @@ declare module "@oomol-lab/connector" {
           output_tokens_details?: Record<string, unknown>;
           [key: string]: unknown;
         };
+        /** The upstream error payload, when the response is incomplete. */
         error?: Record<string, unknown> | null;
+        /** The upstream incomplete details payload, if provided. */
         incomplete_details?: Record<string, unknown> | null;
+        /** The previous response ID referenced by this response. */
         previous_response_id?: string | null;
         /** Whether the response is stored by the upstream platform. */
         store?: boolean;
@@ -824,6 +832,7 @@ declare module "@oomol-lab/connector" {
           owned_by: string;
           /** The root model identifier for a derived model. */
           root?: string;
+          /** The immediate parent model identifier, if any. */
           parent?: string | null;
           /** The permission entries returned for the model. */
           permission?: Array<{
@@ -849,6 +858,7 @@ declare module "@oomol-lab/connector" {
             organization: string;
             /** Whether the permission blocks access. */
             is_blocking: boolean;
+            /** The optional permission group identifier. */
             group?: string | null;
             [key: string]: unknown;
           }>;

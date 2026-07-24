@@ -12,7 +12,6 @@ declare module "@oomol-lab/connector" {
         list_id: string;
         /**
          * Contact email address accepted by the official EmailOctopus API.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email_address: string;
@@ -246,7 +245,6 @@ declare module "@oomol-lab/connector" {
         contact_id: string;
         /**
          * Contact email address accepted by the official EmailOctopus API.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email_address?: string;

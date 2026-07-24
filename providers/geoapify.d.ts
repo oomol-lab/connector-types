@@ -162,7 +162,11 @@ declare module "@oomol-lab/connector" {
          * @minItems 1
          */
         sources: Array<{
-          /** A `[longitude, latitude]` coordinate pair. */
+          /**
+           * A `[longitude, latitude]` coordinate pair.
+           * @minItems 2
+           * @maxItems 2
+           */
           location: [number, number];
         }>;
         /**
@@ -170,7 +174,11 @@ declare module "@oomol-lab/connector" {
          * @minItems 1
          */
         targets: Array<{
-          /** A `[longitude, latitude]` coordinate pair. */
+          /**
+           * A `[longitude, latitude]` coordinate pair.
+           * @minItems 2
+           * @maxItems 2
+           */
           location: [number, number];
         }>;
         /**

@@ -323,7 +323,7 @@ declare module "@oomol-lab/connector" {
          * The Control D rule status code: 0=disabled, 1=enabled.
          * @default 1
          */
-        status: number;
+        status?: number;
         /**
          * The hostname patterns to create or update in Control D.
          * @minItems 1

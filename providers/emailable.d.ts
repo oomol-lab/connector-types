@@ -8,7 +8,6 @@ declare module "@oomol-lab/connector" {
       output: {
         /**
          * The email address of the Emailable account owner.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         owner_email: string;
@@ -50,7 +49,6 @@ declare module "@oomol-lab/connector" {
         emails?: Array<{
           /**
            * The normalized email address verified by Emailable.
-           * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
            * @format email
            */
           email: string;
@@ -227,7 +225,6 @@ declare module "@oomol-lab/connector" {
       input: {
         /**
          * The email address to verify with Emailable.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email: string;
@@ -235,7 +232,6 @@ declare module "@oomol-lab/connector" {
       output: {
         /**
          * The normalized email address verified by Emailable.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email: string;

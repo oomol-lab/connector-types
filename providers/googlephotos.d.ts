@@ -231,6 +231,7 @@ declare module "@oomol-lab/connector" {
           coverPhotoMediaItemId: string | null;
           /** Whether the album is writable by the current user. */
           isWriteable?: boolean;
+          /** Sharing information for the album. */
           shareInfo: Record<string, unknown> | null;
         };
       };
@@ -313,6 +314,7 @@ declare module "@oomol-lab/connector" {
           coverPhotoMediaItemId: string | null;
           /** Whether the album is writable by the current user. */
           isWriteable?: boolean;
+          /** Sharing information for the album. */
           shareInfo: Record<string, unknown> | null;
         };
       };
@@ -433,6 +435,7 @@ declare module "@oomol-lab/connector" {
           coverPhotoMediaItemId: string | null;
           /** Whether the album is writable by the current user. */
           isWriteable?: boolean;
+          /** Sharing information for the album. */
           shareInfo: Record<string, unknown> | null;
         }>;
         /** A token to retrieve the next page of results, if any. */
@@ -481,6 +484,7 @@ declare module "@oomol-lab/connector" {
             /** Video-specific metadata. */
             video?: Record<string, unknown>;
           };
+          /** Information about the contributor of the media item. */
           contributorInfo: Record<string, unknown> | null;
         }>;
         /** A token to retrieve the next page of results, if any. */
@@ -582,6 +586,7 @@ declare module "@oomol-lab/connector" {
             /** Video-specific metadata. */
             video?: Record<string, unknown>;
           };
+          /** Information about the contributor of the media item. */
           contributorInfo: Record<string, unknown> | null;
         }>;
         /** A token to retrieve the next page of results, if any. */
@@ -624,6 +629,7 @@ declare module "@oomol-lab/connector" {
           coverPhotoMediaItemId: string | null;
           /** Whether the album is writable by the current user. */
           isWriteable?: boolean;
+          /** Sharing information for the album. */
           shareInfo: Record<string, unknown> | null;
         };
       };
@@ -670,6 +676,7 @@ declare module "@oomol-lab/connector" {
             /** Video-specific metadata. */
             video?: Record<string, unknown>;
           };
+          /** Information about the contributor of the media item. */
           contributorInfo: Record<string, unknown> | null;
         };
       };
@@ -735,6 +742,7 @@ declare module "@oomol-lab/connector" {
             /** Video-specific metadata. */
             video?: Record<string, unknown>;
           };
+          /** Information about the contributor of the media item. */
           contributorInfo: Record<string, unknown> | null;
         };
       };

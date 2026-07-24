@@ -17,7 +17,6 @@ declare module "@oomol-lab/connector" {
         name: string;
         /**
          * Email address of the customer.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email: string;
@@ -51,7 +50,6 @@ declare module "@oomol-lab/connector" {
             store_id: number;
             /**
              * Customer email address.
-             * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
              * @format email
              */
             email: string;
@@ -242,7 +240,6 @@ declare module "@oomol-lab/connector" {
         storeId?: number;
         /**
          * Only return resources for this email.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email?: string;
@@ -271,7 +268,6 @@ declare module "@oomol-lab/connector" {
             store_id: number;
             /**
              * Customer email address.
-             * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
              * @format email
              */
             email: string;
@@ -357,7 +353,6 @@ declare module "@oomol-lab/connector" {
         storeId?: number;
         /**
          * Only return resources whose user_email matches this address.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         userEmail?: string;
@@ -399,7 +394,6 @@ declare module "@oomol-lab/connector" {
             user_name: string;
             /**
              * Customer email on the order.
-             * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
              * @format email
              */
             user_email: string;
@@ -722,7 +716,6 @@ declare module "@oomol-lab/connector" {
         variantId?: number;
         /**
          * Only return resources whose user_email matches this address.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         userEmail?: string;
@@ -772,7 +765,6 @@ declare module "@oomol-lab/connector" {
             user_name: string;
             /**
              * Subscriber email address.
-             * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
              * @format email
              */
             user_email: string;
@@ -1071,7 +1063,6 @@ declare module "@oomol-lab/connector" {
             name: string;
             /**
              * Email address of the authenticated user.
-             * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
              * @format email
              */
             email: string;
@@ -1146,7 +1137,6 @@ declare module "@oomol-lab/connector" {
             store_id: number;
             /**
              * Customer email address.
-             * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
              * @format email
              */
             email: string;
@@ -1401,7 +1391,6 @@ declare module "@oomol-lab/connector" {
         name?: string;
         /**
          * Updated email address of the customer.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email?: string;
@@ -1435,7 +1424,6 @@ declare module "@oomol-lab/connector" {
             store_id: number;
             /**
              * Customer email address.
-             * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
              * @format email
              */
             email: string;

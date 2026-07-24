@@ -83,25 +83,21 @@ declare module "@oomol-lab/connector" {
         excludeDomains?: Array<string>;
         /**
          * Only return results crawled after this timestamp.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
          * @format date-time
          */
         startCrawlDate?: string;
         /**
          * Only return results crawled before this timestamp.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
          * @format date-time
          */
         endCrawlDate?: string;
         /**
          * Only return results published after this timestamp.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
          * @format date-time
          */
         startPublishedDate?: string;
         /**
          * Only return results published before this timestamp.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
          * @format date-time
          */
         endPublishedDate?: string;
@@ -119,6 +115,7 @@ declare module "@oomol-lab/connector" {
         moderation?: boolean;
         /** The Exa contents request object. */
         contents?: {
+          /** The text value. */
           text?: boolean | {
             /**
              * The maximum number of characters to return for extracted text.
@@ -140,6 +137,7 @@ declare module "@oomol-lab/connector" {
              */
             excludeSections?: Array<"header" | "navigation" | "banner" | "body" | "sidebar" | "footer" | "metadata">;
           };
+          /** The highlights value. */
           highlights?: boolean | {
             /**
              * The maximum number of characters to return across highlights.
@@ -270,6 +268,7 @@ declare module "@oomol-lab/connector" {
          * @minItems 1
          */
         ids?: Array<string>;
+        /** The text value. */
         text?: boolean | {
           /**
            * The maximum number of characters to return for extracted text.
@@ -291,6 +290,7 @@ declare module "@oomol-lab/connector" {
            */
           excludeSections?: Array<"header" | "navigation" | "banner" | "body" | "sidebar" | "footer" | "metadata">;
         };
+        /** The highlights value. */
         highlights?: boolean | {
           /**
            * The maximum number of characters to return across highlights.
@@ -456,25 +456,21 @@ declare module "@oomol-lab/connector" {
         excludeDomains?: Array<string>;
         /**
          * Only return results crawled after this timestamp.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
          * @format date-time
          */
         startCrawlDate?: string;
         /**
          * Only return results crawled before this timestamp.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
          * @format date-time
          */
         endCrawlDate?: string;
         /**
          * Only return results published after this timestamp.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
          * @format date-time
          */
         startPublishedDate?: string;
         /**
          * Only return results published before this timestamp.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
          * @format date-time
          */
         endPublishedDate?: string;
@@ -498,6 +494,7 @@ declare module "@oomol-lab/connector" {
         moderation?: boolean;
         /** The Exa contents request object. */
         contents?: {
+          /** The text value. */
           text?: boolean | {
             /**
              * The maximum number of characters to return for extracted text.
@@ -519,6 +516,7 @@ declare module "@oomol-lab/connector" {
              */
             excludeSections?: Array<"header" | "navigation" | "banner" | "body" | "sidebar" | "footer" | "metadata">;
           };
+          /** The highlights value. */
           highlights?: boolean | {
             /**
              * The maximum number of characters to return across highlights.

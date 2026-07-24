@@ -155,6 +155,7 @@ declare module "@oomol-lab/connector" {
           region: string;
           /** The bucket creation timestamp. */
           creationDate: string;
+          /** The bucket storage class. */
           storageClass: string | null;
         }>;
         /** The bucket owner information, or null when OSS omitted it. */
@@ -215,6 +216,7 @@ declare module "@oomol-lab/connector" {
           type: string;
           /** The object size in bytes. */
           size: number;
+          /** The object storage class. */
           storageClass: string | null;
           /** The object owner, when requested. */
           owner: {

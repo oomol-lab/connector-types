@@ -91,7 +91,10 @@ declare module "@oomol-lab/connector" {
               type: "image";
               /** Whether Gamma should use the theme logo or a custom image URL. */
               source: "themeLogo" | "custom";
-              /** The image URL used when `source` is `custom`. */
+              /**
+               * The image URL used when `source` is `custom`.
+               * @format uri
+               */
               src?: string | null;
               /** The image size Gamma should use in the header or footer. */
               size?: "sm" | "md" | "lg" | "xl" | null;
@@ -110,7 +113,10 @@ declare module "@oomol-lab/connector" {
               type: "image";
               /** Whether Gamma should use the theme logo or a custom image URL. */
               source: "themeLogo" | "custom";
-              /** The image URL used when `source` is `custom`. */
+              /**
+               * The image URL used when `source` is `custom`.
+               * @format uri
+               */
               src?: string | null;
               /** The image size Gamma should use in the header or footer. */
               size?: "sm" | "md" | "lg" | "xl" | null;
@@ -129,7 +135,10 @@ declare module "@oomol-lab/connector" {
               type: "image";
               /** Whether Gamma should use the theme logo or a custom image URL. */
               source: "themeLogo" | "custom";
-              /** The image URL used when `source` is `custom`. */
+              /**
+               * The image URL used when `source` is `custom`.
+               * @format uri
+               */
               src?: string | null;
               /** The image size Gamma should use in the header or footer. */
               size?: "sm" | "md" | "lg" | "xl" | null;
@@ -148,7 +157,10 @@ declare module "@oomol-lab/connector" {
               type: "image";
               /** Whether Gamma should use the theme logo or a custom image URL. */
               source: "themeLogo" | "custom";
-              /** The image URL used when `source` is `custom`. */
+              /**
+               * The image URL used when `source` is `custom`.
+               * @format uri
+               */
               src?: string | null;
               /** The image size Gamma should use in the header or footer. */
               size?: "sm" | "md" | "lg" | "xl" | null;
@@ -167,7 +179,10 @@ declare module "@oomol-lab/connector" {
               type: "image";
               /** Whether Gamma should use the theme logo or a custom image URL. */
               source: "themeLogo" | "custom";
-              /** The image URL used when `source` is `custom`. */
+              /**
+               * The image URL used when `source` is `custom`.
+               * @format uri
+               */
               src?: string | null;
               /** The image size Gamma should use in the header or footer. */
               size?: "sm" | "md" | "lg" | "xl" | null;
@@ -186,7 +201,10 @@ declare module "@oomol-lab/connector" {
               type: "image";
               /** Whether Gamma should use the theme logo or a custom image URL. */
               source: "themeLogo" | "custom";
-              /** The image URL used when `source` is `custom`. */
+              /**
+               * The image URL used when `source` is `custom`.
+               * @format uri
+               */
               src?: string | null;
               /** The image size Gamma should use in the header or footer. */
               size?: "sm" | "md" | "lg" | "xl" | null;
@@ -357,7 +375,10 @@ declare module "@oomol-lab/connector" {
               type: "image";
               /** Whether Gamma should use the theme logo or a custom image URL. */
               source: "themeLogo" | "custom";
-              /** The image URL used when `source` is `custom`. */
+              /**
+               * The image URL used when `source` is `custom`.
+               * @format uri
+               */
               src?: string | null;
               /** The image size Gamma should use in the header or footer. */
               size?: "sm" | "md" | "lg" | "xl" | null;
@@ -376,7 +397,10 @@ declare module "@oomol-lab/connector" {
               type: "image";
               /** Whether Gamma should use the theme logo or a custom image URL. */
               source: "themeLogo" | "custom";
-              /** The image URL used when `source` is `custom`. */
+              /**
+               * The image URL used when `source` is `custom`.
+               * @format uri
+               */
               src?: string | null;
               /** The image size Gamma should use in the header or footer. */
               size?: "sm" | "md" | "lg" | "xl" | null;
@@ -395,7 +419,10 @@ declare module "@oomol-lab/connector" {
               type: "image";
               /** Whether Gamma should use the theme logo or a custom image URL. */
               source: "themeLogo" | "custom";
-              /** The image URL used when `source` is `custom`. */
+              /**
+               * The image URL used when `source` is `custom`.
+               * @format uri
+               */
               src?: string | null;
               /** The image size Gamma should use in the header or footer. */
               size?: "sm" | "md" | "lg" | "xl" | null;
@@ -414,7 +441,10 @@ declare module "@oomol-lab/connector" {
               type: "image";
               /** Whether Gamma should use the theme logo or a custom image URL. */
               source: "themeLogo" | "custom";
-              /** The image URL used when `source` is `custom`. */
+              /**
+               * The image URL used when `source` is `custom`.
+               * @format uri
+               */
               src?: string | null;
               /** The image size Gamma should use in the header or footer. */
               size?: "sm" | "md" | "lg" | "xl" | null;
@@ -433,7 +463,10 @@ declare module "@oomol-lab/connector" {
               type: "image";
               /** Whether Gamma should use the theme logo or a custom image URL. */
               source: "themeLogo" | "custom";
-              /** The image URL used when `source` is `custom`. */
+              /**
+               * The image URL used when `source` is `custom`.
+               * @format uri
+               */
               src?: string | null;
               /** The image size Gamma should use in the header or footer. */
               size?: "sm" | "md" | "lg" | "xl" | null;
@@ -452,7 +485,10 @@ declare module "@oomol-lab/connector" {
               type: "image";
               /** Whether Gamma should use the theme logo or a custom image URL. */
               source: "themeLogo" | "custom";
-              /** The image URL used when `source` is `custom`. */
+              /**
+               * The image URL used when `source` is `custom`.
+               * @format uri
+               */
               src?: string | null;
               /** The image size Gamma should use in the header or footer. */
               size?: "sm" | "md" | "lg" | "xl" | null;

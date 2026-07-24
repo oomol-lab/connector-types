@@ -89,10 +89,7 @@ declare module "@oomol-lab/connector" {
     /** Get Listen Notes episode details by episode ID. */
     "listennotes.get_episode": {
       input: {
-        /**
-         * The Listen Notes episode identifier.
-         * @minLength 1
-         */
+        /** The Listen Notes episode identifier. */
         id: string;
       };
       output: {
@@ -167,10 +164,7 @@ declare module "@oomol-lab/connector" {
     /** Get Listen Notes podcast details and one page of episodes by podcast ID. */
     "listennotes.get_podcast": {
       input: {
-        /**
-         * The Listen Notes podcast identifier.
-         * @minLength 1
-         */
+        /** The Listen Notes podcast identifier. */
         id: string;
         /** The episode sort order for this podcast. */
         sort?: "oldest_first" | "recent_first";
@@ -278,10 +272,7 @@ declare module "@oomol-lab/connector" {
     /** Get related podcast recommendations from Listen Notes by podcast ID. */
     "listennotes.get_related_podcasts": {
       input: {
-        /**
-         * The Listen Notes podcast identifier.
-         * @minLength 1
-         */
+        /** The Listen Notes podcast identifier. */
         id: string;
         /** Whether to exclude explicit recommendations. */
         safeMode?: boolean;
@@ -331,16 +322,13 @@ declare module "@oomol-lab/connector" {
     /** Search Listen Notes podcasts or episodes by keyword. */
     "listennotes.search": {
       input: {
-        /**
-         * The search keywords to send to Listen Notes.
-         * @minLength 1
-         */
+        /** The search keywords to send to Listen Notes. */
         q: string;
         /**
          * Whether to search for episode results or podcast results.
          * @default "episode"
          */
-        type: "episode" | "podcast";
+        type?: "episode" | "podcast";
         /**
          * The search offset for pagination.
          * @minimum 0
@@ -468,10 +456,7 @@ declare module "@oomol-lab/connector" {
     /** Get Listen Notes typeahead suggestions for terms, genres, and podcasts. */
     "listennotes.typeahead": {
       input: {
-        /**
-         * The typeahead keywords to send to Listen Notes.
-         * @minLength 1
-         */
+        /** The typeahead keywords to send to Listen Notes. */
         q: string;
         /** Whether to exclude explicit podcast suggestions. */
         safeMode?: boolean;
