@@ -286,9 +286,9 @@ declare module "@oomol-lab/connector" {
           /** The Mopinion field type. */
           type?: string;
           /** The answer values defined for this field. */
-          answer_values?: unknown | null;
+          answer_values?: unknown;
           /** The answer options defined for this field. */
-          answer_options?: unknown | null;
+          answer_options?: unknown;
           /** The Mopinion field group key. */
           group_key?: string | null;
           [key: string]: unknown;
@@ -451,9 +451,9 @@ declare module "@oomol-lab/connector" {
           /** The Mopinion field type. */
           type?: string;
           /** The answer values defined for this field. */
-          answer_values?: unknown | null;
+          answer_values?: unknown;
           /** The answer options defined for this field. */
-          answer_options?: unknown | null;
+          answer_options?: unknown;
           /** The Mopinion field group key. */
           group_key?: string | null;
           [key: string]: unknown;

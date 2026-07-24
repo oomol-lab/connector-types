@@ -11,7 +11,7 @@ declare module "@oomol-lab/connector" {
          * The Agenty list rows to insert.
          * @minItems 1
          */
-        rows: Array<Record<string, string | number | boolean | null | Array<unknown> | Record<string, unknown>>>;
+        rows: Array<Record<string, unknown>>;
       };
       output: {
         /** The status code returned by Agenty. */
@@ -100,7 +100,7 @@ declare module "@oomol-lab/connector" {
           /** The Agenty agent version number. */
           version?: number;
           /** The Agenty agent configuration object. */
-          config?: Record<string, string | number | boolean | null | Array<unknown> | Record<string, unknown>>;
+          config?: Record<string, unknown>;
           /** Whether the agent is public. */
           is_public?: boolean | number;
           /** Whether the agent is managed. */
@@ -124,7 +124,7 @@ declare module "@oomol-lab/connector" {
         /** The Agenty agent type. */
         type: "scraping" | "changedetection" | "crawling" | "mapmonitoring" | "brandmonitoring";
         /** The Agenty agent configuration object. */
-        config: Record<string, string | number | boolean | null | Array<unknown> | Record<string, unknown>>;
+        config: Record<string, unknown>;
         /** The Agenty agent description. */
         description?: string;
         /** The Agenty agent icon URL. */
@@ -134,7 +134,7 @@ declare module "@oomol-lab/connector" {
         /** Whether Agenty should start the agent immediately. */
         start?: boolean;
         /** The Agenty scripts configuration. */
-        scripts?: Record<string, string | number | boolean | null | Array<unknown> | Record<string, unknown>>;
+        scripts?: Record<string, unknown>;
       };
       output: {
         /** The created Agenty agent. */
@@ -152,7 +152,7 @@ declare module "@oomol-lab/connector" {
           /** The Agenty agent version number. */
           version?: number;
           /** The Agenty agent configuration object. */
-          config?: Record<string, string | number | boolean | null | Array<unknown> | Record<string, unknown>>;
+          config?: Record<string, unknown>;
           /** Whether the agent is public. */
           is_public?: boolean | number;
           /** Whether the agent is managed. */
@@ -325,13 +325,13 @@ declare module "@oomol-lab/connector" {
       };
       output: {
         /** The RDFa structured data extracted from the page. */
-        rdfa: string | number | boolean | null | Array<unknown> | Record<string, unknown>;
+        rdfa: unknown;
         /** The JSON-LD scripts extracted from the page. */
-        jsonld: string | number | boolean | null | Array<unknown> | Record<string, unknown>;
+        jsonld: unknown;
         /** The meta tags extracted from the page. */
-        metatags: string | number | boolean | null | Array<unknown> | Record<string, unknown>;
+        metatags: unknown;
         /** The microdata extracted from the page. */
-        microdata: string | number | boolean | null | Array<unknown> | Record<string, unknown>;
+        microdata: unknown;
       };
     };
     /** Get one Agenty agent by agent identifier. */
@@ -359,7 +359,7 @@ declare module "@oomol-lab/connector" {
           /** The Agenty agent version number. */
           version?: number;
           /** The Agenty agent configuration object. */
-          config?: Record<string, string | number | boolean | null | Array<unknown> | Record<string, unknown>>;
+          config?: Record<string, unknown>;
           /** Whether the agent is public. */
           is_public?: boolean | number;
           /** Whether the agent is managed. */
@@ -568,7 +568,7 @@ declare module "@oomol-lab/connector" {
         /** The number of Agenty result rows returned in this page. */
         returned: number;
         /** The Agenty result rows returned by the request. */
-        result: Array<Record<string, string | number | boolean | null | Array<unknown> | Record<string, unknown>>>;
+        result: Array<Record<string, unknown>>;
       };
     };
     /** Get one Agenty list by list identifier. */
@@ -696,7 +696,7 @@ declare module "@oomol-lab/connector" {
           /** The Agenty agent version number. */
           version?: number;
           /** The Agenty agent configuration object. */
-          config?: Record<string, string | number | boolean | null | Array<unknown> | Record<string, unknown>>;
+          config?: Record<string, unknown>;
           /** Whether the agent is public. */
           is_public?: boolean | number;
           /** Whether the agent is managed. */
@@ -925,7 +925,7 @@ declare module "@oomol-lab/connector" {
         /** The Agenty agent type. */
         type?: "scraping" | "changedetection" | "crawling" | "mapmonitoring" | "brandmonitoring";
         /** The Agenty agent configuration object. */
-        config?: Record<string, string | number | boolean | null | Array<unknown> | Record<string, unknown>>;
+        config?: Record<string, unknown>;
         /** The Agenty agent description. */
         description?: string;
         /** The Agenty agent icon URL. */
@@ -933,7 +933,7 @@ declare module "@oomol-lab/connector" {
         /** The Agenty agent tags. */
         tags?: Array<string>;
         /** The Agenty scripts configuration. */
-        scripts?: Record<string, string | number | boolean | null | Array<unknown> | Record<string, unknown>>;
+        scripts?: Record<string, unknown>;
       };
       output: {
         /** The updated Agenty agent payload returned by the request. */
@@ -951,7 +951,7 @@ declare module "@oomol-lab/connector" {
           /** The Agenty agent version number. */
           version?: number;
           /** The Agenty agent configuration object. */
-          config?: Record<string, string | number | boolean | null | Array<unknown> | Record<string, unknown>>;
+          config?: Record<string, unknown>;
           /** Whether the agent is public. */
           is_public?: boolean | number;
           /** Whether the agent is managed. */

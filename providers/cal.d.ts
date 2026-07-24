@@ -1537,8 +1537,11 @@ declare module "@oomol-lab/connector" {
           isExpired?: boolean;
           /** The booking URL for the private link. */
           bookingUrl?: string;
+          /** The expiration date of the private link. */
           expiresAt?: string | null;
+          /** The maximum number of times the link can be used. */
           maxUsageCount?: number | null;
+          /** The current number of times the link has been used. */
           currentUsageCount?: number | null;
         }>;
       };

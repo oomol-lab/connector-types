@@ -7,7 +7,6 @@ declare module "@oomol-lab/connector" {
       input: {
         /**
          * Customer email address.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email: string;
@@ -27,7 +26,6 @@ declare module "@oomol-lab/connector" {
           id: number;
           /**
            * Customer email address.
-           * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
            * @format email
            */
           email: string;
@@ -61,7 +59,6 @@ declare module "@oomol-lab/connector" {
           id: number;
           /**
            * Customer email address.
-           * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
            * @format email
            */
           email: string;
@@ -120,7 +117,6 @@ declare module "@oomol-lab/connector" {
       input: {
         /**
          * Customer email address used for the transaction.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email: string;
@@ -173,7 +169,6 @@ declare module "@oomol-lab/connector" {
           id: number;
           /**
            * Customer email address.
-           * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
            * @format email
            */
           email: string;
@@ -297,7 +292,6 @@ declare module "@oomol-lab/connector" {
           id: number;
           /**
            * Customer email address.
-           * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
            * @format email
            */
           email: string;

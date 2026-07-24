@@ -696,7 +696,11 @@ declare module "@oomol-lab/connector" {
           countryCode: string | null;
           /** League logo address, null if not available. */
           logoUrl: string | null;
-          /** The current season year, or null if none. */
+          /**
+           * The current season year, or null if none.
+           * @minimum 1000
+           * @maximum 9999
+           */
           currentSeason: number | null;
           /** The data coverage capabilities currently available to the league. */
           coverage: {

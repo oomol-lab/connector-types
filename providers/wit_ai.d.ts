@@ -253,6 +253,8 @@ declare module "@oomol-lab/connector" {
         id: string;
         /** Intent name. */
         name: string;
+        /** Confidence score returned by Wit.ai. */
+        confidence?: number;
       };
     };
     /** Create a new Wit.ai trait with one or more canonical values. */
@@ -360,7 +362,7 @@ declare module "@oomol-lab/connector" {
              * Nested entities inside the composite entity.
              * @default []
              */
-            entities: Array<unknown>;
+            entities?: Array<unknown>;
           }>;
           /** Annotated traits in the utterance. */
           traits: Array<{
@@ -630,6 +632,8 @@ declare module "@oomol-lab/connector" {
           id: string;
           /** Intent name. */
           name: string;
+          /** Confidence score returned by Wit.ai. */
+          confidence?: number;
         }>;
       };
     };
@@ -693,7 +697,7 @@ declare module "@oomol-lab/connector" {
              * Nested entities.
              * @default []
              */
-            entities: Array<unknown>;
+            entities?: Array<unknown>;
           }>;
           /** Annotated traits for the utterance. */
           traits: Array<{

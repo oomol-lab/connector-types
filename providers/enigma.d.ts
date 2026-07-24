@@ -67,10 +67,15 @@ declare module "@oomol-lab/connector" {
         list: {
           /** The Enigma list ID. */
           id: string;
+          /** The Enigma list type. */
           listType?: "LIST_GENERATION" | "ENRICHMENT" | null;
+          /** The list name. */
           name?: string | null;
+          /** The list description. */
           description?: string | null;
+          /** The file format configured for exports. */
           fileFormat?: string | null;
+          /** The source input file URI when the list was built from a file. */
           inputFileUri?: string | null;
           /** When the list was created. */
           createdTimestamp: string;
@@ -114,6 +119,7 @@ declare module "@oomol-lab/connector" {
           entityType: "BRAND" | "OPERATING_LOCATION" | "LEGAL_ENTITY";
           /** The Enigma GraphQL entity ID. */
           id: string;
+          /** The Enigma business identifier when available. */
           enigmaId?: string | null;
           /** The entity names returned by Enigma. */
           names: Array<string>;
@@ -123,15 +129,25 @@ declare module "@oomol-lab/connector" {
           phoneNumbers: Array<string>;
           /** The addresses returned by Enigma. */
           addresses: Array<{
+            /** The Enigma address ID. */
             id?: string | null;
+            /** The full formatted address returned by Enigma. */
             fullAddress?: string | null;
+            /** The first street-address line returned by Enigma. */
             streetAddress1?: string | null;
+            /** The second street-address line returned by Enigma. */
             streetAddress2?: string | null;
+            /** The city returned by Enigma. */
             city?: string | null;
+            /** The state or region returned by Enigma. */
             state?: string | null;
+            /** The postal code returned by Enigma. */
             postalCode?: string | null;
+            /** The ISO country code returned by Enigma. */
             countryCode?: string | null;
+            /** The latitude returned by Enigma. */
             latitude?: number | null;
+            /** The longitude returned by Enigma. */
             longitude?: number | null;
             [key: string]: unknown;
           }>;
@@ -145,7 +161,9 @@ declare module "@oomol-lab/connector" {
               entityType: "BRAND" | "OPERATING_LOCATION" | "LEGAL_ENTITY";
               /** The Enigma GraphQL entity ID. */
               id: string;
+              /** The Enigma business identifier when available. */
               enigmaId?: string | null;
+              /** The first returned name for the related entity. */
               primaryName?: string | null;
               [key: string]: unknown;
             }>;
@@ -155,7 +173,9 @@ declare module "@oomol-lab/connector" {
               entityType: "BRAND" | "OPERATING_LOCATION" | "LEGAL_ENTITY";
               /** The Enigma GraphQL entity ID. */
               id: string;
+              /** The Enigma business identifier when available. */
               enigmaId?: string | null;
+              /** The first returned name for the related entity. */
               primaryName?: string | null;
               [key: string]: unknown;
             }>;
@@ -165,7 +185,9 @@ declare module "@oomol-lab/connector" {
               entityType: "BRAND" | "OPERATING_LOCATION" | "LEGAL_ENTITY";
               /** The Enigma GraphQL entity ID. */
               id: string;
+              /** The Enigma business identifier when available. */
               enigmaId?: string | null;
+              /** The first returned name for the related entity. */
               primaryName?: string | null;
               [key: string]: unknown;
             }>;
@@ -173,9 +195,13 @@ declare module "@oomol-lab/connector" {
           };
           /** Card-transaction summaries returned by Enigma. */
           cardTransactions: Array<{
+            /** The start date for the card-transaction period. */
             periodStartDate?: string | null;
+            /** The end date for the card-transaction period. */
             periodEndDate?: string | null;
+            /** The projected transaction quantity or amount for the period. */
             projectedQuantity?: number | null;
+            /** The quantity type Enigma reports for the card-transaction record. */
             quantityType?: string | null;
             [key: string]: unknown;
           }>;
@@ -262,17 +288,29 @@ declare module "@oomol-lab/connector" {
     "enigma.get_account": {
       input: Record<string, unknown>;
       output: {
+        /** The Enigma customer ID. */
         customerId?: string | null;
+        /** The pricing plan associated with the account. */
         pricingPlan?: string | null;
+        /** The email address associated with the account. */
         customerEmail?: string | null;
+        /** Whether auto-renew is enabled for the account. */
         autoRenewEnabled?: boolean | null;
+        /** The billing account ID. */
         billingAccountId?: string | null;
+        /** Whether credits are currently available. */
         creditsAvailable?: boolean | null;
+        /** The USD limit for automatic recharge. */
         autoRechargeLimitUsd?: number | null;
+        /** The current auto-recharge enabled state. */
         autoRechargeCurrentState?: boolean | null;
+        /** The desired auto-recharge enabled state. */
         autoRechargeDesiredState?: boolean | null;
+        /** The credit threshold that triggers auto-recharge. */
         autoRechargeThresholdAmount?: number | null;
+        /** The credit amount Enigma recharges up to. */
         autoRechargeRechargeToAmount?: number | null;
+        /** When auto-recharge may be re-enabled again. */
         autoRechargeReenableAfterTimestamp?: string | null;
         [key: string]: unknown;
       };
@@ -482,6 +520,7 @@ declare module "@oomol-lab/connector" {
           entityType: "BRAND" | "OPERATING_LOCATION" | "LEGAL_ENTITY";
           /** The Enigma GraphQL entity ID. */
           id: string;
+          /** The Enigma business identifier when available. */
           enigmaId?: string | null;
           /** The entity names returned by Enigma. */
           names: Array<string>;
@@ -491,15 +530,25 @@ declare module "@oomol-lab/connector" {
           phoneNumbers: Array<string>;
           /** The addresses returned by Enigma. */
           addresses: Array<{
+            /** The Enigma address ID. */
             id?: string | null;
+            /** The full formatted address returned by Enigma. */
             fullAddress?: string | null;
+            /** The first street-address line returned by Enigma. */
             streetAddress1?: string | null;
+            /** The second street-address line returned by Enigma. */
             streetAddress2?: string | null;
+            /** The city returned by Enigma. */
             city?: string | null;
+            /** The state or region returned by Enigma. */
             state?: string | null;
+            /** The postal code returned by Enigma. */
             postalCode?: string | null;
+            /** The ISO country code returned by Enigma. */
             countryCode?: string | null;
+            /** The latitude returned by Enigma. */
             latitude?: number | null;
+            /** The longitude returned by Enigma. */
             longitude?: number | null;
             [key: string]: unknown;
           }>;
@@ -513,7 +562,9 @@ declare module "@oomol-lab/connector" {
               entityType: "BRAND" | "OPERATING_LOCATION" | "LEGAL_ENTITY";
               /** The Enigma GraphQL entity ID. */
               id: string;
+              /** The Enigma business identifier when available. */
               enigmaId?: string | null;
+              /** The first returned name for the related entity. */
               primaryName?: string | null;
               [key: string]: unknown;
             }>;
@@ -523,7 +574,9 @@ declare module "@oomol-lab/connector" {
               entityType: "BRAND" | "OPERATING_LOCATION" | "LEGAL_ENTITY";
               /** The Enigma GraphQL entity ID. */
               id: string;
+              /** The Enigma business identifier when available. */
               enigmaId?: string | null;
+              /** The first returned name for the related entity. */
               primaryName?: string | null;
               [key: string]: unknown;
             }>;
@@ -533,7 +586,9 @@ declare module "@oomol-lab/connector" {
               entityType: "BRAND" | "OPERATING_LOCATION" | "LEGAL_ENTITY";
               /** The Enigma GraphQL entity ID. */
               id: string;
+              /** The Enigma business identifier when available. */
               enigmaId?: string | null;
+              /** The first returned name for the related entity. */
               primaryName?: string | null;
               [key: string]: unknown;
             }>;
@@ -541,9 +596,13 @@ declare module "@oomol-lab/connector" {
           };
           /** Card-transaction summaries returned by Enigma. */
           cardTransactions: Array<{
+            /** The start date for the card-transaction period. */
             periodStartDate?: string | null;
+            /** The end date for the card-transaction period. */
             periodEndDate?: string | null;
+            /** The projected transaction quantity or amount for the period. */
             projectedQuantity?: number | null;
+            /** The quantity type Enigma reports for the card-transaction record. */
             quantityType?: string | null;
             [key: string]: unknown;
           }>;
@@ -562,17 +621,27 @@ declare module "@oomol-lab/connector" {
       output: {
         /** The extended-schema types returned by Enigma. */
         types: Array<{
+          /** The Enigma type name. */
           name?: string | null;
+          /** The Enigma type label. */
           label?: string | null;
+          /** The Enigma type description. */
           description?: string | null;
+          /** The simplified Enigma type description. */
           descriptionSimplified?: string | null;
+          /** The pricing tier associated with the type. */
           pricingTier?: string | null;
           /** The fields declared on the type. */
           fields: Array<{
+            /** The Enigma type field name. */
             name?: string | null;
+            /** The Enigma type field label. */
             label?: string | null;
+            /** The type field description from Enigma. */
             description?: string | null;
+            /** The simplified type field description from Enigma. */
             descriptionSimplified?: string | null;
+            /** The pricing tier associated with the type field. */
             pricingTier?: string | null;
             [key: string]: unknown;
           }>;
@@ -580,9 +649,13 @@ declare module "@oomol-lab/connector" {
         }>;
         /** The extended-schema projections returned by Enigma. */
         projections: Array<{
+          /** The entity type the projection belongs to. */
           entity?: string | null;
+          /** The projection name. */
           name?: string | null;
+          /** The projection label. */
           label?: string | null;
+          /** The projection description. */
           description?: string | null;
           /** The raw projection field metadata returned by Enigma. */
           fields?: unknown;
@@ -596,9 +669,13 @@ declare module "@oomol-lab/connector" {
         }>;
         /** The extended-schema data-asset metadata returned by Enigma. */
         dataAssetMetadata: Array<{
+          /** The data-asset namespace. */
           namespace?: string | null;
+          /** The data-asset name. */
           name?: string | null;
+          /** The data-asset value. */
           value?: string | null;
+          /** The data-asset description. */
           description?: string | null;
           [key: string]: unknown;
         }>;
@@ -625,10 +702,15 @@ declare module "@oomol-lab/connector" {
           createdTimestamp: string;
           /** When the materialization was last updated. */
           updatedTimestamp: string;
+          /** The list type for the materialization. */
           listType?: "LIST_GENERATION" | "ENRICHMENT" | null;
+          /** The output resource URI generated by Enigma. */
           resourceUri?: string | null;
+          /** The input file URI associated with the materialization. */
           inputFileUri?: string | null;
+          /** The materialization progress percentage. */
           progressPercentComplete?: number | null;
+          /** The materialization progress message. */
           progressMessage?: string | null;
           /** The field aliases configured for the materialization. */
           fieldAliases: Array<{
@@ -822,6 +904,7 @@ declare module "@oomol-lab/connector" {
           entityType: "BRAND" | "OPERATING_LOCATION" | "LEGAL_ENTITY";
           /** The Enigma GraphQL entity ID. */
           id: string;
+          /** The Enigma business identifier when available. */
           enigmaId?: string | null;
           /** The entity names returned by Enigma. */
           names: Array<string>;
@@ -831,15 +914,25 @@ declare module "@oomol-lab/connector" {
           phoneNumbers: Array<string>;
           /** The addresses returned by Enigma. */
           addresses: Array<{
+            /** The Enigma address ID. */
             id?: string | null;
+            /** The full formatted address returned by Enigma. */
             fullAddress?: string | null;
+            /** The first street-address line returned by Enigma. */
             streetAddress1?: string | null;
+            /** The second street-address line returned by Enigma. */
             streetAddress2?: string | null;
+            /** The city returned by Enigma. */
             city?: string | null;
+            /** The state or region returned by Enigma. */
             state?: string | null;
+            /** The postal code returned by Enigma. */
             postalCode?: string | null;
+            /** The ISO country code returned by Enigma. */
             countryCode?: string | null;
+            /** The latitude returned by Enigma. */
             latitude?: number | null;
+            /** The longitude returned by Enigma. */
             longitude?: number | null;
             [key: string]: unknown;
           }>;
@@ -853,7 +946,9 @@ declare module "@oomol-lab/connector" {
               entityType: "BRAND" | "OPERATING_LOCATION" | "LEGAL_ENTITY";
               /** The Enigma GraphQL entity ID. */
               id: string;
+              /** The Enigma business identifier when available. */
               enigmaId?: string | null;
+              /** The first returned name for the related entity. */
               primaryName?: string | null;
               [key: string]: unknown;
             }>;
@@ -863,7 +958,9 @@ declare module "@oomol-lab/connector" {
               entityType: "BRAND" | "OPERATING_LOCATION" | "LEGAL_ENTITY";
               /** The Enigma GraphQL entity ID. */
               id: string;
+              /** The Enigma business identifier when available. */
               enigmaId?: string | null;
+              /** The first returned name for the related entity. */
               primaryName?: string | null;
               [key: string]: unknown;
             }>;
@@ -873,7 +970,9 @@ declare module "@oomol-lab/connector" {
               entityType: "BRAND" | "OPERATING_LOCATION" | "LEGAL_ENTITY";
               /** The Enigma GraphQL entity ID. */
               id: string;
+              /** The Enigma business identifier when available. */
               enigmaId?: string | null;
+              /** The first returned name for the related entity. */
               primaryName?: string | null;
               [key: string]: unknown;
             }>;
@@ -881,9 +980,13 @@ declare module "@oomol-lab/connector" {
           };
           /** Card-transaction summaries returned by Enigma. */
           cardTransactions: Array<{
+            /** The start date for the card-transaction period. */
             periodStartDate?: string | null;
+            /** The end date for the card-transaction period. */
             periodEndDate?: string | null;
+            /** The projected transaction quantity or amount for the period. */
             projectedQuantity?: number | null;
+            /** The quantity type Enigma reports for the card-transaction record. */
             quantityType?: string | null;
             [key: string]: unknown;
           }>;
@@ -958,10 +1061,15 @@ declare module "@oomol-lab/connector" {
         lists: Array<{
           /** The Enigma list ID. */
           id: string;
+          /** The Enigma list type. */
           listType?: "LIST_GENERATION" | "ENRICHMENT" | null;
+          /** The list name. */
           name?: string | null;
+          /** The list description. */
           description?: string | null;
+          /** The file format configured for exports. */
           fileFormat?: string | null;
+          /** The source input file URI when the list was built from a file. */
           inputFileUri?: string | null;
           /** When the list was created. */
           createdTimestamp: string;
@@ -1110,9 +1218,11 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
       output: {
+        /** The Enigma KYB response ID. */
         responseId?: string | null;
         /** The normalized Enigma KYB risk summary. */
         riskSummary?: {
+          /** The overall risk level returned by Enigma. */
           overallRisk?: string | null;
           /** The individual tasks Enigma evaluated. */
           tasks?: Array<{
@@ -1120,6 +1230,7 @@ declare module "@oomol-lab/connector" {
             taskName: string;
             /** The task status. */
             status: string;
+            /** The task status reason. */
             reason?: string | null;
             [key: string]: unknown;
           }>;

@@ -89,6 +89,7 @@ declare module "@oomol-lab/connector" {
         category?: "business" | "entertainment" | "general" | "health" | "science" | "sports" | "technology";
         /** The ISO 639-1 language code used by the source listing request. */
         language?: "ar" | "de" | "en" | "es" | "fr" | "he" | "it" | "nl" | "no" | "pt" | "ru" | "sv" | "ud" | "zh";
+        /** Schema for sourcesCountrySchema. */
         country?: "ae" | "ar" | "at" | "au" | "be" | "bg" | "br" | "ca" | "ch" | "cn" | "co" | "cu" | "cz" | "de" | "eg" | "fr" | "gb" | "gr" | "hk" | "hu" | "id" | "ie" | "il" | "in" | "is" | "it" | "jp" | "kr" | "lt" | "lv" | "ma" | "mx" | "my" | "ng" | "nl" | "no" | "nz" | "ph" | "pl" | "pt" | "ro" | "rs" | "ru" | "sa" | "se" | "sg" | "si" | "sk" | "th" | "tr" | "tw" | "ua" | "us" | "ve" | "za";
       };
       output: {
@@ -122,6 +123,7 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         q?: string;
+        /** Schema for topHeadlinesCountrySchema. */
         country?: "ae" | "ar" | "at" | "au" | "be" | "bg" | "br" | "ca" | "ch" | "cn" | "co" | "cu" | "cz" | "de" | "eg" | "fr" | "gb" | "gr" | "hk" | "hu" | "id" | "ie" | "il" | "in" | "it" | "jp" | "kr" | "lt" | "lv" | "ma" | "mx" | "my" | "ng" | "nl" | "no" | "nz" | "ph" | "pl" | "pt" | "ro" | "rs" | "ru" | "sa" | "se" | "sg" | "si" | "sk" | "th" | "tr" | "tw" | "ua" | "us" | "ve" | "za";
         /** The news category filter used by the request. */
         category?: "business" | "entertainment" | "general" | "health" | "science" | "sports" | "technology";

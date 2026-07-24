@@ -119,19 +119,16 @@ declare module "@oomol-lab/connector" {
         status?: Array<"queued" | "processing" | "done" | "error">;
         /**
          * Filter jobs relevant to a specific date in YYYY-MM-DD format.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))$
          * @format date
          */
         date?: string;
         /**
          * Filter jobs after the specified ISO datetime.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
          * @format date-time
          */
         afterDate?: string;
         /**
          * Filter jobs before the specified ISO datetime.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
          * @format date-time
          */
         beforeDate?: string;
@@ -143,6 +140,7 @@ declare module "@oomol-lab/connector" {
         first?: string;
         /** The URL for the current result page. */
         current?: string;
+        /** The URL for the next result page. */
         next?: string | null;
         /** The returned transcription jobs. */
         items: Array<{

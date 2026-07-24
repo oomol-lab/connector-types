@@ -29,6 +29,7 @@ declare module "@oomol-lab/connector" {
           }>;
           /** The row objects returned for the datatable query. */
           rows: Array<Record<string, string | number | boolean | null>>;
+          /** The cursor ID to request the next page of datatable rows. */
           nextCursorId: string | null;
         };
         /** The normalized rows returned from the ZACKS/TP datatable. */
@@ -48,6 +49,7 @@ declare module "@oomol-lab/connector" {
           }>;
           /** The row objects returned for the datatable query. */
           rows: Array<Record<string, string | number | boolean | null>>;
+          /** The cursor ID to request the next page of datatable rows. */
           nextCursorId: string | null;
         };
       };
@@ -64,15 +66,19 @@ declare module "@oomol-lab/connector" {
       output: {
         /** The bulk export file information. */
         file: {
+          /** The temporary download URL for the zipped bulk export file. */
           link: string | null;
           /**
            * The current generation status of the bulk export file.
            * @minLength 1
            */
           status: string;
+          /** The snapshot timestamp associated with the generated export. */
           dataSnapshotTime: string | null;
         };
+        /** The datatable refresh metadata for the export. */
         datatable: {
+          /** The last refresh timestamp reported for the datatable. */
           lastRefreshedTime: string | null;
         } | null;
       };
@@ -102,6 +108,7 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         name: string;
+        /** The datatable description when Nasdaq provides it. */
         description: string | null;
         /** The available datatable columns. */
         columns: Array<{
@@ -124,11 +131,16 @@ declare module "@oomol-lab/connector" {
         premium: boolean;
         /** The refresh status information. */
         status: {
+          /** The current refresh status for the datatable when Nasdaq provides it. */
           status: string | null;
+          /** The expected time of the next refresh when Nasdaq provides it. */
           expectedAt: string | null;
+          /** The timestamp when the datatable was last refreshed. */
           refreshedAt: string | null;
+          /** The update cadence reported by Nasdaq for the datatable. */
           updateFrequency: string | null;
         };
+        /** The data-version metadata reported by Nasdaq. */
         dataVersion: {
           /**
            * The Nasdaq data-version code for the datatable.
@@ -137,6 +149,7 @@ declare module "@oomol-lab/connector" {
           code: string;
           /** Whether this data version is the default version. */
           default: boolean;
+          /** The description of the data version when Nasdaq provides it. */
           description: string | null;
         } | null;
       };
@@ -183,6 +196,7 @@ declare module "@oomol-lab/connector" {
         }>;
         /** The row objects returned for the datatable query. */
         rows: Array<Record<string, string | number | boolean | null>>;
+        /** The cursor ID to request the next page of datatable rows. */
         nextCursorId: string | null;
       };
     };
@@ -228,14 +242,22 @@ declare module "@oomol-lab/connector" {
            * @minLength 1
            */
           date: string;
+          /** The opening price for the trading day. */
           open: number | null;
+          /** The highest price for the trading day. */
           high: number | null;
+          /** The lowest price for the trading day. */
           low: number | null;
+          /** The closing price for the trading day. */
           close: number | null;
+          /** The total trading volume for the day. */
           volume: number | null;
+          /** The dividend amount for the day, if any. */
           dividend: number | null;
+          /** The split ratio for the day, if any. */
           split: number | null;
         }>;
+        /** The cursor ID to request the next page of quote rows. */
         nextCursorId: string | null;
       };
     };
@@ -281,14 +303,22 @@ declare module "@oomol-lab/connector" {
            * @minLength 1
            */
           date: string;
+          /** The opening price for the trading day. */
           open: number | null;
+          /** The highest price for the trading day. */
           high: number | null;
+          /** The lowest price for the trading day. */
           low: number | null;
+          /** The closing price for the trading day. */
           close: number | null;
+          /** The total trading volume for the day. */
           volume: number | null;
+          /** The dividend amount for the day, if any. */
           dividend: number | null;
+          /** The split ratio for the day, if any. */
           split: number | null;
         }>;
+        /** The cursor ID to request the next page of quote rows. */
         nextCursorId: string | null;
       };
     };
@@ -349,6 +379,7 @@ declare module "@oomol-lab/connector" {
         }>;
         /** The row objects returned for the datatable query. */
         rows: Array<Record<string, string | number | boolean | null>>;
+        /** The cursor ID to request the next page of datatable rows. */
         nextCursorId: string | null;
       };
     };

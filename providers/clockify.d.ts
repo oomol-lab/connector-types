@@ -37,7 +37,6 @@ declare module "@oomol-lab/connector" {
           type: string;
           /**
            * The project estimate in ISO 8601 duration format.
-           * @pattern ^P(?:(\d+W)|(?!.*W)(?=\d|T\d)(\d+Y)?(\d+M)?(\d+D)?(T(?=\d)(\d+H)?(\d+M)?(\d+([.,]\d+)?S)?)?)$
            * @format duration
            */
           estimate: string;
@@ -121,7 +120,6 @@ declare module "@oomol-lab/connector" {
               currency?: string;
               /**
                * When the rate became effective, if Clockify returned it.
-               * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
                * @format date-time
                */
               since?: string;
@@ -135,7 +133,6 @@ declare module "@oomol-lab/connector" {
               currency?: string;
               /**
                * When the rate became effective, if Clockify returned it.
-               * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
                * @format date-time
                */
               since?: string;
@@ -151,7 +148,6 @@ declare module "@oomol-lab/connector" {
             currency?: string;
             /**
              * When the rate became effective, if Clockify returned it.
-             * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
              * @format date-time
              */
             since?: string;
@@ -165,7 +161,6 @@ declare module "@oomol-lab/connector" {
             currency?: string;
             /**
              * When the rate became effective, if Clockify returned it.
-             * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
              * @format date-time
              */
             since?: string;
@@ -199,7 +194,6 @@ declare module "@oomol-lab/connector" {
         billable?: boolean;
         /**
          * The task estimate in ISO 8601 duration format.
-         * @pattern ^P(?:(\d+W)|(?!.*W)(?=\d|T\d)(\d+Y)?(\d+M)?(\d+D)?(T(?=\d)(\d+H)?(\d+M)?(\d+([.,]\d+)?S)?)?)$
          * @format duration
          */
         estimate?: string;
@@ -230,6 +224,7 @@ declare module "@oomol-lab/connector" {
           billable?: boolean;
           /** The tracked duration for the task. */
           duration?: string | null;
+          /** The task estimate in ISO 8601 duration format returned by Clockify. */
           estimate?: string | null;
           /** The legacy assignee ID returned by Clockify. */
           assigneeId?: string | null;
@@ -247,7 +242,6 @@ declare module "@oomol-lab/connector" {
             currency?: string;
             /**
              * When the rate became effective, if Clockify returned it.
-             * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
              * @format date-time
              */
             since?: string;
@@ -261,7 +255,6 @@ declare module "@oomol-lab/connector" {
             currency?: string;
             /**
              * When the rate became effective, if Clockify returned it.
-             * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
              * @format date-time
              */
             since?: string;
@@ -286,13 +279,11 @@ declare module "@oomol-lab/connector" {
         userId: string;
         /**
          * The start timestamp for the time entry.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
          * @format date-time
          */
         start: string;
         /**
          * The end timestamp for the time entry. Omit it to create a running timer.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
          * @format date-time
          */
         end?: string;
@@ -348,9 +339,15 @@ declare module "@oomol-lab/connector" {
            * @minLength 1
            */
           workspaceId?: string;
-          /** The project ID associated with the time entry. */
+          /**
+           * The project ID associated with the time entry.
+           * @minLength 1
+           */
           projectId?: string | null;
-          /** The task ID associated with the time entry. */
+          /**
+           * The task ID associated with the time entry.
+           * @minLength 1
+           */
           taskId?: string | null;
           /** The tag IDs attached to the time entry. */
           tagIds?: Array<string>;
@@ -362,11 +359,13 @@ declare module "@oomol-lab/connector" {
           timeInterval?: {
             /**
              * The start timestamp of the time interval.
-             * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
              * @format date-time
              */
             start: string;
-            /** The end timestamp of the time interval, if the entry is finished. */
+            /**
+             * The end timestamp of the time interval, if the entry is finished.
+             * @format date-time
+             */
             end?: string | null;
             /** The ISO 8601 duration returned by Clockify. */
             duration?: string | null;
@@ -446,7 +445,6 @@ declare module "@oomol-lab/connector" {
             currency?: string;
             /**
              * When the rate became effective, if Clockify returned it.
-             * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
              * @format date-time
              */
             since?: string;
@@ -460,7 +458,6 @@ declare module "@oomol-lab/connector" {
             currency?: string;
             /**
              * When the rate became effective, if Clockify returned it.
-             * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
              * @format date-time
              */
             since?: string;
@@ -544,7 +541,6 @@ declare module "@oomol-lab/connector" {
               currency?: string;
               /**
                * When the rate became effective, if Clockify returned it.
-               * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
                * @format date-time
                */
               since?: string;
@@ -558,7 +554,6 @@ declare module "@oomol-lab/connector" {
               currency?: string;
               /**
                * When the rate became effective, if Clockify returned it.
-               * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
                * @format date-time
                */
               since?: string;
@@ -653,7 +648,6 @@ declare module "@oomol-lab/connector" {
               currency?: string;
               /**
                * When the rate became effective, if Clockify returned it.
-               * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
                * @format date-time
                */
               since?: string;
@@ -667,7 +661,6 @@ declare module "@oomol-lab/connector" {
               currency?: string;
               /**
                * When the rate became effective, if Clockify returned it.
-               * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
                * @format date-time
                */
               since?: string;
@@ -683,7 +676,6 @@ declare module "@oomol-lab/connector" {
             currency?: string;
             /**
              * When the rate became effective, if Clockify returned it.
-             * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
              * @format date-time
              */
             since?: string;
@@ -697,7 +689,6 @@ declare module "@oomol-lab/connector" {
             currency?: string;
             /**
              * When the rate became effective, if Clockify returned it.
-             * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
              * @format date-time
              */
             since?: string;
@@ -752,7 +743,6 @@ declare module "@oomol-lab/connector" {
               currency?: string;
               /**
                * When the rate became effective, if Clockify returned it.
-               * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
                * @format date-time
                */
               since?: string;
@@ -766,7 +756,6 @@ declare module "@oomol-lab/connector" {
               currency?: string;
               /**
                * When the rate became effective, if Clockify returned it.
-               * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
                * @format date-time
                */
               since?: string;
@@ -908,7 +897,6 @@ declare module "@oomol-lab/connector" {
               currency?: string;
               /**
                * When the rate became effective, if Clockify returned it.
-               * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
                * @format date-time
                */
               since?: string;
@@ -922,7 +910,6 @@ declare module "@oomol-lab/connector" {
               currency?: string;
               /**
                * When the rate became effective, if Clockify returned it.
-               * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
                * @format date-time
                */
               since?: string;
@@ -938,7 +925,6 @@ declare module "@oomol-lab/connector" {
             currency?: string;
             /**
              * When the rate became effective, if Clockify returned it.
-             * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
              * @format date-time
              */
             since?: string;
@@ -952,7 +938,6 @@ declare module "@oomol-lab/connector" {
             currency?: string;
             /**
              * When the rate became effective, if Clockify returned it.
-             * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
              * @format date-time
              */
             since?: string;
@@ -1038,6 +1023,7 @@ declare module "@oomol-lab/connector" {
           billable?: boolean;
           /** The tracked duration for the task. */
           duration?: string | null;
+          /** The task estimate in ISO 8601 duration format returned by Clockify. */
           estimate?: string | null;
           /** The legacy assignee ID returned by Clockify. */
           assigneeId?: string | null;
@@ -1055,7 +1041,6 @@ declare module "@oomol-lab/connector" {
             currency?: string;
             /**
              * When the rate became effective, if Clockify returned it.
-             * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
              * @format date-time
              */
             since?: string;
@@ -1069,7 +1054,6 @@ declare module "@oomol-lab/connector" {
             currency?: string;
             /**
              * When the rate became effective, if Clockify returned it.
-             * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
              * @format date-time
              */
             since?: string;
@@ -1109,13 +1093,11 @@ declare module "@oomol-lab/connector" {
         userId: string;
         /**
          * Only return entries that start after this timestamp.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
          * @format date-time
          */
         start?: string;
         /**
          * Only return entries that end before this timestamp.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
          * @format date-time
          */
         end?: string;
@@ -1173,9 +1155,15 @@ declare module "@oomol-lab/connector" {
            * @minLength 1
            */
           workspaceId?: string;
-          /** The project ID associated with the time entry. */
+          /**
+           * The project ID associated with the time entry.
+           * @minLength 1
+           */
           projectId?: string | null;
-          /** The task ID associated with the time entry. */
+          /**
+           * The task ID associated with the time entry.
+           * @minLength 1
+           */
           taskId?: string | null;
           /** The tag IDs attached to the time entry. */
           tagIds?: Array<string>;
@@ -1187,11 +1175,13 @@ declare module "@oomol-lab/connector" {
           timeInterval?: {
             /**
              * The start timestamp of the time interval.
-             * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
              * @format date-time
              */
             start: string;
-            /** The end timestamp of the time interval, if the entry is finished. */
+            /**
+             * The end timestamp of the time interval, if the entry is finished.
+             * @format date-time
+             */
             end?: string | null;
             /** The ISO 8601 duration returned by Clockify. */
             duration?: string | null;
@@ -1271,7 +1261,6 @@ declare module "@oomol-lab/connector" {
             currency?: string;
             /**
              * When the rate became effective, if Clockify returned it.
-             * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
              * @format date-time
              */
             since?: string;
@@ -1285,7 +1274,6 @@ declare module "@oomol-lab/connector" {
             currency?: string;
             /**
              * When the rate became effective, if Clockify returned it.
-             * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
              * @format date-time
              */
             since?: string;
@@ -1365,7 +1353,6 @@ declare module "@oomol-lab/connector" {
               currency?: string;
               /**
                * When the rate became effective, if Clockify returned it.
-               * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
                * @format date-time
                */
               since?: string;
@@ -1379,7 +1366,6 @@ declare module "@oomol-lab/connector" {
               currency?: string;
               /**
                * When the rate became effective, if Clockify returned it.
-               * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
                * @format date-time
                */
               since?: string;
@@ -1435,7 +1421,6 @@ declare module "@oomol-lab/connector" {
           amount: number;
           /**
            * When the updated cost rate should become effective.
-           * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
            * @format date-time
            */
           since?: string;
@@ -1449,7 +1434,6 @@ declare module "@oomol-lab/connector" {
           amount: number;
           /**
            * When the updated hourly rate should become effective.
-           * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
            * @format date-time
            */
           since?: string;
@@ -1520,7 +1504,6 @@ declare module "@oomol-lab/connector" {
               currency?: string;
               /**
                * When the rate became effective, if Clockify returned it.
-               * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
                * @format date-time
                */
               since?: string;
@@ -1534,7 +1517,6 @@ declare module "@oomol-lab/connector" {
               currency?: string;
               /**
                * When the rate became effective, if Clockify returned it.
-               * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
                * @format date-time
                */
               since?: string;
@@ -1550,7 +1532,6 @@ declare module "@oomol-lab/connector" {
             currency?: string;
             /**
              * When the rate became effective, if Clockify returned it.
-             * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
              * @format date-time
              */
             since?: string;
@@ -1564,7 +1545,6 @@ declare module "@oomol-lab/connector" {
             currency?: string;
             /**
              * When the rate became effective, if Clockify returned it.
-             * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
              * @format date-time
              */
             since?: string;

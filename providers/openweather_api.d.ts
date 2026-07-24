@@ -101,7 +101,7 @@ declare module "@oomol-lab/connector" {
          */
         lon?: number;
         /** The upstream response mode. Only json is supported. */
-        mode?: "json";
+        mode?: string;
         /** The units of measurement for the response. */
         units?: "standard" | "metric" | "imperial";
         /**
@@ -460,7 +460,7 @@ declare module "@oomol-lab/connector" {
          */
         cnt?: number;
         /** The upstream response mode. Only json is supported. */
-        mode?: "json";
+        mode?: string;
         /** The units of measurement for the response. */
         units?: "standard" | "metric" | "imperial";
         /**

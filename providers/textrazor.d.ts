@@ -187,6 +187,7 @@ declare module "@oomol-lab/connector" {
     /** Manage TextRazor custom classifier categories, including upload, listing, retrieval, and deletion. */
     "textrazor.custom_classifier_manager": {
       input: {
+        /** The operation value. */
         operation: "create_update";
         /**
          * The classifier identifier to create or update.
@@ -215,6 +216,7 @@ declare module "@oomol-lab/connector" {
           query: string;
         }>;
       } | {
+        /** The operation value. */
         operation: "delete";
         /**
          * The classifier identifier to delete.
@@ -222,6 +224,7 @@ declare module "@oomol-lab/connector" {
          */
         classifier_id: string;
       } | {
+        /** The operation value. */
         operation: "get_categories";
         /**
          * The classifier identifier to inspect.
@@ -240,6 +243,7 @@ declare module "@oomol-lab/connector" {
          */
         offset?: number;
       } | {
+        /** The operation value. */
         operation: "get_category";
         /**
          * The classifier identifier to inspect.
@@ -252,6 +256,7 @@ declare module "@oomol-lab/connector" {
          */
         category_id: string;
       } | {
+        /** The operation value. */
         operation: "delete_category";
         /**
          * The classifier identifier to mutate.
@@ -277,6 +282,7 @@ declare module "@oomol-lab/connector" {
         categories?: Array<{
           /** The classifier category identifier. */
           categoryId?: string;
+          /** The classifier category label. */
           label?: string | null;
           /** The classifier query expression. */
           query?: string;
@@ -294,6 +300,7 @@ declare module "@oomol-lab/connector" {
     /** Manage TextRazor custom entity dictionaries, including lifecycle and entry operations. */
     "textrazor.dictionary_manager": {
       input: {
+        /** The operation value. */
         operation: "create";
         /**
          * The dictionary identifier to create.
@@ -301,8 +308,10 @@ declare module "@oomol-lab/connector" {
          */
         dictionary_id: string;
       } | {
+        /** The operation value. */
         operation: "list";
       } | {
+        /** The operation value. */
         operation: "get";
         /**
          * The dictionary identifier to retrieve.
@@ -310,6 +319,7 @@ declare module "@oomol-lab/connector" {
          */
         dictionary_id: string;
       } | {
+        /** The operation value. */
         operation: "delete";
         /**
          * The dictionary identifier to delete.
@@ -317,6 +327,7 @@ declare module "@oomol-lab/connector" {
          */
         dictionary_id: string;
       } | {
+        /** The operation value. */
         operation: "add_entries";
         /**
          * The dictionary identifier to mutate.
@@ -342,6 +353,7 @@ declare module "@oomol-lab/connector" {
           data?: Record<string, Array<string>>;
         }>;
       } | {
+        /** The operation value. */
         operation: "get_entries";
         /**
          * The dictionary identifier to inspect.
@@ -360,6 +372,7 @@ declare module "@oomol-lab/connector" {
          */
         offset?: number;
       } | {
+        /** The operation value. */
         operation: "delete_entries";
         /**
          * The dictionary identifier to mutate.

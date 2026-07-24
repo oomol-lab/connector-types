@@ -2,9 +2,74 @@ import "@oomol-lab/connector";
 
 declare module "@oomol-lab/connector" {
   interface ActionRegistry {
+    /** Cancel a queued or running Workers Builds job. */
+    "cloudflare_worker.cancel_build": {
+      input: {
+        /**
+         * The Cloudflare account ID. Omit it when the connection uniquely identifies one account. Multi-account OAuth connections must pass an ID returned by list_accounts.
+         * @minLength 1
+         */
+        accountId?: string;
+        /**
+         * The build UUID.
+         * @format uuid
+         */
+        buildUuid: string;
+      };
+      output: {
+        /**
+         * The cancelled build UUID.
+         * @format uuid
+         */
+        buildUuid: string;
+        /** The build outcome returned after cancellation. */
+        buildOutcome?: string;
+        /** The build stop timestamp. */
+        stoppedOn?: string | null;
+      };
+    };
+    /** Start a Workers Builds job from a configured trigger and branch or commit. */
+    "cloudflare_worker.create_manual_build": {
+      input: {
+        /**
+         * The Cloudflare account ID. Omit it when the connection uniquely identifies one account. Multi-account OAuth connections must pass an ID returned by list_accounts.
+         * @minLength 1
+         */
+        accountId?: string;
+        /**
+         * The build trigger UUID.
+         * @format uuid
+         */
+        triggerUuid: string;
+        /**
+         * The Git branch to build.
+         * @minLength 1
+         */
+        branch?: string;
+        /**
+         * The Git commit hash to build.
+         * @minLength 1
+         */
+        commitHash?: string;
+      };
+      output: {
+        /**
+         * The queued build UUID.
+         * @format uuid
+         */
+        buildUuid: string;
+        /** The build creation timestamp. */
+        createdOn?: string;
+      };
+    };
     /** Create a Cloudflare Worker using the Workers beta API. */
     "cloudflare_worker.create_worker": {
       input: {
+        /**
+         * The Cloudflare account ID. Omit it when the connection uniquely identifies one account. Multi-account OAuth connections must pass an ID returned by list_accounts.
+         * @minLength 1
+         */
+        accountId?: string;
         /**
          * The Worker name.
          * @minLength 1
@@ -53,6 +118,11 @@ declare module "@oomol-lab/connector" {
     "cloudflare_worker.delete_worker": {
       input: {
         /**
+         * The Cloudflare account ID. Omit it when the connection uniquely identifies one account. Multi-account OAuth connections must pass an ID returned by list_accounts.
+         * @minLength 1
+         */
+        accountId?: string;
+        /**
          * The Cloudflare Worker ID.
          * @minLength 1
          */
@@ -68,6 +138,11 @@ declare module "@oomol-lab/connector" {
     /** Delete a Cloudflare Worker script. */
     "cloudflare_worker.delete_worker_script": {
       input: {
+        /**
+         * The Cloudflare account ID. Omit it when the connection uniquely identifies one account. Multi-account OAuth connections must pass an ID returned by list_accounts.
+         * @minLength 1
+         */
+        accountId?: string;
         /**
          * The Cloudflare Worker script name.
          * @minLength 1
@@ -86,6 +161,11 @@ declare module "@oomol-lab/connector" {
     /** Delete a secret binding from a Cloudflare Worker script. */
     "cloudflare_worker.delete_worker_script_secret": {
       input: {
+        /**
+         * The Cloudflare account ID. Omit it when the connection uniquely identifies one account. Multi-account OAuth connections must pass an ID returned by list_accounts.
+         * @minLength 1
+         */
+        accountId?: string;
         /**
          * The Cloudflare Worker script name.
          * @minLength 1
@@ -107,6 +187,11 @@ declare module "@oomol-lab/connector" {
     /** Partially update a Cloudflare Worker using the Workers beta API while leaving omitted fields unchanged. */
     "cloudflare_worker.edit_worker": {
       input: {
+        /**
+         * The Cloudflare account ID. Omit it when the connection uniquely identifies one account. Multi-account OAuth connections must pass an ID returned by list_accounts.
+         * @minLength 1
+         */
+        accountId?: string;
         /**
          * The Cloudflare Worker ID.
          * @minLength 1
@@ -156,9 +241,194 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
+    /** Get the current status and outcome of one Workers Builds job. */
+    "cloudflare_worker.get_build": {
+      input: {
+        /**
+         * The Cloudflare account ID. Omit it when the connection uniquely identifies one account. Multi-account OAuth connections must pass an ID returned by list_accounts.
+         * @minLength 1
+         */
+        accountId?: string;
+        /**
+         * The build UUID.
+         * @format uuid
+         */
+        buildUuid: string;
+      };
+      output: {
+        /** A Cloudflare Workers Builds job. */
+        build: {
+          /**
+           * The build UUID.
+           * @format uuid
+           */
+          buildUuid: string;
+          /** The normalized build lifecycle state. */
+          state: "queued" | "initializing" | "running" | "succeeded" | "failed" | "stopped";
+          /** The Cloudflare build status. */
+          status?: "queued" | "initializing" | "running" | "stopped";
+          /** The Cloudflare build outcome. */
+          buildOutcome?: "success" | "fail" | "skipped" | "cancelled" | "terminated";
+          /** The build creation timestamp. */
+          createdOn?: string;
+          /** The build initialization timestamp. */
+          initializingOn?: string | null;
+          /** The build start timestamp. */
+          runningOn?: string | null;
+          /** The build stop timestamp. */
+          stoppedOn?: string | null;
+          /** The last build update timestamp. */
+          modifiedOn?: string;
+          /** The source revision and build configuration that triggered a Workers Builds job. */
+          triggerMetadata?: {
+            /** The source revision author. */
+            author?: string;
+            /** The source branch name. */
+            branch?: string;
+            /** The build command used by the job. */
+            buildCommand?: string;
+            /** The deploy command used by the job. */
+            deployCommand?: string;
+            /** The build token name. */
+            buildTokenName?: string;
+            /**
+             * The build token UUID.
+             * @format uuid
+             */
+            buildTokenUuid?: string;
+            /** The event source that triggered the build. */
+            buildTriggerSource?: string;
+            /** The source commit hash. */
+            commitHash?: string;
+            /** The source commit message. */
+            commitMessage?: string;
+            /** A free-form object accepted by the Cloudflare API. */
+            environmentVariables?: Record<string, unknown>;
+            /** The source provider account name. */
+            providerAccountName?: string;
+            /** The source repository provider type. */
+            providerType?: string;
+            /** The source repository name. */
+            repoName?: string;
+            /** The repository directory where the build ran. */
+            rootDirectory?: string;
+          };
+          /** A Cloudflare Workers Builds trigger. */
+          trigger?: {
+            /**
+             * The build trigger UUID.
+             * @format uuid
+             */
+            triggerUuid: string;
+            /** The build trigger name. */
+            triggerName?: string;
+            /** The immutable Worker script tag. */
+            externalScriptId?: string;
+            /** The command that builds the Worker. */
+            buildCommand?: string;
+            /** The command that deploys the Worker. */
+            deployCommand?: string;
+            /** The repository directory where the build runs. */
+            rootDirectory?: string;
+            /** Branches that can trigger builds. */
+            branchIncludes?: Array<string>;
+            /** Branches excluded from builds. */
+            branchExcludes?: Array<string>;
+            /** Repository paths that can trigger builds. */
+            pathIncludes?: Array<string>;
+            /** Repository paths excluded from builds. */
+            pathExcludes?: Array<string>;
+            /** Whether build caching is enabled. */
+            buildCachingEnabled?: boolean;
+            /** The UUID of the build token used by this trigger. */
+            buildTokenUuid?: string;
+            /** The name of the build token used by this trigger. */
+            buildTokenName?: string;
+            /** The trigger creation timestamp. */
+            createdOn?: string;
+            /** The last trigger update timestamp. */
+            modifiedOn?: string;
+            /** The trigger deletion timestamp, or null when active. */
+            deletedOn?: string | null;
+            /** The source repository connected to a Workers Builds trigger. */
+            repoConnection?: {
+              /** The source provider account identifier. */
+              providerAccountId?: string;
+              /** The source provider account name. */
+              providerAccountName?: string;
+              /** The source repository provider type. */
+              providerType?: string;
+              /**
+               * The repository connection UUID.
+               * @format uuid
+               */
+              repoConnectionUuid?: string;
+              /** The source repository identifier. */
+              repoId?: string;
+              /** The source repository name. */
+              repoName?: string;
+              /** The repository connection creation timestamp. */
+              createdOn?: string;
+              /** The repository connection modification timestamp. */
+              modifiedOn?: string;
+              /** The repository connection deletion timestamp, or null when active. */
+              deletedOn?: string | null;
+            };
+          };
+          /** The pull request that triggered a Workers Builds job. */
+          pullRequest?: {
+            /** The pull request creation timestamp. */
+            createdOn?: string;
+            /**
+             * The pull request URL.
+             * @format uri
+             */
+            pullRequestUrl?: string;
+          };
+        };
+      };
+    };
+    /** Get one page of log lines for a Workers Builds job. */
+    "cloudflare_worker.get_build_logs": {
+      input: {
+        /**
+         * The Cloudflare account ID. Omit it when the connection uniquely identifies one account. Multi-account OAuth connections must pass an ID returned by list_accounts.
+         * @minLength 1
+         */
+        accountId?: string;
+        /**
+         * The build UUID.
+         * @format uuid
+         */
+        buildUuid: string;
+        /**
+         * The cursor returned by the previous log page.
+         * @minLength 1
+         */
+        cursor?: string;
+      };
+      output: {
+        /** The build log lines. */
+        lines: Array<{
+          /** The log timestamp supplied by Cloudflare. */
+          timestamp: number;
+          /** The log message. */
+          message: string;
+        }>;
+        /** The cursor for the next log page. */
+        cursor?: string;
+        /** Whether Cloudflare truncated the returned log page. */
+        truncated?: boolean;
+      };
+    };
     /** Get one Worker by Worker ID using the Workers beta API. */
     "cloudflare_worker.get_worker": {
       input: {
+        /**
+         * The Cloudflare account ID. Omit it when the connection uniquely identifies one account. Multi-account OAuth connections must pass an ID returned by list_accounts.
+         * @minLength 1
+         */
+        accountId?: string;
         /**
          * The Cloudflare Worker ID.
          * @minLength 1
@@ -197,6 +467,11 @@ declare module "@oomol-lab/connector" {
     "cloudflare_worker.get_worker_script_content": {
       input: {
         /**
+         * The Cloudflare account ID. Omit it when the connection uniquely identifies one account. Multi-account OAuth connections must pass an ID returned by list_accounts.
+         * @minLength 1
+         */
+        accountId?: string;
+        /**
          * The Cloudflare Worker script name.
          * @minLength 1
          */
@@ -205,12 +480,18 @@ declare module "@oomol-lab/connector" {
       output: {
         /** The raw Worker script content. */
         content: string;
+        /** The HTTP content type returned by Cloudflare. */
         contentType: string | null;
       };
     };
     /** Get one secret binding attached to a Cloudflare Worker script. */
     "cloudflare_worker.get_worker_script_secret": {
       input: {
+        /**
+         * The Cloudflare account ID. Omit it when the connection uniquely identifies one account. Multi-account OAuth connections must pass an ID returned by list_accounts.
+         * @minLength 1
+         */
+        accountId?: string;
         /**
          * The Cloudflare Worker script name.
          * @minLength 1
@@ -229,6 +510,7 @@ declare module "@oomol-lab/connector" {
           name: string;
           /** The secret binding type. */
           type?: string;
+          /** The redacted secret text field. */
           text?: string | null;
           /** The key algorithm for key secrets. */
           algorithm?: string;
@@ -244,6 +526,11 @@ declare module "@oomol-lab/connector" {
     /** Get Worker metadata and configuration for a Cloudflare Worker script. */
     "cloudflare_worker.get_worker_script_settings": {
       input: {
+        /**
+         * The Cloudflare account ID. Omit it when the connection uniquely identifies one account. Multi-account OAuth connections must pass an ID returned by list_accounts.
+         * @minLength 1
+         */
+        accountId?: string;
         /**
          * The Cloudflare Worker script name.
          * @minLength 1
@@ -318,9 +605,264 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
+    /** List Workers Builds triggers configured for one Worker script tag. */
+    "cloudflare_worker.list_build_triggers": {
+      input: {
+        /**
+         * The Cloudflare account ID. Omit it when the connection uniquely identifies one account. Multi-account OAuth connections must pass an ID returned by list_accounts.
+         * @minLength 1
+         */
+        accountId?: string;
+        /**
+         * The immutable Worker script tag.
+         * @minLength 1
+         */
+        scriptTag: string;
+      };
+      output: {
+        /** The configured Workers Builds triggers. */
+        triggers: Array<{
+          /**
+           * The build trigger UUID.
+           * @format uuid
+           */
+          triggerUuid: string;
+          /** The build trigger name. */
+          triggerName?: string;
+          /** The immutable Worker script tag. */
+          externalScriptId?: string;
+          /** The command that builds the Worker. */
+          buildCommand?: string;
+          /** The command that deploys the Worker. */
+          deployCommand?: string;
+          /** The repository directory where the build runs. */
+          rootDirectory?: string;
+          /** Branches that can trigger builds. */
+          branchIncludes?: Array<string>;
+          /** Branches excluded from builds. */
+          branchExcludes?: Array<string>;
+          /** Repository paths that can trigger builds. */
+          pathIncludes?: Array<string>;
+          /** Repository paths excluded from builds. */
+          pathExcludes?: Array<string>;
+          /** Whether build caching is enabled. */
+          buildCachingEnabled?: boolean;
+          /** The UUID of the build token used by this trigger. */
+          buildTokenUuid?: string;
+          /** The name of the build token used by this trigger. */
+          buildTokenName?: string;
+          /** The trigger creation timestamp. */
+          createdOn?: string;
+          /** The last trigger update timestamp. */
+          modifiedOn?: string;
+          /** The trigger deletion timestamp, or null when active. */
+          deletedOn?: string | null;
+          /** The source repository connected to a Workers Builds trigger. */
+          repoConnection?: {
+            /** The source provider account identifier. */
+            providerAccountId?: string;
+            /** The source provider account name. */
+            providerAccountName?: string;
+            /** The source repository provider type. */
+            providerType?: string;
+            /**
+             * The repository connection UUID.
+             * @format uuid
+             */
+            repoConnectionUuid?: string;
+            /** The source repository identifier. */
+            repoId?: string;
+            /** The source repository name. */
+            repoName?: string;
+            /** The repository connection creation timestamp. */
+            createdOn?: string;
+            /** The repository connection modification timestamp. */
+            modifiedOn?: string;
+            /** The repository connection deletion timestamp, or null when active. */
+            deletedOn?: string | null;
+          };
+        }>;
+      };
+    };
+    /** List Workers Builds jobs for one Worker script tag. */
+    "cloudflare_worker.list_builds": {
+      input: {
+        /**
+         * The Cloudflare account ID. Omit it when the connection uniquely identifies one account. Multi-account OAuth connections must pass an ID returned by list_accounts.
+         * @minLength 1
+         */
+        accountId?: string;
+        /**
+         * The immutable Worker script tag.
+         * @minLength 1
+         */
+        scriptTag: string;
+        /**
+         * The result page number.
+         * @exclusiveMinimum 0
+         */
+        page?: number;
+        /**
+         * The page size, up to 200.
+         * @minimum 1
+         * @maximum 200
+         */
+        perPage?: number;
+      };
+      output: {
+        /** The Workers Builds jobs. */
+        builds: Array<{
+          /**
+           * The build UUID.
+           * @format uuid
+           */
+          buildUuid: string;
+          /** The normalized build lifecycle state. */
+          state: "queued" | "initializing" | "running" | "succeeded" | "failed" | "stopped";
+          /** The Cloudflare build status. */
+          status?: "queued" | "initializing" | "running" | "stopped";
+          /** The Cloudflare build outcome. */
+          buildOutcome?: "success" | "fail" | "skipped" | "cancelled" | "terminated";
+          /** The build creation timestamp. */
+          createdOn?: string;
+          /** The build initialization timestamp. */
+          initializingOn?: string | null;
+          /** The build start timestamp. */
+          runningOn?: string | null;
+          /** The build stop timestamp. */
+          stoppedOn?: string | null;
+          /** The last build update timestamp. */
+          modifiedOn?: string;
+          /** The source revision and build configuration that triggered a Workers Builds job. */
+          triggerMetadata?: {
+            /** The source revision author. */
+            author?: string;
+            /** The source branch name. */
+            branch?: string;
+            /** The build command used by the job. */
+            buildCommand?: string;
+            /** The deploy command used by the job. */
+            deployCommand?: string;
+            /** The build token name. */
+            buildTokenName?: string;
+            /**
+             * The build token UUID.
+             * @format uuid
+             */
+            buildTokenUuid?: string;
+            /** The event source that triggered the build. */
+            buildTriggerSource?: string;
+            /** The source commit hash. */
+            commitHash?: string;
+            /** The source commit message. */
+            commitMessage?: string;
+            /** A free-form object accepted by the Cloudflare API. */
+            environmentVariables?: Record<string, unknown>;
+            /** The source provider account name. */
+            providerAccountName?: string;
+            /** The source repository provider type. */
+            providerType?: string;
+            /** The source repository name. */
+            repoName?: string;
+            /** The repository directory where the build ran. */
+            rootDirectory?: string;
+          };
+          /** A Cloudflare Workers Builds trigger. */
+          trigger?: {
+            /**
+             * The build trigger UUID.
+             * @format uuid
+             */
+            triggerUuid: string;
+            /** The build trigger name. */
+            triggerName?: string;
+            /** The immutable Worker script tag. */
+            externalScriptId?: string;
+            /** The command that builds the Worker. */
+            buildCommand?: string;
+            /** The command that deploys the Worker. */
+            deployCommand?: string;
+            /** The repository directory where the build runs. */
+            rootDirectory?: string;
+            /** Branches that can trigger builds. */
+            branchIncludes?: Array<string>;
+            /** Branches excluded from builds. */
+            branchExcludes?: Array<string>;
+            /** Repository paths that can trigger builds. */
+            pathIncludes?: Array<string>;
+            /** Repository paths excluded from builds. */
+            pathExcludes?: Array<string>;
+            /** Whether build caching is enabled. */
+            buildCachingEnabled?: boolean;
+            /** The UUID of the build token used by this trigger. */
+            buildTokenUuid?: string;
+            /** The name of the build token used by this trigger. */
+            buildTokenName?: string;
+            /** The trigger creation timestamp. */
+            createdOn?: string;
+            /** The last trigger update timestamp. */
+            modifiedOn?: string;
+            /** The trigger deletion timestamp, or null when active. */
+            deletedOn?: string | null;
+            /** The source repository connected to a Workers Builds trigger. */
+            repoConnection?: {
+              /** The source provider account identifier. */
+              providerAccountId?: string;
+              /** The source provider account name. */
+              providerAccountName?: string;
+              /** The source repository provider type. */
+              providerType?: string;
+              /**
+               * The repository connection UUID.
+               * @format uuid
+               */
+              repoConnectionUuid?: string;
+              /** The source repository identifier. */
+              repoId?: string;
+              /** The source repository name. */
+              repoName?: string;
+              /** The repository connection creation timestamp. */
+              createdOn?: string;
+              /** The repository connection modification timestamp. */
+              modifiedOn?: string;
+              /** The repository connection deletion timestamp, or null when active. */
+              deletedOn?: string | null;
+            };
+          };
+          /** The pull request that triggered a Workers Builds job. */
+          pullRequest?: {
+            /** The pull request creation timestamp. */
+            createdOn?: string;
+            /**
+             * The pull request URL.
+             * @format uri
+             */
+            pullRequestUrl?: string;
+          };
+        }>;
+        /** Cloudflare pagination metadata. */
+        resultInfo?: {
+          /** The current page number. */
+          page?: number;
+          /** The page size. */
+          perPage?: number;
+          /** The number of items in the current page. */
+          count?: number;
+          /** The total number of matching items. */
+          totalCount?: number;
+          /** The total number of pages. */
+          totalPages?: number;
+        };
+      };
+    };
     /** List secret bindings attached to a Cloudflare Worker script. */
     "cloudflare_worker.list_worker_script_secrets": {
       input: {
+        /**
+         * The Cloudflare account ID. Omit it when the connection uniquely identifies one account. Multi-account OAuth connections must pass an ID returned by list_accounts.
+         * @minLength 1
+         */
+        accountId?: string;
         /**
          * The Cloudflare Worker script name.
          * @minLength 1
@@ -334,6 +876,7 @@ declare module "@oomol-lab/connector" {
           name: string;
           /** The secret binding type. */
           type?: string;
+          /** The redacted secret text field. */
           text?: string | null;
           /** The key algorithm for key secrets. */
           algorithm?: string;
@@ -362,6 +905,11 @@ declare module "@oomol-lab/connector" {
     /** List Worker scripts in a Cloudflare account. */
     "cloudflare_worker.list_worker_scripts": {
       input: {
+        /**
+         * The Cloudflare account ID. Omit it when the connection uniquely identifies one account. Multi-account OAuth connections must pass an ID returned by list_accounts.
+         * @minLength 1
+         */
+        accountId?: string;
         /**
          * The result page number.
          * @exclusiveMinimum 0
@@ -429,6 +977,11 @@ declare module "@oomol-lab/connector" {
     "cloudflare_worker.list_workers": {
       input: {
         /**
+         * The Cloudflare account ID. Omit it when the connection uniquely identifies one account. Multi-account OAuth connections must pass an ID returned by list_accounts.
+         * @minLength 1
+         */
+        accountId?: string;
+        /**
          * The result page number.
          * @exclusiveMinimum 0
          */
@@ -491,6 +1044,11 @@ declare module "@oomol-lab/connector" {
     "cloudflare_worker.patch_worker_script_settings": {
       input: {
         /**
+         * The Cloudflare account ID. Omit it when the connection uniquely identifies one account. Multi-account OAuth connections must pass an ID returned by list_accounts.
+         * @minLength 1
+         */
+        accountId?: string;
+        /**
          * The Cloudflare Worker script name.
          * @minLength 1
          */
@@ -550,6 +1108,11 @@ declare module "@oomol-lab/connector" {
     /** Replace only the content of a Cloudflare Worker script without changing metadata. */
     "cloudflare_worker.put_worker_script_content": {
       input: {
+        /**
+         * The Cloudflare account ID. Omit it when the connection uniquely identifies one account. Multi-account OAuth connections must pass an ID returned by list_accounts.
+         * @minLength 1
+         */
+        accountId?: string;
         /**
          * The Cloudflare Worker script name.
          * @minLength 1
@@ -612,6 +1175,11 @@ declare module "@oomol-lab/connector" {
     "cloudflare_worker.put_worker_script_secret": {
       input: {
         /**
+         * The Cloudflare account ID. Omit it when the connection uniquely identifies one account. Multi-account OAuth connections must pass an ID returned by list_accounts.
+         * @minLength 1
+         */
+        accountId?: string;
+        /**
          * The Cloudflare Worker script name.
          * @minLength 1
          */
@@ -633,6 +1201,7 @@ declare module "@oomol-lab/connector" {
           name: string;
           /** The secret binding type. */
           type?: string;
+          /** The redacted secret text field. */
           text?: string | null;
           /** The key algorithm for key secrets. */
           algorithm?: string;
@@ -648,6 +1217,11 @@ declare module "@oomol-lab/connector" {
     /** Search Worker scripts in a Cloudflare account by name or script tag. */
     "cloudflare_worker.search_worker_scripts": {
       input: {
+        /**
+         * The Cloudflare account ID. Omit it when the connection uniquely identifies one account. Multi-account OAuth connections must pass an ID returned by list_accounts.
+         * @minLength 1
+         */
+        accountId?: string;
         /**
          * Search by exact Worker script tag.
          * @minLength 1
@@ -727,6 +1301,11 @@ declare module "@oomol-lab/connector" {
     "cloudflare_worker.update_worker": {
       input: {
         /**
+         * The Cloudflare account ID. Omit it when the connection uniquely identifies one account. Multi-account OAuth connections must pass an ID returned by list_accounts.
+         * @minLength 1
+         */
+        accountId?: string;
+        /**
          * The Cloudflare Worker ID.
          * @minLength 1
          */
@@ -778,6 +1357,11 @@ declare module "@oomol-lab/connector" {
     /** Create or replace a Cloudflare Worker script by uploading a module bundle as multipart/form-data. */
     "cloudflare_worker.upload_worker_script": {
       input: {
+        /**
+         * The Cloudflare account ID. Omit it when the connection uniquely identifies one account. Multi-account OAuth connections must pass an ID returned by list_accounts.
+         * @minLength 1
+         */
+        accountId?: string;
         /**
          * The Cloudflare Worker script name.
          * @minLength 1

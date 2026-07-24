@@ -81,7 +81,6 @@ declare module "@oomol-lab/connector" {
         token?: string;
         /**
          * Email address of the user to add to the team.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email: string;
@@ -130,7 +129,6 @@ declare module "@oomol-lab/connector" {
         user?: string;
         /**
          * Optional email address receiving the license.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email?: string;
@@ -223,7 +221,6 @@ declare module "@oomol-lab/connector" {
       input: {
         /**
          * Pushover account email address.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email: string;
@@ -628,10 +625,7 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         secret: string;
-        /**
-         * Short Open Client device name using letters, numbers, underscores, or hyphens.
-         * @pattern ^[A-Za-z0-9_-]{1,25}$
-         */
+        /** Short Open Client device name using letters, numbers, underscores, or hyphens. */
         name: string;
         /**
          * Open Client OS code. Omit to use the Open Client desktop code O.
@@ -696,7 +690,6 @@ declare module "@oomol-lab/connector" {
         token?: string;
         /**
          * Email address of the team user to remove.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email: string;

@@ -12,6 +12,7 @@ declare module "@oomol-lab/connector" {
         domain: string;
       };
       output: {
+        /** The unique identifier for this lookup result. */
         UID?: string | null;
         /** The type MxToolbox inferred for the lookup argument, such as domain or IP. */
         ArgumentType?: string;
@@ -21,9 +22,11 @@ declare module "@oomol-lab/connector" {
         CommandArgument?: string;
         /** The timestamp when MxToolbox recorded the lookup result. */
         TimeRecorded?: string;
+        /** The reporting name server returned by MxToolbox for this lookup. */
         ReportingNameServer?: string | null;
         /** The lookup duration returned by MxToolbox, typically in milliseconds. */
         TimeToComplete?: string;
+        /** A related IP address returned by MxToolbox when available. */
         RelatedIP?: string | null;
         /** The numeric DNS resource record type returned by MxToolbox. */
         ResourceRecordType?: number;
@@ -60,6 +63,7 @@ declare module "@oomol-lab/connector" {
            * @minLength 1
            */
           Url?: string;
+          /** The public description returned by MxToolbox for the check item. */
           PublicDescription?: string | null;
           /** Additional detail lines returned by MxToolbox for this check item. */
           AdditionalInfo?: Array<string>;
@@ -88,6 +92,7 @@ declare module "@oomol-lab/connector" {
            * @minLength 1
            */
           Url?: string;
+          /** The public description returned by MxToolbox for the check item. */
           PublicDescription?: string | null;
           /** Additional detail lines returned by MxToolbox for this check item. */
           AdditionalInfo?: Array<string>;
@@ -116,6 +121,7 @@ declare module "@oomol-lab/connector" {
            * @minLength 1
            */
           Url?: string;
+          /** The public description returned by MxToolbox for the check item. */
           PublicDescription?: string | null;
           /** Additional detail lines returned by MxToolbox for this check item. */
           AdditionalInfo?: Array<string>;
@@ -139,8 +145,11 @@ declare module "@oomol-lab/connector" {
         Transcript?: Array<Record<string, unknown> | string>;
         /** The MX reputation score returned by MxToolbox. */
         MxRep?: number;
+        /** The email service provider name returned by MxToolbox. */
         EmailServiceProvider?: string | null;
+        /** The DNS service provider name returned by MxToolbox. */
         DnsServiceProvider?: string | null;
+        /** The DNS service provider identifier returned by MxToolbox. */
         DnsServiceProviderIdentifier?: string | null;
         /** Additional command-specific custom data returned by MxToolbox. */
         CustomData?: unknown;
@@ -209,6 +218,7 @@ declare module "@oomol-lab/connector" {
         domain_or_ip: string;
       };
       output: {
+        /** The unique identifier for this lookup result. */
         UID?: string | null;
         /** The type MxToolbox inferred for the lookup argument, such as domain or IP. */
         ArgumentType?: string;
@@ -218,9 +228,11 @@ declare module "@oomol-lab/connector" {
         CommandArgument?: string;
         /** The timestamp when MxToolbox recorded the lookup result. */
         TimeRecorded?: string;
+        /** The reporting name server returned by MxToolbox for this lookup. */
         ReportingNameServer?: string | null;
         /** The lookup duration returned by MxToolbox, typically in milliseconds. */
         TimeToComplete?: string;
+        /** A related IP address returned by MxToolbox when available. */
         RelatedIP?: string | null;
         /** The numeric DNS resource record type returned by MxToolbox. */
         ResourceRecordType?: number;
@@ -257,6 +269,7 @@ declare module "@oomol-lab/connector" {
            * @minLength 1
            */
           Url?: string;
+          /** The public description returned by MxToolbox for the check item. */
           PublicDescription?: string | null;
           /** Additional detail lines returned by MxToolbox for this check item. */
           AdditionalInfo?: Array<string>;
@@ -285,6 +298,7 @@ declare module "@oomol-lab/connector" {
            * @minLength 1
            */
           Url?: string;
+          /** The public description returned by MxToolbox for the check item. */
           PublicDescription?: string | null;
           /** Additional detail lines returned by MxToolbox for this check item. */
           AdditionalInfo?: Array<string>;
@@ -313,6 +327,7 @@ declare module "@oomol-lab/connector" {
            * @minLength 1
            */
           Url?: string;
+          /** The public description returned by MxToolbox for the check item. */
           PublicDescription?: string | null;
           /** Additional detail lines returned by MxToolbox for this check item. */
           AdditionalInfo?: Array<string>;
@@ -336,8 +351,11 @@ declare module "@oomol-lab/connector" {
         Transcript?: Array<Record<string, unknown> | string>;
         /** The MX reputation score returned by MxToolbox. */
         MxRep?: number;
+        /** The email service provider name returned by MxToolbox. */
         EmailServiceProvider?: string | null;
+        /** The DNS service provider name returned by MxToolbox. */
         DnsServiceProvider?: string | null;
+        /** The DNS service provider identifier returned by MxToolbox. */
         DnsServiceProviderIdentifier?: string | null;
         /** Additional command-specific custom data returned by MxToolbox. */
         CustomData?: unknown;
@@ -406,6 +424,7 @@ declare module "@oomol-lab/connector" {
         domain: string;
       };
       output: {
+        /** The unique identifier for this lookup result. */
         UID?: string | null;
         /** The type MxToolbox inferred for the lookup argument, such as domain or IP. */
         ArgumentType?: string;
@@ -415,9 +434,11 @@ declare module "@oomol-lab/connector" {
         CommandArgument?: string;
         /** The timestamp when MxToolbox recorded the lookup result. */
         TimeRecorded?: string;
+        /** The reporting name server returned by MxToolbox for this lookup. */
         ReportingNameServer?: string | null;
         /** The lookup duration returned by MxToolbox, typically in milliseconds. */
         TimeToComplete?: string;
+        /** A related IP address returned by MxToolbox when available. */
         RelatedIP?: string | null;
         /** The numeric DNS resource record type returned by MxToolbox. */
         ResourceRecordType?: number;
@@ -454,6 +475,7 @@ declare module "@oomol-lab/connector" {
            * @minLength 1
            */
           Url?: string;
+          /** The public description returned by MxToolbox for the check item. */
           PublicDescription?: string | null;
           /** Additional detail lines returned by MxToolbox for this check item. */
           AdditionalInfo?: Array<string>;
@@ -482,6 +504,7 @@ declare module "@oomol-lab/connector" {
            * @minLength 1
            */
           Url?: string;
+          /** The public description returned by MxToolbox for the check item. */
           PublicDescription?: string | null;
           /** Additional detail lines returned by MxToolbox for this check item. */
           AdditionalInfo?: Array<string>;
@@ -510,6 +533,7 @@ declare module "@oomol-lab/connector" {
            * @minLength 1
            */
           Url?: string;
+          /** The public description returned by MxToolbox for the check item. */
           PublicDescription?: string | null;
           /** Additional detail lines returned by MxToolbox for this check item. */
           AdditionalInfo?: Array<string>;
@@ -533,8 +557,11 @@ declare module "@oomol-lab/connector" {
         Transcript?: Array<Record<string, unknown> | string>;
         /** The MX reputation score returned by MxToolbox. */
         MxRep?: number;
+        /** The email service provider name returned by MxToolbox. */
         EmailServiceProvider?: string | null;
+        /** The DNS service provider name returned by MxToolbox. */
         DnsServiceProvider?: string | null;
+        /** The DNS service provider identifier returned by MxToolbox. */
         DnsServiceProviderIdentifier?: string | null;
         /** Additional command-specific custom data returned by MxToolbox. */
         CustomData?: unknown;
@@ -603,6 +630,7 @@ declare module "@oomol-lab/connector" {
         domain: string;
       };
       output: {
+        /** The unique identifier for this lookup result. */
         UID?: string | null;
         /** The type MxToolbox inferred for the lookup argument, such as domain or IP. */
         ArgumentType?: string;
@@ -612,9 +640,11 @@ declare module "@oomol-lab/connector" {
         CommandArgument?: string;
         /** The timestamp when MxToolbox recorded the lookup result. */
         TimeRecorded?: string;
+        /** The reporting name server returned by MxToolbox for this lookup. */
         ReportingNameServer?: string | null;
         /** The lookup duration returned by MxToolbox, typically in milliseconds. */
         TimeToComplete?: string;
+        /** A related IP address returned by MxToolbox when available. */
         RelatedIP?: string | null;
         /** The numeric DNS resource record type returned by MxToolbox. */
         ResourceRecordType?: number;
@@ -651,6 +681,7 @@ declare module "@oomol-lab/connector" {
            * @minLength 1
            */
           Url?: string;
+          /** The public description returned by MxToolbox for the check item. */
           PublicDescription?: string | null;
           /** Additional detail lines returned by MxToolbox for this check item. */
           AdditionalInfo?: Array<string>;
@@ -679,6 +710,7 @@ declare module "@oomol-lab/connector" {
            * @minLength 1
            */
           Url?: string;
+          /** The public description returned by MxToolbox for the check item. */
           PublicDescription?: string | null;
           /** Additional detail lines returned by MxToolbox for this check item. */
           AdditionalInfo?: Array<string>;
@@ -707,6 +739,7 @@ declare module "@oomol-lab/connector" {
            * @minLength 1
            */
           Url?: string;
+          /** The public description returned by MxToolbox for the check item. */
           PublicDescription?: string | null;
           /** Additional detail lines returned by MxToolbox for this check item. */
           AdditionalInfo?: Array<string>;
@@ -730,8 +763,11 @@ declare module "@oomol-lab/connector" {
         Transcript?: Array<Record<string, unknown> | string>;
         /** The MX reputation score returned by MxToolbox. */
         MxRep?: number;
+        /** The email service provider name returned by MxToolbox. */
         EmailServiceProvider?: string | null;
+        /** The DNS service provider name returned by MxToolbox. */
         DnsServiceProvider?: string | null;
+        /** The DNS service provider identifier returned by MxToolbox. */
         DnsServiceProviderIdentifier?: string | null;
         /** Additional command-specific custom data returned by MxToolbox. */
         CustomData?: unknown;
@@ -800,6 +836,7 @@ declare module "@oomol-lab/connector" {
         domain: string;
       };
       output: {
+        /** The unique identifier for this lookup result. */
         UID?: string | null;
         /** The type MxToolbox inferred for the lookup argument, such as domain or IP. */
         ArgumentType?: string;
@@ -809,9 +846,11 @@ declare module "@oomol-lab/connector" {
         CommandArgument?: string;
         /** The timestamp when MxToolbox recorded the lookup result. */
         TimeRecorded?: string;
+        /** The reporting name server returned by MxToolbox for this lookup. */
         ReportingNameServer?: string | null;
         /** The lookup duration returned by MxToolbox, typically in milliseconds. */
         TimeToComplete?: string;
+        /** A related IP address returned by MxToolbox when available. */
         RelatedIP?: string | null;
         /** The numeric DNS resource record type returned by MxToolbox. */
         ResourceRecordType?: number;
@@ -848,6 +887,7 @@ declare module "@oomol-lab/connector" {
            * @minLength 1
            */
           Url?: string;
+          /** The public description returned by MxToolbox for the check item. */
           PublicDescription?: string | null;
           /** Additional detail lines returned by MxToolbox for this check item. */
           AdditionalInfo?: Array<string>;
@@ -876,6 +916,7 @@ declare module "@oomol-lab/connector" {
            * @minLength 1
            */
           Url?: string;
+          /** The public description returned by MxToolbox for the check item. */
           PublicDescription?: string | null;
           /** Additional detail lines returned by MxToolbox for this check item. */
           AdditionalInfo?: Array<string>;
@@ -904,6 +945,7 @@ declare module "@oomol-lab/connector" {
            * @minLength 1
            */
           Url?: string;
+          /** The public description returned by MxToolbox for the check item. */
           PublicDescription?: string | null;
           /** Additional detail lines returned by MxToolbox for this check item. */
           AdditionalInfo?: Array<string>;
@@ -927,8 +969,11 @@ declare module "@oomol-lab/connector" {
         Transcript?: Array<Record<string, unknown> | string>;
         /** The MX reputation score returned by MxToolbox. */
         MxRep?: number;
+        /** The email service provider name returned by MxToolbox. */
         EmailServiceProvider?: string | null;
+        /** The DNS service provider name returned by MxToolbox. */
         DnsServiceProvider?: string | null;
+        /** The DNS service provider identifier returned by MxToolbox. */
         DnsServiceProviderIdentifier?: string | null;
         /** Additional command-specific custom data returned by MxToolbox. */
         CustomData?: unknown;
@@ -997,6 +1042,7 @@ declare module "@oomol-lab/connector" {
         domain: string;
       };
       output: {
+        /** The unique identifier for this lookup result. */
         UID?: string | null;
         /** The type MxToolbox inferred for the lookup argument, such as domain or IP. */
         ArgumentType?: string;
@@ -1006,9 +1052,11 @@ declare module "@oomol-lab/connector" {
         CommandArgument?: string;
         /** The timestamp when MxToolbox recorded the lookup result. */
         TimeRecorded?: string;
+        /** The reporting name server returned by MxToolbox for this lookup. */
         ReportingNameServer?: string | null;
         /** The lookup duration returned by MxToolbox, typically in milliseconds. */
         TimeToComplete?: string;
+        /** A related IP address returned by MxToolbox when available. */
         RelatedIP?: string | null;
         /** The numeric DNS resource record type returned by MxToolbox. */
         ResourceRecordType?: number;
@@ -1045,6 +1093,7 @@ declare module "@oomol-lab/connector" {
            * @minLength 1
            */
           Url?: string;
+          /** The public description returned by MxToolbox for the check item. */
           PublicDescription?: string | null;
           /** Additional detail lines returned by MxToolbox for this check item. */
           AdditionalInfo?: Array<string>;
@@ -1073,6 +1122,7 @@ declare module "@oomol-lab/connector" {
            * @minLength 1
            */
           Url?: string;
+          /** The public description returned by MxToolbox for the check item. */
           PublicDescription?: string | null;
           /** Additional detail lines returned by MxToolbox for this check item. */
           AdditionalInfo?: Array<string>;
@@ -1101,6 +1151,7 @@ declare module "@oomol-lab/connector" {
            * @minLength 1
            */
           Url?: string;
+          /** The public description returned by MxToolbox for the check item. */
           PublicDescription?: string | null;
           /** Additional detail lines returned by MxToolbox for this check item. */
           AdditionalInfo?: Array<string>;
@@ -1124,8 +1175,11 @@ declare module "@oomol-lab/connector" {
         Transcript?: Array<Record<string, unknown> | string>;
         /** The MX reputation score returned by MxToolbox. */
         MxRep?: number;
+        /** The email service provider name returned by MxToolbox. */
         EmailServiceProvider?: string | null;
+        /** The DNS service provider name returned by MxToolbox. */
         DnsServiceProvider?: string | null;
+        /** The DNS service provider identifier returned by MxToolbox. */
         DnsServiceProviderIdentifier?: string | null;
         /** Additional command-specific custom data returned by MxToolbox. */
         CustomData?: unknown;
@@ -1194,6 +1248,7 @@ declare module "@oomol-lab/connector" {
         domain: string;
       };
       output: {
+        /** The unique identifier for this lookup result. */
         UID?: string | null;
         /** The type MxToolbox inferred for the lookup argument, such as domain or IP. */
         ArgumentType?: string;
@@ -1203,9 +1258,11 @@ declare module "@oomol-lab/connector" {
         CommandArgument?: string;
         /** The timestamp when MxToolbox recorded the lookup result. */
         TimeRecorded?: string;
+        /** The reporting name server returned by MxToolbox for this lookup. */
         ReportingNameServer?: string | null;
         /** The lookup duration returned by MxToolbox, typically in milliseconds. */
         TimeToComplete?: string;
+        /** A related IP address returned by MxToolbox when available. */
         RelatedIP?: string | null;
         /** The numeric DNS resource record type returned by MxToolbox. */
         ResourceRecordType?: number;
@@ -1242,6 +1299,7 @@ declare module "@oomol-lab/connector" {
            * @minLength 1
            */
           Url?: string;
+          /** The public description returned by MxToolbox for the check item. */
           PublicDescription?: string | null;
           /** Additional detail lines returned by MxToolbox for this check item. */
           AdditionalInfo?: Array<string>;
@@ -1270,6 +1328,7 @@ declare module "@oomol-lab/connector" {
            * @minLength 1
            */
           Url?: string;
+          /** The public description returned by MxToolbox for the check item. */
           PublicDescription?: string | null;
           /** Additional detail lines returned by MxToolbox for this check item. */
           AdditionalInfo?: Array<string>;
@@ -1298,6 +1357,7 @@ declare module "@oomol-lab/connector" {
            * @minLength 1
            */
           Url?: string;
+          /** The public description returned by MxToolbox for the check item. */
           PublicDescription?: string | null;
           /** Additional detail lines returned by MxToolbox for this check item. */
           AdditionalInfo?: Array<string>;
@@ -1321,8 +1381,11 @@ declare module "@oomol-lab/connector" {
         Transcript?: Array<Record<string, unknown> | string>;
         /** The MX reputation score returned by MxToolbox. */
         MxRep?: number;
+        /** The email service provider name returned by MxToolbox. */
         EmailServiceProvider?: string | null;
+        /** The DNS service provider name returned by MxToolbox. */
         DnsServiceProvider?: string | null;
+        /** The DNS service provider identifier returned by MxToolbox. */
         DnsServiceProviderIdentifier?: string | null;
         /** Additional command-specific custom data returned by MxToolbox. */
         CustomData?: unknown;
@@ -1391,6 +1454,7 @@ declare module "@oomol-lab/connector" {
         domain: string;
       };
       output: {
+        /** The unique identifier for this lookup result. */
         UID?: string | null;
         /** The type MxToolbox inferred for the lookup argument, such as domain or IP. */
         ArgumentType?: string;
@@ -1400,9 +1464,11 @@ declare module "@oomol-lab/connector" {
         CommandArgument?: string;
         /** The timestamp when MxToolbox recorded the lookup result. */
         TimeRecorded?: string;
+        /** The reporting name server returned by MxToolbox for this lookup. */
         ReportingNameServer?: string | null;
         /** The lookup duration returned by MxToolbox, typically in milliseconds. */
         TimeToComplete?: string;
+        /** A related IP address returned by MxToolbox when available. */
         RelatedIP?: string | null;
         /** The numeric DNS resource record type returned by MxToolbox. */
         ResourceRecordType?: number;
@@ -1439,6 +1505,7 @@ declare module "@oomol-lab/connector" {
            * @minLength 1
            */
           Url?: string;
+          /** The public description returned by MxToolbox for the check item. */
           PublicDescription?: string | null;
           /** Additional detail lines returned by MxToolbox for this check item. */
           AdditionalInfo?: Array<string>;
@@ -1467,6 +1534,7 @@ declare module "@oomol-lab/connector" {
            * @minLength 1
            */
           Url?: string;
+          /** The public description returned by MxToolbox for the check item. */
           PublicDescription?: string | null;
           /** Additional detail lines returned by MxToolbox for this check item. */
           AdditionalInfo?: Array<string>;
@@ -1495,6 +1563,7 @@ declare module "@oomol-lab/connector" {
            * @minLength 1
            */
           Url?: string;
+          /** The public description returned by MxToolbox for the check item. */
           PublicDescription?: string | null;
           /** Additional detail lines returned by MxToolbox for this check item. */
           AdditionalInfo?: Array<string>;
@@ -1518,8 +1587,11 @@ declare module "@oomol-lab/connector" {
         Transcript?: Array<Record<string, unknown> | string>;
         /** The MX reputation score returned by MxToolbox. */
         MxRep?: number;
+        /** The email service provider name returned by MxToolbox. */
         EmailServiceProvider?: string | null;
+        /** The DNS service provider name returned by MxToolbox. */
         DnsServiceProvider?: string | null;
+        /** The DNS service provider identifier returned by MxToolbox. */
         DnsServiceProviderIdentifier?: string | null;
         /** Additional command-specific custom data returned by MxToolbox. */
         CustomData?: unknown;
@@ -1588,6 +1660,7 @@ declare module "@oomol-lab/connector" {
         domain_or_ip: string;
       };
       output: {
+        /** The unique identifier for this lookup result. */
         UID?: string | null;
         /** The type MxToolbox inferred for the lookup argument, such as domain or IP. */
         ArgumentType?: string;
@@ -1597,9 +1670,11 @@ declare module "@oomol-lab/connector" {
         CommandArgument?: string;
         /** The timestamp when MxToolbox recorded the lookup result. */
         TimeRecorded?: string;
+        /** The reporting name server returned by MxToolbox for this lookup. */
         ReportingNameServer?: string | null;
         /** The lookup duration returned by MxToolbox, typically in milliseconds. */
         TimeToComplete?: string;
+        /** A related IP address returned by MxToolbox when available. */
         RelatedIP?: string | null;
         /** The numeric DNS resource record type returned by MxToolbox. */
         ResourceRecordType?: number;
@@ -1636,6 +1711,7 @@ declare module "@oomol-lab/connector" {
            * @minLength 1
            */
           Url?: string;
+          /** The public description returned by MxToolbox for the check item. */
           PublicDescription?: string | null;
           /** Additional detail lines returned by MxToolbox for this check item. */
           AdditionalInfo?: Array<string>;
@@ -1664,6 +1740,7 @@ declare module "@oomol-lab/connector" {
            * @minLength 1
            */
           Url?: string;
+          /** The public description returned by MxToolbox for the check item. */
           PublicDescription?: string | null;
           /** Additional detail lines returned by MxToolbox for this check item. */
           AdditionalInfo?: Array<string>;
@@ -1692,6 +1769,7 @@ declare module "@oomol-lab/connector" {
            * @minLength 1
            */
           Url?: string;
+          /** The public description returned by MxToolbox for the check item. */
           PublicDescription?: string | null;
           /** Additional detail lines returned by MxToolbox for this check item. */
           AdditionalInfo?: Array<string>;
@@ -1715,8 +1793,11 @@ declare module "@oomol-lab/connector" {
         Transcript?: Array<Record<string, unknown> | string>;
         /** The MX reputation score returned by MxToolbox. */
         MxRep?: number;
+        /** The email service provider name returned by MxToolbox. */
         EmailServiceProvider?: string | null;
+        /** The DNS service provider name returned by MxToolbox. */
         DnsServiceProvider?: string | null;
+        /** The DNS service provider identifier returned by MxToolbox. */
         DnsServiceProviderIdentifier?: string | null;
         /** Additional command-specific custom data returned by MxToolbox. */
         CustomData?: unknown;
@@ -1785,6 +1866,7 @@ declare module "@oomol-lab/connector" {
         domain: string;
       };
       output: {
+        /** The unique identifier for this lookup result. */
         UID?: string | null;
         /** The type MxToolbox inferred for the lookup argument, such as domain or IP. */
         ArgumentType?: string;
@@ -1794,9 +1876,11 @@ declare module "@oomol-lab/connector" {
         CommandArgument?: string;
         /** The timestamp when MxToolbox recorded the lookup result. */
         TimeRecorded?: string;
+        /** The reporting name server returned by MxToolbox for this lookup. */
         ReportingNameServer?: string | null;
         /** The lookup duration returned by MxToolbox, typically in milliseconds. */
         TimeToComplete?: string;
+        /** A related IP address returned by MxToolbox when available. */
         RelatedIP?: string | null;
         /** The numeric DNS resource record type returned by MxToolbox. */
         ResourceRecordType?: number;
@@ -1833,6 +1917,7 @@ declare module "@oomol-lab/connector" {
            * @minLength 1
            */
           Url?: string;
+          /** The public description returned by MxToolbox for the check item. */
           PublicDescription?: string | null;
           /** Additional detail lines returned by MxToolbox for this check item. */
           AdditionalInfo?: Array<string>;
@@ -1861,6 +1946,7 @@ declare module "@oomol-lab/connector" {
            * @minLength 1
            */
           Url?: string;
+          /** The public description returned by MxToolbox for the check item. */
           PublicDescription?: string | null;
           /** Additional detail lines returned by MxToolbox for this check item. */
           AdditionalInfo?: Array<string>;
@@ -1889,6 +1975,7 @@ declare module "@oomol-lab/connector" {
            * @minLength 1
            */
           Url?: string;
+          /** The public description returned by MxToolbox for the check item. */
           PublicDescription?: string | null;
           /** Additional detail lines returned by MxToolbox for this check item. */
           AdditionalInfo?: Array<string>;
@@ -1912,8 +1999,11 @@ declare module "@oomol-lab/connector" {
         Transcript?: Array<Record<string, unknown> | string>;
         /** The MX reputation score returned by MxToolbox. */
         MxRep?: number;
+        /** The email service provider name returned by MxToolbox. */
         EmailServiceProvider?: string | null;
+        /** The DNS service provider name returned by MxToolbox. */
         DnsServiceProvider?: string | null;
+        /** The DNS service provider identifier returned by MxToolbox. */
         DnsServiceProviderIdentifier?: string | null;
         /** Additional command-specific custom data returned by MxToolbox. */
         CustomData?: unknown;
@@ -1982,6 +2072,7 @@ declare module "@oomol-lab/connector" {
         domain: string;
       };
       output: {
+        /** The unique identifier for this lookup result. */
         UID?: string | null;
         /** The type MxToolbox inferred for the lookup argument, such as domain or IP. */
         ArgumentType?: string;
@@ -1991,9 +2082,11 @@ declare module "@oomol-lab/connector" {
         CommandArgument?: string;
         /** The timestamp when MxToolbox recorded the lookup result. */
         TimeRecorded?: string;
+        /** The reporting name server returned by MxToolbox for this lookup. */
         ReportingNameServer?: string | null;
         /** The lookup duration returned by MxToolbox, typically in milliseconds. */
         TimeToComplete?: string;
+        /** A related IP address returned by MxToolbox when available. */
         RelatedIP?: string | null;
         /** The numeric DNS resource record type returned by MxToolbox. */
         ResourceRecordType?: number;
@@ -2030,6 +2123,7 @@ declare module "@oomol-lab/connector" {
            * @minLength 1
            */
           Url?: string;
+          /** The public description returned by MxToolbox for the check item. */
           PublicDescription?: string | null;
           /** Additional detail lines returned by MxToolbox for this check item. */
           AdditionalInfo?: Array<string>;
@@ -2058,6 +2152,7 @@ declare module "@oomol-lab/connector" {
            * @minLength 1
            */
           Url?: string;
+          /** The public description returned by MxToolbox for the check item. */
           PublicDescription?: string | null;
           /** Additional detail lines returned by MxToolbox for this check item. */
           AdditionalInfo?: Array<string>;
@@ -2086,6 +2181,7 @@ declare module "@oomol-lab/connector" {
            * @minLength 1
            */
           Url?: string;
+          /** The public description returned by MxToolbox for the check item. */
           PublicDescription?: string | null;
           /** Additional detail lines returned by MxToolbox for this check item. */
           AdditionalInfo?: Array<string>;
@@ -2109,8 +2205,11 @@ declare module "@oomol-lab/connector" {
         Transcript?: Array<Record<string, unknown> | string>;
         /** The MX reputation score returned by MxToolbox. */
         MxRep?: number;
+        /** The email service provider name returned by MxToolbox. */
         EmailServiceProvider?: string | null;
+        /** The DNS service provider name returned by MxToolbox. */
         DnsServiceProvider?: string | null;
+        /** The DNS service provider identifier returned by MxToolbox. */
         DnsServiceProviderIdentifier?: string | null;
         /** Additional command-specific custom data returned by MxToolbox. */
         CustomData?: unknown;
@@ -2201,6 +2300,7 @@ declare module "@oomol-lab/connector" {
           }>;
           [key: string]: unknown;
         };
+        /** The error message returned by MxToolbox when monitor retrieval fails. */
         error?: string | null;
         /** Whether MxToolbox marked the monitor status request as successful. */
         successfull?: boolean;

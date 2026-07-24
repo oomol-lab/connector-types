@@ -210,7 +210,9 @@ declare module "@oomol-lab/connector" {
         global_name?: string | null;
         /** Whether the user has multi-factor authentication enabled. */
         mfa_enabled?: boolean;
+        /** The accent color of the user profile. */
         accent_color?: number | null;
+        /** The type of Nitro subscription. */
         premium_type?: number | null;
         /** The avatar decoration data for the user. */
         avatar_decoration_data?: Record<string, unknown>;
@@ -295,7 +297,9 @@ declare module "@oomol-lab/connector" {
         global_name?: string | null;
         /** Whether the user has multi-factor authentication enabled. */
         mfa_enabled?: boolean;
+        /** The accent color of the user profile. */
         accent_color?: number | null;
+        /** The type of Nitro subscription. */
         premium_type?: number | null;
         /** The avatar decoration data for the user. */
         avatar_decoration_data?: Record<string, unknown>;

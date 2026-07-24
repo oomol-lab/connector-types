@@ -25,11 +25,8 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         projectSlug: string;
-        /**
-         * The CircleCI job number.
-         * @exclusiveMinimum 0
-         */
-        jobNumber: number;
+        /** The CircleCI job number. */
+        jobNumber: number | string;
       };
       output: {
         /** Artifacts returned by CircleCI. */
@@ -55,11 +52,8 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         projectSlug: string;
-        /**
-         * The CircleCI job number.
-         * @exclusiveMinimum 0
-         */
-        jobNumber: number;
+        /** The CircleCI job number. */
+        jobNumber: number | string;
       };
       output: {
         /** URL of the job in the CircleCI web UI. */

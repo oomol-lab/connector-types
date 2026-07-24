@@ -76,7 +76,7 @@ declare module "@oomol-lab/connector" {
         /** Optional search information returned by SearchApi. */
         search_information?: Record<string, unknown>;
         /** Engine-specific result payload returned by SearchApi. */
-        data: Record<string, string | number | boolean | null | Array<unknown> | Record<string, unknown>>;
+        data: Record<string, unknown>;
       };
     };
     /** Look up canonical SearchApi locations for geo-targeted search queries. */
@@ -237,7 +237,7 @@ declare module "@oomol-lab/connector" {
         /** Optional search information returned by SearchApi. */
         search_information?: Record<string, unknown>;
         /** Engine-specific result payload returned by SearchApi. */
-        data: Record<string, string | number | boolean | null | Array<unknown> | Record<string, unknown>>;
+        data: Record<string, unknown>;
       };
     };
   }

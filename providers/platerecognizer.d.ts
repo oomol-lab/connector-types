@@ -16,7 +16,6 @@ declare module "@oomol-lab/connector" {
           year: number;
           /**
            * When the Plate Recognizer monthly counter resets.
-           * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
            * @format date-time
            */
           resetsOn: string;
@@ -50,7 +49,6 @@ declare module "@oomol-lab/connector" {
         cameraId?: string;
         /**
          * Optional UTC ISO 8601 timestamp associated with the image.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
          * @format date-time
          */
         timestamp?: string;
@@ -137,27 +135,23 @@ declare module "@oomol-lab/connector" {
           model_make?: Array<{
             /** The confidence score for this prediction. */
             score: number;
-            [key: string]: string | number | number;
+            [key: string]: unknown;
           }>;
           /** Optional color predictions returned by MMC. */
           color?: Array<{
             /** The confidence score for this prediction. */
             score: number;
-            [key: string]: string | number | number;
+            [key: string]: unknown;
           }>;
           /** Optional orientation predictions returned by MMC. */
           orientation?: Array<{
             /** The confidence score for this prediction. */
             score: number;
-            [key: string]: string | number | number;
+            [key: string]: unknown;
           }>;
           /** The optional year prediction returned by Plate Recognizer MMC. */
           year?: {
-            /**
-             * The inclusive year range returned by the optional MMC feature.
-             * @minItems 2
-             * @maxItems 2
-             */
+            /** The inclusive year range returned by the optional MMC feature. */
             year_range: Array<number>;
             /** The confidence score for the year range prediction. */
             score: number;

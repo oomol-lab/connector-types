@@ -61,7 +61,6 @@ declare module "@oomol-lab/connector" {
           name: string;
           /**
            * Email address of the Buildkite user.
-           * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
            * @format email
            */
           email: string;
@@ -176,7 +175,6 @@ declare module "@oomol-lab/connector" {
             name: string;
             /**
              * Email address of the Buildkite user.
-             * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
              * @format email
              */
             email: string;
@@ -247,7 +245,6 @@ declare module "@oomol-lab/connector" {
           name: string;
           /**
            * Email address of the user to attribute the build to.
-           * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
            * @format email
            */
           email: string;
@@ -321,7 +318,6 @@ declare module "@oomol-lab/connector" {
           name: string;
           /**
            * Email address of the Buildkite user.
-           * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
            * @format email
            */
           email: string;
@@ -436,7 +432,6 @@ declare module "@oomol-lab/connector" {
             name: string;
             /**
              * Email address of the Buildkite user.
-             * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
              * @format email
              */
             email: string;
@@ -536,7 +531,6 @@ declare module "@oomol-lab/connector" {
           name: string;
           /**
            * Email address of the Buildkite user.
-           * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
            * @format email
            */
           email: string;
@@ -651,7 +645,6 @@ declare module "@oomol-lab/connector" {
             name: string;
             /**
              * Email address of the Buildkite user.
-             * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
              * @format email
              */
             email: string;
@@ -704,7 +697,6 @@ declare module "@oomol-lab/connector" {
         user?: {
           /**
            * Email address of the token owner.
-           * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
            * @format email
            */
           email: string;
@@ -726,7 +718,6 @@ declare module "@oomol-lab/connector" {
         name: string;
         /**
          * Email address of the Buildkite user.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email: string;
@@ -844,7 +835,6 @@ declare module "@oomol-lab/connector" {
           name: string;
           /**
            * Email address of the Buildkite user.
-           * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
            * @format email
            */
           email: string;
@@ -961,7 +951,6 @@ declare module "@oomol-lab/connector" {
             name: string;
             /**
              * Email address of the Buildkite user.
-             * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
              * @format email
              */
             email: string;
@@ -1076,7 +1065,6 @@ declare module "@oomol-lab/connector" {
               name: string;
               /**
                * Email address of the Buildkite user.
-               * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
                * @format email
                */
               email: string;
@@ -1212,7 +1200,6 @@ declare module "@oomol-lab/connector" {
             name: string;
             /**
              * Email address of the Buildkite user.
-             * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
              * @format email
              */
             email: string;
@@ -1327,7 +1314,6 @@ declare module "@oomol-lab/connector" {
               name: string;
               /**
                * Email address of the Buildkite user.
-               * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
                * @format email
                */
               email: string;
@@ -1522,7 +1508,6 @@ declare module "@oomol-lab/connector" {
             name: string;
             /**
              * Email address of the Buildkite user.
-             * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
              * @format email
              */
             email: string;
@@ -1628,7 +1613,6 @@ declare module "@oomol-lab/connector" {
           name: string;
           /**
            * Email address of the Buildkite user.
-           * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
            * @format email
            */
           email: string;
@@ -1743,7 +1727,6 @@ declare module "@oomol-lab/connector" {
             name: string;
             /**
              * Email address of the Buildkite user.
-             * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
              * @format email
              */
             email: string;

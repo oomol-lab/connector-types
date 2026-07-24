@@ -82,19 +82,19 @@ declare module "@oomol-lab/connector" {
          * @maximum 10
          * @default 2
          */
-        max_depth: number;
+        max_depth?: number;
         /**
          * The maximum number of children per node.
          * @minimum 0
          * @maximum 100
          * @default 10
          */
-        max_children: number;
+        max_children?: number;
         /**
          * Whether to truncate long text content.
          * @default true
          */
-        truncate_text: boolean;
+        truncate_text?: boolean;
       };
       output: {
         /** Whether the item was found. */
@@ -160,14 +160,14 @@ declare module "@oomol-lab/connector" {
          * @minimum 0
          * @default 0
          */
-        page: number;
+        page?: number;
         /**
          * The number of results per page.
          * @minimum 0
          * @maximum 20
          * @default 5
          */
-        size: number;
+        size?: number;
         /** The filter tags. */
         tags?: Array<string>;
       };
@@ -333,14 +333,14 @@ declare module "@oomol-lab/connector" {
          * @minimum 0
          * @default 0
          */
-        page: number;
+        page?: number;
         /**
          * The number of results per page.
          * @minimum 0
          * @maximum 20
          * @default 5
          */
-        size: number;
+        size?: number;
         /** The filter tags. */
         tags?: Array<string>;
       };
