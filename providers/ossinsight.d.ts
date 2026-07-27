@@ -19,21 +19,17 @@ declare module "@oomol-lab/connector" {
          * The time interval of the returned history points.
          * @default "month"
          */
-        per: "day" | "week" | "month";
+        per?: "day" | "week" | "month";
         /**
          * The start date of the time range.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))$
-         * @format date
          * @default "2000-01-01"
          */
-        from: string;
+        from?: string;
         /**
          * The end date of the time range.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))$
-         * @format date
          * @default "2099-01-01"
          */
-        to: string;
+        to?: string;
       };
       output: {
         /** Issue creator history returned by OSS Insight. */
@@ -93,21 +89,17 @@ declare module "@oomol-lab/connector" {
          * The time interval of the returned history points.
          * @default "month"
          */
-        per: "day" | "week" | "month";
+        per?: "day" | "week" | "month";
         /**
          * The start date of the time range.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))$
-         * @format date
          * @default "2000-01-01"
          */
-        from: string;
+        from?: string;
         /**
          * The end date of the time range.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))$
-         * @format date
          * @default "2099-01-01"
          */
-        to: string;
+        to?: string;
       };
       output: {
         /** Pull request creator history returned by OSS Insight. */
@@ -167,21 +159,17 @@ declare module "@oomol-lab/connector" {
          * The time interval of the returned history points.
          * @default "month"
          */
-        per: "day" | "week" | "month";
+        per?: "day" | "week" | "month";
         /**
          * The start date of the time range.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))$
-         * @format date
          * @default "2000-01-01"
          */
-        from: string;
+        from?: string;
         /**
          * The end date of the time range.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))$
-         * @format date
          * @default "2099-01-01"
          */
-        to: string;
+        to?: string;
       };
       output: {
         /** Historical stargazer counts returned by OSS Insight. */
@@ -388,21 +376,17 @@ declare module "@oomol-lab/connector" {
          * Whether to exclude rows with unknown country or organization information.
          * @default true
          */
-        exclude_unknown: boolean;
+        exclude_unknown?: boolean;
         /**
          * The start date of the time range.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))$
-         * @format date
          * @default "2000-01-01"
          */
-        from: string;
+        from?: string;
         /**
          * The end date of the time range.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))$
-         * @format date
          * @default "2099-01-01"
          */
-        to: string;
+        to?: string;
       };
       output: {
         /** Issue creator countries or regions returned by OSS Insight. */
@@ -464,21 +448,17 @@ declare module "@oomol-lab/connector" {
          * Whether to exclude rows with unknown country or organization information.
          * @default true
          */
-        exclude_unknown: boolean;
+        exclude_unknown?: boolean;
         /**
          * The start date of the time range.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))$
-         * @format date
          * @default "2000-01-01"
          */
-        from: string;
+        from?: string;
         /**
          * The end date of the time range.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))$
-         * @format date
          * @default "2099-01-01"
          */
-        to: string;
+        to?: string;
       };
       output: {
         /** Issue creator organizations returned by OSS Insight. */
@@ -541,24 +521,24 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          * @default "issues-desc"
          */
-        sort: string;
+        sort?: string;
         /**
          * Whether to exclude bot accounts.
          * @default true
          */
-        exclude_bots: boolean;
+        exclude_bots?: boolean;
         /**
          * The 1-based page number to fetch.
          * @minimum 1
          * @default 1
          */
-        page: number;
+        page?: number;
         /**
          * The number of rows to fetch per page.
          * @minimum 1
          * @default 30
          */
-        page_size: number;
+        page_size?: number;
       };
       output: {
         /** Issue creators returned by OSS Insight. */
@@ -624,21 +604,17 @@ declare module "@oomol-lab/connector" {
          * Whether to exclude rows with unknown country or organization information.
          * @default true
          */
-        exclude_unknown: boolean;
+        exclude_unknown?: boolean;
         /**
          * The start date of the time range.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))$
-         * @format date
          * @default "2000-01-01"
          */
-        from: string;
+        from?: string;
         /**
          * The end date of the time range.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))$
-         * @format date
          * @default "2099-01-01"
          */
-        to: string;
+        to?: string;
       };
       output: {
         /** Pull request creator countries or regions returned by OSS Insight. */
@@ -700,21 +676,17 @@ declare module "@oomol-lab/connector" {
          * Whether to exclude rows with unknown country or organization information.
          * @default true
          */
-        exclude_unknown: boolean;
+        exclude_unknown?: boolean;
         /**
          * The start date of the time range.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))$
-         * @format date
          * @default "2000-01-01"
          */
-        from: string;
+        from?: string;
         /**
          * The end date of the time range.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))$
-         * @format date
          * @default "2099-01-01"
          */
-        to: string;
+        to?: string;
       };
       output: {
         /** Pull request creator organizations returned by OSS Insight. */
@@ -777,24 +749,24 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          * @default "prs-desc"
          */
-        sort: string;
+        sort?: string;
         /**
          * Whether to exclude bot accounts.
          * @default true
          */
-        exclude_bots: boolean;
+        exclude_bots?: boolean;
         /**
          * The 1-based page number to fetch.
          * @minimum 1
          * @default 1
          */
-        page: number;
+        page?: number;
         /**
          * The number of rows to fetch per page.
          * @minimum 1
          * @default 30
          */
-        page_size: number;
+        page_size?: number;
       };
       output: {
         /** Pull request creators returned by OSS Insight. */
@@ -862,21 +834,17 @@ declare module "@oomol-lab/connector" {
          * Whether to exclude rows with unknown country or organization information.
          * @default true
          */
-        exclude_unknown: boolean;
+        exclude_unknown?: boolean;
         /**
          * The start date of the time range.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))$
-         * @format date
          * @default "2000-01-01"
          */
-        from: string;
+        from?: string;
         /**
          * The end date of the time range.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))$
-         * @format date
          * @default "2099-01-01"
          */
-        to: string;
+        to?: string;
       };
       output: {
         /** Countries or regions of stargazers returned by OSS Insight. */
@@ -938,21 +906,17 @@ declare module "@oomol-lab/connector" {
          * Whether to exclude rows with unknown country or organization information.
          * @default true
          */
-        exclude_unknown: boolean;
+        exclude_unknown?: boolean;
         /**
          * The start date of the time range.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))$
-         * @format date
          * @default "2000-01-01"
          */
-        from: string;
+        from?: string;
         /**
          * The end date of the time range.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))$
-         * @format date
          * @default "2099-01-01"
          */
-        to: string;
+        to?: string;
       };
       output: {
         /** Stargazer organizations returned by OSS Insight. */
@@ -1004,13 +968,13 @@ declare module "@oomol-lab/connector" {
          * The time period used to calculate trending repositories.
          * @default "past_24_hours"
          */
-        period: "past_24_hours" | "past_week" | "past_month";
+        period?: "past_24_hours" | "past_week" | "past_month";
         /**
          * The programming language filter. Use All to include every language.
          * @minLength 1
          * @default "All"
          */
-        language: string;
+        language?: string;
       };
       output: {
         /** Trending repositories returned by OSS Insight. */
@@ -1081,7 +1045,7 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          * @default "past_28_days"
          */
-        period: string;
+        period?: string;
       };
       output: {
         /** Repository issue-growth rankings returned by OSS Insight. */
@@ -1148,7 +1112,7 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          * @default "past_28_days"
          */
-        period: string;
+        period?: string;
       };
       output: {
         /** Repository pull-request-growth rankings returned by OSS Insight. */
@@ -1215,7 +1179,7 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          * @default "past_28_days"
          */
-        period: string;
+        period?: string;
       };
       output: {
         /** Repository star-growth rankings returned by OSS Insight. */

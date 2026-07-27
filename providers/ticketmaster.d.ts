@@ -14,35 +14,23 @@ declare module "@oomol-lab/connector" {
            * @exclusiveMinimum 0
            */
           ver?: number;
-          /**
-           * The upstream source system name.
-           * @minLength 1
-           */
+          /** The upstream source system name. */
           srcSysName: string;
           /**
            * The upstream source system type.
            * @exclusiveMinimum 0
            */
           srcSysType?: number;
-          /**
-           * The upstream Archtics version identifier.
-           * @minLength 1
-           */
+          /** The upstream Archtics version identifier. */
           archticsVersion: string;
         };
         /** The command payload. */
         command: {
           /** The Season Ticketing command to execute. */
           cmd: "ping" | "customer_query" | "seats_sold" | "event_search" | "event_details" | "get_attendance";
-          /**
-           * The upstream Season Ticketing DSN value.
-           * @minLength 1
-           */
+          /** The upstream Season Ticketing DSN value. */
           dsn: string;
-          /**
-           * The upstream user identifier.
-           * @minLength 1
-           */
+          /** The upstream user identifier. */
           uid: string;
           /** Additional command-specific parameters forwarded to Ticketmaster. */
           additionalParams?: Record<string, unknown>;
@@ -84,10 +72,7 @@ declare module "@oomol-lab/connector" {
     /** Get the details for a specific Ticketmaster attraction by ID. */
     "ticketmaster.get_attraction_details": {
       input: {
-        /**
-         * The Ticketmaster entity identifier.
-         * @minLength 1
-         */
+        /** The Ticketmaster entity identifier. */
         id: string;
         /** The locale in ISO code format, such as en-us or a comma-separated list like en-us,en,*. */
         locale?: string;
@@ -331,10 +316,7 @@ declare module "@oomol-lab/connector" {
     /** Get the details for a specific Ticketmaster classification by ID. */
     "ticketmaster.get_classification_details": {
       input: {
-        /**
-         * The Ticketmaster entity identifier.
-         * @minLength 1
-         */
+        /** The Ticketmaster entity identifier. */
         id: string;
         /** The locale in ISO code format, such as en-us or a comma-separated list like en-us,en,*. */
         locale?: string;
@@ -506,10 +488,7 @@ declare module "@oomol-lab/connector" {
     /** Get the details for a specific Ticketmaster event by ID. */
     "ticketmaster.get_event_details": {
       input: {
-        /**
-         * The Ticketmaster entity identifier.
-         * @minLength 1
-         */
+        /** The Ticketmaster entity identifier. */
         id: string;
         /** The locale in ISO code format, such as en-us or a comma-separated list like en-us,en,*. */
         locale?: string;
@@ -632,10 +611,7 @@ declare module "@oomol-lab/connector" {
     /** Get the image set for a specific Ticketmaster event. */
     "ticketmaster.get_event_images": {
       input: {
-        /**
-         * The Ticketmaster event identifier.
-         * @minLength 1
-         */
+        /** The Ticketmaster event identifier. */
         id: string;
         /** The locale in ISO code format, such as en-us or a comma-separated list like en-us,en,*. */
         locale?: string;
@@ -881,10 +857,7 @@ declare module "@oomol-lab/connector" {
     /** Get the details for a specific Ticketmaster genre by ID. */
     "ticketmaster.get_genre_details": {
       input: {
-        /**
-         * The Ticketmaster entity identifier.
-         * @minLength 1
-         */
+        /** The Ticketmaster entity identifier. */
         id: string;
         /** The locale in ISO code format, such as en-us or a comma-separated list like en-us,en,*. */
         locale?: string;
@@ -955,10 +928,7 @@ declare module "@oomol-lab/connector" {
     /** Get a section-map image for a Ticketmaster event through the Partner Availability API. */
     "ticketmaster.get_section_map_image": {
       input: {
-        /**
-         * The Ticketmaster event identifier used by the Availability API.
-         * @minLength 1
-         */
+        /** The Ticketmaster event identifier used by the Availability API. */
         eventId: string;
         /** The upstream system identifier required by the section-map endpoint. */
         systemId: "HOST" | "MFX";
@@ -993,10 +963,7 @@ declare module "@oomol-lab/connector" {
     /** Get the details for a specific Ticketmaster segment by ID. */
     "ticketmaster.get_segment_details": {
       input: {
-        /**
-         * The Ticketmaster entity identifier.
-         * @minLength 1
-         */
+        /** The Ticketmaster entity identifier. */
         id: string;
         /** The locale in ISO code format, such as en-us or a comma-separated list like en-us,en,*. */
         locale?: string;
@@ -1067,10 +1034,7 @@ declare module "@oomol-lab/connector" {
     /** Get the details for a specific Ticketmaster sub-genre by ID. */
     "ticketmaster.get_subgenre_details": {
       input: {
-        /**
-         * The Ticketmaster entity identifier.
-         * @minLength 1
-         */
+        /** The Ticketmaster entity identifier. */
         id: string;
         /** The locale in ISO code format, such as en-us or a comma-separated list like en-us,en,*. */
         locale?: string;
@@ -1446,10 +1410,7 @@ declare module "@oomol-lab/connector" {
     /** Get the details for a specific Ticketmaster venue by ID. */
     "ticketmaster.get_venue_details": {
       input: {
-        /**
-         * The Ticketmaster entity identifier.
-         * @minLength 1
-         */
+        /** The Ticketmaster entity identifier. */
         id: string;
         /** The locale in ISO code format, such as en-us or a comma-separated list like en-us,en,*. */
         locale?: string;

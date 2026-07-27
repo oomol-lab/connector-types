@@ -21,7 +21,7 @@ declare module "@oomol-lab/connector" {
         /** When true, includes files from shared drives. */
         includeSharedDrives?: boolean;
         /**
-         * The maximum number of items to return per page (1–100).
+         * The maximum number of items to return per page (1-100).
          * @minimum 1
          * @maximum 100
          */
@@ -70,7 +70,7 @@ declare module "@oomol-lab/connector" {
         /** When true, includes files from shared drives. */
         includeSharedDrives?: boolean;
         /**
-         * The maximum number of items to return per page (1–100).
+         * The maximum number of items to return per page (1-100).
          * @minimum 1
          * @maximum 100
          */
@@ -456,7 +456,7 @@ declare module "@oomol-lab/connector" {
         /** The fields to include in the response. */
         fields?: string;
         /**
-         * The maximum number of comments to return per page (1–100).
+         * The maximum number of comments to return per page (1-100).
          * @minimum 1
          * @maximum 100
          */
@@ -1378,7 +1378,7 @@ declare module "@oomol-lab/connector" {
          */
         pageToken?: string;
         /**
-         * The maximum number of labels to return per page (1–100).
+         * The maximum number of labels to return per page (1-100).
          * @minimum 1
          * @maximum 100
          */
@@ -1804,7 +1804,7 @@ declare module "@oomol-lab/connector" {
         /** The fields to include in the response. */
         fields?: string;
         /**
-         * The maximum number of permissions to return per page (1–100).
+         * The maximum number of permissions to return per page (1-100).
          * @minimum 1
          * @maximum 100
          */
@@ -2094,7 +2094,7 @@ declare module "@oomol-lab/connector" {
         /** The fields to include in the response. */
         fields?: string;
         /**
-         * The maximum number of replies to return per page (1–100).
+         * The maximum number of replies to return per page (1-100).
          * @minimum 1
          * @maximum 100
          */
@@ -2298,7 +2298,7 @@ declare module "@oomol-lab/connector" {
          */
         fileId?: string;
         /**
-         * The maximum number of revisions to return per page (1–1000).
+         * The maximum number of revisions to return per page (1-1000).
          * @minimum 1
          * @maximum 1000
          */

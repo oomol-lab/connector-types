@@ -100,6 +100,7 @@ declare module "@oomol-lab/connector" {
           site_admin?: boolean;
           [key: string]: unknown;
         } | null;
+        /** Schema for anyObject. */
         user?: Record<string, unknown> | null;
         /** Whether the gist content was truncated. */
         truncated?: boolean;
@@ -277,6 +278,7 @@ declare module "@oomol-lab/connector" {
           site_admin?: boolean;
           [key: string]: unknown;
         } | null;
+        /** Schema for anyObject. */
         user?: Record<string, unknown> | null;
         /** Whether the gist content was truncated. */
         truncated?: boolean;
@@ -369,6 +371,7 @@ declare module "@oomol-lab/connector" {
           site_admin?: boolean;
           [key: string]: unknown;
         } | null;
+        /** Schema for anyObject. */
         user?: Record<string, unknown> | null;
         /** Whether the gist content was truncated. */
         truncated?: boolean;
@@ -520,6 +523,7 @@ declare module "@oomol-lab/connector" {
           site_admin?: boolean;
           [key: string]: unknown;
         } | null;
+        /** Schema for anyObject. */
         user?: Record<string, unknown> | null;
         /** Whether the gist content was truncated. */
         truncated?: boolean;
@@ -769,7 +773,6 @@ declare module "@oomol-lab/connector" {
         page?: number;
         /**
          * The ISO 8601 timestamp to filter gists updated after this time.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
          * @format date-time
          */
         since?: string;
@@ -847,6 +850,7 @@ declare module "@oomol-lab/connector" {
             site_admin?: boolean;
             [key: string]: unknown;
           } | null;
+          /** Schema for anyObject. */
           user?: Record<string, unknown> | null;
           /** Whether the gist content was truncated. */
           truncated?: boolean;
@@ -874,7 +878,6 @@ declare module "@oomol-lab/connector" {
         page?: number;
         /**
          * The ISO 8601 timestamp to filter gists updated after this time.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
          * @format date-time
          */
         since?: string;
@@ -952,6 +955,7 @@ declare module "@oomol-lab/connector" {
             site_admin?: boolean;
             [key: string]: unknown;
           } | null;
+          /** Schema for anyObject. */
           user?: Record<string, unknown> | null;
           /** Whether the gist content was truncated. */
           truncated?: boolean;
@@ -979,7 +983,6 @@ declare module "@oomol-lab/connector" {
         page?: number;
         /**
          * The ISO 8601 timestamp to filter gists updated after this time.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
          * @format date-time
          */
         since?: string;
@@ -1057,6 +1060,7 @@ declare module "@oomol-lab/connector" {
             site_admin?: boolean;
             [key: string]: unknown;
           } | null;
+          /** Schema for anyObject. */
           user?: Record<string, unknown> | null;
           /** Whether the gist content was truncated. */
           truncated?: boolean;
@@ -1089,7 +1093,6 @@ declare module "@oomol-lab/connector" {
         page?: number;
         /**
          * The ISO 8601 timestamp to filter results updated after this time.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
          * @format date-time
          */
         since?: string;
@@ -1167,6 +1170,7 @@ declare module "@oomol-lab/connector" {
             site_admin?: boolean;
             [key: string]: unknown;
           } | null;
+          /** Schema for anyObject. */
           user?: Record<string, unknown> | null;
           /** Whether the gist content was truncated. */
           truncated?: boolean;
@@ -1220,6 +1224,7 @@ declare module "@oomol-lab/connector" {
         files?: Record<string, {
             /** The updated text content for the file. */
             content?: string;
+            /** The new filename for the file. */
             filename?: string | null;
           } | null>;
         /** The media type format for the gist content. */
@@ -1296,6 +1301,7 @@ declare module "@oomol-lab/connector" {
           site_admin?: boolean;
           [key: string]: unknown;
         } | null;
+        /** Schema for anyObject. */
         user?: Record<string, unknown> | null;
         /** Whether the gist content was truncated. */
         truncated?: boolean;

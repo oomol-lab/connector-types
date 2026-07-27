@@ -52,13 +52,11 @@ declare module "@oomol-lab/connector" {
         rateChangeMode?: string;
         /**
          * The project start date in YYYY-MM-DD format.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))$
          * @format date
          */
         startDate?: string;
         /**
          * The project end date in YYYY-MM-DD format.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))$
          * @format date
          */
         endDate?: string;
@@ -212,7 +210,10 @@ declare module "@oomol-lab/connector" {
            * @exclusiveMinimum 0
            */
           project_id?: number;
-          /** The user ID assigned to the task. */
+          /**
+           * The user ID assigned to the task.
+           * @exclusiveMinimum 0
+           */
           user_id?: number | null;
           /** The task name. */
           name?: string;
@@ -255,19 +256,16 @@ declare module "@oomol-lab/connector" {
         projectId?: number;
         /**
          * The time entry start timestamp.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
          * @format date-time
          */
         start: string;
         /**
          * The date part used together with start when creating the time entry.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))$
          * @format date
          */
         startDate?: string;
         /**
          * The time entry stop timestamp. Omit it to create a running timer.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
          * @format date-time
          */
         stop?: string;
@@ -310,13 +308,25 @@ declare module "@oomol-lab/connector" {
            * @exclusiveMinimum 0
            */
           wid?: number;
-          /** The project ID associated with the time entry. */
+          /**
+           * The project ID associated with the time entry.
+           * @exclusiveMinimum 0
+           */
           project_id?: number | null;
-          /** The legacy project ID alias returned by Toggl. */
+          /**
+           * The legacy project ID alias returned by Toggl.
+           * @exclusiveMinimum 0
+           */
           pid?: number | null;
-          /** The task ID associated with the time entry. */
+          /**
+           * The task ID associated with the time entry.
+           * @exclusiveMinimum 0
+           */
           task_id?: number | null;
-          /** The legacy task ID alias returned by Toggl. */
+          /**
+           * The legacy task ID alias returned by Toggl.
+           * @exclusiveMinimum 0
+           */
           tid?: number | null;
           /**
            * The user ID that owns the time entry.
@@ -334,7 +344,6 @@ declare module "@oomol-lab/connector" {
           billable?: boolean;
           /**
            * The time entry start timestamp.
-           * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
            * @format date-time
            */
           start?: string;
@@ -454,13 +463,25 @@ declare module "@oomol-lab/connector" {
            * @exclusiveMinimum 0
            */
           wid?: number;
-          /** The project ID associated with the time entry. */
+          /**
+           * The project ID associated with the time entry.
+           * @exclusiveMinimum 0
+           */
           project_id?: number | null;
-          /** The legacy project ID alias returned by Toggl. */
+          /**
+           * The legacy project ID alias returned by Toggl.
+           * @exclusiveMinimum 0
+           */
           pid?: number | null;
-          /** The task ID associated with the time entry. */
+          /**
+           * The task ID associated with the time entry.
+           * @exclusiveMinimum 0
+           */
           task_id?: number | null;
-          /** The legacy task ID alias returned by Toggl. */
+          /**
+           * The legacy task ID alias returned by Toggl.
+           * @exclusiveMinimum 0
+           */
           tid?: number | null;
           /**
            * The user ID that owns the time entry.
@@ -478,7 +499,6 @@ declare module "@oomol-lab/connector" {
           billable?: boolean;
           /**
            * The time entry start timestamp.
-           * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
            * @format date-time
            */
           start?: string;
@@ -509,7 +529,6 @@ declare module "@oomol-lab/connector" {
           id: number;
           /**
            * The user's email address.
-           * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
            * @format email
            */
           email?: string;
@@ -631,7 +650,10 @@ declare module "@oomol-lab/connector" {
            * @exclusiveMinimum 0
            */
           project_id?: number;
-          /** The user ID assigned to the task. */
+          /**
+           * The user ID assigned to the task.
+           * @exclusiveMinimum 0
+           */
           user_id?: number | null;
           /** The task name. */
           name?: string;
@@ -672,13 +694,25 @@ declare module "@oomol-lab/connector" {
            * @exclusiveMinimum 0
            */
           wid?: number;
-          /** The project ID associated with the time entry. */
+          /**
+           * The project ID associated with the time entry.
+           * @exclusiveMinimum 0
+           */
           project_id?: number | null;
-          /** The legacy project ID alias returned by Toggl. */
+          /**
+           * The legacy project ID alias returned by Toggl.
+           * @exclusiveMinimum 0
+           */
           pid?: number | null;
-          /** The task ID associated with the time entry. */
+          /**
+           * The task ID associated with the time entry.
+           * @exclusiveMinimum 0
+           */
           task_id?: number | null;
-          /** The legacy task ID alias returned by Toggl. */
+          /**
+           * The legacy task ID alias returned by Toggl.
+           * @exclusiveMinimum 0
+           */
           tid?: number | null;
           /**
            * The user ID that owns the time entry.
@@ -696,7 +730,6 @@ declare module "@oomol-lab/connector" {
           billable?: boolean;
           /**
            * The time entry start timestamp.
-           * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
            * @format date-time
            */
           start?: string;
@@ -917,7 +950,10 @@ declare module "@oomol-lab/connector" {
            * @exclusiveMinimum 0
            */
           project_id?: number;
-          /** The user ID assigned to the task. */
+          /**
+           * The user ID assigned to the task.
+           * @exclusiveMinimum 0
+           */
           user_id?: number | null;
           /** The task name. */
           name?: string;
@@ -961,13 +997,25 @@ declare module "@oomol-lab/connector" {
            * @exclusiveMinimum 0
            */
           wid?: number;
-          /** The project ID associated with the time entry. */
+          /**
+           * The project ID associated with the time entry.
+           * @exclusiveMinimum 0
+           */
           project_id?: number | null;
-          /** The legacy project ID alias returned by Toggl. */
+          /**
+           * The legacy project ID alias returned by Toggl.
+           * @exclusiveMinimum 0
+           */
           pid?: number | null;
-          /** The task ID associated with the time entry. */
+          /**
+           * The task ID associated with the time entry.
+           * @exclusiveMinimum 0
+           */
           task_id?: number | null;
-          /** The legacy task ID alias returned by Toggl. */
+          /**
+           * The legacy task ID alias returned by Toggl.
+           * @exclusiveMinimum 0
+           */
           tid?: number | null;
           /**
            * The user ID that owns the time entry.
@@ -985,7 +1033,6 @@ declare module "@oomol-lab/connector" {
           billable?: boolean;
           /**
            * The time entry start timestamp.
-           * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
            * @format date-time
            */
           start?: string;
@@ -1062,13 +1109,25 @@ declare module "@oomol-lab/connector" {
            * @exclusiveMinimum 0
            */
           wid?: number;
-          /** The project ID associated with the time entry. */
+          /**
+           * The project ID associated with the time entry.
+           * @exclusiveMinimum 0
+           */
           project_id?: number | null;
-          /** The legacy project ID alias returned by Toggl. */
+          /**
+           * The legacy project ID alias returned by Toggl.
+           * @exclusiveMinimum 0
+           */
           pid?: number | null;
-          /** The task ID associated with the time entry. */
+          /**
+           * The task ID associated with the time entry.
+           * @exclusiveMinimum 0
+           */
           task_id?: number | null;
-          /** The legacy task ID alias returned by Toggl. */
+          /**
+           * The legacy task ID alias returned by Toggl.
+           * @exclusiveMinimum 0
+           */
           tid?: number | null;
           /**
            * The user ID that owns the time entry.
@@ -1086,7 +1145,6 @@ declare module "@oomol-lab/connector" {
           billable?: boolean;
           /**
            * The time entry start timestamp.
-           * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
            * @format date-time
            */
           start?: string;
@@ -1159,13 +1217,11 @@ declare module "@oomol-lab/connector" {
         rateChangeMode?: string;
         /**
          * The updated project start date in YYYY-MM-DD format.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))$
          * @format date
          */
         startDate?: string;
         /**
          * The updated project end date in YYYY-MM-DD format.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))$
          * @format date
          */
         endDate?: string;
@@ -1329,7 +1385,10 @@ declare module "@oomol-lab/connector" {
            * @exclusiveMinimum 0
            */
           project_id?: number;
-          /** The user ID assigned to the task. */
+          /**
+           * The user ID assigned to the task.
+           * @exclusiveMinimum 0
+           */
           user_id?: number | null;
           /** The task name. */
           name?: string;
@@ -1377,19 +1436,16 @@ declare module "@oomol-lab/connector" {
         projectId?: number;
         /**
          * The updated time entry start timestamp.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
          * @format date-time
          */
         start?: string;
         /**
          * The updated date part used together with start.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))$
          * @format date
          */
         startDate?: string;
         /**
          * The updated time entry stop timestamp.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
          * @format date-time
          */
         stop?: string;
@@ -1432,13 +1488,25 @@ declare module "@oomol-lab/connector" {
            * @exclusiveMinimum 0
            */
           wid?: number;
-          /** The project ID associated with the time entry. */
+          /**
+           * The project ID associated with the time entry.
+           * @exclusiveMinimum 0
+           */
           project_id?: number | null;
-          /** The legacy project ID alias returned by Toggl. */
+          /**
+           * The legacy project ID alias returned by Toggl.
+           * @exclusiveMinimum 0
+           */
           pid?: number | null;
-          /** The task ID associated with the time entry. */
+          /**
+           * The task ID associated with the time entry.
+           * @exclusiveMinimum 0
+           */
           task_id?: number | null;
-          /** The legacy task ID alias returned by Toggl. */
+          /**
+           * The legacy task ID alias returned by Toggl.
+           * @exclusiveMinimum 0
+           */
           tid?: number | null;
           /**
            * The user ID that owns the time entry.
@@ -1456,7 +1524,6 @@ declare module "@oomol-lab/connector" {
           billable?: boolean;
           /**
            * The time entry start timestamp.
-           * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
            * @format date-time
            */
           start?: string;

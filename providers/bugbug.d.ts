@@ -7,7 +7,6 @@ declare module "@oomol-lab/connector" {
       input: {
         /**
          * UUID of the requested BugBug resource.
-         * @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$
          * @format uuid
          */
         id: string;
@@ -15,7 +14,6 @@ declare module "@oomol-lab/connector" {
       output: {
         /**
          * UUID of the suite.
-         * @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$
          * @format uuid
          */
         id: string;
@@ -33,7 +31,10 @@ declare module "@oomol-lab/connector" {
         notes: string | null;
         /** Whether tests in the suite run in parallel. */
         runInParallel: boolean;
-        /** Run profile UUID used by the suite. */
+        /**
+         * Run profile UUID used by the suite.
+         * @format uuid
+         */
         runProfileId: string | null;
       };
     };
@@ -42,7 +43,6 @@ declare module "@oomol-lab/connector" {
       input: {
         /**
          * UUID of the requested BugBug resource.
-         * @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$
          * @format uuid
          */
         id: string;
@@ -50,7 +50,6 @@ declare module "@oomol-lab/connector" {
       output: {
         /**
          * UUID of the test.
-         * @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$
          * @format uuid
          */
         id: string;
@@ -69,7 +68,6 @@ declare module "@oomol-lab/connector" {
       input: {
         /**
          * UUID of the requested BugBug resource.
-         * @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$
          * @format uuid
          */
         id: string;
@@ -77,7 +75,6 @@ declare module "@oomol-lab/connector" {
       output: {
         /**
          * UUID of the test run.
-         * @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$
          * @format uuid
          */
         id: string;
@@ -114,7 +111,6 @@ declare module "@oomol-lab/connector" {
         results: Array<{
           /**
            * UUID of the run profile.
-           * @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$
            * @format uuid
            */
           id: string;
@@ -157,7 +153,6 @@ declare module "@oomol-lab/connector" {
         results: Array<{
           /**
            * UUID of the suite.
-           * @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$
            * @format uuid
            */
           id: string;
@@ -185,13 +180,11 @@ declare module "@oomol-lab/connector" {
         page_size?: number;
         /**
          * Only include test runs started after this RFC3339 datetime.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
          * @format date-time
          */
         started_after?: string;
         /**
          * Only include test runs started before this RFC3339 datetime.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
          * @format date-time
          */
         started_before?: string;
@@ -199,7 +192,6 @@ declare module "@oomol-lab/connector" {
         status?: "auto_retrying" | "error" | "failed" | "initialized" | "passed" | "paused" | "queued" | "recording" | "running" | "skipped" | "stopped";
         /**
          * Only include test runs for this test UUID.
-         * @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$
          * @format uuid
          */
         test_id?: string;
@@ -215,7 +207,6 @@ declare module "@oomol-lab/connector" {
         results: Array<{
           /**
            * UUID of the test run.
-           * @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$
            * @format uuid
            */
           id: string;
@@ -229,7 +220,10 @@ declare module "@oomol-lab/connector" {
           started?: string | null;
           /** Source that triggered the test run. */
           triggeredBy?: string;
-          /** UUID of the executed test. */
+          /**
+           * UUID of the executed test.
+           * @format uuid
+           */
           testId?: string | null;
           /** Duration string returned by BugBug. */
           duration?: string | null;
@@ -274,7 +268,6 @@ declare module "@oomol-lab/connector" {
         results: Array<{
           /**
            * UUID of the test.
-           * @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$
            * @format uuid
            */
           id: string;
@@ -288,11 +281,13 @@ declare module "@oomol-lab/connector" {
       input: {
         /**
          * UUID of the test to execute.
-         * @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$
          * @format uuid
          */
         testId: string;
-        /** Optional BugBug run profile UUID used for execution. */
+        /**
+         * Optional BugBug run profile UUID used for execution.
+         * @format uuid
+         */
         runProfileId?: string | null;
         /** Optional variable overrides forwarded to BugBug. */
         variables?: Array<{
@@ -308,7 +303,6 @@ declare module "@oomol-lab/connector" {
       output: {
         /**
          * UUID of the test run.
-         * @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$
          * @format uuid
          */
         id: string;

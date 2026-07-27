@@ -27,7 +27,10 @@ declare module "@oomol-lab/connector" {
         description?: string;
         /** The article tags. */
         tags?: string | Array<string>;
-        /** The optional organization identifier. */
+        /**
+         * The optional organization identifier.
+         * @exclusiveMinimum 0
+         */
         organizationId?: number | null;
       };
       output: {
@@ -670,7 +673,7 @@ declare module "@oomol-lab/connector" {
          * The article status filter.
          * @default "default"
          */
-        status: "default" | "published" | "unpublished" | "all";
+        status?: "default" | "published" | "unpublished" | "all";
       };
       output: Array<{
         /** The record type. */
@@ -975,7 +978,10 @@ declare module "@oomol-lab/connector" {
         description?: string;
         /** The article tags. */
         tags?: string | Array<string>;
-        /** The optional organization identifier. */
+        /**
+         * The optional organization identifier.
+         * @exclusiveMinimum 0
+         */
         organizationId?: number | null;
       };
       output: {

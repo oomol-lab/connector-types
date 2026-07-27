@@ -71,9 +71,15 @@ declare module "@oomol-lab/connector" {
              * @minLength 1
              */
             type: string;
-            /** When the contact detail was created. */
+            /**
+             * When the contact detail was created.
+             * @format date-time
+             */
             createdAt: string | null;
-            /** When the contact detail was last updated. */
+            /**
+             * When the contact detail was last updated.
+             * @format date-time
+             */
             updatedAt: string | null;
           }>;
         };
@@ -101,13 +107,11 @@ declare module "@oomol-lab/connector" {
           blocked: boolean;
           /**
            * When the 2Chat account was created.
-           * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
            * @format date-time
            */
           createdAt: string;
           /**
            * When the current 2Chat plan expires.
-           * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
            * @format date-time
            */
           expiresAt: string;
@@ -207,9 +211,15 @@ declare module "@oomol-lab/connector" {
              * @minLength 1
              */
             type: string;
-            /** When the contact detail was created. */
+            /**
+             * When the contact detail was created.
+             * @format date-time
+             */
             createdAt: string | null;
-            /** When the contact detail was last updated. */
+            /**
+             * When the contact detail was last updated.
+             * @format date-time
+             */
             updatedAt: string | null;
           }>;
         }>;
@@ -245,7 +255,6 @@ declare module "@oomol-lab/connector" {
           hookParams: Record<string, unknown>;
           /**
            * When the webhook was created.
-           * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
            * @format date-time
            */
           createdAt: string;
@@ -274,13 +283,11 @@ declare module "@oomol-lab/connector" {
           blocked: boolean;
           /**
            * When the 2Chat account was created.
-           * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
            * @format date-time
            */
           createdAt: string;
           /**
            * When the current 2Chat plan expires.
-           * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
            * @format date-time
            */
           expiresAt: string;

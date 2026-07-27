@@ -123,7 +123,9 @@ declare module "@oomol-lab/connector" {
             tool_calls?: Array<Record<string, unknown>>;
             [key: string]: unknown;
           };
+          /** The reason generation finished for this choice. */
           finish_reason?: string | null;
+          /** Token-level log probability details. */
           logprobs?: Record<string, unknown> | null;
           [key: string]: unknown;
         }>;

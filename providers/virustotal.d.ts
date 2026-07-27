@@ -323,7 +323,7 @@ declare module "@oomol-lab/connector" {
               "confirmed-timeout"?: number;
               /** Number of engines that do not support the submitted type. */
               "type-unsupported"?: number;
-              [key: string]: number | undefined;
+              [key: string]: unknown;
             };
             /** Per-engine results for the analysis. */
             results: Record<string, {
@@ -337,7 +337,15 @@ declare module "@oomol-lab/connector" {
                  * @minLength 1
                  */
                 engine_name: string;
+                /**
+                 * Version of the security engine.
+                 * @minLength 1
+                 */
                 engine_version?: string | null;
+                /**
+                 * Last engine-update timestamp or version string.
+                 * @minLength 1
+                 */
                 engine_update?: string | null;
                 /**
                  * Detection method used by the engine.
@@ -732,7 +740,7 @@ declare module "@oomol-lab/connector" {
               "confirmed-timeout"?: number;
               /** Number of engines that do not support the submitted type. */
               "type-unsupported"?: number;
-              [key: string]: number | undefined;
+              [key: string]: unknown;
             };
             /** Per-engine results for the latest analysis. */
             last_analysis_results?: Record<string, {
@@ -746,7 +754,15 @@ declare module "@oomol-lab/connector" {
                  * @minLength 1
                  */
                 engine_name: string;
+                /**
+                 * Version of the security engine.
+                 * @minLength 1
+                 */
                 engine_version?: string | null;
+                /**
+                 * Last engine-update timestamp or version string.
+                 * @minLength 1
+                 */
                 engine_update?: string | null;
                 /**
                  * Detection method used by the engine.
@@ -876,7 +892,7 @@ declare module "@oomol-lab/connector" {
               "confirmed-timeout"?: number;
               /** Number of engines that do not support the submitted type. */
               "type-unsupported"?: number;
-              [key: string]: number | undefined;
+              [key: string]: unknown;
             };
             /** Per-engine results for the latest analysis. */
             last_analysis_results?: Record<string, {
@@ -890,7 +906,15 @@ declare module "@oomol-lab/connector" {
                  * @minLength 1
                  */
                 engine_name: string;
+                /**
+                 * Version of the security engine.
+                 * @minLength 1
+                 */
                 engine_version?: string | null;
+                /**
+                 * Last engine-update timestamp or version string.
+                 * @minLength 1
+                 */
                 engine_update?: string | null;
                 /**
                  * Detection method used by the engine.
@@ -1160,7 +1184,7 @@ declare module "@oomol-lab/connector" {
               "confirmed-timeout"?: number;
               /** Number of engines that do not support the submitted type. */
               "type-unsupported"?: number;
-              [key: string]: number | undefined;
+              [key: string]: unknown;
             };
             /** Per-engine results for the latest analysis. */
             last_analysis_results?: Record<string, {
@@ -1174,7 +1198,15 @@ declare module "@oomol-lab/connector" {
                  * @minLength 1
                  */
                 engine_name: string;
+                /**
+                 * Version of the security engine.
+                 * @minLength 1
+                 */
                 engine_version?: string | null;
+                /**
+                 * Last engine-update timestamp or version string.
+                 * @minLength 1
+                 */
                 engine_update?: string | null;
                 /**
                  * Detection method used by the engine.
@@ -1374,7 +1406,7 @@ declare module "@oomol-lab/connector" {
               "confirmed-timeout"?: number;
               /** Number of engines that do not support the submitted type. */
               "type-unsupported"?: number;
-              [key: string]: number | undefined;
+              [key: string]: unknown;
             };
             /** Per-engine results for the latest analysis. */
             last_analysis_results?: Record<string, {
@@ -1388,7 +1420,15 @@ declare module "@oomol-lab/connector" {
                  * @minLength 1
                  */
                 engine_name: string;
+                /**
+                 * Version of the security engine.
+                 * @minLength 1
+                 */
                 engine_version?: string | null;
+                /**
+                 * Last engine-update timestamp or version string.
+                 * @minLength 1
+                 */
                 engine_update?: string | null;
                 /**
                  * Detection method used by the engine.

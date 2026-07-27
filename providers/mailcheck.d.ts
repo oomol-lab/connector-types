@@ -27,7 +27,6 @@ declare module "@oomol-lab/connector" {
               name: string;
               /**
                * The email address of the UserCheck account owner.
-               * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
                * @format email
                */
               email: string;
@@ -110,7 +109,6 @@ declare module "@oomol-lab/connector" {
       input: {
         /**
          * The email address to validate with UserCheck.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email: string;

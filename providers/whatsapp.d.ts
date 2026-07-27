@@ -94,7 +94,7 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          * @default "about,address,description,email,profile_picture_url,websites,vertical"
          */
-        fields: string;
+        fields?: string;
       };
       output: {
         /** Messaging product identifier, typically whatsapp. */
@@ -155,7 +155,7 @@ declare module "@oomol-lab/connector" {
          * @maximum 100
          * @default 25
          */
-        limit: number;
+        limit?: number;
         /** Optional template status filter. */
         status?: string;
         /** Optional template category filter. */
@@ -251,7 +251,7 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          * @default "id,display_phone_number,verified_name,code_verification_status,quality_rating,platform_type,throughput,webhook_configuration,last_onboarded_time"
          */
-        fields: string;
+        fields?: string;
       };
       output: {
         /** Meta phone number ID. */
@@ -294,7 +294,7 @@ declare module "@oomol-lab/connector" {
          * @maximum 100
          * @default 25
          */
-        limit: number;
+        limit?: number;
       };
       output: {
         /** Phone numbers returned for the WABA. */
@@ -458,7 +458,7 @@ declare module "@oomol-lab/connector" {
              * Email type.
              * @default "HOME"
              */
-            type: "HOME" | "WORK";
+            type?: "HOME" | "WORK";
             /** Email address. */
             email: string;
           }>;
@@ -468,7 +468,7 @@ declare module "@oomol-lab/connector" {
              * Phone type.
              * @default "CELL"
              */
-            type: "CELL" | "MAIN" | "IPHONE" | "HOME" | "WORK";
+            type?: "CELL" | "MAIN" | "IPHONE" | "HOME" | "WORK";
             /** Phone number in display format. */
             phone?: string;
             /** WhatsApp ID for the phone number. */
@@ -480,7 +480,7 @@ declare module "@oomol-lab/connector" {
              * Address type.
              * @default "HOME"
              */
-            type: "HOME" | "WORK";
+            type?: "HOME" | "WORK";
             /** Street address. */
             street?: string;
             /** City. */
@@ -821,7 +821,7 @@ declare module "@oomol-lab/connector" {
          * Whether Meta should render a link preview for the first URL in the text.
          * @default false
          */
-        preview_url: boolean;
+        preview_url?: boolean;
       };
       output: {
         /** Resolved contacts associated with the delivery request. */
@@ -857,7 +857,7 @@ declare module "@oomol-lab/connector" {
          * Template language code used for delivery.
          * @default "en_US"
          */
-        language_code: string;
+        language_code?: string;
         /** Template component parameters passed to Meta. */
         components?: Array<{
           /** Template component type such as header, body, or button. */

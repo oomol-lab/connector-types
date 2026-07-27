@@ -6,11 +6,6 @@ declare module "@oomol-lab/connector" {
     "expofp.add_exhibitor": {
       input: {
         /**
-         * Expo identifier where the exhibitor should be created.
-         * @exclusiveMinimum 0
-         */
-        eventId: number;
-        /**
          * Exhibitor name.
          * @minLength 1
          */
@@ -177,6 +172,11 @@ declare module "@oomol-lab/connector" {
            */
           value: string;
         }>;
+        /**
+         * Expo identifier where the exhibitor should be created.
+         * @exclusiveMinimum 0
+         */
+        eventId: number;
       };
       output: {
         /**
@@ -388,7 +388,10 @@ declare module "@oomol-lab/connector" {
           booths: Array<string>;
           /** Gallery image identifiers assigned to the exhibitor. */
           images: Array<string>;
-          /** Logo image URL. */
+          /**
+           * Logo image URL.
+           * @format uri
+           */
           logoFileUrl?: string | null;
           /**
            * Last updated timestamp in ISO8601 format.
@@ -480,11 +483,6 @@ declare module "@oomol-lab/connector" {
     /** Partially update an ExpoFP exhibitor by exhibitor ID. */
     "expofp.update_exhibitor": {
       input: {
-        /**
-         * Exhibitor identifier that should be updated.
-         * @exclusiveMinimum 0
-         */
-        id: number;
         /**
          * Exhibitor name.
          * @minLength 1
@@ -652,6 +650,11 @@ declare module "@oomol-lab/connector" {
            */
           value: string;
         }>;
+        /**
+         * Exhibitor identifier that should be updated.
+         * @exclusiveMinimum 0
+         */
+        id: number;
       };
       output: {
         /** Whether ExpoFP accepted the exhibitor update. */

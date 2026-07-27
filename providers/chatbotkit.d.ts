@@ -464,6 +464,7 @@ declare module "@oomol-lab/connector" {
         conversations: number;
         /** The number of messages sent in the current billing period. */
         messages: number;
+        /** The database value. */
         database: {
           /** The number of datasets created in the current billing period. */
           datasets: number;

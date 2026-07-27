@@ -26,6 +26,7 @@ declare module "@oomol-lab/connector" {
         documentId: string;
         /** The parser identifier the document was queued against. */
         parserId: string;
+        /** The passthrough remote ID returned by Docparser. */
         remoteId?: string | null;
         /** The upstream status message, which usually contains a status URL. */
         message: string;
@@ -56,13 +57,21 @@ declare module "@oomol-lab/connector" {
           id: string;
           /** The unique identifier of the source document. */
           documentId: string;
+          /** The passthrough remote ID associated with the document. */
           remoteId?: string | null;
+          /** The original file name of the source document. */
           fileName?: string | null;
+          /** The standard Docparser media link for the document. */
           mediaLink?: string | null;
+          /** The original-file media link for the document. */
           mediaLinkOriginal?: string | null;
+          /** The parsed-data media link for the document. */
           mediaLinkData?: string | null;
+          /** The page count of the parsed document. */
           pageCount?: number | null;
+          /** The ISO 8601 timestamp when the document was uploaded. */
           uploadedAt?: string | null;
+          /** The ISO 8601 timestamp when the document finished processing. */
           processedAt?: string | null;
           /** The custom parsed fields returned by the parser for this document. */
           parsedData: Record<string, unknown>;
@@ -91,9 +100,13 @@ declare module "@oomol-lab/connector" {
         status: {
           /** The document token returned by Docparser. */
           token: string;
+          /** The passthrough remote ID linked to the document. */
           remoteId?: string | null;
+          /** The import source reported by Docparser, such as `api`. */
           fileSource?: string | null;
+          /** The original file name reported by Docparser. */
           filename?: string | null;
+          /** The detected MIME type of the document. */
           mimeType?: string | null;
           /** The page count reported by Docparser. */
           pages: number;
@@ -175,13 +188,21 @@ declare module "@oomol-lab/connector" {
           id: string;
           /** The unique identifier of the source document. */
           documentId: string;
+          /** The passthrough remote ID associated with the document. */
           remoteId?: string | null;
+          /** The original file name of the source document. */
           fileName?: string | null;
+          /** The standard Docparser media link for the document. */
           mediaLink?: string | null;
+          /** The original-file media link for the document. */
           mediaLinkOriginal?: string | null;
+          /** The parsed-data media link for the document. */
           mediaLinkData?: string | null;
+          /** The page count of the parsed document. */
           pageCount?: number | null;
+          /** The ISO 8601 timestamp when the document was uploaded. */
           uploadedAt?: string | null;
+          /** The ISO 8601 timestamp when the document finished processing. */
           processedAt?: string | null;
           /** The custom parsed fields returned by the parser for this document. */
           parsedData: Record<string, unknown>;
@@ -248,6 +269,7 @@ declare module "@oomol-lab/connector" {
       output: {
         /** The number of documents Docparser scheduled for reintegration. */
         totalReintegrate: number;
+        /** The upstream message returned by Docparser. */
         msg: string | null;
       };
     };
@@ -268,6 +290,7 @@ declare module "@oomol-lab/connector" {
       output: {
         /** The number of documents Docparser scheduled for re-parsing. */
         totalReparsed: number;
+        /** The upstream message returned by Docparser. */
         msg: string | null;
       };
     };
@@ -298,9 +321,13 @@ declare module "@oomol-lab/connector" {
       output: {
         /** The unique identifier of the imported document. */
         documentId: string;
+        /** The imported file size in bytes when Docparser returns it. */
         fileSize?: number | null;
+        /** The amount of account quota consumed by the import. */
         quotaUsed?: number | null;
+        /** The remaining account quota after the import. */
         quotaLeft?: number | null;
+        /** The ISO 8601 timestamp when the account quota refills. */
         quotaRefill?: string | null;
       };
     };

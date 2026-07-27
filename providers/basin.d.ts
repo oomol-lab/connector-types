@@ -115,11 +115,13 @@ declare module "@oomol-lab/connector" {
         smtp_email_validation?: boolean;
       };
       output: {
+        /** A provider field value. */
         uuid: string | null;
         /** Form name. */
         name: string;
         /** IANA timezone configured for the form. */
         timezone: string;
+        /** A provider field value. */
         redirect_url: string | null;
         /** Whether the form submits using AJAX. */
         use_ajax: boolean;
@@ -127,7 +129,9 @@ declare module "@oomol-lab/connector" {
         notification_emails: string;
         /** Whether Basin sends auto-reply emails. */
         autoreply: boolean;
+        /** A provider field value. */
         autoreply_body: string | null;
+        /** A provider field value. */
         whitelist_source_domains: string | null;
         /** Whether Google reCAPTCHA is required. */
         force_recaptcha: boolean;
@@ -135,20 +139,35 @@ declare module "@oomol-lab/connector" {
         force_hcaptcha: boolean;
         /** Whether Cloudflare Turnstile is required. */
         force_turnstile: boolean;
+        /** A provider field value. */
         turnstile_site_key: string | null;
+        /** A provider field value. */
         turnstile_secret: string | null;
+        /** A provider field value. */
         notification_cc_emails: string | null;
+        /** A provider field value. */
         notification_bcc_emails: string | null;
+        /** A provider field value. */
         notification_subject: string | null;
+        /** A provider field value. */
         notification_from_name: string | null;
+        /** A provider field value. */
         autoreply_subject: string | null;
+        /** A provider field value. */
         autoreply_from_name: string | null;
+        /** A provider field value. */
         autoreply_greeting: string | null;
+        /** A provider field value. */
         autoreply_name: string | null;
+        /** A provider field value. */
         autoreply_title: string | null;
+        /** A provider field value. */
         autoreply_email: string | null;
+        /** A provider field value. */
         logo: string | null;
+        /** A provider field value. */
         button_background_color: string | null;
+        /** A provider field value. */
         button_text_color: string | null;
         /** Whether Basin sends a data receipt email. */
         data_receipt_email: boolean;
@@ -158,30 +177,47 @@ declare module "@oomol-lab/connector" {
         hide_dashboard_button: boolean;
         /** Whether the submitter is excluded from reply recipients. */
         exclude_submitter_from_reply: boolean;
+        /** A provider field value. */
         custom_template: string | null;
         /** Whether the custom notification template is enabled. */
         use_custom_template: boolean;
+        /** A provider field value. */
         autoreply_custom_template: string | null;
         /** Whether the custom auto-reply template is enabled. */
         autoreply_use_custom_template: boolean;
+        /** A provider field value. */
         notification_mail_template_id: number | null;
+        /** A provider field value. */
         auto_response_mail_template_id: number | null;
+        /** A provider field value. */
         confirmation_mail_template_id: number | null;
+        /** A provider field value. */
         honeypot_field: string | null;
+        /** A provider field value. */
         recaptcha_failed_url: string | null;
+        /** A provider field value. */
         domain_id: number | null;
+        /** A provider field value. */
         domain_email: string | null;
         /** Whether duplicate submission filtering is enabled. */
         duplicate_filter: boolean;
         /** Project ID that owns the form. */
         project_id: number;
+        /** A provider field value. */
         redirect_heading: string | null;
+        /** A provider field value. */
         redirect_message: string | null;
+        /** A provider field value. */
         redirect_button_background_color: string | null;
+        /** A provider field value. */
         redirect_button_text: string | null;
+        /** A provider field value. */
         redirect_button_text_color: string | null;
+        /** A provider field value. */
         content_blacklist: Array<string> | null;
+        /** A provider field value. */
         allowed_domains: Array<string> | null;
+        /** A provider field value. */
         blocked_domains: Array<string> | null;
         /** Whether SMTP email validation is enabled. */
         smtp_email_validation: boolean;
@@ -215,6 +251,7 @@ declare module "@oomol-lab/connector" {
           updated_at: string;
           /** Number of recent delivery failures for the embedded webhook. */
           failure_count: number;
+          /** A provider field value. */
           last_failure_at: string | null;
           [key: string]: unknown;
         }>;
@@ -275,6 +312,7 @@ declare module "@oomol-lab/connector" {
         updated_at: string;
         /** Number of recent webhook delivery failures. */
         failure_count: number;
+        /** A provider field value. */
         last_failure_at: string | null;
       };
     };
@@ -308,11 +346,13 @@ declare module "@oomol-lab/connector" {
         form_id: string;
       };
       output: {
+        /** A provider field value. */
         uuid: string | null;
         /** Form name. */
         name: string;
         /** IANA timezone configured for the form. */
         timezone: string;
+        /** A provider field value. */
         redirect_url: string | null;
         /** Whether the form submits using AJAX. */
         use_ajax: boolean;
@@ -320,7 +360,9 @@ declare module "@oomol-lab/connector" {
         notification_emails: string;
         /** Whether Basin sends auto-reply emails. */
         autoreply: boolean;
+        /** A provider field value. */
         autoreply_body: string | null;
+        /** A provider field value. */
         whitelist_source_domains: string | null;
         /** Whether Google reCAPTCHA is required. */
         force_recaptcha: boolean;
@@ -328,20 +370,35 @@ declare module "@oomol-lab/connector" {
         force_hcaptcha: boolean;
         /** Whether Cloudflare Turnstile is required. */
         force_turnstile: boolean;
+        /** A provider field value. */
         turnstile_site_key: string | null;
+        /** A provider field value. */
         turnstile_secret: string | null;
+        /** A provider field value. */
         notification_cc_emails: string | null;
+        /** A provider field value. */
         notification_bcc_emails: string | null;
+        /** A provider field value. */
         notification_subject: string | null;
+        /** A provider field value. */
         notification_from_name: string | null;
+        /** A provider field value. */
         autoreply_subject: string | null;
+        /** A provider field value. */
         autoreply_from_name: string | null;
+        /** A provider field value. */
         autoreply_greeting: string | null;
+        /** A provider field value. */
         autoreply_name: string | null;
+        /** A provider field value. */
         autoreply_title: string | null;
+        /** A provider field value. */
         autoreply_email: string | null;
+        /** A provider field value. */
         logo: string | null;
+        /** A provider field value. */
         button_background_color: string | null;
+        /** A provider field value. */
         button_text_color: string | null;
         /** Whether Basin sends a data receipt email. */
         data_receipt_email: boolean;
@@ -351,30 +408,47 @@ declare module "@oomol-lab/connector" {
         hide_dashboard_button: boolean;
         /** Whether the submitter is excluded from reply recipients. */
         exclude_submitter_from_reply: boolean;
+        /** A provider field value. */
         custom_template: string | null;
         /** Whether the custom notification template is enabled. */
         use_custom_template: boolean;
+        /** A provider field value. */
         autoreply_custom_template: string | null;
         /** Whether the custom auto-reply template is enabled. */
         autoreply_use_custom_template: boolean;
+        /** A provider field value. */
         notification_mail_template_id: number | null;
+        /** A provider field value. */
         auto_response_mail_template_id: number | null;
+        /** A provider field value. */
         confirmation_mail_template_id: number | null;
+        /** A provider field value. */
         honeypot_field: string | null;
+        /** A provider field value. */
         recaptcha_failed_url: string | null;
+        /** A provider field value. */
         domain_id: number | null;
+        /** A provider field value. */
         domain_email: string | null;
         /** Whether duplicate submission filtering is enabled. */
         duplicate_filter: boolean;
         /** Project ID that owns the form. */
         project_id: number;
+        /** A provider field value. */
         redirect_heading: string | null;
+        /** A provider field value. */
         redirect_message: string | null;
+        /** A provider field value. */
         redirect_button_background_color: string | null;
+        /** A provider field value. */
         redirect_button_text: string | null;
+        /** A provider field value. */
         redirect_button_text_color: string | null;
+        /** A provider field value. */
         content_blacklist: Array<string> | null;
+        /** A provider field value. */
         allowed_domains: Array<string> | null;
+        /** A provider field value. */
         blocked_domains: Array<string> | null;
         /** Whether SMTP email validation is enabled. */
         smtp_email_validation: boolean;
@@ -408,6 +482,7 @@ declare module "@oomol-lab/connector" {
           updated_at: string;
           /** Number of recent delivery failures for the embedded webhook. */
           failure_count: number;
+          /** A provider field value. */
           last_failure_at: string | null;
           [key: string]: unknown;
         }>;
@@ -417,9 +492,6 @@ declare module "@oomol-lab/connector" {
         spam_count: number;
         /** Number of trashed submissions for the form. */
         trash_count: number;
-      } | {
-        /** Whether Basin accepted the operation. */
-        success: boolean;
       };
     };
     /** Delete a Basin form webhook by ID. */
@@ -452,10 +524,8 @@ declare module "@oomol-lab/connector" {
         updated_at: string;
         /** Number of recent webhook delivery failures. */
         failure_count: number;
+        /** A provider field value. */
         last_failure_at: string | null;
-      } | {
-        /** Whether Basin accepted the operation. */
-        success: boolean;
       };
     };
     /** Delete a Basin project by ID. */
@@ -476,9 +546,6 @@ declare module "@oomol-lab/connector" {
         created_at: string;
         /** Timestamp when the project was last updated. */
         updated_at: string;
-      } | {
-        /** Whether Basin accepted the operation. */
-        success: boolean;
       };
     };
     /** Delete a Basin submission by ID. */
@@ -505,11 +572,13 @@ declare module "@oomol-lab/connector" {
         form_id: string;
       };
       output: {
+        /** A provider field value. */
         uuid: string | null;
         /** Form name. */
         name: string;
         /** IANA timezone configured for the form. */
         timezone: string;
+        /** A provider field value. */
         redirect_url: string | null;
         /** Whether the form submits using AJAX. */
         use_ajax: boolean;
@@ -517,7 +586,9 @@ declare module "@oomol-lab/connector" {
         notification_emails: string;
         /** Whether Basin sends auto-reply emails. */
         autoreply: boolean;
+        /** A provider field value. */
         autoreply_body: string | null;
+        /** A provider field value. */
         whitelist_source_domains: string | null;
         /** Whether Google reCAPTCHA is required. */
         force_recaptcha: boolean;
@@ -525,20 +596,35 @@ declare module "@oomol-lab/connector" {
         force_hcaptcha: boolean;
         /** Whether Cloudflare Turnstile is required. */
         force_turnstile: boolean;
+        /** A provider field value. */
         turnstile_site_key: string | null;
+        /** A provider field value. */
         turnstile_secret: string | null;
+        /** A provider field value. */
         notification_cc_emails: string | null;
+        /** A provider field value. */
         notification_bcc_emails: string | null;
+        /** A provider field value. */
         notification_subject: string | null;
+        /** A provider field value. */
         notification_from_name: string | null;
+        /** A provider field value. */
         autoreply_subject: string | null;
+        /** A provider field value. */
         autoreply_from_name: string | null;
+        /** A provider field value. */
         autoreply_greeting: string | null;
+        /** A provider field value. */
         autoreply_name: string | null;
+        /** A provider field value. */
         autoreply_title: string | null;
+        /** A provider field value. */
         autoreply_email: string | null;
+        /** A provider field value. */
         logo: string | null;
+        /** A provider field value. */
         button_background_color: string | null;
+        /** A provider field value. */
         button_text_color: string | null;
         /** Whether Basin sends a data receipt email. */
         data_receipt_email: boolean;
@@ -548,30 +634,47 @@ declare module "@oomol-lab/connector" {
         hide_dashboard_button: boolean;
         /** Whether the submitter is excluded from reply recipients. */
         exclude_submitter_from_reply: boolean;
+        /** A provider field value. */
         custom_template: string | null;
         /** Whether the custom notification template is enabled. */
         use_custom_template: boolean;
+        /** A provider field value. */
         autoreply_custom_template: string | null;
         /** Whether the custom auto-reply template is enabled. */
         autoreply_use_custom_template: boolean;
+        /** A provider field value. */
         notification_mail_template_id: number | null;
+        /** A provider field value. */
         auto_response_mail_template_id: number | null;
+        /** A provider field value. */
         confirmation_mail_template_id: number | null;
+        /** A provider field value. */
         honeypot_field: string | null;
+        /** A provider field value. */
         recaptcha_failed_url: string | null;
+        /** A provider field value. */
         domain_id: number | null;
+        /** A provider field value. */
         domain_email: string | null;
         /** Whether duplicate submission filtering is enabled. */
         duplicate_filter: boolean;
         /** Project ID that owns the form. */
         project_id: number;
+        /** A provider field value. */
         redirect_heading: string | null;
+        /** A provider field value. */
         redirect_message: string | null;
+        /** A provider field value. */
         redirect_button_background_color: string | null;
+        /** A provider field value. */
         redirect_button_text: string | null;
+        /** A provider field value. */
         redirect_button_text_color: string | null;
+        /** A provider field value. */
         content_blacklist: Array<string> | null;
+        /** A provider field value. */
         allowed_domains: Array<string> | null;
+        /** A provider field value. */
         blocked_domains: Array<string> | null;
         /** Whether SMTP email validation is enabled. */
         smtp_email_validation: boolean;
@@ -605,6 +708,7 @@ declare module "@oomol-lab/connector" {
           updated_at: string;
           /** Number of recent delivery failures for the embedded webhook. */
           failure_count: number;
+          /** A provider field value. */
           last_failure_at: string | null;
           [key: string]: unknown;
         }>;
@@ -646,6 +750,7 @@ declare module "@oomol-lab/connector" {
         updated_at: string;
         /** Number of recent webhook delivery failures. */
         failure_count: number;
+        /** A provider field value. */
         last_failure_at: string | null;
       };
     };
@@ -709,11 +814,17 @@ declare module "@oomol-lab/connector" {
         read: boolean;
         /** Whether the submission is currently in trash. */
         trash: boolean;
+        /** A provider field value. */
         spam_reason: string | null;
+        /** A provider field value. */
         webhook_sent_at: string | null;
+        /** A provider field value. */
         ip: string | null;
+        /** A provider field value. */
         referrer: string | null;
+        /** A provider field value. */
         user_agent: string | null;
+        /** A provider field value. */
         attachments: Array<unknown> | null;
         /** Form summary embedded inside a Basin submission response. */
         form: {
@@ -761,6 +872,7 @@ declare module "@oomol-lab/connector" {
           updated_at: string;
           /** Number of recent webhook delivery failures. */
           failure_count: number;
+          /** A provider field value. */
           last_failure_at: string | null;
           [key: string]: unknown;
         }>;
@@ -795,6 +907,7 @@ declare module "@oomol-lab/connector" {
         forms: Array<{
           /** Form ID. */
           id: number;
+          /** A provider field value. */
           uuid: string | null;
           /** Form name. */
           name: string;
@@ -1030,11 +1143,13 @@ declare module "@oomol-lab/connector" {
         form_id: string;
       };
       output: {
+        /** A provider field value. */
         uuid: string | null;
         /** Form name. */
         name: string;
         /** IANA timezone configured for the form. */
         timezone: string;
+        /** A provider field value. */
         redirect_url: string | null;
         /** Whether the form submits using AJAX. */
         use_ajax: boolean;
@@ -1042,7 +1157,9 @@ declare module "@oomol-lab/connector" {
         notification_emails: string;
         /** Whether Basin sends auto-reply emails. */
         autoreply: boolean;
+        /** A provider field value. */
         autoreply_body: string | null;
+        /** A provider field value. */
         whitelist_source_domains: string | null;
         /** Whether Google reCAPTCHA is required. */
         force_recaptcha: boolean;
@@ -1050,20 +1167,35 @@ declare module "@oomol-lab/connector" {
         force_hcaptcha: boolean;
         /** Whether Cloudflare Turnstile is required. */
         force_turnstile: boolean;
+        /** A provider field value. */
         turnstile_site_key: string | null;
+        /** A provider field value. */
         turnstile_secret: string | null;
+        /** A provider field value. */
         notification_cc_emails: string | null;
+        /** A provider field value. */
         notification_bcc_emails: string | null;
+        /** A provider field value. */
         notification_subject: string | null;
+        /** A provider field value. */
         notification_from_name: string | null;
+        /** A provider field value. */
         autoreply_subject: string | null;
+        /** A provider field value. */
         autoreply_from_name: string | null;
+        /** A provider field value. */
         autoreply_greeting: string | null;
+        /** A provider field value. */
         autoreply_name: string | null;
+        /** A provider field value. */
         autoreply_title: string | null;
+        /** A provider field value. */
         autoreply_email: string | null;
+        /** A provider field value. */
         logo: string | null;
+        /** A provider field value. */
         button_background_color: string | null;
+        /** A provider field value. */
         button_text_color: string | null;
         /** Whether Basin sends a data receipt email. */
         data_receipt_email: boolean;
@@ -1073,30 +1205,47 @@ declare module "@oomol-lab/connector" {
         hide_dashboard_button: boolean;
         /** Whether the submitter is excluded from reply recipients. */
         exclude_submitter_from_reply: boolean;
+        /** A provider field value. */
         custom_template: string | null;
         /** Whether the custom notification template is enabled. */
         use_custom_template: boolean;
+        /** A provider field value. */
         autoreply_custom_template: string | null;
         /** Whether the custom auto-reply template is enabled. */
         autoreply_use_custom_template: boolean;
+        /** A provider field value. */
         notification_mail_template_id: number | null;
+        /** A provider field value. */
         auto_response_mail_template_id: number | null;
+        /** A provider field value. */
         confirmation_mail_template_id: number | null;
+        /** A provider field value. */
         honeypot_field: string | null;
+        /** A provider field value. */
         recaptcha_failed_url: string | null;
+        /** A provider field value. */
         domain_id: number | null;
+        /** A provider field value. */
         domain_email: string | null;
         /** Whether duplicate submission filtering is enabled. */
         duplicate_filter: boolean;
         /** Project ID that owns the form. */
         project_id: number;
+        /** A provider field value. */
         redirect_heading: string | null;
+        /** A provider field value. */
         redirect_message: string | null;
+        /** A provider field value. */
         redirect_button_background_color: string | null;
+        /** A provider field value. */
         redirect_button_text: string | null;
+        /** A provider field value. */
         redirect_button_text_color: string | null;
+        /** A provider field value. */
         content_blacklist: Array<string> | null;
+        /** A provider field value. */
         allowed_domains: Array<string> | null;
+        /** A provider field value. */
         blocked_domains: Array<string> | null;
         /** Whether SMTP email validation is enabled. */
         smtp_email_validation: boolean;
@@ -1130,6 +1279,7 @@ declare module "@oomol-lab/connector" {
           updated_at: string;
           /** Number of recent delivery failures for the embedded webhook. */
           failure_count: number;
+          /** A provider field value. */
           last_failure_at: string | null;
           [key: string]: unknown;
         }>;
@@ -1195,6 +1345,7 @@ declare module "@oomol-lab/connector" {
         updated_at: string;
         /** Number of recent webhook delivery failures. */
         failure_count: number;
+        /** A provider field value. */
         last_failure_at: string | null;
       };
     };

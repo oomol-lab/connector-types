@@ -24,7 +24,6 @@ declare module "@oomol-lab/connector" {
         emails?: Array<{
           /**
            * The email address to send to Close.
-           * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
            * @format email
            */
           email: string;
@@ -87,7 +86,6 @@ declare module "@oomol-lab/connector" {
           emails?: Array<{
             /**
              * The email address returned by Close.
-             * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
              * @format email
              */
             email: string;
@@ -182,7 +180,6 @@ declare module "@oomol-lab/connector" {
           emails?: Array<{
             /**
              * The email address to send to Close.
-             * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
              * @format email
              */
             email: string;
@@ -230,65 +227,9 @@ declare module "@oomol-lab/connector" {
           /** The contact IDs linked to the lead. */
           contact_ids?: Array<string>;
           /** The nested contacts returned with the lead when requested. */
-          contacts?: Array<{
-            /**
-             * The nested contact name returned by Close.
-             * @minLength 1
-             */
-            name: string;
-            /** The nested contact title returned by Close. */
-            title?: string | null;
-            /** Nested contact emails returned by Close. */
-            emails?: Array<{
-              /**
-               * The email address returned by Close.
-               * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
-               * @format email
-               */
-              email: string;
-              /** The Close email label. */
-              type?: string;
-              /** Whether the email address is unsubscribed. */
-              is_unsubscribed?: boolean | null;
-              [key: string]: unknown;
-            }>;
-            /** Nested contact phones returned by Close. */
-            phones?: Array<{
-              /**
-               * The phone number returned by Close.
-               * @minLength 1
-               */
-              phone: string;
-              /** The formatted phone number returned by Close. */
-              phone_formatted?: string;
-              /** The Close phone label. */
-              type?: string;
-              /** The phone country code returned by Close. */
-              country?: string;
-              /** Whether the phone number is unsubscribed. */
-              is_unsubscribed?: boolean | null;
-              [key: string]: unknown;
-            }>;
-            [key: string]: unknown;
-          }>;
+          contacts?: Array<unknown>;
           /** The addresses returned with the lead when requested. */
-          addresses?: Array<{
-            /** The address label returned by Close. */
-            label?: string;
-            /** The first address line returned by Close. */
-            address_1?: string;
-            /** The second address line returned by Close. */
-            address_2?: string;
-            /** The city returned by Close. */
-            city?: string;
-            /** The state or region returned by Close. */
-            state?: string;
-            /** The postal code returned by Close. */
-            zipcode?: string;
-            /** The country code returned by Close. */
-            country?: string;
-            [key: string]: unknown;
-          }>;
+          addresses?: Array<unknown>;
           [key: string]: unknown;
         };
       };
@@ -519,7 +460,6 @@ declare module "@oomol-lab/connector" {
           emails?: Array<{
             /**
              * The email address returned by Close.
-             * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
              * @format email
              */
             email: string;
@@ -601,65 +541,9 @@ declare module "@oomol-lab/connector" {
           /** The contact IDs linked to the lead. */
           contact_ids?: Array<string>;
           /** The nested contacts returned with the lead when requested. */
-          contacts?: Array<{
-            /**
-             * The nested contact name returned by Close.
-             * @minLength 1
-             */
-            name: string;
-            /** The nested contact title returned by Close. */
-            title?: string | null;
-            /** Nested contact emails returned by Close. */
-            emails?: Array<{
-              /**
-               * The email address returned by Close.
-               * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
-               * @format email
-               */
-              email: string;
-              /** The Close email label. */
-              type?: string;
-              /** Whether the email address is unsubscribed. */
-              is_unsubscribed?: boolean | null;
-              [key: string]: unknown;
-            }>;
-            /** Nested contact phones returned by Close. */
-            phones?: Array<{
-              /**
-               * The phone number returned by Close.
-               * @minLength 1
-               */
-              phone: string;
-              /** The formatted phone number returned by Close. */
-              phone_formatted?: string;
-              /** The Close phone label. */
-              type?: string;
-              /** The phone country code returned by Close. */
-              country?: string;
-              /** Whether the phone number is unsubscribed. */
-              is_unsubscribed?: boolean | null;
-              [key: string]: unknown;
-            }>;
-            [key: string]: unknown;
-          }>;
+          contacts?: Array<unknown>;
           /** The addresses returned with the lead when requested. */
-          addresses?: Array<{
-            /** The address label returned by Close. */
-            label?: string;
-            /** The first address line returned by Close. */
-            address_1?: string;
-            /** The second address line returned by Close. */
-            address_2?: string;
-            /** The city returned by Close. */
-            city?: string;
-            /** The state or region returned by Close. */
-            state?: string;
-            /** The postal code returned by Close. */
-            zipcode?: string;
-            /** The country code returned by Close. */
-            country?: string;
-            [key: string]: unknown;
-          }>;
+          addresses?: Array<unknown>;
           [key: string]: unknown;
         };
       };
@@ -872,7 +756,6 @@ declare module "@oomol-lab/connector" {
           emails?: Array<{
             /**
              * The email address returned by Close.
-             * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
              * @format email
              */
             email: string;
@@ -916,7 +799,7 @@ declare module "@oomol-lab/connector" {
          * Whether Close has another page available.
          * @default false
          */
-        hasMore: boolean;
+        hasMore?: boolean;
       };
     };
     /** List Close leads with optional pagination and field selection. */
@@ -964,72 +847,16 @@ declare module "@oomol-lab/connector" {
           /** The contact IDs linked to the lead. */
           contact_ids?: Array<string>;
           /** The nested contacts returned with the lead when requested. */
-          contacts?: Array<{
-            /**
-             * The nested contact name returned by Close.
-             * @minLength 1
-             */
-            name: string;
-            /** The nested contact title returned by Close. */
-            title?: string | null;
-            /** Nested contact emails returned by Close. */
-            emails?: Array<{
-              /**
-               * The email address returned by Close.
-               * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
-               * @format email
-               */
-              email: string;
-              /** The Close email label. */
-              type?: string;
-              /** Whether the email address is unsubscribed. */
-              is_unsubscribed?: boolean | null;
-              [key: string]: unknown;
-            }>;
-            /** Nested contact phones returned by Close. */
-            phones?: Array<{
-              /**
-               * The phone number returned by Close.
-               * @minLength 1
-               */
-              phone: string;
-              /** The formatted phone number returned by Close. */
-              phone_formatted?: string;
-              /** The Close phone label. */
-              type?: string;
-              /** The phone country code returned by Close. */
-              country?: string;
-              /** Whether the phone number is unsubscribed. */
-              is_unsubscribed?: boolean | null;
-              [key: string]: unknown;
-            }>;
-            [key: string]: unknown;
-          }>;
+          contacts?: Array<unknown>;
           /** The addresses returned with the lead when requested. */
-          addresses?: Array<{
-            /** The address label returned by Close. */
-            label?: string;
-            /** The first address line returned by Close. */
-            address_1?: string;
-            /** The second address line returned by Close. */
-            address_2?: string;
-            /** The city returned by Close. */
-            city?: string;
-            /** The state or region returned by Close. */
-            state?: string;
-            /** The postal code returned by Close. */
-            zipcode?: string;
-            /** The country code returned by Close. */
-            country?: string;
-            [key: string]: unknown;
-          }>;
+          addresses?: Array<unknown>;
           [key: string]: unknown;
         }>;
         /**
          * Whether Close has another page available.
          * @default false
          */
-        hasMore: boolean;
+        hasMore?: boolean;
       };
     };
     /** List Close opportunities with stable workflow filters and pagination. */
@@ -1151,7 +978,7 @@ declare module "@oomol-lab/connector" {
          * Whether Close has another page available.
          * @default false
          */
-        hasMore: boolean;
+        hasMore?: boolean;
       };
     };
     /** List Close tasks with lead, assignee, completion, and view filters. */
@@ -1233,7 +1060,7 @@ declare module "@oomol-lab/connector" {
          * Whether Close has another page available.
          * @default false
          */
-        hasMore: boolean;
+        hasMore?: boolean;
       };
     };
     /** Update writable fields on an existing Close contact. */
@@ -1255,7 +1082,6 @@ declare module "@oomol-lab/connector" {
         emails?: Array<{
           /**
            * The email address to send to Close.
-           * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
            * @format email
            */
           email: string;
@@ -1318,7 +1144,6 @@ declare module "@oomol-lab/connector" {
           emails?: Array<{
             /**
              * The email address returned by Close.
-             * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
              * @format email
              */
             email: string;
@@ -1403,65 +1228,9 @@ declare module "@oomol-lab/connector" {
           /** The contact IDs linked to the lead. */
           contact_ids?: Array<string>;
           /** The nested contacts returned with the lead when requested. */
-          contacts?: Array<{
-            /**
-             * The nested contact name returned by Close.
-             * @minLength 1
-             */
-            name: string;
-            /** The nested contact title returned by Close. */
-            title?: string | null;
-            /** Nested contact emails returned by Close. */
-            emails?: Array<{
-              /**
-               * The email address returned by Close.
-               * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
-               * @format email
-               */
-              email: string;
-              /** The Close email label. */
-              type?: string;
-              /** Whether the email address is unsubscribed. */
-              is_unsubscribed?: boolean | null;
-              [key: string]: unknown;
-            }>;
-            /** Nested contact phones returned by Close. */
-            phones?: Array<{
-              /**
-               * The phone number returned by Close.
-               * @minLength 1
-               */
-              phone: string;
-              /** The formatted phone number returned by Close. */
-              phone_formatted?: string;
-              /** The Close phone label. */
-              type?: string;
-              /** The phone country code returned by Close. */
-              country?: string;
-              /** Whether the phone number is unsubscribed. */
-              is_unsubscribed?: boolean | null;
-              [key: string]: unknown;
-            }>;
-            [key: string]: unknown;
-          }>;
+          contacts?: Array<unknown>;
           /** The addresses returned with the lead when requested. */
-          addresses?: Array<{
-            /** The address label returned by Close. */
-            label?: string;
-            /** The first address line returned by Close. */
-            address_1?: string;
-            /** The second address line returned by Close. */
-            address_2?: string;
-            /** The city returned by Close. */
-            city?: string;
-            /** The state or region returned by Close. */
-            state?: string;
-            /** The postal code returned by Close. */
-            zipcode?: string;
-            /** The country code returned by Close. */
-            country?: string;
-            [key: string]: unknown;
-          }>;
+          addresses?: Array<unknown>;
           [key: string]: unknown;
         };
       };

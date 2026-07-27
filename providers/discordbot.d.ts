@@ -5,20 +5,11 @@ declare module "@oomol-lab/connector" {
     /** Add a recipient to a group DM channel. */
     "discordbot.add_group_dm_user": {
       input: {
-        /**
-         * The group DM channel id.
-         * @minLength 1
-         */
+        /** The group DM channel id. */
         channel_id: string;
-        /**
-         * The user id.
-         * @minLength 1
-         */
+        /** The user id. */
         user_id: string;
-        /**
-         * The user access token.
-         * @minLength 1
-         */
+        /** The user access token. */
         access_token: string;
         /**
          * The optional nickname.
@@ -34,20 +25,11 @@ declare module "@oomol-lab/connector" {
     /** Add a user to a guild with a user access token. */
     "discordbot.add_guild_member": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
-        /**
-         * The user id.
-         * @minLength 1
-         */
+        /** The user id. */
         user_id: string;
-        /**
-         * The user access token.
-         * @minLength 1
-         */
+        /** The user access token. */
         access_token: string;
         /**
          * The nickname.
@@ -68,20 +50,11 @@ declare module "@oomol-lab/connector" {
     /** Add a role to a guild member. */
     "discordbot.add_guild_member_role": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
-        /**
-         * The user id.
-         * @minLength 1
-         */
+        /** The user id. */
         user_id: string;
-        /**
-         * The role id.
-         * @minLength 1
-         */
+        /** The role id. */
         role_id: string;
       };
       output: {
@@ -92,20 +65,11 @@ declare module "@oomol-lab/connector" {
     /** Add a reaction as the current bot user. */
     "discordbot.add_my_message_reaction": {
       input: {
-        /**
-         * The channel id.
-         * @minLength 1
-         */
+        /** The channel id. */
         channel_id: string;
-        /**
-         * The message id.
-         * @minLength 1
-         */
+        /** The message id. */
         message_id: string;
-        /**
-         * The emoji name.
-         * @minLength 1
-         */
+        /** The emoji name. */
         emoji_name: string;
       };
       output: {
@@ -116,15 +80,9 @@ declare module "@oomol-lab/connector" {
     /** Add a member to a thread. */
     "discordbot.add_thread_member": {
       input: {
-        /**
-         * The channel id.
-         * @minLength 1
-         */
+        /** The channel id. */
         channel_id: string;
-        /**
-         * The user id.
-         * @minLength 1
-         */
+        /** The user id. */
         user_id: string;
       };
       output: {
@@ -135,15 +93,9 @@ declare module "@oomol-lab/connector" {
     /** Ban a user from a guild. */
     "discordbot.ban_user_from_guild": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
-        /**
-         * The user id.
-         * @minLength 1
-         */
+        /** The user id. */
         user_id: string;
         /**
          * The number of days of messages to delete.
@@ -166,10 +118,7 @@ declare module "@oomol-lab/connector" {
     /** Bulk ban users from a guild. */
     "discordbot.bulk_ban_users_from_guild": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
         /**
          * The user ids to ban.
@@ -189,10 +138,7 @@ declare module "@oomol-lab/connector" {
     /** Bulk delete messages in a Discord channel. */
     "discordbot.bulk_delete_messages": {
       input: {
-        /**
-         * The channel id.
-         * @minLength 1
-         */
+        /** The channel id. */
         channel_id: string;
         /**
          * The message ids to delete.
@@ -209,10 +155,7 @@ declare module "@oomol-lab/connector" {
     /** Create a global application command. */
     "discordbot.create_application_command": {
       input: {
-        /**
-         * The application id.
-         * @minLength 1
-         */
+        /** The application id. */
         application_id: string;
         /**
          * The command name.
@@ -243,10 +186,7 @@ declare module "@oomol-lab/connector" {
     /** Create a guild auto moderation rule. */
     "discordbot.create_auto_moderation_rule": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
         /**
          * The rule name.
@@ -277,10 +217,7 @@ declare module "@oomol-lab/connector" {
     /** Create an invite for a Discord channel. */
     "discordbot.create_channel_invite": {
       input: {
-        /**
-         * The channel id.
-         * @minLength 1
-         */
+        /** The channel id. */
         channel_id: string;
         /**
          * The invite lifetime in seconds.
@@ -300,15 +237,9 @@ declare module "@oomol-lab/connector" {
         unique?: boolean;
         /** The optional target type. */
         target_type?: number;
-        /**
-         * The target user id.
-         * @minLength 1
-         */
+        /** The target user id. */
         target_user_id?: string;
-        /**
-         * The target application id.
-         * @minLength 1
-         */
+        /** The target application id. */
         target_application_id?: string;
       };
       output: Record<string, unknown>;
@@ -316,10 +247,7 @@ declare module "@oomol-lab/connector" {
     /** Create or fetch a DM channel with a recipient user. */
     "discordbot.create_dm": {
       input: {
-        /**
-         * The recipient user id.
-         * @minLength 1
-         */
+        /** The recipient user id. */
         recipient_id: string;
       };
       output: {
@@ -359,15 +287,9 @@ declare module "@oomol-lab/connector" {
     /** Create a guild-scoped application command. */
     "discordbot.create_guild_application_command": {
       input: {
-        /**
-         * The application id.
-         * @minLength 1
-         */
+        /** The application id. */
         application_id: string;
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
         /**
          * The command name.
@@ -398,10 +320,7 @@ declare module "@oomol-lab/connector" {
     /** Create a channel in a guild. */
     "discordbot.create_guild_channel": {
       input: {
-        /**
-         * The guild id. Optional when the connection is installed to a Discord guild.
-         * @minLength 1
-         */
+        /** The guild id. Optional when the connection is installed to a Discord guild. */
         guild_id?: string;
         /**
          * The channel name.
@@ -411,13 +330,20 @@ declare module "@oomol-lab/connector" {
         name: string;
         /** The channel type. */
         type?: number | null;
-        /** The channel topic. */
+        /**
+         * The channel topic.
+         * @maxLength 1024
+         */
         topic?: string | null;
         /** The bitrate. */
         bitrate?: number | null;
         /** The user limit. */
         user_limit?: number | null;
-        /** The slowmode delay in seconds. */
+        /**
+         * The slowmode delay in seconds.
+         * @minimum 0
+         * @maximum 21600
+         */
         rate_limit_per_user?: number | null;
         /** The channel position. */
         position?: number | null;
@@ -441,7 +367,11 @@ declare module "@oomol-lab/connector" {
         default_sort_order?: number | null;
         /** The default forum layout. */
         default_forum_layout?: number | null;
-        /** The default thread slowmode delay in seconds. */
+        /**
+         * The default thread slowmode delay in seconds.
+         * @minimum 0
+         * @maximum 21600
+         */
         default_thread_rate_limit_per_user?: number | null;
       };
       output: {
@@ -461,10 +391,7 @@ declare module "@oomol-lab/connector" {
     /** Create a guild emoji. */
     "discordbot.create_guild_emoji": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
         /**
          * The emoji name.
@@ -484,10 +411,7 @@ declare module "@oomol-lab/connector" {
     /** Create a guild from a template with the platform bot token. */
     "discordbot.create_guild_from_template": {
       input: {
-        /**
-         * The template code.
-         * @minLength 1
-         */
+        /** The template code. */
         code: string;
         /**
          * The guild name.
@@ -503,10 +427,7 @@ declare module "@oomol-lab/connector" {
     /** Create a role in a guild. */
     "discordbot.create_guild_role": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
         /**
          * The role name.
@@ -531,10 +452,7 @@ declare module "@oomol-lab/connector" {
     /** Create a guild scheduled event. */
     "discordbot.create_guild_scheduled_event": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
         /**
          * The scheduled event name.
@@ -566,10 +484,7 @@ declare module "@oomol-lab/connector" {
     /** Create a guild sticker from base64 file content. */
     "discordbot.create_guild_sticker": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
         /** The sticker file payload. */
         file: {
@@ -608,10 +523,7 @@ declare module "@oomol-lab/connector" {
     /** Create a template for a guild. */
     "discordbot.create_guild_template": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
         /**
          * The template name.
@@ -627,10 +539,7 @@ declare module "@oomol-lab/connector" {
     /** Create a Discord channel message with the platform bot token. */
     "discordbot.create_message": {
       input: {
-        /**
-         * The channel id.
-         * @minLength 1
-         */
+        /** The channel id. */
         channel_id: string;
         /**
          * The message content.
@@ -654,6 +563,7 @@ declare module "@oomol-lab/connector" {
         sticker_ids?: Array<string>;
         /** The attachment metadata to include. */
         attachments?: Array<Record<string, unknown>>;
+        /** The allowed mentions configuration for a Discord message. */
         allowed_mentions?: {
           /**
            * The mention targets to parse automatically.
@@ -668,21 +578,13 @@ declare module "@oomol-lab/connector" {
           replied_user?: boolean;
           [key: string]: unknown;
         };
+        /** A Discord message reference. */
         message_reference?: {
-          /**
-           * The referenced message id.
-           * @minLength 1
-           */
+          /** The referenced message id. */
           message_id?: string;
-          /**
-           * The referenced channel id.
-           * @minLength 1
-           */
+          /** The referenced channel id. */
           channel_id?: string;
-          /**
-           * The referenced guild id.
-           * @minLength 1
-           */
+          /** The referenced guild id. */
           guild_id?: string;
           /** Whether the request should fail if the reference does not exist. */
           fail_if_not_exists?: boolean;
@@ -716,10 +618,7 @@ declare module "@oomol-lab/connector" {
     /** Create a thread in a Discord channel. */
     "discordbot.create_thread": {
       input: {
-        /**
-         * The channel id.
-         * @minLength 1
-         */
+        /** The channel id. */
         channel_id: string;
         /**
          * The thread name.
@@ -733,7 +632,11 @@ declare module "@oomol-lab/connector" {
         type?: number;
         /** Whether non-moderators can invite other users. */
         invitable?: boolean;
-        /** The slowmode delay in seconds. */
+        /**
+         * The slowmode delay in seconds.
+         * @minimum 0
+         * @maximum 21600
+         */
         rate_limit_per_user?: number | null;
         /** The applied forum tag ids. */
         applied_tags?: Array<string>;
@@ -757,15 +660,9 @@ declare module "@oomol-lab/connector" {
     /** Create a thread from a Discord message. */
     "discordbot.create_thread_from_message": {
       input: {
-        /**
-         * The channel id.
-         * @minLength 1
-         */
+        /** The channel id. */
         channel_id: string;
-        /**
-         * The message id.
-         * @minLength 1
-         */
+        /** The message id. */
         message_id: string;
         /**
          * The thread name.
@@ -775,7 +672,11 @@ declare module "@oomol-lab/connector" {
         name: string;
         /** The auto-archive duration. */
         auto_archive_duration?: number;
-        /** The slowmode delay in seconds. */
+        /**
+         * The slowmode delay in seconds.
+         * @minimum 0
+         * @maximum 21600
+         */
         rate_limit_per_user?: number | null;
       };
       output: {
@@ -795,15 +696,9 @@ declare module "@oomol-lab/connector" {
     /** Crosspost a message in an announcement channel. */
     "discordbot.crosspost_message": {
       input: {
-        /**
-         * The channel id.
-         * @minLength 1
-         */
+        /** The channel id. */
         channel_id: string;
-        /**
-         * The message id.
-         * @minLength 1
-         */
+        /** The message id. */
         message_id: string;
       };
       output: {
@@ -819,15 +714,9 @@ declare module "@oomol-lab/connector" {
     /** Delete all reactions on a message. */
     "discordbot.delete_all_message_reactions": {
       input: {
-        /**
-         * The channel id.
-         * @minLength 1
-         */
+        /** The channel id. */
         channel_id: string;
-        /**
-         * The message id.
-         * @minLength 1
-         */
+        /** The message id. */
         message_id: string;
       };
       output: {
@@ -838,20 +727,11 @@ declare module "@oomol-lab/connector" {
     /** Delete all reactions for a specific emoji on a message. */
     "discordbot.delete_all_message_reactions_by_emoji": {
       input: {
-        /**
-         * The channel id.
-         * @minLength 1
-         */
+        /** The channel id. */
         channel_id: string;
-        /**
-         * The message id.
-         * @minLength 1
-         */
+        /** The message id. */
         message_id: string;
-        /**
-         * The emoji name.
-         * @minLength 1
-         */
+        /** The emoji name. */
         emoji_name: string;
       };
       output: {
@@ -862,15 +742,9 @@ declare module "@oomol-lab/connector" {
     /** Delete a global application command. */
     "discordbot.delete_application_command": {
       input: {
-        /**
-         * The application id.
-         * @minLength 1
-         */
+        /** The application id. */
         application_id: string;
-        /**
-         * The command id.
-         * @minLength 1
-         */
+        /** The command id. */
         command_id: string;
       };
       output: {
@@ -881,15 +755,9 @@ declare module "@oomol-lab/connector" {
     /** Delete an auto moderation rule. */
     "discordbot.delete_auto_moderation_rule": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
-        /**
-         * The rule id.
-         * @minLength 1
-         */
+        /** The rule id. */
         rule_id: string;
       };
       output: {
@@ -900,10 +768,7 @@ declare module "@oomol-lab/connector" {
     /** Delete a channel. */
     "discordbot.delete_channel": {
       input: {
-        /**
-         * The channel id.
-         * @minLength 1
-         */
+        /** The channel id. */
         channel_id: string;
       };
       output: {
@@ -923,15 +788,9 @@ declare module "@oomol-lab/connector" {
     /** Delete a channel permission overwrite. */
     "discordbot.delete_channel_permission_overwrite": {
       input: {
-        /**
-         * The channel id.
-         * @minLength 1
-         */
+        /** The channel id. */
         channel_id: string;
-        /**
-         * The overwrite id.
-         * @minLength 1
-         */
+        /** The overwrite id. */
         overwrite_id: string;
       };
       output: {
@@ -942,15 +801,9 @@ declare module "@oomol-lab/connector" {
     /** Remove a recipient from a group DM channel. */
     "discordbot.delete_group_dm_user": {
       input: {
-        /**
-         * The group DM channel id.
-         * @minLength 1
-         */
+        /** The group DM channel id. */
         channel_id: string;
-        /**
-         * The user id.
-         * @minLength 1
-         */
+        /** The user id. */
         user_id: string;
       };
       output: {
@@ -961,10 +814,7 @@ declare module "@oomol-lab/connector" {
     /** Delete a guild owned by the platform bot. */
     "discordbot.delete_guild": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
       };
       output: {
@@ -975,20 +825,11 @@ declare module "@oomol-lab/connector" {
     /** Delete a guild-scoped application command. */
     "discordbot.delete_guild_application_command": {
       input: {
-        /**
-         * The application id.
-         * @minLength 1
-         */
+        /** The application id. */
         application_id: string;
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
-        /**
-         * The command id.
-         * @minLength 1
-         */
+        /** The command id. */
         command_id: string;
       };
       output: {
@@ -999,15 +840,9 @@ declare module "@oomol-lab/connector" {
     /** Delete a guild emoji. */
     "discordbot.delete_guild_emoji": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
-        /**
-         * The emoji id.
-         * @minLength 1
-         */
+        /** The emoji id. */
         emoji_id: string;
       };
       output: {
@@ -1018,15 +853,9 @@ declare module "@oomol-lab/connector" {
     /** Delete a guild integration. */
     "discordbot.delete_guild_integration": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
-        /**
-         * The integration id.
-         * @minLength 1
-         */
+        /** The integration id. */
         integration_id: string;
         /**
          * The optional audit log reason.
@@ -1043,15 +872,9 @@ declare module "@oomol-lab/connector" {
     /** Delete a user from a guild. */
     "discordbot.delete_guild_member": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
-        /**
-         * The user id.
-         * @minLength 1
-         */
+        /** The user id. */
         user_id: string;
       };
       output: {
@@ -1062,20 +885,11 @@ declare module "@oomol-lab/connector" {
     /** Delete a role from a guild member. */
     "discordbot.delete_guild_member_role": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
-        /**
-         * The user id.
-         * @minLength 1
-         */
+        /** The user id. */
         user_id: string;
-        /**
-         * The role id.
-         * @minLength 1
-         */
+        /** The role id. */
         role_id: string;
       };
       output: {
@@ -1086,15 +900,9 @@ declare module "@oomol-lab/connector" {
     /** Delete a guild role. */
     "discordbot.delete_guild_role": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
-        /**
-         * The role id.
-         * @minLength 1
-         */
+        /** The role id. */
         role_id: string;
       };
       output: {
@@ -1105,15 +913,9 @@ declare module "@oomol-lab/connector" {
     /** Delete a guild scheduled event. */
     "discordbot.delete_guild_scheduled_event": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
-        /**
-         * The scheduled event id.
-         * @minLength 1
-         */
+        /** The scheduled event id. */
         guild_scheduled_event_id: string;
       };
       output: {
@@ -1124,15 +926,9 @@ declare module "@oomol-lab/connector" {
     /** Delete a guild sticker. */
     "discordbot.delete_guild_sticker": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
-        /**
-         * The sticker id.
-         * @minLength 1
-         */
+        /** The sticker id. */
         sticker_id: string;
       };
       output: {
@@ -1143,15 +939,9 @@ declare module "@oomol-lab/connector" {
     /** Delete a guild template. */
     "discordbot.delete_guild_template": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
-        /**
-         * The template code.
-         * @minLength 1
-         */
+        /** The template code. */
         code: string;
       };
       output: Record<string, unknown>;
@@ -1159,15 +949,9 @@ declare module "@oomol-lab/connector" {
     /** Delete a message in a Discord channel. */
     "discordbot.delete_message": {
       input: {
-        /**
-         * The channel id.
-         * @minLength 1
-         */
+        /** The channel id. */
         channel_id: string;
-        /**
-         * The message id.
-         * @minLength 1
-         */
+        /** The message id. */
         message_id: string;
       };
       output: {
@@ -1178,20 +962,11 @@ declare module "@oomol-lab/connector" {
     /** Delete the current bot user's reaction on a message. */
     "discordbot.delete_my_message_reaction": {
       input: {
-        /**
-         * The channel id.
-         * @minLength 1
-         */
+        /** The channel id. */
         channel_id: string;
-        /**
-         * The message id.
-         * @minLength 1
-         */
+        /** The message id. */
         message_id: string;
-        /**
-         * The emoji name.
-         * @minLength 1
-         */
+        /** The emoji name. */
         emoji_name: string;
       };
       output: {
@@ -1202,15 +977,9 @@ declare module "@oomol-lab/connector" {
     /** Delete a member from a thread. */
     "discordbot.delete_thread_member": {
       input: {
-        /**
-         * The channel id.
-         * @minLength 1
-         */
+        /** The channel id. */
         channel_id: string;
-        /**
-         * The user id.
-         * @minLength 1
-         */
+        /** The user id. */
         user_id: string;
       };
       output: {
@@ -1221,25 +990,13 @@ declare module "@oomol-lab/connector" {
     /** Delete another user's reaction on a message. */
     "discordbot.delete_user_message_reaction": {
       input: {
-        /**
-         * The channel id.
-         * @minLength 1
-         */
+        /** The channel id. */
         channel_id: string;
-        /**
-         * The message id.
-         * @minLength 1
-         */
+        /** The message id. */
         message_id: string;
-        /**
-         * The emoji name.
-         * @minLength 1
-         */
+        /** The emoji name. */
         emoji_name: string;
-        /**
-         * The user id.
-         * @minLength 1
-         */
+        /** The user id. */
         user_id: string;
       };
       output: {
@@ -1250,15 +1007,9 @@ declare module "@oomol-lab/connector" {
     /** Follow an announcement channel into a target channel. */
     "discordbot.follow_channel": {
       input: {
-        /**
-         * The source channel id.
-         * @minLength 1
-         */
+        /** The source channel id. */
         channel_id: string;
-        /**
-         * The destination webhook channel id.
-         * @minLength 1
-         */
+        /** The destination webhook channel id. */
         webhook_channel_id: string;
       };
       output: Record<string, unknown>;
@@ -1266,10 +1017,7 @@ declare module "@oomol-lab/connector" {
     /** Get active threads for a guild. */
     "discordbot.get_active_guild_threads": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
       };
       output: Record<string, unknown>;
@@ -1277,10 +1025,7 @@ declare module "@oomol-lab/connector" {
     /** Get an application by id. */
     "discordbot.get_application": {
       input: {
-        /**
-         * The application id.
-         * @minLength 1
-         */
+        /** The application id. */
         application_id: string;
       };
       output: Record<string, unknown>;
@@ -1288,15 +1033,9 @@ declare module "@oomol-lab/connector" {
     /** Get a global application command. */
     "discordbot.get_application_command": {
       input: {
-        /**
-         * The application id.
-         * @minLength 1
-         */
+        /** The application id. */
         application_id: string;
-        /**
-         * The command id.
-         * @minLength 1
-         */
+        /** The command id. */
         command_id: string;
       };
       output: Record<string, unknown>;
@@ -1304,10 +1043,7 @@ declare module "@oomol-lab/connector" {
     /** Get application role connection metadata. */
     "discordbot.get_application_role_connections_metadata": {
       input: {
-        /**
-         * The application id.
-         * @minLength 1
-         */
+        /** The application id. */
         application_id: string;
       };
       output: Array<Record<string, unknown>>;
@@ -1315,10 +1051,7 @@ declare module "@oomol-lab/connector" {
     /** Get the current user's application role connection. */
     "discordbot.get_application_user_role_connection": {
       input: {
-        /**
-         * The application id.
-         * @minLength 1
-         */
+        /** The application id. */
         application_id: string;
       };
       output: Record<string, unknown>;
@@ -1326,15 +1059,9 @@ declare module "@oomol-lab/connector" {
     /** Get an auto moderation rule. */
     "discordbot.get_auto_moderation_rule": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
-        /**
-         * The rule id.
-         * @minLength 1
-         */
+        /** The rule id. */
         rule_id: string;
       };
       output: Record<string, unknown>;
@@ -1363,10 +1090,7 @@ declare module "@oomol-lab/connector" {
     /** Get a channel by id. */
     "discordbot.get_channel": {
       input: {
-        /**
-         * The channel id.
-         * @minLength 1
-         */
+        /** The channel id. */
         channel_id: string;
       };
       output: {
@@ -1394,10 +1118,7 @@ declare module "@oomol-lab/connector" {
     /** Get a guild by id using the platform bot token. */
     "discordbot.get_guild": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
         /** Whether to include approximate counts. */
         with_counts?: boolean;
@@ -1407,20 +1128,11 @@ declare module "@oomol-lab/connector" {
     /** Get a guild-scoped application command. */
     "discordbot.get_guild_application_command": {
       input: {
-        /**
-         * The application id.
-         * @minLength 1
-         */
+        /** The application id. */
         application_id: string;
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
-        /**
-         * The command id.
-         * @minLength 1
-         */
+        /** The command id. */
         command_id: string;
       };
       output: Record<string, unknown>;
@@ -1428,20 +1140,11 @@ declare module "@oomol-lab/connector" {
     /** Get guild application command permissions. */
     "discordbot.get_guild_application_command_permissions": {
       input: {
-        /**
-         * The application id.
-         * @minLength 1
-         */
+        /** The application id. */
         application_id: string;
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
-        /**
-         * The command id.
-         * @minLength 1
-         */
+        /** The command id. */
         command_id: string;
       };
       output: Record<string, unknown>;
@@ -1449,15 +1152,9 @@ declare module "@oomol-lab/connector" {
     /** Get a specific guild ban by user id. */
     "discordbot.get_guild_ban": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
-        /**
-         * The user id.
-         * @minLength 1
-         */
+        /** The user id. */
         user_id: string;
       };
       output: Record<string, unknown>;
@@ -1465,15 +1162,9 @@ declare module "@oomol-lab/connector" {
     /** Get a guild emoji by id. */
     "discordbot.get_guild_emoji": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
-        /**
-         * The emoji id.
-         * @minLength 1
-         */
+        /** The emoji id. */
         emoji_id: string;
       };
       output: Record<string, unknown>;
@@ -1481,15 +1172,9 @@ declare module "@oomol-lab/connector" {
     /** Get a guild member by guild id and user id. */
     "discordbot.get_guild_member": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
-        /**
-         * The user id.
-         * @minLength 1
-         */
+        /** The user id. */
         user_id: string;
       };
       output: Record<string, unknown>;
@@ -1497,10 +1182,7 @@ declare module "@oomol-lab/connector" {
     /** Get the preview for a discoverable guild. */
     "discordbot.get_guild_preview": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
       };
       output: Record<string, unknown>;
@@ -1508,15 +1190,9 @@ declare module "@oomol-lab/connector" {
     /** Get a guild scheduled event. */
     "discordbot.get_guild_scheduled_event": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
-        /**
-         * The scheduled event id.
-         * @minLength 1
-         */
+        /** The scheduled event id. */
         guild_scheduled_event_id: string;
         /** Whether to include user counts. */
         with_user_count?: boolean;
@@ -1526,15 +1202,9 @@ declare module "@oomol-lab/connector" {
     /** Get a guild sticker by id. */
     "discordbot.get_guild_sticker": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
-        /**
-         * The sticker id.
-         * @minLength 1
-         */
+        /** The sticker id. */
         sticker_id: string;
       };
       output: Record<string, unknown>;
@@ -1542,10 +1212,7 @@ declare module "@oomol-lab/connector" {
     /** Get a guild template by code. */
     "discordbot.get_guild_template": {
       input: {
-        /**
-         * The template code.
-         * @minLength 1
-         */
+        /** The template code. */
         code: string;
       };
       output: Record<string, unknown>;
@@ -1553,10 +1220,7 @@ declare module "@oomol-lab/connector" {
     /** Get the vanity invite for a guild. */
     "discordbot.get_guild_vanity_url": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
       };
       output: Record<string, unknown>;
@@ -1564,10 +1228,7 @@ declare module "@oomol-lab/connector" {
     /** Get a guild welcome screen. */
     "discordbot.get_guild_welcome_screen": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
       };
       output: Record<string, unknown>;
@@ -1575,10 +1236,7 @@ declare module "@oomol-lab/connector" {
     /** Get the public guild widget JSON. */
     "discordbot.get_guild_widget": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
       };
       output: Record<string, unknown>;
@@ -1586,10 +1244,7 @@ declare module "@oomol-lab/connector" {
     /** Get the public guild widget PNG. */
     "discordbot.get_guild_widget_png": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
         /**
          * The widget style.
@@ -1611,10 +1266,7 @@ declare module "@oomol-lab/connector" {
     /** Get guild widget settings. */
     "discordbot.get_guild_widget_settings": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
       };
       output: Record<string, unknown>;
@@ -1622,10 +1274,7 @@ declare module "@oomol-lab/connector" {
     /** Get guild onboarding configuration. */
     "discordbot.get_guilds_onboarding": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
       };
       output: Record<string, unknown>;
@@ -1633,15 +1282,9 @@ declare module "@oomol-lab/connector" {
     /** Get a message by channel id and message id. */
     "discordbot.get_message": {
       input: {
-        /**
-         * The channel id.
-         * @minLength 1
-         */
+        /** The channel id. */
         channel_id: string;
-        /**
-         * The message id.
-         * @minLength 1
-         */
+        /** The message id. */
         message_id: string;
       };
       output: {
@@ -1691,10 +1334,7 @@ declare module "@oomol-lab/connector" {
     /** Get a sticker by id. */
     "discordbot.get_sticker": {
       input: {
-        /**
-         * The sticker id.
-         * @minLength 1
-         */
+        /** The sticker id. */
         sticker_id: string;
       };
       output: Record<string, unknown>;
@@ -1702,15 +1342,9 @@ declare module "@oomol-lab/connector" {
     /** Get a thread member by user id. */
     "discordbot.get_thread_member": {
       input: {
-        /**
-         * The channel id.
-         * @minLength 1
-         */
+        /** The channel id. */
         channel_id: string;
-        /**
-         * The user id.
-         * @minLength 1
-         */
+        /** The user id. */
         user_id: string;
         /** Whether to include the member payload. */
         with_member?: boolean;
@@ -1720,10 +1354,7 @@ declare module "@oomol-lab/connector" {
     /** Get a user by id. */
     "discordbot.get_user": {
       input: {
-        /**
-         * The user id.
-         * @minLength 1
-         */
+        /** The user id. */
         user_id: string;
       };
       output: Record<string, unknown>;
@@ -1731,17 +1362,11 @@ declare module "@oomol-lab/connector" {
     /** Resolve a guild or channel invite by code. */
     "discordbot.invite_resolve": {
       input: {
-        /**
-         * The invite code.
-         * @minLength 1
-         */
+        /** The invite code. */
         code: string;
         /** Whether to include counts. */
         with_counts?: boolean;
-        /**
-         * The guild scheduled event id.
-         * @minLength 1
-         */
+        /** The guild scheduled event id. */
         guild_scheduled_event_id?: string;
       };
       output: Record<string, unknown>;
@@ -1749,10 +1374,7 @@ declare module "@oomol-lab/connector" {
     /** Revoke an invite by code. */
     "discordbot.invite_revoke": {
       input: {
-        /**
-         * The invite code.
-         * @minLength 1
-         */
+        /** The invite code. */
         code: string;
       };
       output: Record<string, unknown>;
@@ -1760,10 +1382,7 @@ declare module "@oomol-lab/connector" {
     /** Join a thread as the current bot user. */
     "discordbot.join_thread": {
       input: {
-        /**
-         * The channel id.
-         * @minLength 1
-         */
+        /** The channel id. */
         channel_id: string;
       };
       output: {
@@ -1774,10 +1393,7 @@ declare module "@oomol-lab/connector" {
     /** Leave a guild as the current bot user. */
     "discordbot.leave_guild": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
       };
       output: {
@@ -1788,10 +1404,7 @@ declare module "@oomol-lab/connector" {
     /** Leave a thread as the current bot user. */
     "discordbot.leave_thread": {
       input: {
-        /**
-         * The channel id.
-         * @minLength 1
-         */
+        /** The channel id. */
         channel_id: string;
       };
       output: {
@@ -1802,10 +1415,7 @@ declare module "@oomol-lab/connector" {
     /** List global application commands. */
     "discordbot.list_application_commands": {
       input: {
-        /**
-         * The application id.
-         * @minLength 1
-         */
+        /** The application id. */
         application_id: string;
         /** Whether to include localizations. */
         with_localizations?: boolean;
@@ -1818,10 +1428,7 @@ declare module "@oomol-lab/connector" {
     /** List auto moderation rules for a guild. */
     "discordbot.list_auto_moderation_rules": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
       };
       output: {
@@ -1832,10 +1439,7 @@ declare module "@oomol-lab/connector" {
     /** List invites for a channel. */
     "discordbot.list_channel_invites": {
       input: {
-        /**
-         * The channel id.
-         * @minLength 1
-         */
+        /** The channel id. */
         channel_id: string;
       };
       output: {
@@ -1846,15 +1450,9 @@ declare module "@oomol-lab/connector" {
     /** List guild application command permissions. */
     "discordbot.list_guild_application_command_permissions": {
       input: {
-        /**
-         * The application id.
-         * @minLength 1
-         */
+        /** The application id. */
         application_id: string;
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
       };
       output: {
@@ -1865,15 +1463,9 @@ declare module "@oomol-lab/connector" {
     /** List guild-scoped application commands. */
     "discordbot.list_guild_application_commands": {
       input: {
-        /**
-         * The application id.
-         * @minLength 1
-         */
+        /** The application id. */
         application_id: string;
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
         /** Whether to include localizations. */
         with_localizations?: boolean;
@@ -1886,32 +1478,17 @@ declare module "@oomol-lab/connector" {
     /** List audit log entries for a guild. */
     "discordbot.list_guild_audit_log_entries": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
-        /**
-         * The user id filter.
-         * @minLength 1
-         */
+        /** The user id filter. */
         user_id?: string;
-        /**
-         * The target id filter.
-         * @minLength 1
-         */
+        /** The target id filter. */
         target_id?: string;
         /** The audit log action type filter. */
         action_type?: number;
-        /**
-         * The entry id to start before.
-         * @minLength 1
-         */
+        /** The entry id to start before. */
         before?: string;
-        /**
-         * The entry id to start after.
-         * @minLength 1
-         */
+        /** The entry id to start after. */
         after?: string;
         /**
          * The maximum number of entries to return.
@@ -1925,20 +1502,11 @@ declare module "@oomol-lab/connector" {
     /** List bans for a guild. */
     "discordbot.list_guild_bans": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
-        /**
-         * The ban id to start before.
-         * @minLength 1
-         */
+        /** The ban id to start before. */
         before?: string;
-        /**
-         * The ban id to start after.
-         * @minLength 1
-         */
+        /** The ban id to start after. */
         after?: string;
         /**
          * The maximum number of bans to return.
@@ -1955,10 +1523,7 @@ declare module "@oomol-lab/connector" {
     /** List channels in a guild. */
     "discordbot.list_guild_channels": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
       };
       output: {
@@ -1979,10 +1544,7 @@ declare module "@oomol-lab/connector" {
     /** List emojis for a guild. */
     "discordbot.list_guild_emojis": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
       };
       output: {
@@ -1993,10 +1555,7 @@ declare module "@oomol-lab/connector" {
     /** List guild integrations. */
     "discordbot.list_guild_integrations": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
       };
       output: {
@@ -2007,10 +1566,7 @@ declare module "@oomol-lab/connector" {
     /** List invites for a guild. */
     "discordbot.list_guild_invites": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
       };
       output: {
@@ -2021,10 +1577,7 @@ declare module "@oomol-lab/connector" {
     /** List guild members. */
     "discordbot.list_guild_members": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
         /**
          * The maximum number of members to return.
@@ -2032,10 +1585,7 @@ declare module "@oomol-lab/connector" {
          * @maximum 1000
          */
         limit?: number;
-        /**
-         * The member id to start after.
-         * @minLength 1
-         */
+        /** The member id to start after. */
         after?: string;
       };
       output: {
@@ -2046,10 +1596,7 @@ declare module "@oomol-lab/connector" {
     /** List roles in a guild. */
     "discordbot.list_guild_roles": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
       };
       output: {
@@ -2060,27 +1607,15 @@ declare module "@oomol-lab/connector" {
     /** List users for a guild scheduled event. */
     "discordbot.list_guild_scheduled_event_users": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
-        /**
-         * The scheduled event id.
-         * @minLength 1
-         */
+        /** The scheduled event id. */
         guild_scheduled_event_id: string;
         /** Whether to include member payloads. */
         with_member?: boolean;
-        /**
-         * The user id to start before.
-         * @minLength 1
-         */
+        /** The user id to start before. */
         before?: string;
-        /**
-         * The user id to start after.
-         * @minLength 1
-         */
+        /** The user id to start after. */
         after?: string;
         /**
          * The maximum number of users to return.
@@ -2097,10 +1632,7 @@ declare module "@oomol-lab/connector" {
     /** List scheduled events for a guild. */
     "discordbot.list_guild_scheduled_events": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
         /** Whether to include user counts. */
         with_user_count?: boolean;
@@ -2113,10 +1645,7 @@ declare module "@oomol-lab/connector" {
     /** List stickers for a guild. */
     "discordbot.list_guild_stickers": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
       };
       output: {
@@ -2127,10 +1656,7 @@ declare module "@oomol-lab/connector" {
     /** List templates for a guild. */
     "discordbot.list_guild_templates": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
       };
       output: {
@@ -2141,10 +1667,7 @@ declare module "@oomol-lab/connector" {
     /** List voice regions for a guild. */
     "discordbot.list_guild_voice_regions": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
       };
       output: {
@@ -2155,25 +1678,13 @@ declare module "@oomol-lab/connector" {
     /** List users who reacted to a message with a specific emoji. */
     "discordbot.list_message_reactions_by_emoji": {
       input: {
-        /**
-         * The channel id.
-         * @minLength 1
-         */
+        /** The channel id. */
         channel_id: string;
-        /**
-         * The message id.
-         * @minLength 1
-         */
+        /** The message id. */
         message_id: string;
-        /**
-         * The emoji name.
-         * @minLength 1
-         */
+        /** The emoji name. */
         emoji_name: string;
-        /**
-         * The user id to start listing after.
-         * @minLength 1
-         */
+        /** The user id to start listing after. */
         after?: string;
         /**
          * The maximum number of users to return.
@@ -2190,25 +1701,13 @@ declare module "@oomol-lab/connector" {
     /** List messages in a channel. */
     "discordbot.list_messages": {
       input: {
-        /**
-         * The channel id.
-         * @minLength 1
-         */
+        /** The channel id. */
         channel_id: string;
-        /**
-         * The message id to anchor around.
-         * @minLength 1
-         */
+        /** The message id to anchor around. */
         around?: string;
-        /**
-         * The message id to fetch messages before.
-         * @minLength 1
-         */
+        /** The message id to fetch messages before. */
         before?: string;
-        /**
-         * The message id to fetch messages after.
-         * @minLength 1
-         */
+        /** The message id to fetch messages after. */
         after?: string;
         /**
          * The maximum number of messages to return.
@@ -2233,10 +1732,7 @@ declare module "@oomol-lab/connector" {
     /** List private archived threads joined by the current bot user. */
     "discordbot.list_my_private_archived_threads": {
       input: {
-        /**
-         * The channel id.
-         * @minLength 1
-         */
+        /** The channel id. */
         channel_id: string;
         /** The thread id to start before. */
         before?: string;
@@ -2252,10 +1748,7 @@ declare module "@oomol-lab/connector" {
     /** List pinned messages in a channel. */
     "discordbot.list_pinned_messages": {
       input: {
-        /**
-         * The channel id.
-         * @minLength 1
-         */
+        /** The channel id. */
         channel_id: string;
       };
       output: {
@@ -2274,10 +1767,7 @@ declare module "@oomol-lab/connector" {
     /** List private archived threads in a channel. */
     "discordbot.list_private_archived_threads": {
       input: {
-        /**
-         * The channel id.
-         * @minLength 1
-         */
+        /** The channel id. */
         channel_id: string;
         /** The thread id to start before. */
         before?: string;
@@ -2293,10 +1783,7 @@ declare module "@oomol-lab/connector" {
     /** List public archived threads in a channel. */
     "discordbot.list_public_archived_threads": {
       input: {
-        /**
-         * The channel id.
-         * @minLength 1
-         */
+        /** The channel id. */
         channel_id: string;
         /** The thread id to start before. */
         before?: string;
@@ -2317,17 +1804,11 @@ declare module "@oomol-lab/connector" {
     /** List thread members. */
     "discordbot.list_thread_members": {
       input: {
-        /**
-         * The channel id.
-         * @minLength 1
-         */
+        /** The channel id. */
         channel_id: string;
         /** Whether to include member payloads. */
         with_member?: boolean;
-        /**
-         * The member id to start after.
-         * @minLength 1
-         */
+        /** The member id to start after. */
         after?: string;
         /**
          * The maximum number of thread members to return.
@@ -2352,15 +1833,9 @@ declare module "@oomol-lab/connector" {
     /** Pin a message in a channel. */
     "discordbot.pin_message": {
       input: {
-        /**
-         * The channel id.
-         * @minLength 1
-         */
+        /** The channel id. */
         channel_id: string;
-        /**
-         * The message id.
-         * @minLength 1
-         */
+        /** The message id. */
         message_id: string;
       };
       output: {
@@ -2371,10 +1846,7 @@ declare module "@oomol-lab/connector" {
     /** Preview how many members would be pruned from a guild. */
     "discordbot.preview_prune_guild": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
         /**
          * The inactivity window in days.
@@ -2390,10 +1862,7 @@ declare module "@oomol-lab/connector" {
     /** Prune inactive members from a guild. */
     "discordbot.prune_guild": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
         /**
          * The inactivity window in days.
@@ -2411,10 +1880,7 @@ declare module "@oomol-lab/connector" {
     /** Update guild onboarding configuration. */
     "discordbot.put_guilds_onboarding": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
         /** The onboarding mode. */
         mode?: number;
@@ -2430,10 +1896,7 @@ declare module "@oomol-lab/connector" {
     /** Search guild members by query. */
     "discordbot.search_guild_members": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
         /**
          * The search query.
@@ -2455,15 +1918,9 @@ declare module "@oomol-lab/connector" {
     /** Create or update a channel permission overwrite. */
     "discordbot.set_channel_permission_overwrite": {
       input: {
-        /**
-         * The channel id.
-         * @minLength 1
-         */
+        /** The channel id. */
         channel_id: string;
-        /**
-         * The overwrite id.
-         * @minLength 1
-         */
+        /** The overwrite id. */
         overwrite_id: string;
         /**
          * The overwrite target type.
@@ -2484,15 +1941,9 @@ declare module "@oomol-lab/connector" {
     /** Sync a guild template with the current guild state. */
     "discordbot.sync_guild_template": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
-        /**
-         * The template code.
-         * @minLength 1
-         */
+        /** The template code. */
         code: string;
       };
       output: Record<string, unknown>;
@@ -2513,10 +1964,7 @@ declare module "@oomol-lab/connector" {
     /** Trigger the typing indicator in a channel. */
     "discordbot.trigger_typing_indicator": {
       input: {
-        /**
-         * The channel id.
-         * @minLength 1
-         */
+        /** The channel id. */
         channel_id: string;
       };
       output: {
@@ -2527,15 +1975,9 @@ declare module "@oomol-lab/connector" {
     /** Remove a guild ban for a user. */
     "discordbot.unban_user_from_guild": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
-        /**
-         * The user id.
-         * @minLength 1
-         */
+        /** The user id. */
         user_id: string;
         /**
          * The optional audit log reason.
@@ -2552,15 +1994,9 @@ declare module "@oomol-lab/connector" {
     /** Unpin a message in a channel. */
     "discordbot.unpin_message": {
       input: {
-        /**
-         * The channel id.
-         * @minLength 1
-         */
+        /** The channel id. */
         channel_id: string;
-        /**
-         * The message id.
-         * @minLength 1
-         */
+        /** The message id. */
         message_id: string;
       };
       output: {
@@ -2571,15 +2007,9 @@ declare module "@oomol-lab/connector" {
     /** Update a global application command. */
     "discordbot.update_application_command": {
       input: {
-        /**
-         * The application id.
-         * @minLength 1
-         */
+        /** The application id. */
         application_id: string;
-        /**
-         * The command id.
-         * @minLength 1
-         */
+        /** The command id. */
         command_id: string;
         /**
          * The command name.
@@ -2608,10 +2038,7 @@ declare module "@oomol-lab/connector" {
     /** Update the current user's application role connection. */
     "discordbot.update_application_user_role_connection": {
       input: {
-        /**
-         * The application id.
-         * @minLength 1
-         */
+        /** The application id. */
         application_id: string;
         /**
          * The platform name.
@@ -2631,15 +2058,9 @@ declare module "@oomol-lab/connector" {
     /** Update an auto moderation rule. */
     "discordbot.update_auto_moderation_rule": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
-        /**
-         * The rule id.
-         * @minLength 1
-         */
+        /** The rule id. */
         rule_id: string;
         /**
          * The rule name.
@@ -2670,10 +2091,7 @@ declare module "@oomol-lab/connector" {
     /** Update settings for an existing channel. */
     "discordbot.update_channel": {
       input: {
-        /**
-         * The channel id.
-         * @minLength 1
-         */
+        /** The channel id. */
         channel_id: string;
         /**
          * The channel name.
@@ -2685,11 +2103,18 @@ declare module "@oomol-lab/connector" {
         type?: number;
         /** The channel position. */
         position?: number | null;
-        /** The channel topic. */
+        /**
+         * The channel topic.
+         * @maxLength 4096
+         */
         topic?: string | null;
         /** Whether the channel is NSFW. */
         nsfw?: boolean | null;
-        /** The slowmode delay in seconds. */
+        /**
+         * The slowmode delay in seconds.
+         * @minimum 0
+         * @maximum 21600
+         */
         rate_limit_per_user?: number | null;
         /** The bitrate. */
         bitrate?: number | null;
@@ -2697,10 +2122,7 @@ declare module "@oomol-lab/connector" {
         user_limit?: number | null;
         /** The permission overwrites. */
         permission_overwrites?: Array<{
-          /**
-           * The target id.
-           * @minLength 1
-           */
+          /** The target id. */
           id: string;
           /** The overwrite target type. */
           type: number;
@@ -2712,7 +2134,10 @@ declare module "@oomol-lab/connector" {
         }> | null;
         /** The parent channel id. */
         parent_id?: string | null;
-        /** The RTC region. */
+        /**
+         * The RTC region.
+         * @minLength 1
+         */
         rtc_region?: string | null;
         /** The video quality mode. */
         video_quality_mode?: number;
@@ -2722,10 +2147,7 @@ declare module "@oomol-lab/connector" {
         flags?: number;
         /** The available forum tags. */
         available_tags?: Array<{
-          /**
-           * The tag id.
-           * @minLength 1
-           */
+          /** The tag id. */
           id?: string;
           /**
            * The tag name.
@@ -2737,16 +2159,16 @@ declare module "@oomol-lab/connector" {
           moderated?: boolean;
           /** The optional emoji id. */
           emoji_id?: string | null;
-          /** The optional emoji name. */
+          /**
+           * The optional emoji name.
+           * @minLength 1
+           */
           emoji_name?: string | null;
           [key: string]: unknown;
         }>;
         /** The default reaction emoji payload. */
         default_reaction_emoji?: {
-          /**
-           * The optional emoji id.
-           * @minLength 1
-           */
+          /** The optional emoji id. */
           emoji_id?: string;
           /**
            * The optional emoji name.
@@ -2783,10 +2205,7 @@ declare module "@oomol-lab/connector" {
     /** Update guild settings. */
     "discordbot.update_guild": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
         /** The guild icon. */
         icon?: string;
@@ -2804,10 +2223,7 @@ declare module "@oomol-lab/connector" {
         splash?: string;
         /** The guild feature flags. */
         features?: Array<string>;
-        /**
-         * The guild owner id.
-         * @minLength 1
-         */
+        /** The guild owner id. */
         owner_id?: string;
         /** The AFK timeout in seconds. */
         afk_timeout?: number;
@@ -2815,24 +2231,15 @@ declare module "@oomol-lab/connector" {
         description?: string;
         /** The guild home header. */
         home_header?: string;
-        /**
-         * The AFK channel id.
-         * @minLength 1
-         */
+        /** The AFK channel id. */
         afk_channel_id?: string;
         /** The discovery splash image. */
         discovery_splash?: string;
         /** The preferred locale. */
         preferred_locale?: string;
-        /**
-         * The rules channel id.
-         * @minLength 1
-         */
+        /** The rules channel id. */
         rules_channel_id?: string;
-        /**
-         * The system channel id.
-         * @minLength 1
-         */
+        /** The system channel id. */
         system_channel_id?: string;
         /** The verification level. */
         verification_level?: number;
@@ -2840,15 +2247,9 @@ declare module "@oomol-lab/connector" {
         system_channel_flags?: number;
         /** The explicit content filter level. */
         explicit_content_filter?: number;
-        /**
-         * The safety alerts channel id.
-         * @minLength 1
-         */
+        /** The safety alerts channel id. */
         safety_alerts_channel_id?: string;
-        /**
-         * The public updates channel id.
-         * @minLength 1
-         */
+        /** The public updates channel id. */
         public_updates_channel_id?: string;
         /** Whether the premium progress bar is enabled. */
         premium_progress_bar_enabled?: boolean;
@@ -2860,20 +2261,11 @@ declare module "@oomol-lab/connector" {
     /** Update a guild-scoped application command. */
     "discordbot.update_guild_application_command": {
       input: {
-        /**
-         * The application id.
-         * @minLength 1
-         */
+        /** The application id. */
         application_id: string;
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
-        /**
-         * The command id.
-         * @minLength 1
-         */
+        /** The command id. */
         command_id: string;
         /**
          * The command name.
@@ -2902,15 +2294,9 @@ declare module "@oomol-lab/connector" {
     /** Update a guild emoji. */
     "discordbot.update_guild_emoji": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
-        /**
-         * The emoji id.
-         * @minLength 1
-         */
+        /** The emoji id. */
         emoji_id: string;
         /**
          * The new emoji name.
@@ -2925,17 +2311,14 @@ declare module "@oomol-lab/connector" {
     /** Update a guild member. */
     "discordbot.update_guild_member": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
-        /**
-         * The user id.
-         * @minLength 1
-         */
+        /** The user id. */
         user_id: string;
-        /** The new nickname. */
+        /**
+         * The new nickname.
+         * @maxLength 32
+         */
         nick?: string | null;
         /** The role ids to assign. */
         roles?: Array<string> | null;
@@ -2955,15 +2338,9 @@ declare module "@oomol-lab/connector" {
     /** Update a guild role. */
     "discordbot.update_guild_role": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
-        /**
-         * The role id.
-         * @minLength 1
-         */
+        /** The role id. */
         role_id: string;
         /**
          * The role name.
@@ -2990,15 +2367,9 @@ declare module "@oomol-lab/connector" {
     /** Update a guild scheduled event. */
     "discordbot.update_guild_scheduled_event": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
-        /**
-         * The scheduled event id.
-         * @minLength 1
-         */
+        /** The scheduled event id. */
         guild_scheduled_event_id: string;
         /**
          * The scheduled event name.
@@ -3032,15 +2403,9 @@ declare module "@oomol-lab/connector" {
     /** Update a guild sticker. */
     "discordbot.update_guild_sticker": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
-        /**
-         * The sticker id.
-         * @minLength 1
-         */
+        /** The sticker id. */
         sticker_id: string;
         /**
          * The sticker name.
@@ -3054,7 +2419,11 @@ declare module "@oomol-lab/connector" {
          * @maxLength 200
          */
         tags?: string;
-        /** The sticker description. */
+        /**
+         * The sticker description.
+         * @minLength 2
+         * @maxLength 100
+         */
         description?: string | null;
       };
       output: Record<string, unknown>;
@@ -3062,15 +2431,9 @@ declare module "@oomol-lab/connector" {
     /** Update a guild template. */
     "discordbot.update_guild_template": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
-        /**
-         * The template code.
-         * @minLength 1
-         */
+        /** The template code. */
         code: string;
         /**
          * The template name.
@@ -3086,28 +2449,28 @@ declare module "@oomol-lab/connector" {
     /** Update a guild welcome screen. */
     "discordbot.update_guild_welcome_screen": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
         /** Whether the welcome screen is enabled. */
         enabled?: boolean | null;
         /** The welcome screen description. */
         description?: string | null;
-        /** The welcome screen channels. */
+        /**
+         * The welcome screen channels.
+         * @maxItems 5
+         */
         welcome_channels?: Array<{
-          /**
-           * The channel id.
-           * @minLength 1
-           */
+          /** The channel id. */
           channel_id: string;
           /**
            * The channel description.
            * @minLength 1
            */
           description: string;
-          /** The optional emoji name. */
+          /**
+           * The optional emoji name.
+           * @minLength 1
+           */
           emoji_name?: string | null;
           /** The optional emoji id. */
           emoji_id?: string | null;
@@ -3118,17 +2481,11 @@ declare module "@oomol-lab/connector" {
     /** Update guild widget settings. */
     "discordbot.update_guild_widget_settings": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
         /** Whether the widget is enabled. */
         enabled?: boolean;
-        /**
-         * The widget channel id.
-         * @minLength 1
-         */
+        /** The widget channel id. */
         channel_id?: string;
       };
       output: Record<string, unknown>;
@@ -3136,24 +2493,31 @@ declare module "@oomol-lab/connector" {
     /** Update a message in a Discord channel. */
     "discordbot.update_message": {
       input: {
-        /**
-         * The channel id.
-         * @minLength 1
-         */
+        /** The channel id. */
         channel_id: string;
-        /**
-         * The message id.
-         * @minLength 1
-         */
+        /** The message id. */
         message_id: string;
-        /** The new message content. */
+        /**
+         * The new message content.
+         * @maxLength 2000
+         */
         content?: string | null;
-        /** The embeds to include. */
+        /**
+         * The embeds to include.
+         * @maxItems 10
+         */
         embeds?: Array<Record<string, unknown>> | null;
-        /** The components to include. */
+        /**
+         * The components to include.
+         * @maxItems 5
+         */
         components?: Array<Record<string, unknown>> | null;
-        /** The sticker ids to attach. */
+        /**
+         * The sticker ids to attach.
+         * @maxItems 3
+         */
         sticker_ids?: Array<string> | null;
+        /** The allowed mentions configuration for a Discord message. */
         allowed_mentions?: {
           /**
            * The mention targets to parse automatically.
@@ -3186,12 +2550,12 @@ declare module "@oomol-lab/connector" {
     /** Update the current bot user's guild member profile. */
     "discordbot.update_my_guild_member": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
-        /** The new nickname. */
+        /**
+         * The new nickname.
+         * @maxLength 32
+         */
         nick?: string | null;
         /** The guild member banner image. */
         banner?: string | null;
@@ -3219,15 +2583,9 @@ declare module "@oomol-lab/connector" {
     /** Update the current bot user's voice state. */
     "discordbot.update_self_voice_state": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
-        /**
-         * The voice channel id.
-         * @minLength 1
-         */
+        /** The voice channel id. */
         channel_id?: string;
         /** Whether the user is suppressed. */
         suppress?: boolean;
@@ -3242,20 +2600,11 @@ declare module "@oomol-lab/connector" {
     /** Update another user's voice state. */
     "discordbot.update_voice_state": {
       input: {
-        /**
-         * The guild id.
-         * @minLength 1
-         */
+        /** The guild id. */
         guild_id: string;
-        /**
-         * The user id.
-         * @minLength 1
-         */
+        /** The user id. */
         user_id: string;
-        /**
-         * The voice channel id.
-         * @minLength 1
-         */
+        /** The voice channel id. */
         channel_id?: string;
         /** Whether the user is suppressed. */
         suppress?: boolean;

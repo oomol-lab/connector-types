@@ -46,7 +46,9 @@ declare module "@oomol-lab/connector" {
           inheritable?: boolean;
           /** The creation time. */
           createdAt?: string;
+          /** The initial fetch time. */
           initialFetchAt?: string | null;
+          /** The most recent fetch time. */
           lastFetchAt?: string | null;
         };
       };
@@ -153,7 +155,9 @@ declare module "@oomol-lab/connector" {
           inheritable?: boolean;
           /** The creation time. */
           createdAt?: string;
+          /** The initial fetch time. */
           initialFetchAt?: string | null;
+          /** The most recent fetch time. */
           lastFetchAt?: string | null;
         };
       };
@@ -188,6 +192,7 @@ declare module "@oomol-lab/connector" {
           name?: string;
           /** The owning project identifier. */
           project?: string;
+          /** The initial fetch time. */
           initialFetchAt?: string | null;
           /** The environment creation time. */
           createdAt?: string;
@@ -214,6 +219,7 @@ declare module "@oomol-lab/connector" {
           name?: string;
           /** The project slug. */
           slug?: string;
+          /** The project description. */
           description?: string | null;
           /** The project creation time. */
           createdAt?: string;
@@ -262,6 +268,7 @@ declare module "@oomol-lab/connector" {
           environment?: string;
           /** The creation time. */
           createdAt?: string;
+          /** The expiration time. */
           expiresAt?: string | null;
         };
       };
@@ -304,6 +311,7 @@ declare module "@oomol-lab/connector" {
           config?: string;
           /** Whether the sync is enabled. */
           enabled?: boolean;
+          /** The last time Doppler synced this sync. */
           lastSyncedAt?: string | null;
         };
       };
@@ -475,11 +483,13 @@ declare module "@oomol-lab/connector" {
       output: {
         /** The stable identifier of the current token. */
         slug?: string;
+        /** The display name of the current token. */
         name?: string | null;
         /** The type of the current token. */
         type: string;
         /** The creation time of the current token. */
         createdAt?: string;
+        /** The last time the current token was used. */
         lastSeenAt?: string | null;
         /** The preview string of the current token. */
         tokenPreview?: string;
@@ -560,7 +570,9 @@ declare module "@oomol-lab/connector" {
           inheritable?: boolean;
           /** The creation time. */
           createdAt?: string;
+          /** The initial fetch time. */
           initialFetchAt?: string | null;
+          /** The most recent fetch time. */
           lastFetchAt?: string | null;
         };
       };
@@ -631,6 +643,7 @@ declare module "@oomol-lab/connector" {
           name?: string;
           /** The owning project identifier. */
           project?: string;
+          /** The initial fetch time. */
           initialFetchAt?: string | null;
           /** The environment creation time. */
           createdAt?: string;
@@ -671,6 +684,7 @@ declare module "@oomol-lab/connector" {
             config?: string;
             /** Whether the sync is enabled. */
             enabled?: boolean;
+            /** The last time Doppler synced this sync. */
             lastSyncedAt?: string | null;
           }>;
           [key: string]: unknown;
@@ -695,6 +709,7 @@ declare module "@oomol-lab/connector" {
           name?: string;
           /** The project slug. */
           slug?: string;
+          /** The project description. */
           description?: string | null;
           /** The project creation time. */
           createdAt?: string;
@@ -729,10 +744,15 @@ declare module "@oomol-lab/connector" {
           raw?: string;
           /** The computed secret value. */
           computed?: string;
+          /** The secret note. */
           note?: string | null;
+          /** The visibility of the raw value. */
           rawVisibility?: string | null;
+          /** The visibility of the computed value. */
           computedVisibility?: string | null;
+          /** Type information for the raw value. */
           rawValueType?: Record<string, unknown> | null;
+          /** Type information for the computed value. */
           computedValueType?: Record<string, unknown> | null;
         };
       };
@@ -769,6 +789,7 @@ declare module "@oomol-lab/connector" {
           config?: string;
           /** Whether the sync is enabled. */
           enabled?: boolean;
+          /** The last time Doppler synced this sync. */
           lastSyncedAt?: string | null;
         };
       };
@@ -947,7 +968,9 @@ declare module "@oomol-lab/connector" {
           inheritable?: boolean;
           /** The creation time. */
           createdAt?: string;
+          /** The initial fetch time. */
           initialFetchAt?: string | null;
+          /** The most recent fetch time. */
           lastFetchAt?: string | null;
         }>;
       };
@@ -972,6 +995,7 @@ declare module "@oomol-lab/connector" {
           name?: string;
           /** The owning project identifier. */
           project?: string;
+          /** The initial fetch time. */
           initialFetchAt?: string | null;
           /** The environment creation time. */
           createdAt?: string;
@@ -1008,6 +1032,7 @@ declare module "@oomol-lab/connector" {
             config?: string;
             /** Whether the sync is enabled. */
             enabled?: boolean;
+            /** The last time Doppler synced this sync. */
             lastSyncedAt?: string | null;
           }>;
           [key: string]: unknown;
@@ -1039,6 +1064,7 @@ declare module "@oomol-lab/connector" {
           name?: string;
           /** The project slug. */
           slug?: string;
+          /** The project description. */
           description?: string | null;
           /** The project creation time. */
           createdAt?: string;
@@ -1095,10 +1121,15 @@ declare module "@oomol-lab/connector" {
             raw?: string;
             /** The computed secret value. */
             computed?: string;
+            /** The secret note. */
             note?: string | null;
+            /** The visibility of the raw value. */
             rawVisibility?: string | null;
+            /** The visibility of the computed value. */
             computedVisibility?: string | null;
+            /** Type information for the raw value. */
             rawValueType?: Record<string, unknown> | null;
+            /** Type information for the computed value. */
             computedValueType?: Record<string, unknown> | null;
           }>;
       };
@@ -1136,6 +1167,7 @@ declare module "@oomol-lab/connector" {
           environment?: string;
           /** The creation time. */
           createdAt?: string;
+          /** The expiration time. */
           expiresAt?: string | null;
         }>;
       };
@@ -1231,7 +1263,9 @@ declare module "@oomol-lab/connector" {
           inheritable?: boolean;
           /** The creation time. */
           createdAt?: string;
+          /** The initial fetch time. */
           initialFetchAt?: string | null;
+          /** The most recent fetch time. */
           lastFetchAt?: string | null;
         };
       };
@@ -1385,7 +1419,9 @@ declare module "@oomol-lab/connector" {
           inheritable?: boolean;
           /** The creation time. */
           createdAt?: string;
+          /** The initial fetch time. */
           initialFetchAt?: string | null;
+          /** The most recent fetch time. */
           lastFetchAt?: string | null;
         };
       };
@@ -1425,6 +1461,7 @@ declare module "@oomol-lab/connector" {
           name?: string;
           /** The owning project identifier. */
           project?: string;
+          /** The initial fetch time. */
           initialFetchAt?: string | null;
           /** The environment creation time. */
           createdAt?: string;
@@ -1456,6 +1493,7 @@ declare module "@oomol-lab/connector" {
           name?: string;
           /** The project slug. */
           slug?: string;
+          /** The project description. */
           description?: string | null;
           /** The project creation time. */
           createdAt?: string;
@@ -1513,10 +1551,15 @@ declare module "@oomol-lab/connector" {
             raw?: string;
             /** The computed secret value. */
             computed?: string;
+            /** The secret note. */
             note?: string | null;
+            /** The visibility of the raw value. */
             rawVisibility?: string | null;
+            /** The visibility of the computed value. */
             computedVisibility?: string | null;
+            /** Type information for the raw value. */
             rawValueType?: Record<string, unknown> | null;
+            /** Type information for the computed value. */
             computedValueType?: Record<string, unknown> | null;
           }>;
       };

@@ -414,6 +414,11 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         driveId?: string;
+        /**
+         * Optional workbook session ID created by create_session.
+         * @minLength 1
+         */
+        sessionId?: string;
         /** Whether workbook changes should persist after the session closes. */
         persistChanges?: boolean;
       };

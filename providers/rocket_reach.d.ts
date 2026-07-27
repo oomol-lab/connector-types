@@ -272,7 +272,6 @@ declare module "@oomol-lab/connector" {
         id?: number;
         /**
          * The email address of the person to look up.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email?: string;
@@ -316,7 +315,6 @@ declare module "@oomol-lab/connector" {
         id?: number;
         /**
          * The email address of the person to look up.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email?: string;
