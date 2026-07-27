@@ -91,6 +91,7 @@ declare module "@oomol-lab/connector" {
         user?: {
           /** The user avatar URL. */
           avatar_url?: string;
+          /** The user banner URL. */
           banner_url?: string | null;
           /** The user profile URL. */
           profile_url?: string;
@@ -98,8 +99,11 @@ declare module "@oomol-lab/connector" {
           username?: string;
           /** The display name. */
           display_name?: string;
+          /** The user description. */
           description?: string | null;
+          /** The user Instagram URL. */
           instagram_url?: string | null;
+          /** The user website URL. */
           website_url?: string | null;
           /** Whether the user is verified. */
           is_verified?: boolean;
@@ -198,6 +202,7 @@ declare module "@oomol-lab/connector" {
         user?: {
           /** The user avatar URL. */
           avatar_url?: string;
+          /** The user banner URL. */
           banner_url?: string | null;
           /** The user profile URL. */
           profile_url?: string;
@@ -205,8 +210,11 @@ declare module "@oomol-lab/connector" {
           username?: string;
           /** The display name. */
           display_name?: string;
+          /** The user description. */
           description?: string | null;
+          /** The user Instagram URL. */
           instagram_url?: string | null;
+          /** The user website URL. */
           website_url?: string | null;
           /** Whether the user is verified. */
           is_verified?: boolean;
@@ -313,6 +321,7 @@ declare module "@oomol-lab/connector" {
         user?: {
           /** The user avatar URL. */
           avatar_url?: string;
+          /** The user banner URL. */
           banner_url?: string | null;
           /** The user profile URL. */
           profile_url?: string;
@@ -320,8 +329,11 @@ declare module "@oomol-lab/connector" {
           username?: string;
           /** The display name. */
           display_name?: string;
+          /** The user description. */
           description?: string | null;
+          /** The user Instagram URL. */
           instagram_url?: string | null;
+          /** The user website URL. */
           website_url?: string | null;
           /** Whether the user is verified. */
           is_verified?: boolean;
@@ -416,6 +428,7 @@ declare module "@oomol-lab/connector" {
               user?: {
                 /** The user avatar URL. */
                 avatar_url?: string;
+                /** The user banner URL. */
                 banner_url?: string | null;
                 /** The user profile URL. */
                 profile_url?: string;
@@ -423,8 +436,11 @@ declare module "@oomol-lab/connector" {
                 username?: string;
                 /** The display name. */
                 display_name?: string;
+                /** The user description. */
                 description?: string | null;
+                /** The user Instagram URL. */
                 instagram_url?: string | null;
+                /** The user website URL. */
                 website_url?: string | null;
                 /** Whether the user is verified. */
                 is_verified?: boolean;
@@ -504,6 +520,7 @@ declare module "@oomol-lab/connector" {
             user?: {
               /** The user avatar URL. */
               avatar_url?: string;
+              /** The user banner URL. */
               banner_url?: string | null;
               /** The user profile URL. */
               profile_url?: string;
@@ -511,8 +528,11 @@ declare module "@oomol-lab/connector" {
               username?: string;
               /** The display name. */
               display_name?: string;
+              /** The user description. */
               description?: string | null;
+              /** The user Instagram URL. */
               instagram_url?: string | null;
+              /** The user website URL. */
               website_url?: string | null;
               /** Whether the user is verified. */
               is_verified?: boolean;
@@ -628,6 +648,7 @@ declare module "@oomol-lab/connector" {
           user?: {
             /** The user avatar URL. */
             avatar_url?: string;
+            /** The user banner URL. */
             banner_url?: string | null;
             /** The user profile URL. */
             profile_url?: string;
@@ -635,8 +656,11 @@ declare module "@oomol-lab/connector" {
             username?: string;
             /** The display name. */
             display_name?: string;
+            /** The user description. */
             description?: string | null;
+            /** The user Instagram URL. */
             instagram_url?: string | null;
+            /** The user website URL. */
             website_url?: string | null;
             /** Whether the user is verified. */
             is_verified?: boolean;
@@ -766,6 +790,7 @@ declare module "@oomol-lab/connector" {
           user?: {
             /** The user avatar URL. */
             avatar_url?: string;
+            /** The user banner URL. */
             banner_url?: string | null;
             /** The user profile URL. */
             profile_url?: string;
@@ -773,8 +798,11 @@ declare module "@oomol-lab/connector" {
             username?: string;
             /** The display name. */
             display_name?: string;
+            /** The user description. */
             description?: string | null;
+            /** The user Instagram URL. */
             instagram_url?: string | null;
+            /** The user website URL. */
             website_url?: string | null;
             /** Whether the user is verified. */
             is_verified?: boolean;
@@ -898,6 +926,7 @@ declare module "@oomol-lab/connector" {
           user?: {
             /** The user avatar URL. */
             avatar_url?: string;
+            /** The user banner URL. */
             banner_url?: string | null;
             /** The user profile URL. */
             profile_url?: string;
@@ -905,8 +934,11 @@ declare module "@oomol-lab/connector" {
             username?: string;
             /** The display name. */
             display_name?: string;
+            /** The user description. */
             description?: string | null;
+            /** The user Instagram URL. */
             instagram_url?: string | null;
+            /** The user website URL. */
             website_url?: string | null;
             /** Whether the user is verified. */
             is_verified?: boolean;
@@ -1045,6 +1077,7 @@ declare module "@oomol-lab/connector" {
           user?: {
             /** The user avatar URL. */
             avatar_url?: string;
+            /** The user banner URL. */
             banner_url?: string | null;
             /** The user profile URL. */
             profile_url?: string;
@@ -1052,8 +1085,11 @@ declare module "@oomol-lab/connector" {
             username?: string;
             /** The display name. */
             display_name?: string;
+            /** The user description. */
             description?: string | null;
+            /** The user Instagram URL. */
             instagram_url?: string | null;
+            /** The user website URL. */
             website_url?: string | null;
             /** Whether the user is verified. */
             is_verified?: boolean;
@@ -1184,6 +1220,7 @@ declare module "@oomol-lab/connector" {
           user?: {
             /** The user avatar URL. */
             avatar_url?: string;
+            /** The user banner URL. */
             banner_url?: string | null;
             /** The user profile URL. */
             profile_url?: string;
@@ -1191,8 +1228,11 @@ declare module "@oomol-lab/connector" {
             username?: string;
             /** The display name. */
             display_name?: string;
+            /** The user description. */
             description?: string | null;
+            /** The user Instagram URL. */
             instagram_url?: string | null;
+            /** The user website URL. */
             website_url?: string | null;
             /** Whether the user is verified. */
             is_verified?: boolean;
@@ -1336,6 +1376,7 @@ declare module "@oomol-lab/connector" {
         user?: {
           /** The user avatar URL. */
           avatar_url?: string;
+          /** The user banner URL. */
           banner_url?: string | null;
           /** The user profile URL. */
           profile_url?: string;
@@ -1343,8 +1384,11 @@ declare module "@oomol-lab/connector" {
           username?: string;
           /** The display name. */
           display_name?: string;
+          /** The user description. */
           description?: string | null;
+          /** The user Instagram URL. */
           instagram_url?: string | null;
+          /** The user website URL. */
           website_url?: string | null;
           /** Whether the user is verified. */
           is_verified?: boolean;
@@ -1446,6 +1490,7 @@ declare module "@oomol-lab/connector" {
         user?: {
           /** The user avatar URL. */
           avatar_url?: string;
+          /** The user banner URL. */
           banner_url?: string | null;
           /** The user profile URL. */
           profile_url?: string;
@@ -1453,8 +1498,11 @@ declare module "@oomol-lab/connector" {
           username?: string;
           /** The display name. */
           display_name?: string;
+          /** The user description. */
           description?: string | null;
+          /** The user Instagram URL. */
           instagram_url?: string | null;
+          /** The user website URL. */
           website_url?: string | null;
           /** Whether the user is verified. */
           is_verified?: boolean;

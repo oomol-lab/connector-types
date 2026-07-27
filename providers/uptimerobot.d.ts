@@ -185,15 +185,15 @@ declare module "@oomol-lab/connector" {
     /** Get the full configuration and current status of a single UptimeRobot monitor. */
     "uptimerobot.get_monitor": {
       input: {
+        /** Whether monitor logs should be included in the UptimeRobot response. */
+        logs?: boolean;
+        /** Whether alert contacts should be included in the UptimeRobot response. */
+        alert_contacts?: boolean;
         /**
          * The numeric ID of the UptimeRobot monitor.
          * @exclusiveMinimum 0
          */
         monitor_id: number;
-        /** Whether monitor logs should be included in the UptimeRobot response. */
-        logs?: boolean;
-        /** Whether alert contacts should be included in the UptimeRobot response. */
-        alert_contacts?: boolean;
       };
       output: {
         /** The monitor returned by UptimeRobot. */

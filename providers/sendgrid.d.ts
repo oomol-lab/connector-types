@@ -90,7 +90,6 @@ declare module "@oomol-lab/connector" {
         from: {
           /**
            * The sender email address.
-           * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
            * @format email
            */
           email: string;
@@ -107,7 +106,6 @@ declare module "@oomol-lab/connector" {
         to: Array<{
           /**
            * The recipient email address.
-           * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
            * @format email
            */
           email: string;
@@ -124,7 +122,6 @@ declare module "@oomol-lab/connector" {
         cc?: Array<{
           /**
            * The recipient email address.
-           * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
            * @format email
            */
           email: string;
@@ -141,7 +138,6 @@ declare module "@oomol-lab/connector" {
         bcc?: Array<{
           /**
            * The recipient email address.
-           * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
            * @format email
            */
           email: string;
@@ -155,7 +151,6 @@ declare module "@oomol-lab/connector" {
         replyTo?: {
           /**
            * The sender email address.
-           * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
            * @format email
            */
           email: string;

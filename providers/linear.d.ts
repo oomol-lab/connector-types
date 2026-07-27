@@ -23,6 +23,7 @@ declare module "@oomol-lab/connector" {
         title: string;
         /** Attachment link. */
         url: string;
+        /** Attachment subtitle. */
         subtitle?: string | null;
       };
     };
@@ -95,6 +96,7 @@ declare module "@oomol-lab/connector" {
         identifier?: string;
         /** The issue title after creation. */
         issue_title: string;
+        /** Issue description after creation. */
         issue_description?: string | null;
         /** Issue link after creation. */
         ticket_url?: string;
@@ -142,6 +144,7 @@ declare module "@oomol-lab/connector" {
         name: string;
         /** Label color. */
         color: string;
+        /** Tag description. */
         description?: string | null;
       };
     };
@@ -199,6 +202,7 @@ declare module "@oomol-lab/connector" {
         project_id: string;
         /** Milestone name. */
         name: string;
+        /** Milestone target dates. */
         target_date?: string | null;
       };
     };
@@ -219,7 +223,9 @@ declare module "@oomol-lab/connector" {
         id: string;
         /** The unique identifier of the project. */
         project_id: string;
+        /** Project update text. */
         body?: string | null;
+        /** Project health status. */
         health?: string | null;
         /** Whether to hide diff. */
         is_diff_hidden?: boolean;
@@ -270,13 +276,17 @@ declare module "@oomol-lab/connector" {
           id: string;
           /** Attachment title. */
           title: string;
+          /** Attachment subtitle. */
           subtitle?: string | null;
           /** Attachment link. */
           url: string;
+          /** Attachment source type. */
           sourceType?: string | null;
           /** Attachment metadata. */
           metadata?: Record<string, unknown>;
+          /** Attachment source information. */
           source?: Record<string, unknown> | null;
+          /** The issue to which the attachment belongs. */
           issue?: {
             /** Unique identifier associated with the issue. */
             id: string;
@@ -367,12 +377,20 @@ declare module "@oomol-lab/connector" {
       output: {
         /** The team's issue default configuration. */
         team: {
+          /** The team's default issue status. */
           defaultIssueState: {
             /** The unique identifier of the status. */
             id: string;
             /** Status name. */
             name: string;
+            /** Status type. */
+            type?: string;
+            /** Status color. */
+            color?: string;
+            /** Status description. */
+            description?: string;
           } | null;
+          /** The team's default issue estimate. */
           defaultIssueEstimate: number | null;
         };
       };
@@ -392,6 +410,7 @@ declare module "@oomol-lab/connector" {
           identifier: string;
           /** issue title. */
           title: string;
+          /** issue description. */
           description?: string | null;
           /** issue link. */
           url?: string;
@@ -399,10 +418,15 @@ declare module "@oomol-lab/connector" {
           createdAt: string;
           /** issue update time. */
           updatedAt: string;
+          /** Issue filing time. */
           archivedAt?: string | null;
+          /** issue deadline. */
           dueDate?: string | null;
+          /** issue priority. */
           priority?: number | null;
+          /** issue estimate. */
           estimate?: number | null;
+          /** Team information. */
           team?: {
             /** The team's unique identifier. */
             id: string;
@@ -411,6 +435,7 @@ declare module "@oomol-lab/connector" {
             /** The team shorthand key. */
             key?: string;
           } | null;
+          /** Current workflow status. */
           state?: {
             /** The unique identifier of the status. */
             id: string;
@@ -423,6 +448,7 @@ declare module "@oomol-lab/connector" {
             /** Status description. */
             description?: string;
           } | null;
+          /** Project information. */
           project?: {
             /** The unique identifier of the project. */
             id: string;
@@ -434,6 +460,7 @@ declare module "@oomol-lab/connector" {
             url?: string;
             /** Project status. */
             state?: string;
+            /** Project health status. */
             health?: string | null;
             /** Project progress. */
             progress?: number;
@@ -443,15 +470,21 @@ declare module "@oomol-lab/connector" {
             priorityLabel?: string;
             /** Project scope value. */
             scope?: number;
+            /** Item color. */
             color?: string | null;
+            /** Project description. */
             description?: string | null;
+            /** Project icon. */
             icon?: string | null;
+            /** Project start date. */
             startDate?: string | null;
+            /** Project target date. */
             targetDate?: string | null;
             /** Project creation time. */
             createdAt?: string;
             /** Project update time. */
             updatedAt?: string;
+            /** Project leader. */
             lead?: {
               /** User unique identifier. */
               id: string;
@@ -470,6 +503,7 @@ declare module "@oomol-lab/connector" {
               /** User creation time. */
               createdAt?: string;
             } | null;
+            /** Project creator. */
             creator?: {
               /** User unique identifier. */
               id: string;
@@ -488,6 +522,7 @@ declare module "@oomol-lab/connector" {
               /** User creation time. */
               createdAt?: string;
             } | null;
+            /** Project status object. */
             status?: {
               /** Unique identifier of project status. */
               id: string;
@@ -501,6 +536,7 @@ declare module "@oomol-lab/connector" {
               description?: string;
             } | null;
           } | null;
+          /** Current person in charge information. */
           assignee?: {
             /** User unique identifier. */
             id: string;
@@ -535,6 +571,7 @@ declare module "@oomol-lab/connector" {
               is_group?: boolean;
               /** Whether to group labels. */
               isGroup?: boolean;
+              /** Parent label group information. */
               parent?: {
                 /** The unique identifier of the parent label group. */
                 id: string;
@@ -543,6 +580,7 @@ declare module "@oomol-lab/connector" {
               } | null;
             }>;
           };
+          /** Issue creator information. */
           creator?: {
             /** User unique identifier. */
             id: string;
@@ -561,6 +599,7 @@ declare module "@oomol-lab/connector" {
             /** User creation time. */
             createdAt?: string;
           } | null;
+          /** The cycle to which the issue belongs. */
           cycle?: {
             /** The unique identifier of the cycle. */
             id: string;
@@ -592,6 +631,7 @@ declare module "@oomol-lab/connector" {
               key?: string;
             };
           } | null;
+          /** Parent issue information. */
           parent?: {
             /** The unique identifier of the parent issue. */
             id: string;
@@ -608,13 +648,17 @@ declare module "@oomol-lab/connector" {
               id: string;
               /** Attachment title. */
               title: string;
+              /** Attachment subtitle. */
               subtitle?: string | null;
               /** Attachment link. */
               url: string;
+              /** Attachment source type. */
               sourceType?: string | null;
               /** Attachment metadata. */
               metadata?: Record<string, unknown>;
+              /** Attachment source information. */
               source?: Record<string, unknown> | null;
+              /** The issue to which the attachment belongs. */
               issue?: {
                 /** Unique identifier associated with the issue. */
                 id: string;
@@ -650,16 +694,23 @@ declare module "@oomol-lab/connector" {
               body?: string;
               /** Comment link. */
               url?: string;
+              /** Quote text. */
               quotedText?: string | null;
               /** Comment creation time. */
               createdAt?: string;
               /** Comment updated time. */
               updatedAt?: string;
+              /** Comment editing time. */
               editedAt?: string | null;
+              /** Comment resolution time. */
               resolvedAt?: string | null;
+              /** Unique identifier associated with the issue. */
               issueId?: string | null;
+              /** The unique identifier of the parent comment. */
               parentId?: string | null;
+              /** Associated project updates unique identifier. */
               projectUpdateId?: string | null;
+              /** Comment author information. */
               user?: {
                 /** User unique identifier. */
                 id: string;
@@ -688,6 +739,7 @@ declare module "@oomol-lab/connector" {
                 createdAt?: string;
                 /** Response update time. */
                 updatedAt?: string;
+                /** The user who triggered the reaction. */
                 user?: {
                   /** User unique identifier. */
                   id: string;
@@ -706,16 +758,19 @@ declare module "@oomol-lab/connector" {
                   /** User creation time. */
                   createdAt?: string;
                 } | null;
+                /** The comment value. */
                 comment?: {
                   /** The unique identifier of the comment. */
                   id: string;
                 } | null;
+                /** The issue value. */
                 issue?: {
                   /** issue unique identifier. */
                   id: string;
                   /** Issue abbreviation identifier. */
                   identifier?: string;
                 } | null;
+                /** The projectUpdate value. */
                 projectUpdate?: {
                   /** Project update unique identifier. */
                   id: string;
@@ -777,6 +832,7 @@ declare module "@oomol-lab/connector" {
             createdAt?: string;
             /** Response update time. */
             updatedAt?: string;
+            /** The user who triggered the reaction. */
             user?: {
               /** User unique identifier. */
               id: string;
@@ -795,16 +851,19 @@ declare module "@oomol-lab/connector" {
               /** User creation time. */
               createdAt?: string;
             } | null;
+            /** The comment value. */
             comment?: {
               /** The unique identifier of the comment. */
               id: string;
             } | null;
+            /** The issue value. */
             issue?: {
               /** issue unique identifier. */
               id: string;
               /** Issue abbreviation identifier. */
               identifier?: string;
             } | null;
+            /** The projectUpdate value. */
             projectUpdate?: {
               /** Project update unique identifier. */
               id: string;
@@ -838,6 +897,7 @@ declare module "@oomol-lab/connector" {
           url?: string;
           /** Project status. */
           state?: string;
+          /** Project health status. */
           health?: string | null;
           /** Project progress. */
           progress?: number;
@@ -847,15 +907,21 @@ declare module "@oomol-lab/connector" {
           priorityLabel?: string;
           /** Project scope value. */
           scope?: number;
+          /** Item color. */
           color?: string | null;
+          /** Project description. */
           description?: string | null;
+          /** Project icon. */
           icon?: string | null;
+          /** Project start date. */
           startDate?: string | null;
+          /** Project target date. */
           targetDate?: string | null;
           /** Project creation time. */
           createdAt?: string;
           /** Project update time. */
           updatedAt?: string;
+          /** Project leader. */
           lead?: {
             /** User unique identifier. */
             id: string;
@@ -874,6 +940,7 @@ declare module "@oomol-lab/connector" {
             /** User creation time. */
             createdAt?: string;
           } | null;
+          /** Project creator. */
           creator?: {
             /** User unique identifier. */
             id: string;
@@ -892,6 +959,7 @@ declare module "@oomol-lab/connector" {
             /** User creation time. */
             createdAt?: string;
           } | null;
+          /** Project status object. */
           status?: {
             /** Unique identifier of project status. */
             id: string;
@@ -915,6 +983,17 @@ declare module "@oomol-lab/connector" {
               /** The team shorthand key. */
               key?: string;
             }>;
+            /** Team pagination information. */
+            pageInfo?: {
+              /** The starting point of the cursor on the previous page. */
+              startCursor?: string | null;
+              /** The end cursor for the next page. */
+              endCursor: string | null;
+              /** Whether there is a previous page. */
+              hasPreviousPage?: boolean;
+              /** Whether the next page exists. */
+              hasNextPage: boolean;
+            };
           };
           /** Project member connections. */
           members?: {
@@ -946,10 +1025,22 @@ declare module "@oomol-lab/connector" {
               id: string;
               /** initiative name. */
               name: string;
+              /** initiative description. */
               description?: string | null;
               /** initiative link. */
               url?: string;
             }>;
+            /** initiative pagination information. */
+            pageInfo?: {
+              /** The starting point of the cursor on the previous page. */
+              startCursor?: string | null;
+              /** The end cursor for the next page. */
+              endCursor: string | null;
+              /** Whether there is a previous page. */
+              hasPreviousPage?: boolean;
+              /** Whether the next page exists. */
+              hasNextPage: boolean;
+            };
           };
         };
       };
@@ -969,6 +1060,7 @@ declare module "@oomol-lab/connector" {
           id: string;
           /** Draft raw data. */
           data?: Record<string, unknown>;
+          /** Draft text data. */
           bodyData?: string | null;
           /** Draft creation time. */
           createdAt?: string;
@@ -976,6 +1068,7 @@ declare module "@oomol-lab/connector" {
           updatedAt?: string;
           /** Whether to generate automatically. */
           isAutogenerated?: boolean;
+          /** Associated team information. */
           team?: {
             /** The team's unique identifier. */
             id: string;
@@ -984,18 +1077,22 @@ declare module "@oomol-lab/connector" {
             /** The team shorthand key. */
             key?: string;
           } | null;
+          /** The issue value. */
           issue?: {
             /** Unique identifier associated with the issue. */
             id: string;
           } | null;
+          /** The project value. */
           project?: {
             /** The unique identifier of the associated project. */
             id: string;
           } | null;
+          /** The projectUpdate value. */
           projectUpdate?: {
             /** Associated project updates unique identifier. */
             id: string;
           } | null;
+          /** Draft creator information. */
           user?: {
             /** User unique identifier. */
             id: string;
@@ -1058,6 +1155,7 @@ declare module "@oomol-lab/connector" {
           identifier: string;
           /** issue title. */
           title: string;
+          /** issue description. */
           description?: string | null;
           /** issue link. */
           url?: string;
@@ -1065,10 +1163,15 @@ declare module "@oomol-lab/connector" {
           createdAt: string;
           /** issue update time. */
           updatedAt: string;
+          /** Issue filing time. */
           archivedAt?: string | null;
+          /** issue deadline. */
           dueDate?: string | null;
+          /** issue priority. */
           priority?: number | null;
+          /** issue estimate. */
           estimate?: number | null;
+          /** Team information. */
           team?: {
             /** The team's unique identifier. */
             id: string;
@@ -1077,6 +1180,7 @@ declare module "@oomol-lab/connector" {
             /** The team shorthand key. */
             key?: string;
           } | null;
+          /** Current workflow status. */
           state?: {
             /** The unique identifier of the status. */
             id: string;
@@ -1089,6 +1193,7 @@ declare module "@oomol-lab/connector" {
             /** Status description. */
             description?: string;
           } | null;
+          /** Project information. */
           project?: {
             /** The unique identifier of the project. */
             id: string;
@@ -1100,6 +1205,7 @@ declare module "@oomol-lab/connector" {
             url?: string;
             /** Project status. */
             state?: string;
+            /** Project health status. */
             health?: string | null;
             /** Project progress. */
             progress?: number;
@@ -1109,15 +1215,21 @@ declare module "@oomol-lab/connector" {
             priorityLabel?: string;
             /** Project scope value. */
             scope?: number;
+            /** Item color. */
             color?: string | null;
+            /** Project description. */
             description?: string | null;
+            /** Project icon. */
             icon?: string | null;
+            /** Project start date. */
             startDate?: string | null;
+            /** Project target date. */
             targetDate?: string | null;
             /** Project creation time. */
             createdAt?: string;
             /** Project update time. */
             updatedAt?: string;
+            /** Project leader. */
             lead?: {
               /** User unique identifier. */
               id: string;
@@ -1136,6 +1248,7 @@ declare module "@oomol-lab/connector" {
               /** User creation time. */
               createdAt?: string;
             } | null;
+            /** Project creator. */
             creator?: {
               /** User unique identifier. */
               id: string;
@@ -1154,6 +1267,7 @@ declare module "@oomol-lab/connector" {
               /** User creation time. */
               createdAt?: string;
             } | null;
+            /** Project status object. */
             status?: {
               /** Unique identifier of project status. */
               id: string;
@@ -1167,6 +1281,7 @@ declare module "@oomol-lab/connector" {
               description?: string;
             } | null;
           } | null;
+          /** Current person in charge information. */
           assignee?: {
             /** User unique identifier. */
             id: string;
@@ -1201,6 +1316,7 @@ declare module "@oomol-lab/connector" {
               is_group?: boolean;
               /** Whether to group labels. */
               isGroup?: boolean;
+              /** Parent label group information. */
               parent?: {
                 /** The unique identifier of the parent label group. */
                 id: string;
@@ -1282,6 +1398,7 @@ declare module "@oomol-lab/connector" {
           identifier: string;
           /** issue title. */
           title: string;
+          /** issue description. */
           description?: string | null;
           /** issue link. */
           url?: string;
@@ -1289,10 +1406,15 @@ declare module "@oomol-lab/connector" {
           createdAt: string;
           /** issue update time. */
           updatedAt: string;
+          /** Issue filing time. */
           archivedAt?: string | null;
+          /** issue deadline. */
           dueDate?: string | null;
+          /** issue priority. */
           priority?: number | null;
+          /** issue estimate. */
           estimate?: number | null;
+          /** Team information. */
           team?: {
             /** The team's unique identifier. */
             id: string;
@@ -1301,6 +1423,7 @@ declare module "@oomol-lab/connector" {
             /** The team shorthand key. */
             key?: string;
           } | null;
+          /** Current workflow status. */
           state?: {
             /** The unique identifier of the status. */
             id: string;
@@ -1313,6 +1436,7 @@ declare module "@oomol-lab/connector" {
             /** Status description. */
             description?: string;
           } | null;
+          /** Project information. */
           project?: {
             /** The unique identifier of the project. */
             id: string;
@@ -1324,6 +1448,7 @@ declare module "@oomol-lab/connector" {
             url?: string;
             /** Project status. */
             state?: string;
+            /** Project health status. */
             health?: string | null;
             /** Project progress. */
             progress?: number;
@@ -1333,15 +1458,21 @@ declare module "@oomol-lab/connector" {
             priorityLabel?: string;
             /** Project scope value. */
             scope?: number;
+            /** Item color. */
             color?: string | null;
+            /** Project description. */
             description?: string | null;
+            /** Project icon. */
             icon?: string | null;
+            /** Project start date. */
             startDate?: string | null;
+            /** Project target date. */
             targetDate?: string | null;
             /** Project creation time. */
             createdAt?: string;
             /** Project update time. */
             updatedAt?: string;
+            /** Project leader. */
             lead?: {
               /** User unique identifier. */
               id: string;
@@ -1360,6 +1491,7 @@ declare module "@oomol-lab/connector" {
               /** User creation time. */
               createdAt?: string;
             } | null;
+            /** Project creator. */
             creator?: {
               /** User unique identifier. */
               id: string;
@@ -1378,6 +1510,7 @@ declare module "@oomol-lab/connector" {
               /** User creation time. */
               createdAt?: string;
             } | null;
+            /** Project status object. */
             status?: {
               /** Unique identifier of project status. */
               id: string;
@@ -1391,6 +1524,7 @@ declare module "@oomol-lab/connector" {
               description?: string;
             } | null;
           } | null;
+          /** Current person in charge information. */
           assignee?: {
             /** User unique identifier. */
             id: string;
@@ -1425,6 +1559,7 @@ declare module "@oomol-lab/connector" {
               is_group?: boolean;
               /** Whether to group labels. */
               isGroup?: boolean;
+              /** Parent label group information. */
               parent?: {
                 /** The unique identifier of the parent label group. */
                 id: string;
@@ -1468,6 +1603,7 @@ declare module "@oomol-lab/connector" {
           is_group?: boolean;
           /** Whether to group labels. */
           isGroup?: boolean;
+          /** Parent label group information. */
           parent?: {
             /** The unique identifier of the parent label group. */
             id: string;
@@ -1493,6 +1629,7 @@ declare module "@oomol-lab/connector" {
           url?: string;
           /** Project status. */
           state?: string;
+          /** Project health status. */
           health?: string | null;
           /** Project progress. */
           progress?: number;
@@ -1502,15 +1639,21 @@ declare module "@oomol-lab/connector" {
           priorityLabel?: string;
           /** Project scope value. */
           scope?: number;
+          /** Item color. */
           color?: string | null;
+          /** Project description. */
           description?: string | null;
+          /** Project icon. */
           icon?: string | null;
+          /** Project start date. */
           startDate?: string | null;
+          /** Project target date. */
           targetDate?: string | null;
           /** Project creation time. */
           createdAt?: string;
           /** Project update time. */
           updatedAt?: string;
+          /** Project leader. */
           lead?: {
             /** User unique identifier. */
             id: string;
@@ -1529,6 +1672,7 @@ declare module "@oomol-lab/connector" {
             /** User creation time. */
             createdAt?: string;
           } | null;
+          /** Project creator. */
           creator?: {
             /** User unique identifier. */
             id: string;
@@ -1547,6 +1691,7 @@ declare module "@oomol-lab/connector" {
             /** User creation time. */
             createdAt?: string;
           } | null;
+          /** Project status object. */
           status?: {
             /** Unique identifier of project status. */
             id: string;
@@ -1630,6 +1775,7 @@ declare module "@oomol-lab/connector" {
             url?: string;
             /** Project status. */
             state?: string;
+            /** Project health status. */
             health?: string | null;
             /** Project progress. */
             progress?: number;
@@ -1639,15 +1785,21 @@ declare module "@oomol-lab/connector" {
             priorityLabel?: string;
             /** Project scope value. */
             scope?: number;
+            /** Item color. */
             color?: string | null;
+            /** Project description. */
             description?: string | null;
+            /** Project icon. */
             icon?: string | null;
+            /** Project start date. */
             startDate?: string | null;
+            /** Project target date. */
             targetDate?: string | null;
             /** Project creation time. */
             createdAt?: string;
             /** Project update time. */
             updatedAt?: string;
+            /** Project leader. */
             lead?: {
               /** User unique identifier. */
               id: string;
@@ -1666,6 +1818,7 @@ declare module "@oomol-lab/connector" {
               /** User creation time. */
               createdAt?: string;
             } | null;
+            /** Project creator. */
             creator?: {
               /** User unique identifier. */
               id: string;
@@ -1684,6 +1837,7 @@ declare module "@oomol-lab/connector" {
               /** User creation time. */
               createdAt?: string;
             } | null;
+            /** Project status object. */
             status?: {
               /** Unique identifier of project status. */
               id: string;
@@ -1858,6 +2012,7 @@ declare module "@oomol-lab/connector" {
           identifier: string;
           /** issue title. */
           title: string;
+          /** issue description. */
           description?: string | null;
           /** issue link. */
           url?: string;
@@ -1865,10 +2020,15 @@ declare module "@oomol-lab/connector" {
           createdAt: string;
           /** issue update time. */
           updatedAt: string;
+          /** Issue filing time. */
           archivedAt?: string | null;
+          /** issue deadline. */
           dueDate?: string | null;
+          /** issue priority. */
           priority?: number | null;
+          /** issue estimate. */
           estimate?: number | null;
+          /** Team information. */
           team?: {
             /** The team's unique identifier. */
             id: string;
@@ -1877,6 +2037,7 @@ declare module "@oomol-lab/connector" {
             /** The team shorthand key. */
             key?: string;
           } | null;
+          /** Current workflow status. */
           state?: {
             /** The unique identifier of the status. */
             id: string;
@@ -1889,6 +2050,7 @@ declare module "@oomol-lab/connector" {
             /** Status description. */
             description?: string;
           } | null;
+          /** Project information. */
           project?: {
             /** The unique identifier of the project. */
             id: string;
@@ -1900,6 +2062,7 @@ declare module "@oomol-lab/connector" {
             url?: string;
             /** Project status. */
             state?: string;
+            /** Project health status. */
             health?: string | null;
             /** Project progress. */
             progress?: number;
@@ -1909,15 +2072,21 @@ declare module "@oomol-lab/connector" {
             priorityLabel?: string;
             /** Project scope value. */
             scope?: number;
+            /** Item color. */
             color?: string | null;
+            /** Project description. */
             description?: string | null;
+            /** Project icon. */
             icon?: string | null;
+            /** Project start date. */
             startDate?: string | null;
+            /** Project target date. */
             targetDate?: string | null;
             /** Project creation time. */
             createdAt?: string;
             /** Project update time. */
             updatedAt?: string;
+            /** Project leader. */
             lead?: {
               /** User unique identifier. */
               id: string;
@@ -1936,6 +2105,7 @@ declare module "@oomol-lab/connector" {
               /** User creation time. */
               createdAt?: string;
             } | null;
+            /** Project creator. */
             creator?: {
               /** User unique identifier. */
               id: string;
@@ -1954,6 +2124,7 @@ declare module "@oomol-lab/connector" {
               /** User creation time. */
               createdAt?: string;
             } | null;
+            /** Project status object. */
             status?: {
               /** Unique identifier of project status. */
               id: string;
@@ -1967,6 +2138,7 @@ declare module "@oomol-lab/connector" {
               description?: string;
             } | null;
           } | null;
+          /** Current person in charge information. */
           assignee?: {
             /** User unique identifier. */
             id: string;
@@ -2001,6 +2173,7 @@ declare module "@oomol-lab/connector" {
               is_group?: boolean;
               /** Whether to group labels. */
               isGroup?: boolean;
+              /** Parent label group information. */
               parent?: {
                 /** The unique identifier of the parent label group. */
                 id: string;
@@ -2064,6 +2237,7 @@ declare module "@oomol-lab/connector" {
           identifier: string;
           /** issue title. */
           title: string;
+          /** issue description. */
           description?: string | null;
           /** issue link. */
           url?: string;
@@ -2071,10 +2245,15 @@ declare module "@oomol-lab/connector" {
           createdAt: string;
           /** issue update time. */
           updatedAt: string;
+          /** Issue filing time. */
           archivedAt?: string | null;
+          /** issue deadline. */
           dueDate?: string | null;
+          /** issue priority. */
           priority?: number | null;
+          /** issue estimate. */
           estimate?: number | null;
+          /** Team information. */
           team?: {
             /** The team's unique identifier. */
             id: string;
@@ -2083,6 +2262,7 @@ declare module "@oomol-lab/connector" {
             /** The team shorthand key. */
             key?: string;
           } | null;
+          /** Current workflow status. */
           state?: {
             /** The unique identifier of the status. */
             id: string;
@@ -2095,6 +2275,7 @@ declare module "@oomol-lab/connector" {
             /** Status description. */
             description?: string;
           } | null;
+          /** Project information. */
           project?: {
             /** The unique identifier of the project. */
             id: string;
@@ -2106,6 +2287,7 @@ declare module "@oomol-lab/connector" {
             url?: string;
             /** Project status. */
             state?: string;
+            /** Project health status. */
             health?: string | null;
             /** Project progress. */
             progress?: number;
@@ -2115,15 +2297,21 @@ declare module "@oomol-lab/connector" {
             priorityLabel?: string;
             /** Project scope value. */
             scope?: number;
+            /** Item color. */
             color?: string | null;
+            /** Project description. */
             description?: string | null;
+            /** Project icon. */
             icon?: string | null;
+            /** Project start date. */
             startDate?: string | null;
+            /** Project target date. */
             targetDate?: string | null;
             /** Project creation time. */
             createdAt?: string;
             /** Project update time. */
             updatedAt?: string;
+            /** Project leader. */
             lead?: {
               /** User unique identifier. */
               id: string;
@@ -2142,6 +2330,7 @@ declare module "@oomol-lab/connector" {
               /** User creation time. */
               createdAt?: string;
             } | null;
+            /** Project creator. */
             creator?: {
               /** User unique identifier. */
               id: string;
@@ -2160,6 +2349,7 @@ declare module "@oomol-lab/connector" {
               /** User creation time. */
               createdAt?: string;
             } | null;
+            /** Project status object. */
             status?: {
               /** Unique identifier of project status. */
               id: string;
@@ -2173,6 +2363,7 @@ declare module "@oomol-lab/connector" {
               description?: string;
             } | null;
           } | null;
+          /** Current person in charge information. */
           assignee?: {
             /** User unique identifier. */
             id: string;
@@ -2207,6 +2398,7 @@ declare module "@oomol-lab/connector" {
               is_group?: boolean;
               /** Whether to group labels. */
               isGroup?: boolean;
+              /** Parent label group information. */
               parent?: {
                 /** The unique identifier of the parent label group. */
                 id: string;
@@ -2215,6 +2407,7 @@ declare module "@oomol-lab/connector" {
               } | null;
             }>;
           };
+          /** Issue creator information. */
           creator?: {
             /** User unique identifier. */
             id: string;
@@ -2233,6 +2426,7 @@ declare module "@oomol-lab/connector" {
             /** User creation time. */
             createdAt?: string;
           } | null;
+          /** The cycle to which the issue belongs. */
           cycle?: {
             /** The unique identifier of the cycle. */
             id: string;
@@ -2264,6 +2458,7 @@ declare module "@oomol-lab/connector" {
               key?: string;
             };
           } | null;
+          /** Parent issue information. */
           parent?: {
             /** The unique identifier of the parent issue. */
             id: string;
@@ -2280,13 +2475,17 @@ declare module "@oomol-lab/connector" {
               id: string;
               /** Attachment title. */
               title: string;
+              /** Attachment subtitle. */
               subtitle?: string | null;
               /** Attachment link. */
               url: string;
+              /** Attachment source type. */
               sourceType?: string | null;
               /** Attachment metadata. */
               metadata?: Record<string, unknown>;
+              /** Attachment source information. */
               source?: Record<string, unknown> | null;
+              /** The issue to which the attachment belongs. */
               issue?: {
                 /** Unique identifier associated with the issue. */
                 id: string;
@@ -2322,16 +2521,23 @@ declare module "@oomol-lab/connector" {
               body?: string;
               /** Comment link. */
               url?: string;
+              /** Quote text. */
               quotedText?: string | null;
               /** Comment creation time. */
               createdAt?: string;
               /** Comment updated time. */
               updatedAt?: string;
+              /** Comment editing time. */
               editedAt?: string | null;
+              /** Comment resolution time. */
               resolvedAt?: string | null;
+              /** Unique identifier associated with the issue. */
               issueId?: string | null;
+              /** The unique identifier of the parent comment. */
               parentId?: string | null;
+              /** Associated project updates unique identifier. */
               projectUpdateId?: string | null;
+              /** Comment author information. */
               user?: {
                 /** User unique identifier. */
                 id: string;
@@ -2360,6 +2566,7 @@ declare module "@oomol-lab/connector" {
                 createdAt?: string;
                 /** Response update time. */
                 updatedAt?: string;
+                /** The user who triggered the reaction. */
                 user?: {
                   /** User unique identifier. */
                   id: string;
@@ -2378,16 +2585,19 @@ declare module "@oomol-lab/connector" {
                   /** User creation time. */
                   createdAt?: string;
                 } | null;
+                /** The comment value. */
                 comment?: {
                   /** The unique identifier of the comment. */
                   id: string;
                 } | null;
+                /** The issue value. */
                 issue?: {
                   /** issue unique identifier. */
                   id: string;
                   /** Issue abbreviation identifier. */
                   identifier?: string;
                 } | null;
+                /** The projectUpdate value. */
                 projectUpdate?: {
                   /** Project update unique identifier. */
                   id: string;
@@ -2449,6 +2659,7 @@ declare module "@oomol-lab/connector" {
             createdAt?: string;
             /** Response update time. */
             updatedAt?: string;
+            /** The user who triggered the reaction. */
             user?: {
               /** User unique identifier. */
               id: string;
@@ -2467,16 +2678,19 @@ declare module "@oomol-lab/connector" {
               /** User creation time. */
               createdAt?: string;
             } | null;
+            /** The comment value. */
             comment?: {
               /** The unique identifier of the comment. */
               id: string;
             } | null;
+            /** The issue value. */
             issue?: {
               /** issue unique identifier. */
               id: string;
               /** Issue abbreviation identifier. */
               identifier?: string;
             } | null;
+            /** The projectUpdate value. */
             projectUpdate?: {
               /** Project update unique identifier. */
               id: string;
@@ -2502,16 +2716,23 @@ declare module "@oomol-lab/connector" {
           body?: string;
           /** Comment link. */
           url?: string;
+          /** Quote text. */
           quotedText?: string | null;
           /** Comment creation time. */
           createdAt?: string;
           /** Comment updated time. */
           updatedAt?: string;
+          /** Comment editing time. */
           editedAt?: string | null;
+          /** Comment resolution time. */
           resolvedAt?: string | null;
+          /** Unique identifier associated with the issue. */
           issueId?: string | null;
+          /** The unique identifier of the parent comment. */
           parentId?: string | null;
+          /** Associated project updates unique identifier. */
           projectUpdateId?: string | null;
+          /** Comment author information. */
           user?: {
             /** User unique identifier. */
             id: string;
@@ -2540,6 +2761,7 @@ declare module "@oomol-lab/connector" {
             createdAt?: string;
             /** Response update time. */
             updatedAt?: string;
+            /** The user who triggered the reaction. */
             user?: {
               /** User unique identifier. */
               id: string;
@@ -2558,16 +2780,19 @@ declare module "@oomol-lab/connector" {
               /** User creation time. */
               createdAt?: string;
             } | null;
+            /** The comment value. */
             comment?: {
               /** The unique identifier of the comment. */
               id: string;
             } | null;
+            /** The issue value. */
             issue?: {
               /** issue unique identifier. */
               id: string;
               /** Issue abbreviation identifier. */
               identifier?: string;
             } | null;
+            /** The projectUpdate value. */
             projectUpdate?: {
               /** Project update unique identifier. */
               id: string;
@@ -2615,6 +2840,7 @@ declare module "@oomol-lab/connector" {
           url?: string;
           /** Project status. */
           state?: string;
+          /** Project health status. */
           health?: string | null;
           /** Project progress. */
           progress?: number;
@@ -2624,15 +2850,21 @@ declare module "@oomol-lab/connector" {
           priorityLabel?: string;
           /** Project scope value. */
           scope?: number;
+          /** Item color. */
           color?: string | null;
+          /** Project description. */
           description?: string | null;
+          /** Project icon. */
           icon?: string | null;
+          /** Project start date. */
           startDate?: string | null;
+          /** Project target date. */
           targetDate?: string | null;
           /** Project creation time. */
           createdAt?: string;
           /** Project update time. */
           updatedAt?: string;
+          /** Project leader. */
           lead?: {
             /** User unique identifier. */
             id: string;
@@ -2651,6 +2883,7 @@ declare module "@oomol-lab/connector" {
             /** User creation time. */
             createdAt?: string;
           } | null;
+          /** Project creator. */
           creator?: {
             /** User unique identifier. */
             id: string;
@@ -2669,6 +2902,7 @@ declare module "@oomol-lab/connector" {
             /** User creation time. */
             createdAt?: string;
           } | null;
+          /** Project status object. */
           status?: {
             /** Unique identifier of project status. */
             id: string;

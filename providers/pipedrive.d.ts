@@ -47,7 +47,6 @@ declare module "@oomol-lab/connector" {
         projectId?: number;
         /**
          * Due date in YYYY-MM-DD format.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))$
          * @format date
          */
         dueDate?: string;
@@ -144,9 +143,15 @@ declare module "@oomol-lab/connector" {
           subject: string;
           /** Activity type. */
           type: string;
-          /** Owner user ID. */
+          /**
+           * Owner user ID.
+           * @exclusiveMinimum 0
+           */
           owner_id?: number | null;
-          /** Creator user ID. */
+          /**
+           * Creator user ID.
+           * @exclusiveMinimum 0
+           */
           creator_user_id?: number | null;
           /** Whether the activity is deleted. */
           is_deleted?: boolean;
@@ -154,15 +159,27 @@ declare module "@oomol-lab/connector" {
           add_time?: string;
           /** Last update timestamp. */
           update_time?: string;
-          /** Linked deal ID. */
+          /**
+           * Linked deal ID.
+           * @exclusiveMinimum 0
+           */
           deal_id?: number | null;
           /** Linked lead UUID. */
           lead_id?: string | null;
-          /** Linked person ID. */
+          /**
+           * Linked person ID.
+           * @exclusiveMinimum 0
+           */
           person_id?: number | null;
-          /** Linked organization ID. */
+          /**
+           * Linked organization ID.
+           * @exclusiveMinimum 0
+           */
           org_id?: number | null;
-          /** Linked project ID. */
+          /**
+           * Linked project ID.
+           * @exclusiveMinimum 0
+           */
           project_id?: number | null;
           /** Due date. */
           due_date?: string | null;
@@ -220,9 +237,15 @@ declare module "@oomol-lab/connector" {
             status?: string | null;
             /** Whether the attendee is the organizer. */
             is_organizer?: boolean | null;
-            /** Related Pipedrive person ID. */
+            /**
+             * Related Pipedrive person ID.
+             * @exclusiveMinimum 0
+             */
             person_id?: number | null;
-            /** Related Pipedrive user ID. */
+            /**
+             * Related Pipedrive user ID.
+             * @exclusiveMinimum 0
+             */
             user_id?: number | null;
           }>;
           /** Conference client. */
@@ -291,13 +314,11 @@ declare module "@oomol-lab/connector" {
         visibleTo?: number;
         /**
          * Close timestamp in RFC 3339 format.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
          * @format date-time
          */
         closeTime?: string;
         /**
          * Expected close date in YYYY-MM-DD format.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))$
          * @format date
          */
         expectedCloseDate?: string;
@@ -319,15 +340,30 @@ declare module "@oomol-lab/connector" {
           id: number;
           /** Deal title. */
           title: string;
-          /** Owner user ID. */
+          /**
+           * Owner user ID.
+           * @exclusiveMinimum 0
+           */
           owner_id?: number | null;
-          /** Linked person ID. */
+          /**
+           * Linked person ID.
+           * @exclusiveMinimum 0
+           */
           person_id?: number | null;
-          /** Linked organization ID. */
+          /**
+           * Linked organization ID.
+           * @exclusiveMinimum 0
+           */
           org_id?: number | null;
-          /** Pipeline ID. */
+          /**
+           * Pipeline ID.
+           * @exclusiveMinimum 0
+           */
           pipeline_id?: number | null;
-          /** Stage ID. */
+          /**
+           * Stage ID.
+           * @exclusiveMinimum 0
+           */
           stage_id?: number | null;
           /** Deal monetary value. */
           value?: number | null;
@@ -425,7 +461,10 @@ declare module "@oomol-lab/connector" {
           id: number;
           /** Organization name. */
           name: string;
-          /** Owner user ID. */
+          /**
+           * Owner user ID.
+           * @exclusiveMinimum 0
+           */
           owner_id?: number | null;
           /** Creation timestamp. */
           add_time?: string;
@@ -541,9 +580,15 @@ declare module "@oomol-lab/connector" {
           first_name?: string | null;
           /** Person last name. */
           last_name?: string | null;
-          /** Owner user ID. */
+          /**
+           * Owner user ID.
+           * @exclusiveMinimum 0
+           */
           owner_id?: number | null;
-          /** Linked organization ID. */
+          /**
+           * Linked organization ID.
+           * @exclusiveMinimum 0
+           */
           org_id?: number | null;
           /** Creation timestamp. */
           add_time?: string;
@@ -725,9 +770,15 @@ declare module "@oomol-lab/connector" {
           subject: string;
           /** Activity type. */
           type: string;
-          /** Owner user ID. */
+          /**
+           * Owner user ID.
+           * @exclusiveMinimum 0
+           */
           owner_id?: number | null;
-          /** Creator user ID. */
+          /**
+           * Creator user ID.
+           * @exclusiveMinimum 0
+           */
           creator_user_id?: number | null;
           /** Whether the activity is deleted. */
           is_deleted?: boolean;
@@ -735,15 +786,27 @@ declare module "@oomol-lab/connector" {
           add_time?: string;
           /** Last update timestamp. */
           update_time?: string;
-          /** Linked deal ID. */
+          /**
+           * Linked deal ID.
+           * @exclusiveMinimum 0
+           */
           deal_id?: number | null;
           /** Linked lead UUID. */
           lead_id?: string | null;
-          /** Linked person ID. */
+          /**
+           * Linked person ID.
+           * @exclusiveMinimum 0
+           */
           person_id?: number | null;
-          /** Linked organization ID. */
+          /**
+           * Linked organization ID.
+           * @exclusiveMinimum 0
+           */
           org_id?: number | null;
-          /** Linked project ID. */
+          /**
+           * Linked project ID.
+           * @exclusiveMinimum 0
+           */
           project_id?: number | null;
           /** Due date. */
           due_date?: string | null;
@@ -801,9 +864,15 @@ declare module "@oomol-lab/connector" {
             status?: string | null;
             /** Whether the attendee is the organizer. */
             is_organizer?: boolean | null;
-            /** Related Pipedrive person ID. */
+            /**
+             * Related Pipedrive person ID.
+             * @exclusiveMinimum 0
+             */
             person_id?: number | null;
-            /** Related Pipedrive user ID. */
+            /**
+             * Related Pipedrive user ID.
+             * @exclusiveMinimum 0
+             */
             user_id?: number | null;
           }>;
           /** Conference client. */
@@ -852,15 +921,30 @@ declare module "@oomol-lab/connector" {
           id: number;
           /** Deal title. */
           title: string;
-          /** Owner user ID. */
+          /**
+           * Owner user ID.
+           * @exclusiveMinimum 0
+           */
           owner_id?: number | null;
-          /** Linked person ID. */
+          /**
+           * Linked person ID.
+           * @exclusiveMinimum 0
+           */
           person_id?: number | null;
-          /** Linked organization ID. */
+          /**
+           * Linked organization ID.
+           * @exclusiveMinimum 0
+           */
           org_id?: number | null;
-          /** Pipeline ID. */
+          /**
+           * Pipeline ID.
+           * @exclusiveMinimum 0
+           */
           pipeline_id?: number | null;
-          /** Stage ID. */
+          /**
+           * Stage ID.
+           * @exclusiveMinimum 0
+           */
           stage_id?: number | null;
           /** Deal monetary value. */
           value?: number | null;
@@ -932,7 +1016,10 @@ declare module "@oomol-lab/connector" {
           id: number;
           /** Organization name. */
           name: string;
-          /** Owner user ID. */
+          /**
+           * Owner user ID.
+           * @exclusiveMinimum 0
+           */
           owner_id?: number | null;
           /** Creation timestamp. */
           add_time?: string;
@@ -1008,9 +1095,15 @@ declare module "@oomol-lab/connector" {
           first_name?: string | null;
           /** Person last name. */
           last_name?: string | null;
-          /** Owner user ID. */
+          /**
+           * Owner user ID.
+           * @exclusiveMinimum 0
+           */
           owner_id?: number | null;
-          /** Linked organization ID. */
+          /**
+           * Linked organization ID.
+           * @exclusiveMinimum 0
+           */
           org_id?: number | null;
           /** Creation timestamp. */
           add_time?: string;
@@ -1156,7 +1249,10 @@ declare module "@oomol-lab/connector" {
           is_deleted?: boolean;
           /** Stage probability percentage. */
           deal_probability?: number | null;
-          /** Parent pipeline ID. */
+          /**
+           * Parent pipeline ID.
+           * @exclusiveMinimum 0
+           */
           pipeline_id?: number | null;
           /** Whether deal rot is enabled for the stage. */
           is_deal_rot_enabled?: boolean;
@@ -1213,13 +1309,11 @@ declare module "@oomol-lab/connector" {
         done?: boolean;
         /**
          * Only include records updated at or after this RFC 3339 timestamp.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
          * @format date-time
          */
         updatedSince?: string;
         /**
          * Only include records updated before this RFC 3339 timestamp.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
          * @format date-time
          */
         updatedUntil?: string;
@@ -1256,9 +1350,15 @@ declare module "@oomol-lab/connector" {
           subject: string;
           /** Activity type. */
           type: string;
-          /** Owner user ID. */
+          /**
+           * Owner user ID.
+           * @exclusiveMinimum 0
+           */
           owner_id?: number | null;
-          /** Creator user ID. */
+          /**
+           * Creator user ID.
+           * @exclusiveMinimum 0
+           */
           creator_user_id?: number | null;
           /** Whether the activity is deleted. */
           is_deleted?: boolean;
@@ -1266,15 +1366,27 @@ declare module "@oomol-lab/connector" {
           add_time?: string;
           /** Last update timestamp. */
           update_time?: string;
-          /** Linked deal ID. */
+          /**
+           * Linked deal ID.
+           * @exclusiveMinimum 0
+           */
           deal_id?: number | null;
           /** Linked lead UUID. */
           lead_id?: string | null;
-          /** Linked person ID. */
+          /**
+           * Linked person ID.
+           * @exclusiveMinimum 0
+           */
           person_id?: number | null;
-          /** Linked organization ID. */
+          /**
+           * Linked organization ID.
+           * @exclusiveMinimum 0
+           */
           org_id?: number | null;
-          /** Linked project ID. */
+          /**
+           * Linked project ID.
+           * @exclusiveMinimum 0
+           */
           project_id?: number | null;
           /** Due date. */
           due_date?: string | null;
@@ -1332,9 +1444,15 @@ declare module "@oomol-lab/connector" {
             status?: string | null;
             /** Whether the attendee is the organizer. */
             is_organizer?: boolean | null;
-            /** Related Pipedrive person ID. */
+            /**
+             * Related Pipedrive person ID.
+             * @exclusiveMinimum 0
+             */
             person_id?: number | null;
-            /** Related Pipedrive user ID. */
+            /**
+             * Related Pipedrive user ID.
+             * @exclusiveMinimum 0
+             */
             user_id?: number | null;
           }>;
           /** Conference client. */
@@ -1401,13 +1519,11 @@ declare module "@oomol-lab/connector" {
         status?: Array<"open" | "won" | "lost" | "deleted">;
         /**
          * Only include records updated at or after this RFC 3339 timestamp.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
          * @format date-time
          */
         updatedSince?: string;
         /**
          * Only include records updated before this RFC 3339 timestamp.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
          * @format date-time
          */
         updatedUntil?: string;
@@ -1448,15 +1564,30 @@ declare module "@oomol-lab/connector" {
           id: number;
           /** Deal title. */
           title: string;
-          /** Owner user ID. */
+          /**
+           * Owner user ID.
+           * @exclusiveMinimum 0
+           */
           owner_id?: number | null;
-          /** Linked person ID. */
+          /**
+           * Linked person ID.
+           * @exclusiveMinimum 0
+           */
           person_id?: number | null;
-          /** Linked organization ID. */
+          /**
+           * Linked organization ID.
+           * @exclusiveMinimum 0
+           */
           org_id?: number | null;
-          /** Pipeline ID. */
+          /**
+           * Pipeline ID.
+           * @exclusiveMinimum 0
+           */
           pipeline_id?: number | null;
-          /** Stage ID. */
+          /**
+           * Stage ID.
+           * @exclusiveMinimum 0
+           */
           stage_id?: number | null;
           /** Deal monetary value. */
           value?: number | null;
@@ -1521,13 +1652,11 @@ declare module "@oomol-lab/connector" {
         ownerId?: number;
         /**
          * Only include records updated at or after this RFC 3339 timestamp.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
          * @format date-time
          */
         updatedSince?: string;
         /**
          * Only include records updated before this RFC 3339 timestamp.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
          * @format date-time
          */
         updatedUntil?: string;
@@ -1568,7 +1697,10 @@ declare module "@oomol-lab/connector" {
           id: number;
           /** Organization name. */
           name: string;
-          /** Owner user ID. */
+          /**
+           * Owner user ID.
+           * @exclusiveMinimum 0
+           */
           owner_id?: number | null;
           /** Creation timestamp. */
           add_time?: string;
@@ -1643,13 +1775,11 @@ declare module "@oomol-lab/connector" {
         dealId?: number;
         /**
          * Only include records updated at or after this RFC 3339 timestamp.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
          * @format date-time
          */
         updatedSince?: string;
         /**
          * Only include records updated before this RFC 3339 timestamp.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
          * @format date-time
          */
         updatedUntil?: string;
@@ -1694,9 +1824,15 @@ declare module "@oomol-lab/connector" {
           first_name?: string | null;
           /** Person last name. */
           last_name?: string | null;
-          /** Owner user ID. */
+          /**
+           * Owner user ID.
+           * @exclusiveMinimum 0
+           */
           owner_id?: number | null;
-          /** Linked organization ID. */
+          /**
+           * Linked organization ID.
+           * @exclusiveMinimum 0
+           */
           org_id?: number | null;
           /** Creation timestamp. */
           add_time?: string;
@@ -1871,7 +2007,10 @@ declare module "@oomol-lab/connector" {
           is_deleted?: boolean;
           /** Stage probability percentage. */
           deal_probability?: number | null;
-          /** Parent pipeline ID. */
+          /**
+           * Parent pipeline ID.
+           * @exclusiveMinimum 0
+           */
           pipeline_id?: number | null;
           /** Whether deal rot is enabled for the stage. */
           is_deal_rot_enabled?: boolean;
@@ -2216,7 +2355,6 @@ declare module "@oomol-lab/connector" {
         projectId?: number;
         /**
          * Due date in YYYY-MM-DD format.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))$
          * @format date
          */
         dueDate?: string;
@@ -2318,9 +2456,15 @@ declare module "@oomol-lab/connector" {
           subject: string;
           /** Activity type. */
           type: string;
-          /** Owner user ID. */
+          /**
+           * Owner user ID.
+           * @exclusiveMinimum 0
+           */
           owner_id?: number | null;
-          /** Creator user ID. */
+          /**
+           * Creator user ID.
+           * @exclusiveMinimum 0
+           */
           creator_user_id?: number | null;
           /** Whether the activity is deleted. */
           is_deleted?: boolean;
@@ -2328,15 +2472,27 @@ declare module "@oomol-lab/connector" {
           add_time?: string;
           /** Last update timestamp. */
           update_time?: string;
-          /** Linked deal ID. */
+          /**
+           * Linked deal ID.
+           * @exclusiveMinimum 0
+           */
           deal_id?: number | null;
           /** Linked lead UUID. */
           lead_id?: string | null;
-          /** Linked person ID. */
+          /**
+           * Linked person ID.
+           * @exclusiveMinimum 0
+           */
           person_id?: number | null;
-          /** Linked organization ID. */
+          /**
+           * Linked organization ID.
+           * @exclusiveMinimum 0
+           */
           org_id?: number | null;
-          /** Linked project ID. */
+          /**
+           * Linked project ID.
+           * @exclusiveMinimum 0
+           */
           project_id?: number | null;
           /** Due date. */
           due_date?: string | null;
@@ -2394,9 +2550,15 @@ declare module "@oomol-lab/connector" {
             status?: string | null;
             /** Whether the attendee is the organizer. */
             is_organizer?: boolean | null;
-            /** Related Pipedrive person ID. */
+            /**
+             * Related Pipedrive person ID.
+             * @exclusiveMinimum 0
+             */
             person_id?: number | null;
-            /** Related Pipedrive user ID. */
+            /**
+             * Related Pipedrive user ID.
+             * @exclusiveMinimum 0
+             */
             user_id?: number | null;
           }>;
           /** Conference client. */
@@ -2465,13 +2627,11 @@ declare module "@oomol-lab/connector" {
         visibleTo?: number;
         /**
          * Close timestamp in RFC 3339 format.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
          * @format date-time
          */
         closeTime?: string;
         /**
          * Expected close date in YYYY-MM-DD format.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))$
          * @format date
          */
         expectedCloseDate?: string;
@@ -2498,15 +2658,30 @@ declare module "@oomol-lab/connector" {
           id: number;
           /** Deal title. */
           title: string;
-          /** Owner user ID. */
+          /**
+           * Owner user ID.
+           * @exclusiveMinimum 0
+           */
           owner_id?: number | null;
-          /** Linked person ID. */
+          /**
+           * Linked person ID.
+           * @exclusiveMinimum 0
+           */
           person_id?: number | null;
-          /** Linked organization ID. */
+          /**
+           * Linked organization ID.
+           * @exclusiveMinimum 0
+           */
           org_id?: number | null;
-          /** Pipeline ID. */
+          /**
+           * Pipeline ID.
+           * @exclusiveMinimum 0
+           */
           pipeline_id?: number | null;
-          /** Stage ID. */
+          /**
+           * Stage ID.
+           * @exclusiveMinimum 0
+           */
           stage_id?: number | null;
           /** Deal monetary value. */
           value?: number | null;
@@ -2609,7 +2784,10 @@ declare module "@oomol-lab/connector" {
           id: number;
           /** Organization name. */
           name: string;
-          /** Owner user ID. */
+          /**
+           * Owner user ID.
+           * @exclusiveMinimum 0
+           */
           owner_id?: number | null;
           /** Creation timestamp. */
           add_time?: string;
@@ -2730,9 +2908,15 @@ declare module "@oomol-lab/connector" {
           first_name?: string | null;
           /** Person last name. */
           last_name?: string | null;
-          /** Owner user ID. */
+          /**
+           * Owner user ID.
+           * @exclusiveMinimum 0
+           */
           owner_id?: number | null;
-          /** Linked organization ID. */
+          /**
+           * Linked organization ID.
+           * @exclusiveMinimum 0
+           */
           org_id?: number | null;
           /** Creation timestamp. */
           add_time?: string;

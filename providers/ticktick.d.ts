@@ -238,6 +238,7 @@ declare module "@oomol-lab/connector" {
           etag?: string;
           /** The TickTick task kind. */
           kind?: string;
+          /** The tags value. */
           tags?: Array<string>;
           [key: string]: unknown;
         };
@@ -356,6 +357,7 @@ declare module "@oomol-lab/connector" {
           etag?: string;
           /** The TickTick task kind. */
           kind?: string;
+          /** The tags value. */
           tags?: Array<string>;
           [key: string]: unknown;
         };
@@ -411,6 +413,7 @@ declare module "@oomol-lab/connector" {
         endDate?: string;
         /** An optional list of TickTick priority values. */
         priority?: Array<0 | 1 | 3 | 5>;
+        /** The tag value. */
         tag?: Array<string>;
         /** An optional list of TickTick task status codes. */
         status?: Array<number>;
@@ -472,6 +475,7 @@ declare module "@oomol-lab/connector" {
           etag?: string;
           /** The TickTick task kind. */
           kind?: string;
+          /** The tags value. */
           tags?: Array<string>;
           [key: string]: unknown;
         }>;
@@ -665,6 +669,7 @@ declare module "@oomol-lab/connector" {
           etag?: string;
           /** The TickTick task kind. */
           kind?: string;
+          /** The tags value. */
           tags?: Array<string>;
           [key: string]: unknown;
         }>;
@@ -753,6 +758,7 @@ declare module "@oomol-lab/connector" {
           etag?: string;
           /** The TickTick task kind. */
           kind?: string;
+          /** The tags value. */
           tags?: Array<string>;
           [key: string]: unknown;
         };
@@ -862,6 +868,7 @@ declare module "@oomol-lab/connector" {
           etag?: string;
           /** The TickTick task kind. */
           kind?: string;
+          /** The tags value. */
           tags?: Array<string>;
           [key: string]: unknown;
         }>;
@@ -938,6 +945,7 @@ declare module "@oomol-lab/connector" {
           etag?: string;
           /** The TickTick task kind. */
           kind?: string;
+          /** The tags value. */
           tags?: Array<string>;
           [key: string]: unknown;
         }>;
@@ -1259,6 +1267,7 @@ declare module "@oomol-lab/connector" {
           etag?: string;
           /** The TickTick task kind. */
           kind?: string;
+          /** The tags value. */
           tags?: Array<string>;
           [key: string]: unknown;
         };

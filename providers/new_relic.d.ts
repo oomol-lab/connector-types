@@ -424,6 +424,7 @@ declare module "@oomol-lab/connector" {
           message?: string;
           [key: string]: unknown;
         }> | null;
+        /** The created ping monitor summary. */
         monitor: {
           /** The created monitor ID. */
           id?: string;

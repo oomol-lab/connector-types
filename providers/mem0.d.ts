@@ -202,6 +202,7 @@ declare module "@oomol-lab/connector" {
         results?: Array<unknown>;
         /** Additional metadata attached to the event. */
         metadata?: Record<string, unknown>;
+        /** The event processing latency in milliseconds. */
         latency?: number | null;
         /** The graph-memory processing status. */
         graph_status?: unknown;
@@ -267,6 +268,7 @@ declare module "@oomol-lab/connector" {
           results?: Array<unknown>;
           /** Additional metadata attached to the event. */
           metadata?: Record<string, unknown>;
+          /** The event processing latency in milliseconds. */
           latency?: number | null;
           /** The graph-memory processing status. */
           graph_status?: unknown;

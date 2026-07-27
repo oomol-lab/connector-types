@@ -297,11 +297,8 @@ declare module "@oomol-lab/connector" {
       input: {
         /** The ID of the Google Docs document. */
         document_id: string;
-        /**
-         * One or more DeleteTableColumnRequest objects identifying the columns to delete.
-         * @minItems 1
-         */
-        requests: Array<Record<string, unknown>>;
+        /** One or more DeleteTableColumnRequest objects identifying the columns to delete. */
+        requests: (Array<Record<string, unknown>>) & (Array<unknown>);
       };
       output: {
         /** The ID of the document that was updated. */
@@ -495,11 +492,8 @@ declare module "@oomol-lab/connector" {
       input: {
         /** The ID of the Google Docs document. */
         document_id: string;
-        /**
-         * One or more InsertTableColumnRequest objects specifying where and how to insert columns.
-         * @minItems 1
-         */
-        requests: Array<Record<string, unknown>>;
+        /** One or more InsertTableColumnRequest objects specifying where and how to insert columns. */
+        requests: (Array<Record<string, unknown>>) & (Array<unknown>);
       };
       output: {
         /** The ID of the document that was updated. */
@@ -694,11 +688,8 @@ declare module "@oomol-lab/connector" {
       input: {
         /** The ID of the Google Docs document. */
         document_id: string;
-        /**
-         * An array of Docs API Request objects to apply in a single batchUpdate call.
-         * @minItems 1
-         */
-        requests: Array<Record<string, unknown>>;
+        /** An array of Docs API Request objects to apply in a single batchUpdate call. */
+        requests: (Array<Record<string, unknown>>) & (Array<unknown>);
         /** An optional WriteControl object to control how write requests are executed. */
         write_control?: Record<string, unknown>;
       };
@@ -739,11 +730,8 @@ declare module "@oomol-lab/connector" {
       input: {
         /** The ID of the Google Docs document to update. */
         document_id: string;
-        /**
-         * An array of Docs API Request objects describing the edits to apply.
-         * @minItems 1
-         */
-        editDocs: Array<Record<string, unknown>>;
+        /** An array of Docs API Request objects describing the edits to apply. */
+        editDocs: (Array<Record<string, unknown>>) & (Array<unknown>);
       };
       output: {
         /** The ID of the document that was updated. */

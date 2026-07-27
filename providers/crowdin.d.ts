@@ -35,8 +35,11 @@ declare module "@oomol-lab/connector" {
         projectId: number;
         /** The name of the branch. */
         name: string;
+        /** The title of the branch. */
         title: string | null;
+        /** The export pattern for the branch. */
         exportPattern: string | null;
+        /** The priority of the branch. */
         priority: number | null;
         /** The timestamp when the branch was created. */
         createdAt: string;
@@ -85,12 +88,23 @@ declare module "@oomol-lab/connector" {
          * @exclusiveMinimum 0
          */
         projectId: number;
+        /**
+         * The branch ID this directory belongs to.
+         * @exclusiveMinimum 0
+         */
         branchId: number | null;
+        /**
+         * The parent directory ID.
+         * @exclusiveMinimum 0
+         */
         parentId: number | null;
         /** The name of the directory. */
         name: string;
+        /** The title of the directory. */
         title: string | null;
+        /** The export pattern for the directory. */
         exportPattern: string | null;
+        /** The priority of the directory. */
         priority: number | null;
         /** The timestamp when the directory was created. */
         createdAt: string;
@@ -134,8 +148,11 @@ declare module "@oomol-lab/connector" {
           projectId: number;
           /** The name of the branch. */
           name: string;
+          /** The title of the branch. */
           title: string | null;
+          /** The export pattern for the branch. */
           exportPattern: string | null;
+          /** The priority of the branch. */
           priority: number | null;
           /** The timestamp when the branch was created. */
           createdAt: string;
@@ -203,12 +220,23 @@ declare module "@oomol-lab/connector" {
            * @exclusiveMinimum 0
            */
           projectId: number;
+          /**
+           * The branch ID this directory belongs to.
+           * @exclusiveMinimum 0
+           */
           branchId: number | null;
+          /**
+           * The parent directory ID.
+           * @exclusiveMinimum 0
+           */
           parentId: number | null;
           /** The name of the directory. */
           name: string;
+          /** The title of the directory. */
           title: string | null;
+          /** The export pattern for the directory. */
           exportPattern: string | null;
+          /** The priority of the directory. */
           priority: number | null;
           /** The timestamp when the directory was created. */
           createdAt: string;
@@ -276,11 +304,21 @@ declare module "@oomol-lab/connector" {
            * @exclusiveMinimum 0
            */
           projectId: number;
+          /**
+           * The branch ID this file belongs to.
+           * @exclusiveMinimum 0
+           */
           branchId: number | null;
+          /**
+           * The directory ID this file belongs to.
+           * @exclusiveMinimum 0
+           */
           directoryId: number | null;
           /** The name of the source file. */
           name: string;
+          /** The title of the source file. */
           title: string | null;
+          /** The context information for the source file. */
           context: string | null;
           /** The file type. */
           type: string;
@@ -419,11 +457,21 @@ declare module "@oomol-lab/connector" {
            * @exclusiveMinimum 0
            */
           projectId: number;
+          /**
+           * The branch ID this file belongs to.
+           * @exclusiveMinimum 0
+           */
           branchId: number | null;
+          /**
+           * The directory ID this file belongs to.
+           * @exclusiveMinimum 0
+           */
           directoryId: number | null;
           /** The name of the source file. */
           name: string;
+          /** The title of the source file. */
           title: string | null;
+          /** The context information for the source file. */
           context: string | null;
           /** The file type. */
           type: string;

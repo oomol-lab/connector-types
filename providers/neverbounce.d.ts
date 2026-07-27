@@ -468,7 +468,6 @@ declare module "@oomol-lab/connector" {
       input: {
         /**
          * The email address to verify with NeverBounce.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email: string;

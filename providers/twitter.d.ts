@@ -159,11 +159,8 @@ declare module "@oomol-lab/connector" {
         attachmentMediaIds?: Array<string>;
         /** The Direct Message conversation type. */
         conversationType: "Group";
-        /**
-         * The participant user IDs to include in the group conversation.
-         * @minItems 2
-         */
-        participantIds: Array<string>;
+        /** The participant user IDs to include in the group conversation. */
+        participantIds: (Array<string>) & (Array<unknown>);
       };
       output: {
         /** The Direct Message conversation identifier. */
@@ -1454,12 +1451,8 @@ declare module "@oomol-lab/connector" {
     /** Get Spaces created by up to 100 user accounts. */
     "twitter.get_spaces_by_creators": {
       input: {
-        /**
-         * The user IDs whose created Spaces should be read.
-         * @minItems 1
-         * @maxItems 100
-         */
-        userIds: Array<string>;
+        /** The user IDs whose created Spaces should be read. */
+        userIds: (Array<string>) & (Array<unknown>);
         /** The Space-related expansions to include in the X API response. */
         expansions?: Array<string>;
         /** The user fields to request for expanded Space users. */
@@ -1523,12 +1516,8 @@ declare module "@oomol-lab/connector" {
     /** Get up to 100 Spaces by Space ID and optional expanded objects. */
     "twitter.get_spaces_by_ids": {
       input: {
-        /**
-         * The list of Space IDs to look up.
-         * @minItems 1
-         * @maxItems 100
-         */
-        ids: Array<string>;
+        /** The list of Space IDs to look up. */
+        ids: (Array<string>) & (Array<unknown>);
         /** The Space-related expansions to include in the X API response. */
         expansions?: Array<string>;
         /** The user fields to request for expanded Space users. */
@@ -1899,12 +1888,8 @@ declare module "@oomol-lab/connector" {
     /** Get up to 100 public X user profiles by user ID and optional expanded objects. */
     "twitter.get_users_by_ids": {
       input: {
-        /**
-         * The list of user IDs to look up.
-         * @minItems 1
-         * @maxItems 100
-         */
-        ids: Array<string>;
+        /** The list of user IDs to look up. */
+        ids: (Array<string>) & (Array<unknown>);
         /** The expansions to include, such as pinned_tweet_id. */
         expansions?: Array<string>;
         /** The additional user fields to request from the X API. */
@@ -2229,12 +2214,8 @@ declare module "@oomol-lab/connector" {
     /** Get up to 100 public Tweets by Tweet ID and optional expanded objects. */
     "twitter.post_lookup_by_post_ids": {
       input: {
-        /**
-         * The list of Tweet IDs to look up.
-         * @minItems 1
-         * @maxItems 100
-         */
-        ids: Array<string>;
+        /** The list of Tweet IDs to look up. */
+        ids: (Array<string>) & (Array<unknown>);
         /** The expansions to include in the X API response. */
         expansions?: Array<string>;
         /** The poll fields to request from the X API. */
@@ -3201,12 +3182,8 @@ declare module "@oomol-lab/connector" {
     /** Get up to 100 public X user profiles by username and optional expanded objects. */
     "twitter.user_lookup_by_usernames": {
       input: {
-        /**
-         * The list of usernames to look up, without the @ prefix.
-         * @minItems 1
-         * @maxItems 100
-         */
-        usernames: Array<string>;
+        /** The list of usernames to look up, without the @ prefix. */
+        usernames: (Array<string>) & (Array<unknown>);
         /** The expansions to include, such as pinned_tweet_id. */
         expansions?: Array<string>;
         /** The additional user fields to request from the X API. */

@@ -95,8 +95,10 @@ declare module "@oomol-lab/connector" {
           message: {
             /** The role of the generated message. */
             role: string;
+            /** The generated text content. */
             content?: string | null;
           };
+          /** Why Hugging Face stopped generating this choice. */
           finishReason?: string | null;
         }>;
         /** The normalized token usage. */
@@ -396,7 +398,7 @@ declare module "@oomol-lab/connector" {
          * @maximum 500
          * @default 20
          */
-        limit: number;
+        limit?: number;
       };
       output: {
         /** The list of matching dataset summaries. */
@@ -469,7 +471,7 @@ declare module "@oomol-lab/connector" {
          * @maximum 100
          * @default 20
          */
-        limit: number;
+        limit?: number;
       };
       output: {
         /** The list of matching model summaries. */
@@ -511,7 +513,7 @@ declare module "@oomol-lab/connector" {
          * The optional repository-relative path to list.
          * @default ""
          */
-        path: string;
+        path?: string;
         /** The optional git revision to inspect. */
         revision?: string;
         /** Whether to recursively return all nested entries. */
@@ -565,7 +567,7 @@ declare module "@oomol-lab/connector" {
          * @maximum 500
          * @default 20
          */
-        limit: number;
+        limit?: number;
       };
       output: {
         /** The list of matching Space summaries. */

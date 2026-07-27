@@ -242,12 +242,8 @@ declare module "@oomol-lab/connector" {
           markdown?: string;
           /** Whether the bulk screenshots should use caching by default. */
           cache?: boolean;
-          /**
-           * The default delay in milliseconds before rendering each screenshot.
-           * @minimum 0
-           * @maximum 30000
-           */
-          delay?: number;
+          /** The default delay in milliseconds before rendering each screenshot. */
+          delay?: (number) & (string);
           /** The default image format for the bulk screenshots. */
           format?: "png" | "jpg" | "jpeg" | "webp";
           /** Whether to block ads by default. */
@@ -268,20 +264,12 @@ declare module "@oomol-lab/connector" {
           storage_path?: string;
           /** Whether to block trackers by default. */
           block_trackers?: boolean;
-          /**
-           * The default viewport width in pixels.
-           * @minimum 1
-           * @maximum 7680
-           */
-          viewport_width?: number;
+          /** The default viewport width in pixels. */
+          viewport_width?: (number) & (string);
           /** The default device viewport preset. */
           viewport_device?: "desktop" | "mobile" | "tablet";
-          /**
-           * The default viewport height in pixels.
-           * @minimum 1
-           * @maximum 7680
-           */
-          viewport_height?: number;
+          /** The default viewport height in pixels. */
+          viewport_height?: (number) & (string);
           /**
            * The default device scale factor.
            * @minimum 1
@@ -316,12 +304,8 @@ declare module "@oomol-lab/connector" {
           markdown?: string;
           /** Whether this screenshot should use caching. */
           cache?: boolean;
-          /**
-           * The delay in milliseconds before rendering this screenshot.
-           * @minimum 0
-           * @maximum 30000
-           */
-          delay?: number;
+          /** The delay in milliseconds before rendering this screenshot. */
+          delay?: (number) & (string);
           /** The image format for this screenshot. */
           format?: "png" | "jpg" | "jpeg" | "webp";
           /** Whether to block ads for this screenshot. */
@@ -342,20 +326,12 @@ declare module "@oomol-lab/connector" {
           storage_path?: string;
           /** Whether to block trackers for this screenshot. */
           block_trackers?: boolean;
-          /**
-           * The viewport width in pixels.
-           * @minimum 1
-           * @maximum 7680
-           */
-          viewport_width?: number;
+          /** The viewport width in pixels. */
+          viewport_width?: (number) & (string);
           /** The viewport preset for this screenshot. */
           viewport_device?: "desktop" | "mobile" | "tablet";
-          /**
-           * The viewport height in pixels.
-           * @minimum 1
-           * @maximum 7680
-           */
-          viewport_height?: number;
+          /** The viewport height in pixels. */
+          viewport_height?: (number) & (string);
           /**
            * The device scale factor for this screenshot.
            * @minimum 1
@@ -405,12 +381,8 @@ declare module "@oomol-lab/connector" {
         markdown?: string;
         /** Whether ScreenshotOne should return or reuse a cached screenshot URL. */
         cache?: boolean;
-        /**
-         * The delay in seconds before rendering the screenshot.
-         * @minimum 0
-         * @maximum 30
-         */
-        delay?: number;
+        /** The delay in seconds before rendering the screenshot. */
+        delay?: (number) & (string);
         /** The output format for the screenshot. */
         format?: "png" | "jpeg" | "webp" | "pdf" | "html";
         /** The response type requested from ScreenshotOne. */

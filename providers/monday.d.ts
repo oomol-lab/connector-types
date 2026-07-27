@@ -27,7 +27,7 @@ declare module "@oomol-lab/connector" {
          * The membership role that monday should assign on the board.
          * @default "subscriber"
          */
-        kind: "owner" | "subscriber";
+        kind?: "owner" | "subscriber";
         /**
          * The teams that should be added to the board.
          * @minItems 1
@@ -56,7 +56,7 @@ declare module "@oomol-lab/connector" {
          * The membership role that monday should assign on the board.
          * @default "subscriber"
          */
-        kind: "owner" | "subscriber";
+        kind?: "owner" | "subscriber";
         /**
          * The users that should be added to the board.
          * @minItems 1
@@ -307,14 +307,16 @@ declare module "@oomol-lab/connector" {
           column_values?: Array<{
             /** The monday column identifier. */
             id?: string;
+            /** The rendered monday column text value. */
             text?: string | null;
             /** The monday column type. */
             type?: string;
+            /** The raw monday column JSON value. */
             value?: string | null;
             [key: string]: unknown;
           }>;
           /** The nested subitems of a monday item. */
-          subitems?: Array<unknown>;
+          subitems?: Array<Record<string, unknown>>;
           [key: string]: unknown;
         };
       };
@@ -438,14 +440,16 @@ declare module "@oomol-lab/connector" {
           column_values?: Array<{
             /** The monday column identifier. */
             id?: string;
+            /** The rendered monday column text value. */
             text?: string | null;
             /** The monday column type. */
             type?: string;
+            /** The raw monday column JSON value. */
             value?: string | null;
             [key: string]: unknown;
           }>;
           /** The nested subitems of a monday item. */
-          subitems?: Array<unknown>;
+          subitems?: Array<Record<string, unknown>>;
           [key: string]: unknown;
         };
       };
@@ -574,14 +578,16 @@ declare module "@oomol-lab/connector" {
           column_values?: Array<{
             /** The monday column identifier. */
             id?: string;
+            /** The rendered monday column text value. */
             text?: string | null;
             /** The monday column type. */
             type?: string;
+            /** The raw monday column JSON value. */
             value?: string | null;
             [key: string]: unknown;
           }>;
           /** The nested subitems of a monday item. */
-          subitems?: Array<unknown>;
+          subitems?: Array<Record<string, unknown>>;
           [key: string]: unknown;
         };
       };
@@ -1125,14 +1131,16 @@ declare module "@oomol-lab/connector" {
           column_values?: Array<{
             /** The monday column identifier. */
             id?: string;
+            /** The rendered monday column text value. */
             text?: string | null;
             /** The monday column type. */
             type?: string;
+            /** The raw monday column JSON value. */
             value?: string | null;
             [key: string]: unknown;
           }>;
           /** The nested subitems of a monday item. */
-          subitems?: Array<unknown>;
+          subitems?: Array<Record<string, unknown>>;
           [key: string]: unknown;
         };
       };
@@ -1259,14 +1267,16 @@ declare module "@oomol-lab/connector" {
           column_values?: Array<{
             /** The monday column identifier. */
             id?: string;
+            /** The rendered monday column text value. */
             text?: string | null;
             /** The monday column type. */
             type?: string;
+            /** The raw monday column JSON value. */
             value?: string | null;
             [key: string]: unknown;
           }>;
           /** The nested subitems of a monday item. */
-          subitems?: Array<unknown>;
+          subitems?: Array<Record<string, unknown>>;
           [key: string]: unknown;
         };
       };
@@ -1630,14 +1640,16 @@ declare module "@oomol-lab/connector" {
           column_values?: Array<{
             /** The monday column identifier. */
             id?: string;
+            /** The rendered monday column text value. */
             text?: string | null;
             /** The monday column type. */
             type?: string;
+            /** The raw monday column JSON value. */
             value?: string | null;
             [key: string]: unknown;
           }>;
           /** The nested subitems of a monday item. */
-          subitems?: Array<unknown>;
+          subitems?: Array<Record<string, unknown>>;
           [key: string]: unknown;
         };
       };
@@ -1842,14 +1854,16 @@ declare module "@oomol-lab/connector" {
           column_values?: Array<{
             /** The monday column identifier. */
             id?: string;
+            /** The rendered monday column text value. */
             text?: string | null;
             /** The monday column type. */
             type?: string;
+            /** The raw monday column JSON value. */
             value?: string | null;
             [key: string]: unknown;
           }>;
           /** The nested subitems of a monday item. */
-          subitems?: Array<unknown>;
+          subitems?: Array<Record<string, unknown>>;
           [key: string]: unknown;
         }>;
       };
@@ -2224,14 +2238,16 @@ declare module "@oomol-lab/connector" {
           column_values?: Array<{
             /** The monday column identifier. */
             id?: string;
+            /** The rendered monday column text value. */
             text?: string | null;
             /** The monday column type. */
             type?: string;
+            /** The raw monday column JSON value. */
             value?: string | null;
             [key: string]: unknown;
           }>;
           /** The nested subitems of a monday item. */
-          subitems?: Array<unknown>;
+          subitems?: Array<Record<string, unknown>>;
           [key: string]: unknown;
         }>;
       };
@@ -2366,14 +2382,16 @@ declare module "@oomol-lab/connector" {
           column_values?: Array<{
             /** The monday column identifier. */
             id?: string;
+            /** The rendered monday column text value. */
             text?: string | null;
             /** The monday column type. */
             type?: string;
+            /** The raw monday column JSON value. */
             value?: string | null;
             [key: string]: unknown;
           }>;
           /** The nested subitems of a monday item. */
-          subitems?: Array<unknown>;
+          subitems?: Array<Record<string, unknown>>;
           [key: string]: unknown;
         }>;
       };
@@ -2502,14 +2520,16 @@ declare module "@oomol-lab/connector" {
           column_values?: Array<{
             /** The monday column identifier. */
             id?: string;
+            /** The rendered monday column text value. */
             text?: string | null;
             /** The monday column type. */
             type?: string;
+            /** The raw monday column JSON value. */
             value?: string | null;
             [key: string]: unknown;
           }>;
           /** The nested subitems of a monday item. */
-          subitems?: Array<unknown>;
+          subitems?: Array<Record<string, unknown>>;
           [key: string]: unknown;
         }>;
       };
@@ -3153,14 +3173,16 @@ declare module "@oomol-lab/connector" {
             column_values?: Array<{
               /** The monday column identifier. */
               id?: string;
+              /** The rendered monday column text value. */
               text?: string | null;
               /** The monday column type. */
               type?: string;
+              /** The raw monday column JSON value. */
               value?: string | null;
               [key: string]: unknown;
             }>;
             /** The nested subitems of a monday item. */
-            subitems?: Array<unknown>;
+            subitems?: Array<Record<string, unknown>>;
             [key: string]: unknown;
           }>;
           [key: string]: unknown;
@@ -3608,14 +3630,16 @@ declare module "@oomol-lab/connector" {
           column_values?: Array<{
             /** The monday column identifier. */
             id?: string;
+            /** The rendered monday column text value. */
             text?: string | null;
             /** The monday column type. */
             type?: string;
+            /** The raw monday column JSON value. */
             value?: string | null;
             [key: string]: unknown;
           }>;
           /** The nested subitems of a monday item. */
-          subitems?: Array<unknown>;
+          subitems?: Array<Record<string, unknown>>;
           [key: string]: unknown;
         };
       };
@@ -3738,14 +3762,16 @@ declare module "@oomol-lab/connector" {
           column_values?: Array<{
             /** The monday column identifier. */
             id?: string;
+            /** The rendered monday column text value. */
             text?: string | null;
             /** The monday column type. */
             type?: string;
+            /** The raw monday column JSON value. */
             value?: string | null;
             [key: string]: unknown;
           }>;
           /** The nested subitems of a monday item. */
-          subitems?: Array<unknown>;
+          subitems?: Array<Record<string, unknown>>;
           [key: string]: unknown;
         };
       };

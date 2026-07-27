@@ -290,7 +290,6 @@ declare module "@oomol-lab/connector" {
         unsubscribed_at?: string;
         /**
          * Subscriber email address.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email: string;

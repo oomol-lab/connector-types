@@ -368,8 +368,11 @@ declare module "@oomol-lab/connector" {
         pagesInfo: Array<{
           /** The 1-based page index. */
           pageIndex: number;
+          /** The page rotation where 0=0deg, 1=90deg, 2=180deg, and 3=270deg. */
           rotation: number | null;
+          /** The page width in 1/72 inch units. */
           width: number | null;
+          /** The page height in 1/72 inch units. */
           height: number | null;
         }> | null;
       };

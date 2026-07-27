@@ -11,7 +11,7 @@ declare module "@oomol-lab/connector" {
          */
         issueIdOrKey: string;
         /**
-         * Plain text comment body converted to Atlassian Document Format.
+         * Plain text comment body converted to the connected deployment's document format.
          * @minLength 1
          */
         bodyText?: string;
@@ -33,7 +33,7 @@ declare module "@oomol-lab/connector" {
           id: string;
           /** The Jira API URL for this comment. */
           self?: string;
-          /** The Jira comment body in ADF. */
+          /** The Jira comment body in the connected deployment's format. */
           body?: {
             /** The ADF root node type. */
             type: "doc";
@@ -42,11 +42,15 @@ declare module "@oomol-lab/connector" {
             /** The ADF top-level content nodes. */
             content: Array<unknown>;
             [key: string]: unknown;
-          };
+          } | string;
           /** The Jira comment author. */
           author?: {
             /** The Jira account ID. */
-            accountId: string;
+            accountId?: string;
+            /** The Jira Server username. */
+            name?: string;
+            /** The Jira Server user key. */
+            key?: string;
             /** The Jira account type. */
             accountType?: string;
             /** The Jira display name. */
@@ -64,7 +68,11 @@ declare module "@oomol-lab/connector" {
           /** The Jira comment update author. */
           updateAuthor?: {
             /** The Jira account ID. */
-            accountId: string;
+            accountId?: string;
+            /** The Jira Server username. */
+            name?: string;
+            /** The Jira Server user key. */
+            key?: string;
             /** The Jira account type. */
             accountType?: string;
             /** The Jira display name. */
@@ -120,7 +128,7 @@ declare module "@oomol-lab/connector" {
          */
         summary: string;
         /**
-         * Plain text description converted to Atlassian Document Format.
+         * Plain text description converted to the connected deployment's document format.
          * @minLength 1
          */
         descriptionText?: string;
@@ -140,7 +148,7 @@ declare module "@oomol-lab/connector" {
          */
         labels?: Array<string>;
         /**
-         * The Jira account ID to assign to the new issue.
+         * The Jira Cloud account ID or Jira Server username to assign to the new issue.
          * @minLength 1
          */
         assigneeAccountId?: string;
@@ -151,7 +159,6 @@ declare module "@oomol-lab/connector" {
         priorityId?: string;
         /**
          * The Jira due date in YYYY-MM-DD format.
-         * @pattern ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))$
          * @format date
          */
         dueDate?: string;
@@ -174,7 +181,7 @@ declare module "@oomol-lab/connector" {
           self?: string;
           /** The Jira issue summary. */
           summary?: string;
-          /** The Jira issue description in ADF. */
+          /** The normalized Jira issue description in ADF. */
           description?: {
             /** The ADF root node type. */
             type: "doc";
@@ -235,7 +242,11 @@ declare module "@oomol-lab/connector" {
             /** The Jira project lead. */
             lead?: {
               /** The Jira account ID. */
-              accountId: string;
+              accountId?: string;
+              /** The Jira Server username. */
+              name?: string;
+              /** The Jira Server user key. */
+              key?: string;
               /** The Jira account type. */
               accountType?: string;
               /** The Jira display name. */
@@ -273,7 +284,11 @@ declare module "@oomol-lab/connector" {
           /** The Jira issue assignee. */
           assignee?: {
             /** The Jira account ID. */
-            accountId: string;
+            accountId?: string;
+            /** The Jira Server username. */
+            name?: string;
+            /** The Jira Server user key. */
+            key?: string;
             /** The Jira account type. */
             accountType?: string;
             /** The Jira display name. */
@@ -291,7 +306,11 @@ declare module "@oomol-lab/connector" {
           /** The Jira issue reporter. */
           reporter?: {
             /** The Jira account ID. */
-            accountId: string;
+            accountId?: string;
+            /** The Jira Server username. */
+            name?: string;
+            /** The Jira Server user key. */
+            key?: string;
             /** The Jira account type. */
             accountType?: string;
             /** The Jira display name. */
@@ -366,7 +385,7 @@ declare module "@oomol-lab/connector" {
           self?: string;
           /** The Jira issue summary. */
           summary?: string;
-          /** The Jira issue description in ADF. */
+          /** The normalized Jira issue description in ADF. */
           description?: {
             /** The ADF root node type. */
             type: "doc";
@@ -427,7 +446,11 @@ declare module "@oomol-lab/connector" {
             /** The Jira project lead. */
             lead?: {
               /** The Jira account ID. */
-              accountId: string;
+              accountId?: string;
+              /** The Jira Server username. */
+              name?: string;
+              /** The Jira Server user key. */
+              key?: string;
               /** The Jira account type. */
               accountType?: string;
               /** The Jira display name. */
@@ -465,7 +488,11 @@ declare module "@oomol-lab/connector" {
           /** The Jira issue assignee. */
           assignee?: {
             /** The Jira account ID. */
-            accountId: string;
+            accountId?: string;
+            /** The Jira Server username. */
+            name?: string;
+            /** The Jira Server user key. */
+            key?: string;
             /** The Jira account type. */
             accountType?: string;
             /** The Jira display name. */
@@ -483,7 +510,11 @@ declare module "@oomol-lab/connector" {
           /** The Jira issue reporter. */
           reporter?: {
             /** The Jira account ID. */
-            accountId: string;
+            accountId?: string;
+            /** The Jira Server username. */
+            name?: string;
+            /** The Jira Server user key. */
+            key?: string;
             /** The Jira account type. */
             accountType?: string;
             /** The Jira display name. */
@@ -566,7 +597,11 @@ declare module "@oomol-lab/connector" {
           /** The Jira project lead. */
           lead?: {
             /** The Jira account ID. */
-            accountId: string;
+            accountId?: string;
+            /** The Jira Server username. */
+            name?: string;
+            /** The Jira Server user key. */
+            key?: string;
             /** The Jira account type. */
             accountType?: string;
             /** The Jira display name. */
@@ -635,7 +670,7 @@ declare module "@oomol-lab/connector" {
           id: string;
           /** The Jira API URL for this comment. */
           self?: string;
-          /** The Jira comment body in ADF. */
+          /** The Jira comment body in the connected deployment's format. */
           body?: {
             /** The ADF root node type. */
             type: "doc";
@@ -644,11 +679,15 @@ declare module "@oomol-lab/connector" {
             /** The ADF top-level content nodes. */
             content: Array<unknown>;
             [key: string]: unknown;
-          };
+          } | string;
           /** The Jira comment author. */
           author?: {
             /** The Jira account ID. */
-            accountId: string;
+            accountId?: string;
+            /** The Jira Server username. */
+            name?: string;
+            /** The Jira Server user key. */
+            key?: string;
             /** The Jira account type. */
             accountType?: string;
             /** The Jira display name. */
@@ -666,7 +705,11 @@ declare module "@oomol-lab/connector" {
           /** The Jira comment update author. */
           updateAuthor?: {
             /** The Jira account ID. */
-            accountId: string;
+            accountId?: string;
+            /** The Jira Server username. */
+            name?: string;
+            /** The Jira Server user key. */
+            key?: string;
             /** The Jira account type. */
             accountType?: string;
             /** The Jira display name. */
@@ -742,7 +785,11 @@ declare module "@oomol-lab/connector" {
           /** The Jira project lead. */
           lead?: {
             /** The Jira account ID. */
-            accountId: string;
+            accountId?: string;
+            /** The Jira Server username. */
+            name?: string;
+            /** The Jira Server user key. */
+            key?: string;
             /** The Jira account type. */
             accountType?: string;
             /** The Jira display name. */
@@ -825,7 +872,7 @@ declare module "@oomol-lab/connector" {
           self?: string;
           /** The Jira issue summary. */
           summary?: string;
-          /** The Jira issue description in ADF. */
+          /** The normalized Jira issue description in ADF. */
           description?: {
             /** The ADF root node type. */
             type: "doc";
@@ -886,7 +933,11 @@ declare module "@oomol-lab/connector" {
             /** The Jira project lead. */
             lead?: {
               /** The Jira account ID. */
-              accountId: string;
+              accountId?: string;
+              /** The Jira Server username. */
+              name?: string;
+              /** The Jira Server user key. */
+              key?: string;
               /** The Jira account type. */
               accountType?: string;
               /** The Jira display name. */
@@ -924,7 +975,11 @@ declare module "@oomol-lab/connector" {
           /** The Jira issue assignee. */
           assignee?: {
             /** The Jira account ID. */
-            accountId: string;
+            accountId?: string;
+            /** The Jira Server username. */
+            name?: string;
+            /** The Jira Server user key. */
+            key?: string;
             /** The Jira account type. */
             accountType?: string;
             /** The Jira display name. */
@@ -942,7 +997,11 @@ declare module "@oomol-lab/connector" {
           /** The Jira issue reporter. */
           reporter?: {
             /** The Jira account ID. */
-            accountId: string;
+            accountId?: string;
+            /** The Jira Server username. */
+            name?: string;
+            /** The Jira Server user key. */
+            key?: string;
             /** The Jira account type. */
             accountType?: string;
             /** The Jira display name. */

@@ -8,7 +8,6 @@ declare module "@oomol-lab/connector" {
       output: {
         /**
          * Email address of the authenticated Render user.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email: string;
@@ -241,7 +240,6 @@ declare module "@oomol-lab/connector" {
           name: string;
           /**
            * Primary email address of the workspace.
-           * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
            * @format email
            */
           email: string;

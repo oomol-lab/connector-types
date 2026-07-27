@@ -125,7 +125,6 @@ declare module "@oomol-lab/connector" {
         results: Array<{
           /**
            * The normalized email address returned by Bouncer.
-           * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
            * @format email
            */
           email: string;
@@ -287,7 +286,6 @@ declare module "@oomol-lab/connector" {
         results: Array<{
           /**
            * The email address returned by Bouncer toxicity list results.
-           * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
            * @format email
            */
           email: string;
@@ -338,7 +336,6 @@ declare module "@oomol-lab/connector" {
       input: {
         /**
          * The email address to verify with Bouncer.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email: string;
@@ -346,7 +343,6 @@ declare module "@oomol-lab/connector" {
       output: {
         /**
          * The normalized email address returned by Bouncer.
-         * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
          * @format email
          */
         email: string;
@@ -413,7 +409,6 @@ declare module "@oomol-lab/connector" {
         results: Array<{
           /**
            * The normalized email address returned by Bouncer.
-           * @pattern ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
            * @format email
            */
           email: string;

@@ -24,17 +24,17 @@ declare module "@oomol-lab/connector" {
          * The definition format to request from SwaggerHub.
          * @default "json"
          */
-        format: "json" | "yaml";
+        format?: "json" | "yaml";
         /**
          * Whether SwaggerHub should resolve external references in the returned API definition.
          * @default false
          */
-        resolved: boolean;
+        resolved?: boolean;
         /**
          * Whether SwaggerHub should flatten inline schemas in the returned definition when supported.
          * @default false
          */
-        flatten: boolean;
+        flatten?: boolean;
       };
       output: {
         /** The definition format returned by SwaggerHub. */
@@ -67,7 +67,7 @@ declare module "@oomol-lab/connector" {
          * The definition format to request from SwaggerHub.
          * @default "json"
          */
-        format: "json" | "yaml";
+        format?: "json" | "yaml";
       };
       output: {
         /** The definition format returned by SwaggerHub. */
@@ -129,12 +129,12 @@ declare module "@oomol-lab/connector" {
          * The definition format to request from SwaggerHub.
          * @default "json"
          */
-        format: "json" | "yaml";
+        format?: "json" | "yaml";
         /**
          * Whether SwaggerHub should flatten inline schemas in the returned definition when supported.
          * @default false
          */
-        flatten: boolean;
+        flatten?: boolean;
       };
       output: {
         /** The definition format returned by SwaggerHub. */
@@ -300,24 +300,24 @@ declare module "@oomol-lab/connector" {
          * @minimum 0
          * @default 0
          */
-        page: number;
+        page?: number;
         /**
          * The maximum number of results to return per page.
          * @minimum 1
          * @maximum 100
          * @default 10
          */
-        limit: number;
+        limit?: number;
         /**
          * The sort field used by SwaggerHub registry search endpoints.
          * @default "NAME"
          */
-        sort: "NAME" | "UPDATED" | "CREATED" | "OWNER" | "BEST_MATCH" | "TITLE";
+        sort?: "NAME" | "UPDATED" | "CREATED" | "OWNER" | "BEST_MATCH" | "TITLE";
         /**
          * The sort order used by SwaggerHub list endpoints.
          * @default "ASC"
          */
-        order: "ASC" | "DESC";
+        order?: "ASC" | "DESC";
       };
       output: {
         /** The raw registry listing returned by SwaggerHub. */
@@ -389,24 +389,24 @@ declare module "@oomol-lab/connector" {
          * @minimum 0
          * @default 0
          */
-        page: number;
+        page?: number;
         /**
          * The maximum number of results to return per page.
          * @minimum 1
          * @maximum 100
          * @default 10
          */
-        limit: number;
+        limit?: number;
         /**
          * The sort field used by SwaggerHub registry search endpoints.
          * @default "NAME"
          */
-        sort: "NAME" | "UPDATED" | "CREATED" | "OWNER" | "BEST_MATCH" | "TITLE";
+        sort?: "NAME" | "UPDATED" | "CREATED" | "OWNER" | "BEST_MATCH" | "TITLE";
         /**
          * The sort order used by SwaggerHub list endpoints.
          * @default "ASC"
          */
-        order: "ASC" | "DESC";
+        order?: "ASC" | "DESC";
       };
       output: {
         /** The raw registry listing returned by SwaggerHub. */
@@ -477,25 +477,25 @@ declare module "@oomol-lab/connector" {
          * Whether SwaggerHub should omit the APIs and domains arrays from the project listing.
          * @default false
          */
-        nameOnly: boolean;
+        nameOnly?: boolean;
         /**
          * The zero-based page number to request.
          * @minimum 0
          * @default 0
          */
-        page: number;
+        page?: number;
         /**
          * The maximum number of results to return per page.
          * @minimum 1
          * @maximum 100
          * @default 10
          */
-        limit: number;
+        limit?: number;
         /**
          * The sort order used by SwaggerHub list endpoints.
          * @default "ASC"
          */
-        order: "ASC" | "DESC";
+        order?: "ASC" | "DESC";
       };
       output: {
         /** The raw project listing returned by SwaggerHub. */
@@ -643,30 +643,30 @@ declare module "@oomol-lab/connector" {
          * The published-state filter used by SwaggerHub search endpoints.
          * @default "ALL"
          */
-        state: "ALL" | "PUBLISHED" | "UNPUBLISHED";
+        state?: "ALL" | "PUBLISHED" | "UNPUBLISHED";
         /**
          * The zero-based page number to request.
          * @minimum 0
          * @default 0
          */
-        page: number;
+        page?: number;
         /**
          * The maximum number of results to return per page.
          * @minimum 1
          * @maximum 100
          * @default 10
          */
-        limit: number;
+        limit?: number;
         /**
          * The sort field used by SwaggerHub registry search endpoints.
          * @default "NAME"
          */
-        sort: "NAME" | "UPDATED" | "CREATED" | "OWNER" | "BEST_MATCH" | "TITLE";
+        sort?: "NAME" | "UPDATED" | "CREATED" | "OWNER" | "BEST_MATCH" | "TITLE";
         /**
          * The sort order used by SwaggerHub list endpoints.
          * @default "ASC"
          */
-        order: "ASC" | "DESC";
+        order?: "ASC" | "DESC";
       };
       output: {
         /** The raw registry listing returned by SwaggerHub. */
@@ -737,30 +737,30 @@ declare module "@oomol-lab/connector" {
          * The published-state filter used by SwaggerHub search endpoints.
          * @default "ALL"
          */
-        state: "ALL" | "PUBLISHED" | "UNPUBLISHED";
+        state?: "ALL" | "PUBLISHED" | "UNPUBLISHED";
         /**
          * The zero-based page number to request.
          * @minimum 0
          * @default 0
          */
-        page: number;
+        page?: number;
         /**
          * The maximum number of results to return per page.
          * @minimum 1
          * @maximum 100
          * @default 10
          */
-        limit: number;
+        limit?: number;
         /**
          * The sort field used by SwaggerHub registry search endpoints.
          * @default "NAME"
          */
-        sort: "NAME" | "UPDATED" | "CREATED" | "OWNER" | "BEST_MATCH" | "TITLE";
+        sort?: "NAME" | "UPDATED" | "CREATED" | "OWNER" | "BEST_MATCH" | "TITLE";
         /**
          * The sort order used by SwaggerHub list endpoints.
          * @default "ASC"
          */
-        order: "ASC" | "DESC";
+        order?: "ASC" | "DESC";
       };
       output: {
         /** The raw registry listing returned by SwaggerHub. */
@@ -831,30 +831,30 @@ declare module "@oomol-lab/connector" {
          * The published-state filter used by SwaggerHub search endpoints.
          * @default "ALL"
          */
-        state: "ALL" | "PUBLISHED" | "UNPUBLISHED";
+        state?: "ALL" | "PUBLISHED" | "UNPUBLISHED";
         /**
          * The zero-based page number to request.
          * @minimum 0
          * @default 0
          */
-        page: number;
+        page?: number;
         /**
          * The maximum number of results to return per page.
          * @minimum 1
          * @maximum 100
          * @default 10
          */
-        limit: number;
+        limit?: number;
         /**
          * The sort field used by SwaggerHub registry search endpoints.
          * @default "NAME"
          */
-        sort: "NAME" | "UPDATED" | "CREATED" | "OWNER" | "BEST_MATCH" | "TITLE";
+        sort?: "NAME" | "UPDATED" | "CREATED" | "OWNER" | "BEST_MATCH" | "TITLE";
         /**
          * The sort order used by SwaggerHub list endpoints.
          * @default "ASC"
          */
-        order: "ASC" | "DESC";
+        order?: "ASC" | "DESC";
       };
       output: {
         /** The raw registry listing returned by SwaggerHub. */

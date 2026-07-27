@@ -5,20 +5,11 @@ declare module "@oomol-lab/connector" {
     /** Invite a Docker ID or email address to join a Docker Hub organization by using the documented bulk invite endpoint with a single invitee. */
     "docker_hub.add_org_member": {
       input: {
-        /**
-         * The Docker Hub organization name.
-         * @minLength 1
-         */
+        /** The Docker Hub organization name. */
         orgName: string;
-        /**
-         * The Docker ID or email address to invite.
-         * @minLength 1
-         */
+        /** The Docker ID or email address to invite. */
         invitee: string;
-        /**
-         * The optional team to attach to the invite.
-         * @minLength 1
-         */
+        /** The optional team to attach to the invite. */
         teamName?: string;
         /** The optional organization role to assign to the invite. */
         role?: string;
@@ -53,14 +44,10 @@ declare module "@oomol-lab/connector" {
     /** Create a Docker Hub repository inside a namespace. */
     "docker_hub.create_repository": {
       input: {
-        /**
-         * The namespace where the repository should be created.
-         * @minLength 1
-         */
+        /** The namespace where the repository should be created. */
         namespace: string;
         /**
          * The repository name to create.
-         * @minLength 2
          * @maxLength 255
          */
         name: string;
@@ -155,15 +142,9 @@ declare module "@oomol-lab/connector" {
     /** Delete a Docker Hub team within an organization. */
     "docker_hub.delete_team": {
       input: {
-        /**
-         * The Docker Hub organization name.
-         * @minLength 1
-         */
+        /** The Docker Hub organization name. */
         orgName: string;
-        /**
-         * The team name to delete.
-         * @minLength 1
-         */
+        /** The team name to delete. */
         teamName: string;
       };
       output: {
@@ -174,20 +155,11 @@ declare module "@oomol-lab/connector" {
     /** Find a Docker Hub image variant by digest by scanning the repository's published tags. This is a repo-level helper built on the official tag listing responses. */
     "docker_hub.get_image": {
       input: {
-        /**
-         * The namespace that owns the repository.
-         * @minLength 1
-         */
+        /** The namespace that owns the repository. */
         namespace: string;
-        /**
-         * The repository name to search.
-         * @minLength 1
-         */
+        /** The repository name to search. */
         repository: string;
-        /**
-         * The image manifest digest to look up.
-         * @minLength 1
-         */
+        /** The image manifest digest to look up. */
         digest: string;
         /**
          * The number of results to return per page.
@@ -301,15 +273,9 @@ declare module "@oomol-lab/connector" {
     /** Get detailed metadata for a Docker Hub repository within a namespace. */
     "docker_hub.get_repository": {
       input: {
-        /**
-         * The namespace that owns the repository.
-         * @minLength 1
-         */
+        /** The namespace that owns the repository. */
         namespace: string;
-        /**
-         * The repository name to retrieve.
-         * @minLength 1
-         */
+        /** The repository name to retrieve. */
         repository: string;
       };
       output: {
@@ -388,20 +354,11 @@ declare module "@oomol-lab/connector" {
     /** Get metadata and image variants for a specific Docker Hub repository tag. */
     "docker_hub.get_tag": {
       input: {
-        /**
-         * The namespace that owns the repository.
-         * @minLength 1
-         */
+        /** The namespace that owns the repository. */
         namespace: string;
-        /**
-         * The repository name that owns the tag.
-         * @minLength 1
-         */
+        /** The repository name that owns the tag. */
         repository: string;
-        /**
-         * The tag name to retrieve.
-         * @minLength 1
-         */
+        /** The tag name to retrieve. */
         tag: string;
       };
       output: {
@@ -469,15 +426,9 @@ declare module "@oomol-lab/connector" {
     /** Get a Docker Hub team within an organization. */
     "docker_hub.get_team": {
       input: {
-        /**
-         * The Docker Hub organization name.
-         * @minLength 1
-         */
+        /** The Docker Hub organization name. */
         orgName: string;
-        /**
-         * The team name to retrieve.
-         * @minLength 1
-         */
+        /** The team name to retrieve. */
         teamName: string;
       };
       output: {
@@ -499,10 +450,7 @@ declare module "@oomol-lab/connector" {
     /** List Docker Hub organization access tokens for an organization. */
     "docker_hub.list_org_access_tokens": {
       input: {
-        /**
-         * The Docker Hub organization name.
-         * @minLength 1
-         */
+        /** The Docker Hub organization name. */
         orgName: string;
         /**
          * The page number to retrieve.
@@ -554,10 +502,7 @@ declare module "@oomol-lab/connector" {
     /** List Docker Hub organization members with optional filtering and pagination. */
     "docker_hub.list_org_members": {
       input: {
-        /**
-         * The Docker Hub organization name.
-         * @minLength 1
-         */
+        /** The Docker Hub organization name. */
         orgName: string;
         /** An optional member search term. */
         search?: string;
@@ -618,10 +563,7 @@ declare module "@oomol-lab/connector" {
     /** List Docker Hub repositories in a namespace with optional name filtering and ordering. */
     "docker_hub.list_repositories": {
       input: {
-        /**
-         * The namespace that owns the repositories.
-         * @minLength 1
-         */
+        /** The namespace that owns the repositories. */
         namespace: string;
         /**
          * The page number to retrieve.
@@ -634,10 +576,7 @@ declare module "@oomol-lab/connector" {
          * @maximum 100
          */
         pageSize?: number;
-        /**
-         * An optional partial repository name filter.
-         * @minLength 1
-         */
+        /** An optional partial repository name filter. */
         name?: string;
         /** The field and direction used to order repositories. */
         ordering?: "name" | "-name" | "last_updated" | "-last_updated" | "pull_count" | "-pull_count";
@@ -696,15 +635,9 @@ declare module "@oomol-lab/connector" {
     /** List members of a Docker Hub team within an organization. */
     "docker_hub.list_team_members": {
       input: {
-        /**
-         * The Docker Hub organization name.
-         * @minLength 1
-         */
+        /** The Docker Hub organization name. */
         orgName: string;
-        /**
-         * The team name whose members should be listed.
-         * @minLength 1
-         */
+        /** The team name whose members should be listed. */
         teamName: string;
         /**
          * The page number to retrieve.
@@ -717,10 +650,7 @@ declare module "@oomol-lab/connector" {
          * @maximum 100
          */
         pageSize?: number;
-        /**
-         * An optional member search term.
-         * @minLength 1
-         */
+        /** An optional member search term. */
         search?: string;
       };
       output: {
@@ -756,10 +686,7 @@ declare module "@oomol-lab/connector" {
     /** List Docker Hub teams for an organization. */
     "docker_hub.list_teams": {
       input: {
-        /**
-         * The Docker Hub organization name.
-         * @minLength 1
-         */
+        /** The Docker Hub organization name. */
         orgName: string;
         /**
          * The page number to retrieve.
@@ -772,15 +699,9 @@ declare module "@oomol-lab/connector" {
          * @maximum 100
          */
         pageSize?: number;
-        /**
-         * An optional username to filter teams by membership.
-         * @minLength 1
-         */
+        /** An optional username to filter teams by membership. */
         username?: string;
-        /**
-         * An optional team search term.
-         * @minLength 1
-         */
+        /** An optional team search term. */
         search?: string;
       };
       output: {
@@ -808,15 +729,9 @@ declare module "@oomol-lab/connector" {
     /** Remove a member from a Docker Hub organization. */
     "docker_hub.remove_org_member": {
       input: {
-        /**
-         * The Docker Hub organization name.
-         * @minLength 1
-         */
+        /** The Docker Hub organization name. */
         orgName: string;
-        /**
-         * The Docker Hub username to remove.
-         * @minLength 1
-         */
+        /** The Docker Hub username to remove. */
         username: string;
       };
       output: {
@@ -827,20 +742,11 @@ declare module "@oomol-lab/connector" {
     /** Remove a user from a Docker Hub team within an organization. */
     "docker_hub.remove_team_member": {
       input: {
-        /**
-         * The Docker Hub organization name.
-         * @minLength 1
-         */
+        /** The Docker Hub organization name. */
         orgName: string;
-        /**
-         * The team name that owns the membership.
-         * @minLength 1
-         */
+        /** The team name that owns the membership. */
         teamName: string;
-        /**
-         * The Docker Hub username to remove from the team.
-         * @minLength 1
-         */
+        /** The Docker Hub username to remove from the team. */
         username: string;
       };
       output: {
