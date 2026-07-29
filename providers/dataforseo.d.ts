@@ -287,6 +287,156 @@ declare module "@oomol-lab/connector" {
         results?: Array<Record<string, unknown>> | null;
       };
     };
+    /** Retrieve the status and Advanced results of one DataForSEO Amazon ASIN task. */
+    "dataforseo.get_amazon_asins_task": {
+      input: {
+        /**
+         * Task identifier returned by the matching Amazon Merchant submit action.
+         * @format uuid
+         */
+        id: string;
+      };
+      output: {
+        /** Normalized metadata and lifecycle state for one DataForSEO asynchronous task. */
+        task: {
+          /** DataForSEO task identifier when the task was accepted. */
+          id: string | null;
+          /** Connector lifecycle state derived from the DataForSEO task status. */
+          state: "running" | "succeeded" | "failed";
+          /** DataForSEO task status code. */
+          status_code: number | null;
+          /** DataForSEO task status message. */
+          status_message: string | null;
+          /** Task execution time reported by DataForSEO. */
+          time: string | null;
+          /** Task cost in USD reported by DataForSEO. */
+          cost: number | null;
+          /** Number of result objects returned by the task. */
+          result_count: number | null;
+          /** Request path components returned for the task. */
+          path: Array<string>;
+          /** Original task input metadata returned by DataForSEO. */
+          data: Record<string, unknown>;
+          /** Complete task object returned by DataForSEO. */
+          raw: Record<string, unknown>;
+        };
+        /** Result objects returned by DataForSEO for the task. */
+        results: Array<Record<string, unknown>>;
+        /** Task errors returned by DataForSEO without discarding task status or cost. */
+        errors: Array<{
+          /** DataForSEO task error status code. */
+          status_code: number | null;
+          /** DataForSEO task error status message. */
+          status_message: string | null;
+          /** Complete failed task object returned by DataForSEO. */
+          raw: Record<string, unknown>;
+        }>;
+        /** Total response cost in USD reported by DataForSEO. */
+        cost: number | null;
+        /** Complete DataForSEO response envelope. */
+        raw: Record<string, unknown>;
+      };
+    };
+    /** Retrieve the status and Advanced results of one DataForSEO Amazon Products task. */
+    "dataforseo.get_amazon_products_task": {
+      input: {
+        /**
+         * Task identifier returned by the matching Amazon Merchant submit action.
+         * @format uuid
+         */
+        id: string;
+      };
+      output: {
+        /** Normalized metadata and lifecycle state for one DataForSEO asynchronous task. */
+        task: {
+          /** DataForSEO task identifier when the task was accepted. */
+          id: string | null;
+          /** Connector lifecycle state derived from the DataForSEO task status. */
+          state: "running" | "succeeded" | "failed";
+          /** DataForSEO task status code. */
+          status_code: number | null;
+          /** DataForSEO task status message. */
+          status_message: string | null;
+          /** Task execution time reported by DataForSEO. */
+          time: string | null;
+          /** Task cost in USD reported by DataForSEO. */
+          cost: number | null;
+          /** Number of result objects returned by the task. */
+          result_count: number | null;
+          /** Request path components returned for the task. */
+          path: Array<string>;
+          /** Original task input metadata returned by DataForSEO. */
+          data: Record<string, unknown>;
+          /** Complete task object returned by DataForSEO. */
+          raw: Record<string, unknown>;
+        };
+        /** Result objects returned by DataForSEO for the task. */
+        results: Array<Record<string, unknown>>;
+        /** Task errors returned by DataForSEO without discarding task status or cost. */
+        errors: Array<{
+          /** DataForSEO task error status code. */
+          status_code: number | null;
+          /** DataForSEO task error status message. */
+          status_message: string | null;
+          /** Complete failed task object returned by DataForSEO. */
+          raw: Record<string, unknown>;
+        }>;
+        /** Total response cost in USD reported by DataForSEO. */
+        cost: number | null;
+        /** Complete DataForSEO response envelope. */
+        raw: Record<string, unknown>;
+      };
+    };
+    /** Retrieve the status and Advanced results of one DataForSEO Amazon Sellers task. */
+    "dataforseo.get_amazon_sellers_task": {
+      input: {
+        /**
+         * Task identifier returned by the matching Amazon Merchant submit action.
+         * @format uuid
+         */
+        id: string;
+      };
+      output: {
+        /** Normalized metadata and lifecycle state for one DataForSEO asynchronous task. */
+        task: {
+          /** DataForSEO task identifier when the task was accepted. */
+          id: string | null;
+          /** Connector lifecycle state derived from the DataForSEO task status. */
+          state: "running" | "succeeded" | "failed";
+          /** DataForSEO task status code. */
+          status_code: number | null;
+          /** DataForSEO task status message. */
+          status_message: string | null;
+          /** Task execution time reported by DataForSEO. */
+          time: string | null;
+          /** Task cost in USD reported by DataForSEO. */
+          cost: number | null;
+          /** Number of result objects returned by the task. */
+          result_count: number | null;
+          /** Request path components returned for the task. */
+          path: Array<string>;
+          /** Original task input metadata returned by DataForSEO. */
+          data: Record<string, unknown>;
+          /** Complete task object returned by DataForSEO. */
+          raw: Record<string, unknown>;
+        };
+        /** Result objects returned by DataForSEO for the task. */
+        results: Array<Record<string, unknown>>;
+        /** Task errors returned by DataForSEO without discarding task status or cost. */
+        errors: Array<{
+          /** DataForSEO task error status code. */
+          status_code: number | null;
+          /** DataForSEO task error status message. */
+          status_message: string | null;
+          /** Complete failed task object returned by DataForSEO. */
+          raw: Record<string, unknown>;
+        }>;
+        /** Total response cost in USD reported by DataForSEO. */
+        cost: number | null;
+        /** Complete DataForSEO response envelope. */
+        raw: Record<string, unknown>;
+      };
+    };
     /** Retrieve DataForSEO account details, balance, rates, limits, and usage data. */
     "dataforseo.get_user_data": {
       input: Record<string, never>;
@@ -913,6 +1063,336 @@ declare module "@oomol-lab/connector" {
         };
         /** Result objects returned by DataForSEO for the first task. */
         results?: Array<Record<string, unknown>> | null;
+      };
+    };
+    /** List uncollected completed Amazon Products, ASIN, and Sellers tasks from DataForSEO Merchant API. */
+    "dataforseo.list_amazon_tasks_ready": {
+      input: Record<string, never>;
+      output: {
+        /** Normalized metadata and lifecycle state for one DataForSEO asynchronous task. */
+        task: {
+          /** DataForSEO task identifier when the task was accepted. */
+          id: string | null;
+          /** Connector lifecycle state derived from the DataForSEO task status. */
+          state: "running" | "succeeded" | "failed";
+          /** DataForSEO task status code. */
+          status_code: number | null;
+          /** DataForSEO task status message. */
+          status_message: string | null;
+          /** Task execution time reported by DataForSEO. */
+          time: string | null;
+          /** Task cost in USD reported by DataForSEO. */
+          cost: number | null;
+          /** Number of result objects returned by the task. */
+          result_count: number | null;
+          /** Request path components returned for the task. */
+          path: Array<string>;
+          /** Original task input metadata returned by DataForSEO. */
+          data: Record<string, unknown>;
+          /** Complete task object returned by DataForSEO. */
+          raw: Record<string, unknown>;
+        };
+        /** Result objects returned by DataForSEO for the task. */
+        results: Array<Record<string, unknown>>;
+        /** Task errors returned by DataForSEO without discarding task status or cost. */
+        errors: Array<{
+          /** DataForSEO task error status code. */
+          status_code: number | null;
+          /** DataForSEO task error status message. */
+          status_message: string | null;
+          /** Complete failed task object returned by DataForSEO. */
+          raw: Record<string, unknown>;
+        }>;
+        /** Total response cost in USD reported by DataForSEO. */
+        cost: number | null;
+        /** Complete DataForSEO response envelope. */
+        raw: Record<string, unknown>;
+      };
+    };
+    /** Submit one Standard DataForSEO Amazon ASIN task for asynchronous product variant research. */
+    "dataforseo.submit_amazon_asins_task": {
+      input: {
+        /**
+         * Amazon Standard Identification Number for the product.
+         * @minLength 1
+         */
+        asin: string;
+        /** Task priority: 1 for normal execution or 2 for faster execution at an additional cost. */
+        priority?: 1 | 2;
+        /**
+         * Full name of the Amazon location to target.
+         * @minLength 1
+         */
+        locationName?: string;
+        /** Numeric DataForSEO Amazon location code to target. */
+        locationCode?: number;
+        /**
+         * GPS coordinates and radius in the `latitude,longitude,radius` format.
+         * @minLength 1
+         */
+        locationCoordinate?: string;
+        /**
+         * Full name of the Amazon language to target.
+         * @minLength 1
+         */
+        languageName?: string;
+        /**
+         * DataForSEO Amazon language code to target.
+         * @minLength 1
+         */
+        languageCode?: string;
+        /**
+         * Amazon search engine domain, such as `amazon.com`.
+         * @minLength 1
+         */
+        seDomain?: string;
+        /**
+         * User-defined task tag passed through to DataForSEO.
+         * @minLength 1
+         * @maxLength 255
+         */
+        tag?: string;
+      };
+      output: {
+        /** Normalized metadata and lifecycle state for one DataForSEO asynchronous task. */
+        task: {
+          /** DataForSEO task identifier when the task was accepted. */
+          id: string | null;
+          /** Connector lifecycle state derived from the DataForSEO task status. */
+          state: "running" | "succeeded" | "failed";
+          /** DataForSEO task status code. */
+          status_code: number | null;
+          /** DataForSEO task status message. */
+          status_message: string | null;
+          /** Task execution time reported by DataForSEO. */
+          time: string | null;
+          /** Task cost in USD reported by DataForSEO. */
+          cost: number | null;
+          /** Number of result objects returned by the task. */
+          result_count: number | null;
+          /** Request path components returned for the task. */
+          path: Array<string>;
+          /** Original task input metadata returned by DataForSEO. */
+          data: Record<string, unknown>;
+          /** Complete task object returned by DataForSEO. */
+          raw: Record<string, unknown>;
+        };
+        /** Result objects returned by DataForSEO for the task. */
+        results: Array<Record<string, unknown>>;
+        /** Task errors returned by DataForSEO without discarding task status or cost. */
+        errors: Array<{
+          /** DataForSEO task error status code. */
+          status_code: number | null;
+          /** DataForSEO task error status message. */
+          status_message: string | null;
+          /** Complete failed task object returned by DataForSEO. */
+          raw: Record<string, unknown>;
+        }>;
+        /** Total response cost in USD reported by DataForSEO. */
+        cost: number | null;
+        /** Complete DataForSEO response envelope. */
+        raw: Record<string, unknown>;
+      };
+    };
+    /** Submit one Standard DataForSEO Amazon Products task for asynchronous product listing research. */
+    "dataforseo.submit_amazon_products_task": {
+      input: {
+        /**
+         * Product keyword to search on Amazon.
+         * @minLength 1
+         * @maxLength 700
+         */
+        keyword: string;
+        /**
+         * Direct Amazon search URL to parse in addition to the required keyword.
+         * @format uri
+         */
+        url?: string;
+        /** Task priority: 1 for normal execution or 2 for faster execution at an additional cost. */
+        priority?: 1 | 2;
+        /**
+         * Full name of the Amazon location to target.
+         * @minLength 1
+         */
+        locationName?: string;
+        /** Numeric DataForSEO Amazon location code to target. */
+        locationCode?: number;
+        /**
+         * GPS coordinates and radius in the `latitude,longitude,radius` format.
+         * @minLength 1
+         */
+        locationCoordinate?: string;
+        /**
+         * Full name of the Amazon language to target.
+         * @minLength 1
+         */
+        languageName?: string;
+        /**
+         * DataForSEO Amazon language code to target.
+         * @minLength 1
+         */
+        languageCode?: string;
+        /**
+         * Amazon search engine domain, such as `amazon.com`.
+         * @minLength 1
+         */
+        seDomain?: string;
+        /**
+         * User-defined task tag passed through to DataForSEO.
+         * @minLength 1
+         * @maxLength 255
+         */
+        tag?: string;
+        /**
+         * Maximum number of Amazon product results to retrieve.
+         * @minimum 1
+         * @maximum 700
+         */
+        depth?: number;
+        /**
+         * Maximum number of Amazon search result pages to crawl.
+         * @minimum 1
+         * @maximum 7
+         */
+        maxCrawlPages?: number;
+        /** Amazon product department used to narrow the search. */
+        department?: "Arts & Crafts" | "Automotive" | "Baby" | "Beauty & Personal Care" | "Books" | "Computers" | "Digital Music" | "Electronics" | "Kindle Store" | "Prime Video" | "Women's Fashion" | "Men's Fashion" | "Girls' Fashion" | "Boys' Fashion" | "Deals" | "Health & Household" | "Home & Kitchen" | "Industrial & Scientific" | "Luggage" | "Movies & TV" | "Music, CDs & Vinyl" | "Pet Supplies" | "Software" | "Sports & Outdoors" | "Tools & Home Improvement" | "Toys & Games" | "Video Games";
+        /**
+         * Additional Amazon search URL parameters.
+         * @minLength 1
+         */
+        searchParam?: string;
+        /** Minimum product price used to filter Amazon results. */
+        priceMin?: number;
+        /** Maximum product price used to filter Amazon results. */
+        priceMax?: number;
+        /** Amazon product result sorting rule. */
+        sortBy?: "relevance" | "price_low_to_high" | "price_high_to_low" | "featured" | "avg_customer_review" | "newest_arrival";
+      };
+      output: {
+        /** Normalized metadata and lifecycle state for one DataForSEO asynchronous task. */
+        task: {
+          /** DataForSEO task identifier when the task was accepted. */
+          id: string | null;
+          /** Connector lifecycle state derived from the DataForSEO task status. */
+          state: "running" | "succeeded" | "failed";
+          /** DataForSEO task status code. */
+          status_code: number | null;
+          /** DataForSEO task status message. */
+          status_message: string | null;
+          /** Task execution time reported by DataForSEO. */
+          time: string | null;
+          /** Task cost in USD reported by DataForSEO. */
+          cost: number | null;
+          /** Number of result objects returned by the task. */
+          result_count: number | null;
+          /** Request path components returned for the task. */
+          path: Array<string>;
+          /** Original task input metadata returned by DataForSEO. */
+          data: Record<string, unknown>;
+          /** Complete task object returned by DataForSEO. */
+          raw: Record<string, unknown>;
+        };
+        /** Result objects returned by DataForSEO for the task. */
+        results: Array<Record<string, unknown>>;
+        /** Task errors returned by DataForSEO without discarding task status or cost. */
+        errors: Array<{
+          /** DataForSEO task error status code. */
+          status_code: number | null;
+          /** DataForSEO task error status message. */
+          status_message: string | null;
+          /** Complete failed task object returned by DataForSEO. */
+          raw: Record<string, unknown>;
+        }>;
+        /** Total response cost in USD reported by DataForSEO. */
+        cost: number | null;
+        /** Complete DataForSEO response envelope. */
+        raw: Record<string, unknown>;
+      };
+    };
+    /** Submit one Standard DataForSEO Amazon Sellers task for asynchronous offer and seller research. */
+    "dataforseo.submit_amazon_sellers_task": {
+      input: {
+        /**
+         * Amazon Standard Identification Number for the product.
+         * @minLength 1
+         */
+        asin: string;
+        /** Task priority: 1 for normal execution or 2 for faster execution at an additional cost. */
+        priority?: 1 | 2;
+        /**
+         * Full name of the Amazon location to target.
+         * @minLength 1
+         */
+        locationName?: string;
+        /** Numeric DataForSEO Amazon location code to target. */
+        locationCode?: number;
+        /**
+         * GPS coordinates and radius in the `latitude,longitude,radius` format.
+         * @minLength 1
+         */
+        locationCoordinate?: string;
+        /**
+         * Full name of the Amazon language to target.
+         * @minLength 1
+         */
+        languageName?: string;
+        /**
+         * DataForSEO Amazon language code to target.
+         * @minLength 1
+         */
+        languageCode?: string;
+        /**
+         * Amazon search engine domain, such as `amazon.com`.
+         * @minLength 1
+         */
+        seDomain?: string;
+        /**
+         * User-defined task tag passed through to DataForSEO.
+         * @minLength 1
+         * @maxLength 255
+         */
+        tag?: string;
+      };
+      output: {
+        /** Normalized metadata and lifecycle state for one DataForSEO asynchronous task. */
+        task: {
+          /** DataForSEO task identifier when the task was accepted. */
+          id: string | null;
+          /** Connector lifecycle state derived from the DataForSEO task status. */
+          state: "running" | "succeeded" | "failed";
+          /** DataForSEO task status code. */
+          status_code: number | null;
+          /** DataForSEO task status message. */
+          status_message: string | null;
+          /** Task execution time reported by DataForSEO. */
+          time: string | null;
+          /** Task cost in USD reported by DataForSEO. */
+          cost: number | null;
+          /** Number of result objects returned by the task. */
+          result_count: number | null;
+          /** Request path components returned for the task. */
+          path: Array<string>;
+          /** Original task input metadata returned by DataForSEO. */
+          data: Record<string, unknown>;
+          /** Complete task object returned by DataForSEO. */
+          raw: Record<string, unknown>;
+        };
+        /** Result objects returned by DataForSEO for the task. */
+        results: Array<Record<string, unknown>>;
+        /** Task errors returned by DataForSEO without discarding task status or cost. */
+        errors: Array<{
+          /** DataForSEO task error status code. */
+          status_code: number | null;
+          /** DataForSEO task error status message. */
+          status_message: string | null;
+          /** Complete failed task object returned by DataForSEO. */
+          raw: Record<string, unknown>;
+        }>;
+        /** Total response cost in USD reported by DataForSEO. */
+        cost: number | null;
+        /** Complete DataForSEO response envelope. */
+        raw: Record<string, unknown>;
       };
     };
   }
