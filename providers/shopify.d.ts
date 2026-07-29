@@ -70,18 +70,8 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         title?: string;
-        /**
-         * Count pages with this Shopify page handle.
-         * @minLength 1
-         */
-        handle?: string;
         /** The Shopify publication status filter. */
         published_status?: "published" | "unpublished" | "any";
-        /**
-         * Return records with Shopify numeric IDs greater than this value.
-         * @minimum 1
-         */
-        since_id?: number;
         /**
          * An ISO 8601 date-time filter accepted by Shopify REST Admin.
          * @minLength 1
@@ -275,6 +265,14 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
+    /** List Shopify REST article authors across the connected shop. */
+    "shopify.list_article_authors": {
+      input: Record<string, never>;
+      output: {
+        /** Article authors returned by Shopify. */
+        authors: Array<string>;
+      };
+    };
     /** List Shopify REST article tags across all articles in the connected shop. */
     "shopify.list_article_tags": {
       input: {
@@ -412,6 +410,28 @@ declare module "@oomol-lab/connector" {
         };
         /** The raw object returned by Shopify REST Admin. */
         raw: Record<string, unknown>;
+      };
+    };
+    /** List Shopify REST article tags for one blog. */
+    "shopify.list_blog_article_tags": {
+      input: {
+        /**
+         * The Shopify blog ID.
+         * @minimum 1
+         */
+        blog_id: number;
+        /**
+         * The maximum number of records to return. Shopify REST supports values from 1 to 250.
+         * @minimum 1
+         * @maximum 250
+         */
+        limit?: number;
+        /** Whether Shopify should order tags by popularity. */
+        popular?: boolean;
+      };
+      output: {
+        /** Article tags returned by Shopify. */
+        tags: Array<string>;
       };
     };
     /** List Shopify REST blogs with optional handle filtering and pagination. */
