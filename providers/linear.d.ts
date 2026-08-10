@@ -1384,10 +1384,6 @@ declare module "@oomol-lab/connector" {
         project_id?: string;
         /** The unique identifier of the person responsible for filtering. */
         assignee_id?: string;
-        /** Original cursor. */
-        original_cursor?: string;
-        /** Whether the cursor is corrupted. */
-        cursor_was_corrupted?: boolean;
       };
       output: {
         /** issue list. */

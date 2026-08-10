@@ -245,6 +245,42 @@ declare module "@oomol-lab/connector" {
         success: boolean;
       };
     };
+    /** Download a Gmail message attachment using metadata returned by a message action and upload it to Connector file transit storage. */
+    "gmail.download_attachment": {
+      input: {
+        /** Gmail message ID. */
+        messageId: string;
+        /** Gmail attachment ID returned in message attachment metadata. */
+        attachmentId: string;
+        /** Attachment filename returned in message metadata. */
+        filename: string;
+        /** Attachment MIME type returned in message metadata. */
+        mimeType: string;
+        /**
+         * Attachment size in bytes returned in message metadata.
+         * @minimum 0
+         * @maximum 52428800
+         */
+        size: number;
+      };
+      output: {
+        /** Gmail message ID. */
+        messageId: string;
+        /** Gmail attachment ID returned in message attachment metadata. */
+        attachmentId: string;
+        /** Attachment filename returned in message metadata. */
+        filename: string;
+        /** Attachment MIME type returned in message metadata. */
+        mimeType: string;
+        /** Downloaded attachment size in bytes. */
+        sizeBytes: number;
+        /**
+         * Temporary Connector file transit URL for downloading the attachment.
+         * @format uri
+         */
+        transitUrl: string;
+      };
+    };
     /** List Gmail messages with optional query, label, and pagination filters. Use `detail` to choose between identifiers only, lightweight summaries, or full normalized messages. */
     "gmail.fetch_emails": {
       input: {

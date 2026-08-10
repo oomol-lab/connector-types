@@ -24,10 +24,13 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         application_id: string;
-        /** Whether to exclude entitlements that have already ended. */
-        exclude_ended?: boolean;
-        /** Whether to exclude entitlements marked as deleted. */
-        exclude_deleted?: boolean;
+        /**
+         * The SKU IDs used to filter current-user entitlements.
+         * @maxItems 100
+         */
+        sku_ids?: Array<string>;
+        /** Whether to exclude entitlements that have already been consumed. */
+        exclude_consumed?: boolean;
       };
       output: {
         /** The entitlements visible to the current OAuth user. */
@@ -38,26 +41,29 @@ declare module "@oomol-lab/connector" {
           sku_id: string;
           /** The application ID the entitlement belongs to. */
           application_id: string;
+          /** The user ID who owns the entitlement. */
+          user_id: string;
           /** The type of the entitlement. */
           type: number;
           /** Whether the entitlement has been deleted. */
           deleted: boolean;
-          /** The user ID who owns the entitlement. */
-          user_id?: string;
-          /** The guild ID the entitlement is granted to. */
-          guild_id?: string;
           /** The start timestamp of the entitlement. */
-          starts_at?: string;
+          starts_at: string | null;
           /** The end timestamp of the entitlement. */
-          ends_at?: string;
+          ends_at: string | null;
+          /** The guild ID the entitlement is granted to. */
+          guild_id?: string | null;
           /** Whether the entitlement has been consumed. */
           consumed?: boolean;
-          /** The promotion ID associated with the entitlement. */
-          promotion_id?: string;
-          /** The gift code flags for the entitlement. */
-          gift_code_flags?: number;
-          /** The subscription ID associated with the entitlement. */
-          subscription_id?: string;
+          /** The timestamp when the entitlement was fulfilled. */
+          fulfilled_at?: string | null;
+          /** The fulfillment status code for the entitlement. */
+          fulfillment_status?: number | null;
+          /** The user ID that gifted the entitlement. */
+          gifter_user_id?: string | null;
+          /** The parent entitlement ID. */
+          parent_id?: string | null;
+          [key: string]: unknown;
         }>;
       };
     };
@@ -123,13 +129,21 @@ declare module "@oomol-lab/connector" {
         invite_code: string;
         /** Whether to include approximate member and presence counts. */
         with_counts?: boolean;
-        /** Whether to include expiration metadata in the invite response. */
-        with_expiration?: boolean;
         /**
          * The scheduled event ID to include in the invite context.
          * @minLength 1
          */
         guild_scheduled_event_id?: string;
+        /**
+         * The target channel ID to include in the invite context.
+         * @minLength 1
+         */
+        target_channel_id?: string;
+        /**
+         * The target message ID to include in the invite context.
+         * @minLength 1
+         */
+        target_message_id?: string;
       };
       output: Record<string, unknown>;
     };
@@ -147,6 +161,8 @@ declare module "@oomol-lab/connector" {
         role_connection: {
           /** The optional platform display name shown on the user's Discord profile. */
           platform_name?: string | null;
+          /** The optional platform username shown on the user's Discord profile. */
+          platform_username?: string | null;
           /** Optional application role connection metadata values keyed by metadata field name. */
           metadata?: Record<string, string>;
           [key: string]: unknown;
@@ -205,7 +221,7 @@ declare module "@oomol-lab/connector" {
         /** Whether the user's email is verified. */
         verified?: boolean;
         /** The email address of the user. */
-        email?: string;
+        email?: string | null;
         /** The global display name of the user. */
         global_name?: string | null;
         /** Whether the user has multi-factor authentication enabled. */
@@ -215,7 +231,18 @@ declare module "@oomol-lab/connector" {
         /** The type of Nitro subscription. */
         premium_type?: number | null;
         /** The avatar decoration data for the user. */
-        avatar_decoration_data?: Record<string, unknown>;
+        avatar_decoration_data?: Record<string, unknown> | null;
+        /** The user's collectible cosmetics. */
+        collectibles?: Record<string, unknown> | null;
+        /** The user's primary guild identity. */
+        primary_guild?: Record<string, unknown> | null;
+        /** The styles applied to the user's display name. */
+        display_name_styles?: Record<string, unknown> | null;
+        /** The user's banner color. */
+        banner_color?: string | null;
+        /** The user's clan identity. */
+        clan?: Record<string, unknown> | null;
+        [key: string]: unknown;
       };
     };
     /** Get OpenID Connect userinfo for the current OAuth user. */
@@ -262,11 +289,8 @@ declare module "@oomol-lab/connector" {
     /** Get a Discord user. OAuth mode only supports @me in this provider. */
     "discord.get_user": {
       input: {
-        /**
-         * The user ID to fetch. Use `@me` for the current OAuth user.
-         * @minLength 1
-         */
-        user_id: string;
+        /** The current OAuth user identifier. */
+        user_id: "@me";
       };
       output: {
         /** The unique identifier of the user. */
@@ -292,7 +316,7 @@ declare module "@oomol-lab/connector" {
         /** Whether the user's email is verified. */
         verified?: boolean;
         /** The email address of the user. */
-        email?: string;
+        email?: string | null;
         /** The global display name of the user. */
         global_name?: string | null;
         /** Whether the user has multi-factor authentication enabled. */
@@ -302,7 +326,18 @@ declare module "@oomol-lab/connector" {
         /** The type of Nitro subscription. */
         premium_type?: number | null;
         /** The avatar decoration data for the user. */
-        avatar_decoration_data?: Record<string, unknown>;
+        avatar_decoration_data?: Record<string, unknown> | null;
+        /** The user's collectible cosmetics. */
+        collectibles?: Record<string, unknown> | null;
+        /** The user's primary guild identity. */
+        primary_guild?: Record<string, unknown> | null;
+        /** The styles applied to the user's display name. */
+        display_name_styles?: Record<string, unknown> | null;
+        /** The user's banner color. */
+        banner_color?: string | null;
+        /** The user's clan identity. */
+        clan?: Record<string, unknown> | null;
+        [key: string]: unknown;
       };
     };
     /** List the current OAuth user's linked connections. */
@@ -373,10 +408,13 @@ declare module "@oomol-lab/connector" {
           features: Array<string>;
           /** The icon hash of the guild. */
           icon?: string | null;
+          /** The banner hash of the guild. */
+          banner?: string | null;
           /** The approximate number of members in the guild. */
-          approximate_member_count?: number;
+          approximate_member_count?: number | null;
           /** The approximate number of online members in the guild. */
-          approximate_presence_count?: number;
+          approximate_presence_count?: number | null;
+          [key: string]: unknown;
         }>;
       };
     };
@@ -416,6 +454,9 @@ declare module "@oomol-lab/connector" {
             available?: boolean;
             /** The sort order value for the sticker. */
             sort_value?: number;
+            /** The legacy asset value returned by Discord sticker pack APIs. */
+            asset?: string;
+            [key: string]: unknown;
           }>;
           /** The banner asset ID for the pack artwork. */
           banner_asset_id?: string;
@@ -434,13 +475,21 @@ declare module "@oomol-lab/connector" {
         code: string;
         /** Whether to include approximate member and presence counts. */
         with_counts?: boolean;
-        /** Whether to include invite expiration metadata. */
-        with_expiration?: boolean;
         /**
          * The scheduled event ID to attach to the invite context.
          * @minLength 1
          */
         guild_scheduled_event_id?: string;
+        /**
+         * The target channel ID to include in the invite context.
+         * @minLength 1
+         */
+        target_channel_id?: string;
+        /**
+         * The target message ID to include in the invite context.
+         * @minLength 1
+         */
+        target_message_id?: string;
       };
       output: Record<string, unknown>;
     };
@@ -470,6 +519,8 @@ declare module "@oomol-lab/connector" {
         role_connection: {
           /** The optional platform display name shown on the user's Discord profile. */
           platform_name?: string | null;
+          /** The optional platform username shown on the user's Discord profile. */
+          platform_username?: string | null;
           /** Optional application role connection metadata values keyed by metadata field name. */
           metadata?: Record<string, string>;
           [key: string]: unknown;

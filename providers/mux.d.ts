@@ -2,6 +2,49 @@ import "@oomol-lab/connector";
 
 declare module "@oomol-lab/connector" {
   interface ActionRegistry {
+    /** Cancel a waiting Mux Direct Upload so it cannot create an asset. */
+    "mux.cancel_direct_upload": {
+      input: {
+        /**
+         * The Mux Direct Upload ID.
+         * @minLength 1
+         */
+        uploadId: string;
+      };
+      output: {
+        /** A Mux Direct Upload and its current ingest status. */
+        upload: {
+          /**
+           * The Direct Upload ID.
+           * @minLength 1
+           */
+          id?: string;
+          /**
+           * The browser origin allowed to use the signed upload URL.
+           * @minLength 1
+           */
+          cors_origin?: string;
+          /** The current Direct Upload status. */
+          status?: "waiting" | "asset_created" | "errored" | "cancelled" | "timed_out";
+          /**
+           * The signed upload URL validity period in seconds.
+           * @minimum 0
+           */
+          timeout?: number;
+          /** The resulting asset ID once ingested. */
+          asset_id?: string | null;
+          /** The ingest error reported for a failed Direct Upload. */
+          error?: Record<string, unknown>;
+          /** The asset settings used after ingest. */
+          new_asset_settings?: Record<string, unknown>;
+          /** Whether this is a Mux test upload. */
+          test?: boolean;
+          /** The signed URL to upload the source media. */
+          url?: string | null;
+          [key: string]: unknown;
+        };
+      };
+    };
     /** Create a Mux on-demand video asset from a publicly accessible media URL and return its initial processing state. */
     "mux.create_asset": {
       input: {
@@ -103,6 +146,97 @@ declare module "@oomol-lab/connector" {
           errors?: Record<string, unknown>;
           /** Customer-provided structured metadata for the asset. */
           meta?: Record<string, unknown>;
+          [key: string]: unknown;
+        };
+      };
+    };
+    /** Create a signed Mux Direct Upload URL without proxying video bytes through the connector. */
+    "mux.create_direct_upload": {
+      input: {
+        /**
+         * The browser origin that will use the signed upload URL, or * for any origin.
+         * @minLength 1
+         */
+        corsOrigin: string;
+        /** Asset settings applied after a direct upload completes. */
+        newAssetSettings?: {
+          /**
+           * Playback policies to create for the resulting asset.
+           * @minItems 1
+           * @maxItems 2
+           */
+          playbackPolicies?: Array<"public" | "signed">;
+          /** The encoding-quality tier for the resulting asset. */
+          videoQuality?: "basic" | "plus" | "premium";
+          /** The maximum resolution tier Mux should produce. */
+          maxResolutionTier?: "1080p" | "1440p" | "2160p";
+          /**
+           * Opaque metadata returned with the asset.
+           * @minLength 1
+           * @maxLength 255
+           */
+          passthrough?: string;
+          /** Customer-provided metadata attached to a Mux asset. Do not include personally identifiable information. */
+          meta?: {
+            /**
+             * A human-readable asset title.
+             * @minLength 1
+             * @maxLength 512
+             */
+            title?: string;
+            /**
+             * Your identifier for the asset creator.
+             * @minLength 1
+             * @maxLength 128
+             */
+            creatorId?: string;
+            /**
+             * Your identifier linking the asset to an external record.
+             * @minLength 1
+             * @maxLength 128
+             */
+            externalId?: string;
+          };
+        };
+        /** Whether to create a free, watermarked test upload. */
+        test?: boolean;
+        /**
+         * How long the signed upload URL remains valid, in seconds.
+         * @minimum 60
+         * @maximum 604800
+         */
+        timeout?: number;
+      };
+      output: {
+        /** A Mux Direct Upload and its current ingest status. */
+        upload: {
+          /**
+           * The Direct Upload ID.
+           * @minLength 1
+           */
+          id?: string;
+          /**
+           * The browser origin allowed to use the signed upload URL.
+           * @minLength 1
+           */
+          cors_origin?: string;
+          /** The current Direct Upload status. */
+          status?: "waiting" | "asset_created" | "errored" | "cancelled" | "timed_out";
+          /**
+           * The signed upload URL validity period in seconds.
+           * @minimum 0
+           */
+          timeout?: number;
+          /** The resulting asset ID once ingested. */
+          asset_id?: string | null;
+          /** The ingest error reported for a failed Direct Upload. */
+          error?: Record<string, unknown>;
+          /** The asset settings used after ingest. */
+          new_asset_settings?: Record<string, unknown>;
+          /** Whether this is a Mux test upload. */
+          test?: boolean;
+          /** The signed URL to upload the source media. */
+          url?: string | null;
           [key: string]: unknown;
         };
       };
@@ -238,6 +372,83 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
+    /** Retrieve the status, signed URL, and resulting asset ID for a Mux Direct Upload. */
+    "mux.get_direct_upload": {
+      input: {
+        /**
+         * The Mux Direct Upload ID.
+         * @minLength 1
+         */
+        uploadId: string;
+      };
+      output: {
+        /** A Mux Direct Upload and its current ingest status. */
+        upload: {
+          /**
+           * The Direct Upload ID.
+           * @minLength 1
+           */
+          id?: string;
+          /**
+           * The browser origin allowed to use the signed upload URL.
+           * @minLength 1
+           */
+          cors_origin?: string;
+          /** The current Direct Upload status. */
+          status?: "waiting" | "asset_created" | "errored" | "cancelled" | "timed_out";
+          /**
+           * The signed upload URL validity period in seconds.
+           * @minimum 0
+           */
+          timeout?: number;
+          /** The resulting asset ID once ingested. */
+          asset_id?: string | null;
+          /** The ingest error reported for a failed Direct Upload. */
+          error?: Record<string, unknown>;
+          /** The asset settings used after ingest. */
+          new_asset_settings?: Record<string, unknown>;
+          /** Whether this is a Mux test upload. */
+          test?: boolean;
+          /** The signed URL to upload the source media. */
+          url?: string | null;
+          [key: string]: unknown;
+        };
+      };
+    };
+    /** Resolve a Mux playback ID to its asset or live stream and access policy. */
+    "mux.get_playback_id": {
+      input: {
+        /**
+         * The Mux playback ID.
+         * @minLength 1
+         */
+        playbackId: string;
+      };
+      output: {
+        /** The Mux object associated with a playback ID. */
+        playbackId: {
+          /**
+           * The playback ID.
+           * @minLength 1
+           */
+          id?: string;
+          /** The associated Mux object. */
+          object?: {
+            /**
+             * The associated asset or live stream ID.
+             * @minLength 1
+             */
+            id?: string;
+            /** The associated object type. */
+            type?: "asset" | "live_stream";
+            [key: string]: unknown;
+          };
+          /** The access policy for a Mux playback ID. */
+          policy?: "public" | "signed" | "drm";
+          [key: string]: unknown;
+        };
+      };
+    };
     /** List Mux video assets with cursor or page-based pagination and source filters. */
     "mux.list_assets": {
       input: {
@@ -327,6 +538,149 @@ declare module "@oomol-lab/connector" {
         }>;
         /** The cursor for the next page, or null when no cursor was returned. */
         nextCursor: string | null;
+      };
+    };
+    /** List Mux Direct Uploads in the current environment. */
+    "mux.list_direct_uploads": {
+      input: {
+        /**
+         * The maximum number of Direct Uploads to return.
+         * @minimum 1
+         */
+        limit?: number;
+        /**
+         * The one-based page number.
+         * @exclusiveMinimum 0
+         */
+        page?: number;
+      };
+      output: {
+        /** Mux Direct Uploads in this page. */
+        uploads: Array<{
+          /**
+           * The Direct Upload ID.
+           * @minLength 1
+           */
+          id?: string;
+          /**
+           * The browser origin allowed to use the signed upload URL.
+           * @minLength 1
+           */
+          cors_origin?: string;
+          /** The current Direct Upload status. */
+          status?: "waiting" | "asset_created" | "errored" | "cancelled" | "timed_out";
+          /**
+           * The signed upload URL validity period in seconds.
+           * @minimum 0
+           */
+          timeout?: number;
+          /** The resulting asset ID once ingested. */
+          asset_id?: string | null;
+          /** The ingest error reported for a failed Direct Upload. */
+          error?: Record<string, unknown>;
+          /** The asset settings used after ingest. */
+          new_asset_settings?: Record<string, unknown>;
+          /** Whether this is a Mux test upload. */
+          test?: boolean;
+          /** The signed URL to upload the source media. */
+          url?: string | null;
+          [key: string]: unknown;
+        }>;
+      };
+    };
+    /** Update the passthrough value or customer metadata for an existing Mux video asset. */
+    "mux.update_asset": {
+      input: {
+        /**
+         * The Mux asset ID.
+         * @minLength 1
+         */
+        assetId: string;
+        /**
+         * Opaque metadata returned in asset details. Pass an empty string to clear it.
+         * @maxLength 255
+         */
+        passthrough?: string;
+        /** Customer-provided metadata attached to a Mux asset. Do not include personally identifiable information. */
+        meta?: {
+          /**
+           * A human-readable asset title.
+           * @minLength 1
+           * @maxLength 512
+           */
+          title?: string;
+          /**
+           * Your identifier for the asset creator.
+           * @minLength 1
+           * @maxLength 128
+           */
+          creatorId?: string;
+          /**
+           * Your identifier linking the asset to an external record.
+           * @minLength 1
+           * @maxLength 128
+           */
+          externalId?: string;
+        };
+      };
+      output: {
+        /** A Mux video asset, including its current processing state and media details. */
+        asset: {
+          /**
+           * The Mux asset ID.
+           * @minLength 1
+           */
+          id?: string;
+          /** The current asset processing status. */
+          status?: "preparing" | "ready" | "errored";
+          /**
+           * The Unix timestamp when Mux created the asset.
+           * @minLength 1
+           */
+          created_at?: string;
+          /**
+           * The asset duration in seconds.
+           * @minimum 0
+           */
+          duration?: number;
+          /**
+           * The source aspect ratio in width:height form.
+           * @minLength 1
+           */
+          aspect_ratio?: string;
+          /**
+           * The highest resolution tier available for the asset.
+           * @minLength 1
+           */
+          resolution_tier?: string;
+          /** The Mux video quality tier used to encode the asset. */
+          video_quality?: "basic" | "plus" | "premium";
+          /** User-supplied passthrough metadata. */
+          passthrough?: string | null;
+          /** Playback IDs currently attached to the asset. */
+          playback_ids?: Array<{
+            /**
+             * The playback ID used in Mux streaming URLs.
+             * @minLength 1
+             */
+            id?: string;
+            /** The access policy for a Mux playback ID. */
+            policy?: "public" | "signed" | "drm";
+            /**
+             * The DRM configuration ID when the policy is drm.
+             * @minLength 1
+             */
+            drm_configuration_id?: string;
+            [key: string]: unknown;
+          }>;
+          /** Audio, video, and text tracks in the asset. */
+          tracks?: Array<Record<string, unknown>>;
+          /** Processing errors reported by Mux when the asset is errored. */
+          errors?: Record<string, unknown>;
+          /** Customer-provided structured metadata for the asset. */
+          meta?: Record<string, unknown>;
+          [key: string]: unknown;
+        };
       };
     };
   }

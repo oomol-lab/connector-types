@@ -786,6 +786,165 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
+    /** Get the Qwen Image Layered task result */
+    "fusion-api.fal_qwen_image_layered_result": {
+      input: {
+        /**
+         * Session ID
+         * @example "01936c8e-7890-7abc-def0-123456789abc"
+         */
+        sessionID: string;
+        [key: string]: unknown;
+      };
+      output: {
+        /** Task state. */
+        state: "completed";
+        /** Layered image result. */
+        data: {
+          /** Generated layer images. */
+          images: Array<{
+            /** Layer image URL. */
+            url: string;
+            /** Image MIME type. */
+            contentType?: string | null;
+            /** Output file name. */
+            fileName?: string | null;
+            /** File size in bytes. */
+            fileSize?: number | null;
+            /** Image width in pixels. */
+            width?: number | null;
+            /** Image height in pixels. */
+            height?: number | null;
+            [key: string]: unknown;
+          }>;
+          /** Processing time by stage. */
+          timings: Record<string, number>;
+          /** Seed used for generation. */
+          seed: number;
+          /** Safety-check result for each layer image. */
+          hasNsfwConcepts: Array<boolean>;
+          /** Prompt used for generation. */
+          prompt?: string | null;
+          [key: string]: unknown;
+        };
+        [key: string]: unknown;
+      } | {
+        /** Task state. */
+        state: "processing";
+        /** Task progress. */
+        progress: number;
+        [key: string]: unknown;
+      } | {
+        /** Task state. */
+        state: "not_found";
+        /** Error message. */
+        error: string;
+        [key: string]: unknown;
+      };
+    };
+    /** Get the Qwen Image Layered task state */
+    "fusion-api.fal_qwen_image_layered_state": {
+      input: {
+        /**
+         * Session ID
+         * @example "01936c8e-7890-7abc-def0-123456789abc"
+         */
+        sessionID: string;
+        [key: string]: unknown;
+      };
+      output: {
+        /** Task state. */
+        state: "completed";
+        [key: string]: unknown;
+      } | {
+        /** Task state. */
+        state: "processing";
+        /** Task progress. */
+        progress: number;
+        [key: string]: unknown;
+      } | {
+        /** Task state. */
+        state: "not_found";
+        /** Error message. */
+        error: string;
+        [key: string]: unknown;
+      };
+    };
+    /** Split an image into multiple layers with Qwen Image Layered */
+    "fusion-api.fal_qwen_image_layered_submit": {
+      input: {
+        /**
+         * URL of the input image to split into layers.
+         * @minLength 1
+         * @example "https://example.com/source.png"
+         */
+        imageURL: string;
+        /**
+         * Optional description of the input image.
+         * @minLength 1
+         * @example "A product photo with a clean background"
+         */
+        prompt?: string | null;
+        /**
+         * Content to avoid during generation.
+         * @default ""
+         * @example "blurry, low quality"
+         */
+        negativePrompt?: string;
+        /**
+         * Number of inference steps.
+         * @minimum 1
+         * @maximum 50
+         * @default 28
+         * @example 28
+         */
+        numInferenceSteps?: number;
+        /**
+         * Prompt guidance strength.
+         * @minimum 1
+         * @maximum 20
+         * @default 5
+         * @example 5
+         */
+        guidanceScale?: number;
+        /**
+         * Seed used to reproduce a result.
+         * @example 42
+         */
+        seed?: number | null;
+        /**
+         * Number of layers to generate.
+         * @minimum 1
+         * @maximum 10
+         * @default 4
+         * @example 4
+         */
+        numLayers?: number;
+        /**
+         * Whether to enable the safety checker.
+         * @default true
+         */
+        enableSafetyChecker?: boolean;
+        /**
+         * Output image format.
+         * @default "png"
+         * @example "png"
+         */
+        outputFormat?: "png" | "webp";
+        /**
+         * Inference acceleration level.
+         * @default "regular"
+         * @example "regular"
+         */
+        acceleration?: "none" | "regular" | "high";
+        [key: string]: unknown;
+      };
+      output: {
+        /** Task session ID. */
+        sessionId: string;
+        [key: string]: unknown;
+      };
+    };
     /** Image with background removed */
     "fusion-api.fal_remove_background_result": {
       input: {

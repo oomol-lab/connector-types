@@ -696,11 +696,8 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         title: string;
-        /**
-         * The monday column type to create.
-         * @minLength 1
-         */
-        column_type: string;
+        /** The official monday column type to create. Use people for a People column and numbers for a Numbers column. */
+        column_type: "auto_number" | "board_relation" | "button" | "checkbox" | "color_picker" | "country" | "creation_log" | "date" | "dependency" | "doc" | "dropdown" | "email" | "file" | "formula" | "hour" | "last_updated" | "link" | "location" | "long_text" | "mirror" | "numbers" | "people" | "phone" | "progress" | "rating" | "status" | "subtasks" | "tags" | "text" | "timeline" | "time_tracking" | "vote" | "week" | "world_clock";
         /**
          * The optional custom identifier of the new column.
          * @minLength 1
@@ -1339,6 +1336,38 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
+    /** Create a monday workspace with the official create_workspace mutation. */
+    "monday.create_workspace": {
+      input: {
+        /**
+         * The name of the new workspace.
+         * @minLength 1
+         */
+        name: string;
+        /** The visibility type of the new workspace. */
+        kind: "open" | "closed";
+        /** The description of the new workspace. */
+        description?: string;
+        /** The account product in which to create the workspace. */
+        account_product_id?: string | number;
+      };
+      output: {
+        /** The monday workspace returned by create_workspace. */
+        workspace: {
+          /** The monday workspace identifier. */
+          id: string;
+          /** The monday workspace name. */
+          name?: string;
+          /** The monday workspace kind. */
+          kind?: string;
+          /** The monday workspace state. */
+          state?: string;
+          /** The monday workspace description. */
+          description?: string;
+          [key: string]: unknown;
+        };
+      };
+    };
     /** Deactivate a monday Workform so it stops accepting submissions. */
     "monday.deactivate_form": {
       input: {
@@ -1521,6 +1550,17 @@ declare module "@oomol-lab/connector" {
       output: {
         /** The deleted monday update identifier. */
         deletedUpdateId: string;
+      };
+    };
+    /** Delete a monday workspace with the official delete_workspace mutation. */
+    "monday.delete_workspace": {
+      input: {
+        /** The workspace identifier to delete. */
+        workspace_id: string | number;
+      };
+      output: {
+        /** The deleted monday workspace identifier. */
+        deletedWorkspaceId: string;
       };
     };
     /** Duplicate a monday item. */
@@ -3337,19 +3377,19 @@ declare module "@oomol-lab/connector" {
     "monday.list_updates": {
       input: {
         /**
-         * The number of updates to return.
-         * @exclusiveMinimum 0
+         * The maximum number of updates to return.
+         * @minimum 1
+         * @maximum 100
          */
         limit?: number;
         /**
-         * The inclusive start date for filtering updates.
-         * @minLength 1
+         * The 1-based page number of updates to return.
+         * @exclusiveMinimum 0
          */
+        page?: number;
+        /** The inclusive start date for filtering updates. */
         from_date?: string;
-        /**
-         * The inclusive end date for filtering updates.
-         * @minLength 1
-         */
+        /** The inclusive end date for filtering updates. */
         to_date?: string;
       };
       output: {
@@ -3466,7 +3506,7 @@ declare module "@oomol-lab/connector" {
          */
         ids?: Array<string | number>;
         /** The workspace visibility type. */
-        kind?: "open" | "closed";
+        kind?: "open" | "closed" | "template";
         /**
          * The number of workspaces to return.
          * @exclusiveMinimum 0
@@ -4079,6 +4119,40 @@ declare module "@oomol-lab/connector" {
           archived?: boolean;
           /** Whether the monday group is deleted. */
           deleted?: boolean;
+          [key: string]: unknown;
+        };
+      };
+    };
+    /** Update a monday workspace with the official update_workspace mutation. */
+    "monday.update_workspace": {
+      input: {
+        /** The workspace identifier to update. */
+        workspace_id: string | number;
+        /**
+         * The updated workspace name.
+         * @minLength 1
+         */
+        name?: string;
+        /** The updated workspace description. */
+        description?: string;
+        /** The updated workspace kind. */
+        kind?: "open" | "closed" | "template";
+        /** The target account product for the workspace. */
+        account_product_id?: string | number;
+      };
+      output: {
+        /** The monday workspace returned by update_workspace. */
+        workspace: {
+          /** The monday workspace identifier. */
+          id: string;
+          /** The monday workspace name. */
+          name?: string;
+          /** The monday workspace kind. */
+          kind?: string;
+          /** The monday workspace state. */
+          state?: string;
+          /** The monday workspace description. */
+          description?: string;
           [key: string]: unknown;
         };
       };

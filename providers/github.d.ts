@@ -4577,7 +4577,7 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** List issues for a GitHub repository. Pull requests are filtered out from the response. */
+    /** List issues for a GitHub repository. Pull requests are filtered out of the response; pageInfo.fetched reports the raw page length before filtering, so paginating callers must continue while fetched equals perPage (30 by default) even when the issues array is short or empty. */
     "github.list_repository_issues": {
       input: {
         /**
@@ -4601,7 +4601,7 @@ declare module "@oomol-lab/connector" {
         /** The ISO 8601 date to filter issues updated after. */
         since?: string;
         /**
-         * The number of results per page.
+         * The number of raw GitHub results requested per page. Defaults to 30.
          * @minimum 1
          * @maximum 100
          */
@@ -4673,6 +4673,14 @@ declare module "@oomol-lab/connector" {
           pull_request?: Record<string, unknown>;
           [key: string]: unknown;
         }>;
+        /** Pagination signals from the raw GitHub page before filtering. */
+        pageInfo: {
+          /**
+           * The number of items GitHub returned before filtering pull requests. Continue paginating while it equals perPage.
+           * @minimum 0
+           */
+          fetched: number;
+        };
       };
     };
     /** List labels available in a GitHub repository. */

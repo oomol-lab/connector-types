@@ -661,7 +661,7 @@ declare module "@oomol-lab/connector" {
       input: {
         /** Search query used to filter templates by name. */
         q?: string;
-        /** Exact template identifier filter applied client-side. */
+        /** Only return the template with this identifier. */
         id?: string;
         /** Tags used to filter templates. */
         tag?: Array<string>;

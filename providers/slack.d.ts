@@ -638,6 +638,74 @@ declare module "@oomol-lab/connector" {
         postAt: number;
       };
     };
+    /** Search messages visible to the Slack user who authorized the connection. Slack search modifiers such as in:channel_name and from:<@UserID> are supported. */
+    "slack.search_messages": {
+      input: {
+        /**
+         * The Slack search query.
+         * @minLength 1
+         */
+        query: string;
+        /**
+         * The number of results to return per page.
+         * @minimum 1
+         * @maximum 100
+         */
+        count?: number;
+        /**
+         * The Slack page number to fetch.
+         * @minimum 1
+         * @maximum 100
+         */
+        page?: number;
+        /** The Slack cursor for cursormark pagination. Use '*' for the first request. */
+        cursor?: string;
+        /** Whether Slack should mark query terms in matching text. */
+        highlight?: boolean;
+        /** How Slack should sort search results. */
+        sort?: "score" | "timestamp";
+        /** The sort direction for search results. */
+        sortDir?: "asc" | "desc";
+        /** The encoded team ID to search when using an org-level token. */
+        teamId?: string;
+      };
+      output: {
+        /** The search query Slack executed. */
+        query: string;
+        /** The matching Slack messages. */
+        matches: Array<{
+          /** Slack's search result item identifier. */
+          matchId?: string;
+          /** The conversation identifier containing the message. */
+          channelId?: string;
+          /** The conversation name when Slack returns one. */
+          channelName?: string | null;
+          /** The message timestamp identifier. */
+          ts?: string;
+          /** The user ID of the message author. */
+          userId?: string;
+          /** The username of the message author when Slack returns one. */
+          username?: string;
+          /** The matching message text. */
+          text?: string;
+          /** A Slack permalink for the matching message. */
+          permalink?: string;
+          /** The Slack team ID returned for the match. */
+          teamId?: string;
+          /** The Slack result type. */
+          type?: string;
+          [key: string]: unknown;
+        }>;
+        /** The total number of matches Slack reports. */
+        total: number;
+        /** Slack pagination metadata when returned. */
+        pagination: Record<string, unknown>;
+        /** Slack legacy paging metadata when returned. */
+        paging: Record<string, unknown>;
+        /** The cursor for the next page when Slack returns one. */
+        nextCursor: string | null;
+      };
+    };
     /** Update a Slack message posted by the bot. Provide text, blocks, or attachments as the new message content. */
     "slack.update_message": {
       input: {

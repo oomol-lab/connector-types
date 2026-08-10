@@ -2,6 +2,136 @@ import "@oomol-lab/connector";
 
 declare module "@oomol-lab/connector" {
   interface ActionRegistry {
+    /** Batch create multiple TickTick tasks in one request. */
+    "ticktick.batch_add_tasks": {
+      input: {
+        /**
+         * The TickTick tasks to create.
+         * @minItems 1
+         * @maxItems 50
+         */
+        tasks: Array<{
+          /**
+           * The TickTick project ID.
+           * @minLength 1
+           */
+          projectId: string;
+          /**
+           * The TickTick task title.
+           * @minLength 1
+           */
+          title: string;
+          /** The TickTick task content. */
+          content?: string;
+          /** The TickTick task description. */
+          desc?: string;
+          /** Whether the TickTick task is all day. */
+          isAllDay?: boolean;
+          /** The task start date-time string. */
+          startDate?: string;
+          /** The task due date-time string. */
+          dueDate?: string;
+          /** The TickTick task time zone. */
+          timeZone?: string;
+          /** The reminder trigger strings attached to the task. */
+          reminders?: Array<string>;
+          /** The TickTick recurrence rule string. */
+          repeatFlag?: string;
+          /** The TickTick priority value. Valid values are 0, 1, 3, and 5. */
+          priority?: 0 | 1 | 3 | 5;
+          /** The TickTick task sort order. */
+          sortOrder?: number;
+          /** The checklist items to create under the task. */
+          items?: Array<{
+            /** The checklist item ID. */
+            id?: string;
+            /**
+             * The checklist item title.
+             * @minLength 1
+             */
+            title: string;
+            /** The checklist item status. Use 0 for normal and 1 for completed. */
+            status?: number;
+            /** Whether the checklist item is all day. */
+            isAllDay?: boolean;
+            /** The time zone for the checklist item. */
+            timeZone?: string;
+            /** The sort order of the checklist item. */
+            sortOrder?: number;
+            /** The checklist item start date-time string. */
+            startDate?: string;
+            /** The checklist item completion date-time string. */
+            completedTime?: string;
+          }>;
+          /** The TickTick task tags. */
+          tags?: Array<string>;
+        }>;
+      };
+      output: {
+        /** The created TickTick tasks. */
+        tasks: Array<{
+          /** The TickTick task ID. */
+          id: string;
+          /** The TickTick project ID that owns the task. */
+          projectId: string;
+          /** The TickTick task title. */
+          title?: string;
+          /** The TickTick task content. */
+          content?: string;
+          /** The TickTick task description. */
+          desc?: string;
+          /** Whether the task is all day. */
+          isAllDay?: boolean;
+          /** The task start date-time string. */
+          startDate?: string;
+          /** The task due date-time string. */
+          dueDate?: string;
+          /** The TickTick task time zone. */
+          timeZone?: string;
+          /** The TickTick reminder trigger strings attached to the task. */
+          reminders?: Array<string>;
+          /** The TickTick recurrence rule string. */
+          repeatFlag?: string;
+          /** The TickTick priority value. */
+          priority?: number;
+          /** The TickTick task status code. */
+          status?: number;
+          /** The task completion date-time string. */
+          completedTime?: string;
+          /** The TickTick task sort order. */
+          sortOrder?: number;
+          /** The checklist items under the task. */
+          items?: Array<{
+            /** The checklist item ID. */
+            id: string;
+            /** The checklist item title. */
+            title?: string;
+            /** The checklist item status code. */
+            status?: number;
+            /** Whether the checklist item is all day. */
+            isAllDay?: boolean;
+            /** The time zone for the checklist item. */
+            timeZone?: string;
+            /** The checklist item sort order. */
+            sortOrder?: number;
+            /** The checklist item start date-time string. */
+            startDate?: string;
+            /** The checklist item completion date-time string. */
+            completedTime?: string;
+            [key: string]: unknown;
+          }>;
+          /** The TickTick entity tag. */
+          etag?: string;
+          /** The TickTick task kind. */
+          kind?: string;
+          /** The tags value. */
+          tags?: Array<string>;
+          [key: string]: unknown;
+        }>;
+        /** The number of tasks created. */
+        createdCount: number;
+      };
+    };
     /** Mark a TickTick task as completed by project ID and task ID. */
     "ticktick.complete_task": {
       input: {
@@ -180,6 +310,8 @@ declare module "@oomol-lab/connector" {
           /** The checklist item completion date-time string. */
           completedTime?: string;
         }>;
+        /** The TickTick task tags. */
+        tags?: Array<string>;
       };
       output: {
         /** The created TickTick task. */
@@ -299,6 +431,8 @@ declare module "@oomol-lab/connector" {
           /** The checklist item completion date-time string. */
           completedTime?: string;
         }>;
+        /** The TickTick task tags. */
+        tags?: Array<string>;
       };
       output: {
         /** The created TickTick task. */
@@ -1209,6 +1343,8 @@ declare module "@oomol-lab/connector" {
           /** The checklist item completion date-time string. */
           completedTime?: string;
         }>;
+        /** The TickTick task tags. */
+        tags?: Array<string>;
       };
       output: {
         /** The updated TickTick task. */
