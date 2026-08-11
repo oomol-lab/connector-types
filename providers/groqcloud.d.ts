@@ -2,6 +2,141 @@ import "@oomol-lab/connector";
 
 declare module "@oomol-lab/connector" {
   interface ActionRegistry {
+    /** Transcribe an audio file into text in its original language using a GroqCloud Whisper model. Supply the audio inline as base64 or as a public URL that GroqCloud downloads. */
+    "groqcloud.create_audio_transcription": {
+      input: {
+        /** The GroqCloud speech-to-text model identifier. */
+        model: "whisper-large-v3" | "whisper-large-v3-turbo";
+        /** The audio source. Provide url for GroqCloud to fetch the audio, or content_base64 to upload the bytes inline. */
+        file: Record<string, unknown>;
+        /** The ISO-639-1 code of the spoken language, such as en, which improves accuracy and latency. */
+        language?: string;
+        /** Optional context or style guidance for the transcript, limited to 224 tokens. */
+        prompt?: string;
+        /** The transcript format to return. This connector returns structured payloads, so the plain text format is not offered. */
+        response_format?: "json" | "verbose_json";
+        /**
+         * The sampling temperature applied to the transcription.
+         * @minimum 0
+         * @maximum 1
+         */
+        temperature?: number;
+        /**
+         * The timestamp detail to include. Requires response_format to be verbose_json.
+         * @minItems 1
+         */
+        timestamp_granularities?: Array<"word" | "segment">;
+      };
+      output: {
+        /** The full transcript text. */
+        text?: string;
+        /** The detected or requested language of the audio. */
+        language?: string;
+        /** The audio duration in seconds. */
+        duration?: number;
+        /** The transcribed segments, returned for the verbose_json format. */
+        segments?: Array<{
+          /** The segment index. */
+          id?: number;
+          /** The seek offset of the segment. */
+          seek?: number;
+          /** The segment start time in seconds. */
+          start?: number;
+          /** The segment end time in seconds. */
+          end?: number;
+          /** The transcribed text for the segment. */
+          text?: string;
+          /** The token identifiers for the segment. */
+          tokens?: Array<number>;
+          /** The sampling temperature used for the segment. */
+          temperature?: number;
+          /** The average log probability of the segment. */
+          avg_logprob?: number;
+          /** The compression ratio of the segment. */
+          compression_ratio?: number;
+          /** The probability that the segment contains no speech. */
+          no_speech_prob?: number;
+          [key: string]: unknown;
+        }>;
+        /** The transcribed words, returned when word timestamp granularity is requested. */
+        words?: Array<{
+          /** The transcribed word. */
+          word?: string;
+          /** The word start time in seconds. */
+          start?: number;
+          /** The word end time in seconds. */
+          end?: number;
+          [key: string]: unknown;
+        }>;
+        /** Any JSON object. */
+        x_groq?: Record<string, unknown>;
+        [key: string]: unknown;
+      };
+    };
+    /** Translate an audio file into English text using a GroqCloud Whisper model. Supply the audio inline as base64 or as a public URL that GroqCloud downloads. */
+    "groqcloud.create_audio_translation": {
+      input: {
+        /** The GroqCloud speech-to-text model identifier. Only whisper-large-v3 supports translation. */
+        model: "whisper-large-v3";
+        /** The audio source. Provide url for GroqCloud to fetch the audio, or content_base64 to upload the bytes inline. */
+        file: Record<string, unknown>;
+        /** Optional context or style guidance for the transcript, limited to 224 tokens. */
+        prompt?: string;
+        /** The transcript format to return. This connector returns structured payloads, so the plain text format is not offered. */
+        response_format?: "json" | "verbose_json";
+        /**
+         * The sampling temperature applied to the transcription.
+         * @minimum 0
+         * @maximum 1
+         */
+        temperature?: number;
+      };
+      output: {
+        /** The full transcript text. */
+        text?: string;
+        /** The detected or requested language of the audio. */
+        language?: string;
+        /** The audio duration in seconds. */
+        duration?: number;
+        /** The transcribed segments, returned for the verbose_json format. */
+        segments?: Array<{
+          /** The segment index. */
+          id?: number;
+          /** The seek offset of the segment. */
+          seek?: number;
+          /** The segment start time in seconds. */
+          start?: number;
+          /** The segment end time in seconds. */
+          end?: number;
+          /** The transcribed text for the segment. */
+          text?: string;
+          /** The token identifiers for the segment. */
+          tokens?: Array<number>;
+          /** The sampling temperature used for the segment. */
+          temperature?: number;
+          /** The average log probability of the segment. */
+          avg_logprob?: number;
+          /** The compression ratio of the segment. */
+          compression_ratio?: number;
+          /** The probability that the segment contains no speech. */
+          no_speech_prob?: number;
+          [key: string]: unknown;
+        }>;
+        /** The transcribed words, returned when word timestamp granularity is requested. */
+        words?: Array<{
+          /** The transcribed word. */
+          word?: string;
+          /** The word start time in seconds. */
+          start?: number;
+          /** The word end time in seconds. */
+          end?: number;
+          [key: string]: unknown;
+        }>;
+        /** Any JSON object. */
+        x_groq?: Record<string, unknown>;
+        [key: string]: unknown;
+      };
+    };
     /** Create a non-streaming GroqCloud OpenAI-compatible chat completion. */
     "groqcloud.create_chat_completion": {
       input: {
@@ -69,8 +204,6 @@ declare module "@oomol-lab/connector" {
         seed?: number;
         /** One or more sequences where generation should stop. */
         stop?: string | Array<string>;
-        /** Whether to request a streaming response. This connector only accepts false or an omitted value. */
-        stream?: boolean;
         /**
          * The sampling temperature.
          * @minimum 0

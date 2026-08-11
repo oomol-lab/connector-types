@@ -182,6 +182,20 @@ declare module "@oomol-lab/connector" {
         raw: Record<string, unknown> | null;
       };
     };
+    /** Retrieve one Grafana-managed alert rule by UID via the provisioning API. */
+    "grafana.get_alert_rule": {
+      input: {
+        /**
+         * The Grafana alert rule UID.
+         * @minLength 1
+         */
+        uid: string;
+      };
+      output: {
+        /** A Grafana-managed alert rule. */
+        alertRule: Record<string, unknown>;
+      };
+    };
     /** Retrieve one Grafana dashboard resource by UID. */
     "grafana.get_dashboard": {
       input: {
@@ -276,6 +290,37 @@ declare module "@oomol-lab/connector" {
           /** The raw Grafana API object. */
           raw: Record<string, unknown>;
         };
+      };
+    };
+    /** List currently firing or pending Grafana alert instances from the built-in Alertmanager. */
+    "grafana.list_alert_instances": {
+      input: {
+        /** Include active (firing) alert instances. */
+        active?: boolean;
+        /** Include silenced alert instances. */
+        silenced?: boolean;
+        /** Include inhibited alert instances. */
+        inhibited?: boolean;
+      };
+      output: {
+        /** Alert instances returned by Grafana. */
+        alertInstances: Array<Record<string, unknown>>;
+      };
+    };
+    /** List all Grafana-managed alert rules via the provisioning API. */
+    "grafana.list_alert_rules": {
+      input: Record<string, never>;
+      output: {
+        /** Alert rules returned by Grafana. */
+        alertRules: Array<Record<string, unknown>>;
+      };
+    };
+    /** List Grafana notification contact points via the provisioning API. */
+    "grafana.list_contact_points": {
+      input: Record<string, never>;
+      output: {
+        /** Contact points returned by Grafana. */
+        contactPoints: Array<Record<string, unknown>>;
       };
     };
     /** List Grafana data sources available to the service account token. */

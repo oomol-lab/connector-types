@@ -991,7 +991,7 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         summary: string;
-        /** The event description. */
+        /** The event description in Feishu Markdown. */
         description?: string;
         /**
          * An RFC 3339 date-time or Unix timestamp in seconds, for example `2026-07-23T09:00:00+08:00`.
@@ -4937,12 +4937,10 @@ declare module "@oomol-lab/connector" {
     "feishu_app_bot.get_slides_screenshots": {
       input: {
         /**
-         * The Slides presentation ID or Wiki node token.
+         * A Feishu resource token.
          * @minLength 1
          */
         presentationToken: string;
-        /** How to interpret the presentation token. */
-        presentationType?: "slides" | "wiki";
         /**
          * Stable slide IDs to render.
          * @minItems 1
@@ -9635,8 +9633,8 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         subject?: string;
-        /** Whether messages must be unread. */
-        unread?: boolean;
+        /** Filter unread messages when set to true. */
+        unread?: true;
         /** Whether messages must have attachments. */
         hasAttachment?: boolean;
         /**
@@ -10112,7 +10110,7 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         summary?: string;
-        /** The event description. */
+        /** The event description in Feishu Markdown. */
         description?: string;
         /**
          * An RFC 3339 date-time or Unix timestamp in seconds, for example `2026-07-23T09:00:00+08:00`.
@@ -10172,7 +10170,7 @@ declare module "@oomol-lab/connector" {
         attendeesRemoved: number;
       };
     };
-    /** Update a Feishu chat's profile and membership-related settings. */
+    /** Update a Feishu chat's name or description. */
     "feishu_app_bot.update_chat": {
       input: {
         /**
@@ -10180,18 +10178,18 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         chatId: string;
-        /** The new chat name. */
+        /**
+         * The new chat name.
+         * @maxLength 60
+         */
         name?: string;
-        /** The new chat description. */
+        /**
+         * The new chat description.
+         * @maxLength 100
+         */
         description?: string;
-        /** The new owner identifier. */
-        ownerId?: string;
         /** The user identifier type used by this request. */
         userIdType?: "open_id" | "union_id" | "user_id";
-        /** The new group discoverability type. */
-        chatType?: "private" | "public";
-        /** Whether the chat may contain external users. */
-        external?: boolean;
       };
       output: {
         /** The raw Feishu data object. */
