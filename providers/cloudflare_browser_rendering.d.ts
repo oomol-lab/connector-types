@@ -6,6 +6,11 @@ declare module "@oomol-lab/connector" {
     "cloudflare_browser_rendering.get_html_content": {
       input: {
         /**
+         * The Cloudflare account ID. OAuth connections that can access multiple accounts must provide this value.
+         * @minLength 1
+         */
+        accountId?: string;
+        /**
          * The URL Cloudflare Browser Run should navigate to.
          * @minLength 1
          * @format uri
@@ -115,6 +120,11 @@ declare module "@oomol-lab/connector" {
     /** Render a URL or raw HTML with Cloudflare Browser Run and extract structured JSON from the page. */
     "cloudflare_browser_rendering.get_json": {
       input: {
+        /**
+         * The Cloudflare account ID. OAuth connections that can access multiple accounts must provide this value.
+         * @minLength 1
+         */
+        accountId?: string;
         /**
          * The URL Cloudflare Browser Run should navigate to.
          * @minLength 1
@@ -233,6 +243,11 @@ declare module "@oomol-lab/connector" {
     "cloudflare_browser_rendering.get_links": {
       input: {
         /**
+         * The Cloudflare account ID. OAuth connections that can access multiple accounts must provide this value.
+         * @minLength 1
+         */
+        accountId?: string;
+        /**
          * The URL Cloudflare Browser Run should navigate to.
          * @minLength 1
          * @format uri
@@ -338,6 +353,11 @@ declare module "@oomol-lab/connector" {
     /** Render a URL or raw HTML with Cloudflare Browser Run and return the page content as Markdown. */
     "cloudflare_browser_rendering.get_markdown": {
       input: {
+        /**
+         * The Cloudflare account ID. OAuth connections that can access multiple accounts must provide this value.
+         * @minLength 1
+         */
+        accountId?: string;
         /**
          * The URL Cloudflare Browser Run should navigate to.
          * @minLength 1
@@ -479,6 +499,11 @@ declare module "@oomol-lab/connector" {
     /** Render a URL or raw HTML with Cloudflare Browser Run and scrape selected HTML elements. */
     "cloudflare_browser_rendering.scrape_elements": {
       input: {
+        /**
+         * The Cloudflare account ID. OAuth connections that can access multiple accounts must provide this value.
+         * @minLength 1
+         */
+        accountId?: string;
         /**
          * The URL Cloudflare Browser Run should navigate to.
          * @minLength 1

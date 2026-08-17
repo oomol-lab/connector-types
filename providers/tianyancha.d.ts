@@ -313,6 +313,129 @@ declare module "@oomol-lab/connector" {
         pageSize: number;
       };
     };
+    /** List a company's disclosed equity changes, including shareholders before and after each change. */
+    "tianyancha.list_company_equity_changes": {
+      input: {
+        /**
+         * A company name, Tianyancha company ID, registration number, or unified social credit code.
+         * @minLength 1
+         * @pattern \S
+         */
+        keyword: string;
+        /**
+         * The one-based page number. Defaults to 1.
+         * @minimum 1
+         */
+        pageNum?: number;
+        /**
+         * The number of records per page. Defaults to 20 and cannot exceed 20.
+         * @minimum 1
+         * @maximum 20
+         */
+        pageSize?: number;
+      };
+      output: {
+        /** The disclosed equity change records returned by Tianyancha. */
+        equityChanges: Array<Record<string, unknown>>;
+        /**
+         * The total number of matching records reported by Tianyancha.
+         * @minimum 0
+         */
+        total: number;
+        /**
+         * The requested one-based page number.
+         * @exclusiveMinimum 0
+         */
+        pageNum: number;
+        /**
+         * The requested number of records per page.
+         * @exclusiveMinimum 0
+         */
+        pageSize: number;
+      };
+    };
+    /** List companies previously invested in by a company using Tianyancha. */
+    "tianyancha.list_company_historical_investments": {
+      input: {
+        /**
+         * A company name, Tianyancha company ID, registration number, or unified social credit code.
+         * @minLength 1
+         * @pattern \S
+         */
+        keyword: string;
+        /**
+         * The one-based page number. Defaults to 1.
+         * @minimum 1
+         */
+        pageNum?: number;
+        /**
+         * The number of records per page. Defaults to 20 and cannot exceed 20.
+         * @minimum 1
+         * @maximum 20
+         */
+        pageSize?: number;
+      };
+      output: {
+        /** The historical outbound investment records returned by Tianyancha. */
+        historicalInvestments: Array<Record<string, unknown>>;
+        /**
+         * The total number of matching records reported by Tianyancha.
+         * @minimum 0
+         */
+        total: number;
+        /**
+         * The requested one-based page number.
+         * @exclusiveMinimum 0
+         */
+        pageNum: number;
+        /**
+         * The requested number of records per page.
+         * @exclusiveMinimum 0
+         */
+        pageSize: number;
+      };
+    };
+    /** List a company's historical shareholders, ownership ratios, and subscribed capital from Tianyancha. */
+    "tianyancha.list_company_historical_shareholders": {
+      input: {
+        /**
+         * A company name, Tianyancha company ID, registration number, or unified social credit code.
+         * @minLength 1
+         * @pattern \S
+         */
+        keyword: string;
+        /**
+         * The one-based page number. Defaults to 1.
+         * @minimum 1
+         */
+        pageNum?: number;
+        /**
+         * The number of records per page. Defaults to 20 and cannot exceed 20.
+         * @minimum 1
+         * @maximum 20
+         */
+        pageSize?: number;
+      };
+      output: {
+        /** The historical shareholder records returned by Tianyancha. */
+        historicalShareholders: Array<Record<string, unknown>>;
+        /**
+         * The total number of matching records reported by Tianyancha.
+         * @minimum 0
+         */
+        total: number;
+        /**
+         * The requested one-based page number.
+         * @exclusiveMinimum 0
+         */
+        pageNum: number;
+        /**
+         * The requested number of records per page.
+         * @exclusiveMinimum 0
+         */
+        pageSize: number;
+      };
+    };
     /** List companies directly invested in by a company using Tianyancha. */
     "tianyancha.list_company_investments": {
       input: {
