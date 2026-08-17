@@ -2,16 +2,16 @@ import "@oomol-lab/connector";
 
 declare module "@oomol-lab/connector" {
   interface ActionRegistry {
-    /** Synchronously copy one file or folder within the Baidu Netdisk app directory. */
+    /** Synchronously copy one Baidu Netdisk file or folder. */
     "baidu_netdisk.copy": {
       input: {
         /**
-         * The app-relative source path.
+         * The absolute source path.
          * @minLength 1
          */
         sourcePath: string;
         /**
-         * The app-relative destination directory path.
+         * The absolute destination directory path.
          * @minLength 1
          */
         destinationDirectoryPath: string;
@@ -24,25 +24,25 @@ declare module "@oomol-lab/connector" {
          * How Baidu Netdisk should handle a destination name conflict.
          * @default "fail"
          */
-        conflictStrategy?: "fail" | "rename" | "overwrite" | "skip";
+        conflictStrategy?: "fail" | "rename";
       };
       output: {
-        /** The source app-relative path supplied by the caller. */
+        /** The absolute source path supplied by the caller. */
         sourcePath: string;
-        /** The app-relative path reported by Baidu, or null when unavailable. */
+        /** The resulting absolute path, or null when Baidu omits it. */
         path: string | null;
       };
     };
-    /** Create one folder below the configured Baidu Netdisk app directory. */
+    /** Create one folder at an absolute path below the user's Baidu Netdisk root. */
     "baidu_netdisk.create_folder": {
       input: {
         /**
-         * The app-relative path of the folder to create.
+         * The absolute folder path to create.
          * @minLength 1
          */
         path: string;
         /**
-         * How to handle an existing folder path.
+         * How Baidu Netdisk should handle a destination name conflict.
          * @default "fail"
          */
         conflictStrategy?: "fail" | "rename";
@@ -52,7 +52,7 @@ declare module "@oomol-lab/connector" {
         id: string;
         /** The file or folder name. */
         name: string;
-        /** The app-directory-relative path beginning with a slash. */
+        /** The absolute path below the user's Baidu Netdisk root. */
         path: string;
         /** Whether this item is a file or folder. */
         kind: "file" | "folder";
@@ -74,31 +74,26 @@ declare module "@oomol-lab/connector" {
         cloudMd5: string | null;
       };
     };
-    /** Create one UTF-8 text file of up to 4 MiB in the configured Baidu Netdisk app directory. */
+    /** Create one UTF-8 text file through Baidu MCP. */
     "baidu_netdisk.create_text_file": {
       input: {
         /**
-         * The app-relative destination file path.
+         * The absolute destination file path.
          * @minLength 1
          */
         path: string;
         /**
-         * The UTF-8 text content, limited to 4 MiB after encoding.
-         * @maxLength 4194304
+         * The UTF-8 text content accepted by Baidu MCP.
+         * @maxLength 20000
          */
         content: string;
-        /**
-         * How Baidu Netdisk should handle an existing destination path.
-         * @default "fail"
-         */
-        conflictStrategy?: "fail" | "rename" | "overwrite";
       };
       output: {
-        /** The lossless Baidu Netdisk fs_id decimal string, or null when instant upload succeeds without returning fs_id. */
-        id: string | null;
+        /** The lossless Baidu Netdisk fs_id decimal string. */
+        id: string;
         /** The file or folder name. */
         name: string;
-        /** The app-directory-relative path beginning with a slash. */
+        /** The absolute path below the user's Baidu Netdisk root. */
         path: string;
         /** Whether this item is a file or folder. */
         kind: "file" | "folder";
@@ -118,22 +113,6 @@ declare module "@oomol-lab/connector" {
         modifiedAt: string | null;
         /** The provider cloud hash, or null when unavailable. */
         cloudMd5: string | null;
-      };
-    };
-    /** Delete one file or folder within the configured Baidu Netdisk app directory. */
-    "baidu_netdisk.delete": {
-      input: {
-        /**
-         * The app-relative path to delete.
-         * @minLength 1
-         */
-        path: string;
-      };
-      output: {
-        /** The source app-relative path supplied by the caller. */
-        sourcePath: string;
-        /** The app-relative path reported by Baidu, or null when unavailable. */
-        path: string | null;
       };
     };
     /** Get the current Baidu Netdisk account and membership summary. */
@@ -148,46 +127,6 @@ declare module "@oomol-lab/connector" {
         avatarUrl: string | null;
         /** The current Baidu Netdisk membership tier. */
         membership: "free" | "vip" | "svip" | null;
-      };
-    };
-    /** Get normalized metadata for up to 100 Baidu Netdisk file IDs. */
-    "baidu_netdisk.get_file_metadata": {
-      input: {
-        /**
-         * The Baidu Netdisk fs_id values to fetch.
-         * @minItems 1
-         * @maxItems 100
-         */
-        fileIds: Array<string>;
-      };
-      output: {
-        /** The found items ordered by the input file IDs. */
-        items: Array<{
-          /** The lossless Baidu Netdisk fs_id decimal string. */
-          id: string;
-          /** The file or folder name. */
-          name: string;
-          /** The app-directory-relative path beginning with a slash. */
-          path: string;
-          /** Whether this item is a file or folder. */
-          kind: "file" | "folder";
-          /** The Baidu Netdisk file category, or null for folders. */
-          category: "video" | "audio" | "image" | "document" | "application" | "other" | "torrent" | null;
-          /** The file size in bytes, or null for folders or missing values. */
-          sizeBytes: number | null;
-          /**
-           * The server creation time in ISO 8601 UTC format.
-           * @format date-time
-           */
-          createdAt: string | null;
-          /**
-           * The server modification time in ISO 8601 UTC format.
-           * @format date-time
-           */
-          modifiedAt: string | null;
-          /** The provider cloud hash, or null when unavailable. */
-          cloudMd5: string | null;
-        }>;
       };
     };
     /** Get total, used, remaining, free, and expiring Baidu Netdisk capacity. */
@@ -206,66 +145,30 @@ declare module "@oomol-lab/connector" {
         expiresWithinSevenDays: boolean;
       };
     };
-    /** List files and folders within the configured Baidu Netdisk app directory. */
+    /** List files and folders from the user's Baidu Netdisk root. */
     "baidu_netdisk.list_files": {
       input: {
         /**
-         * The app-relative directory path to list.
+         * The absolute directory path to list.
          * @minLength 1
          * @default "/"
          */
         path?: string;
         /**
-         * Whether to recursively list descendants.
-         * @default false
-         */
-        recursive?: boolean;
-        /**
-         * The maximum number of items to return.
+         * The one-based Baidu MCP result page.
          * @minimum 1
-         * @maximum 1000
-         * @default 1000
+         * @default 1
          */
-        limit?: number;
-        /** The field used to sort the complete directory listing. */
-        sortBy?: "name" | "modifiedTime" | "size";
-        /** The directory listing sort direction. */
-        sortOrder?: "ascending" | "descending";
-        /**
-         * The decimal Baidu Netdisk start cursor returned by a previous list call.
-         * @minLength 1
-         */
-        cursor?: string;
-        /**
-         * The file categories to include. Category-filtered results contain files, not folders.
-         * @minItems 1
-         * @maxItems 7
-         */
-        categories?: Array<"video" | "audio" | "image" | "document" | "application" | "other" | "torrent">;
-        /**
-         * The file extensions to include within the selected categories.
-         * @minItems 1
-         */
-        extensions?: Array<string>;
-        /**
-         * Only include files uploaded strictly after this ISO 8601 timestamp.
-         * @format date-time
-         */
-        createdAfter?: string;
-        /**
-         * Only include files modified strictly after this ISO 8601 timestamp.
-         * @format date-time
-         */
-        modifiedAfter?: string;
+        page?: number;
       };
       output: {
-        /** The normalized files and folders in this page. */
+        /** The files and folders in this page. */
         items: Array<{
           /** The lossless Baidu Netdisk fs_id decimal string. */
           id: string;
           /** The file or folder name. */
           name: string;
-          /** The app-directory-relative path beginning with a slash. */
+          /** The absolute path below the user's Baidu Netdisk root. */
           path: string;
           /** Whether this item is a file or folder. */
           kind: "file" | "folder";
@@ -286,20 +189,20 @@ declare module "@oomol-lab/connector" {
           /** The provider cloud hash, or null when unavailable. */
           cloudMd5: string | null;
         }>;
-        /** The decimal cursor for the next page, or null when complete. */
-        nextCursor: string | null;
+        /** The one-based page that was returned. */
+        page: number;
       };
     };
-    /** Synchronously move one file or folder within the Baidu Netdisk app directory. */
+    /** Synchronously move one Baidu Netdisk file or folder. */
     "baidu_netdisk.move": {
       input: {
         /**
-         * The app-relative source path.
+         * The absolute source path.
          * @minLength 1
          */
         sourcePath: string;
         /**
-         * The app-relative destination directory path.
+         * The absolute destination directory path.
          * @minLength 1
          */
         destinationDirectoryPath: string;
@@ -312,20 +215,20 @@ declare module "@oomol-lab/connector" {
          * How Baidu Netdisk should handle a destination name conflict.
          * @default "fail"
          */
-        conflictStrategy?: "fail" | "rename" | "overwrite" | "skip";
+        conflictStrategy?: "fail" | "rename";
       };
       output: {
-        /** The source app-relative path supplied by the caller. */
+        /** The absolute source path supplied by the caller. */
         sourcePath: string;
-        /** The app-relative path reported by Baidu, or null when unavailable. */
+        /** The resulting absolute path, or null when Baidu omits it. */
         path: string | null;
       };
     };
-    /** Synchronously rename one file or folder within the Baidu Netdisk app directory. */
+    /** Synchronously rename one Baidu Netdisk file or folder. */
     "baidu_netdisk.rename": {
       input: {
         /**
-         * The app-relative source path.
+         * The absolute source path.
          * @minLength 1
          */
         sourcePath: string;
@@ -338,16 +241,16 @@ declare module "@oomol-lab/connector" {
          * How Baidu Netdisk should handle a destination name conflict.
          * @default "fail"
          */
-        conflictStrategy?: "fail" | "rename" | "overwrite" | "skip";
+        conflictStrategy?: "fail" | "rename";
       };
       output: {
-        /** The source app-relative path supplied by the caller. */
+        /** The absolute source path supplied by the caller. */
         sourcePath: string;
-        /** The app-relative path reported by Baidu, or null when unavailable. */
+        /** The resulting absolute path, or null when Baidu omits it. */
         path: string | null;
       };
     };
-    /** Search up to 500 files and folders within the Baidu Netdisk app directory. */
+    /** Search files and folders below an absolute Baidu Netdisk directory. */
     "baidu_netdisk.search_files": {
       input: {
         /**
@@ -357,18 +260,24 @@ declare module "@oomol-lab/connector" {
          */
         query: string;
         /**
-         * The app-relative directory path to search.
+         * The absolute directory to search.
          * @minLength 1
          * @default "/"
          */
         path?: string;
         /**
-         * Whether to recursively search descendants.
-         * @default false
+         * The one-based Baidu MCP result page.
+         * @minimum 1
+         * @default 1
          */
-        recursive?: boolean;
-        /** The optional Baidu Netdisk file category filter. */
-        category?: "video" | "audio" | "image" | "document" | "application" | "other" | "torrent";
+        page?: number;
+        /**
+         * The number of matches requested from Baidu MCP.
+         * @minimum 1
+         * @maximum 500
+         * @default 100
+         */
+        pageSize?: number;
       };
       output: {
         /** The normalized matching files and folders. */
@@ -377,7 +286,7 @@ declare module "@oomol-lab/connector" {
           id: string;
           /** The file or folder name. */
           name: string;
-          /** The app-directory-relative path beginning with a slash. */
+          /** The absolute path below the user's Baidu Netdisk root. */
           path: string;
           /** Whether this item is a file or folder. */
           kind: "file" | "folder";
@@ -398,30 +307,30 @@ declare module "@oomol-lab/connector" {
           /** The provider cloud hash, or null when unavailable. */
           cloudMd5: string | null;
         }>;
-        /** Whether Baidu reports more matches than this bounded result. */
-        truncated: boolean;
+        /** The one-based page that was returned. */
+        page: number;
       };
     };
-    /** Search files in the configured Baidu Netdisk app directory using a natural-language description. */
+    /** Search Baidu Netdisk using a natural-language description. */
     "baidu_netdisk.semantic_search_files": {
       input: {
         /**
-         * The natural-language description of the files to find.
+         * The natural-language description of files to find.
          * @minLength 1
          * @pattern \S
          */
         query: string;
         /**
-         * The app-relative directory path to search.
+         * The absolute directory to search.
          * @minLength 1
          * @default "/"
          */
         path?: string;
         /**
-         * The maximum number of semantic matches to return.
+         * The maximum number of matches to return.
          * @minimum 1
          * @maximum 500
-         * @default 500
+         * @default 100
          */
         limit?: number;
       };
@@ -432,7 +341,7 @@ declare module "@oomol-lab/connector" {
           id: string;
           /** The file or folder name. */
           name: string;
-          /** The app-directory-relative path beginning with a slash. */
+          /** The absolute path below the user's Baidu Netdisk root. */
           path: string;
           /** Whether this item is a file or folder. */
           kind: "file" | "folder";
@@ -452,44 +361,39 @@ declare module "@oomol-lab/connector" {
           modifiedAt: string | null;
           /** The provider cloud hash, or null when unavailable. */
           cloudMd5: string | null;
-          /** The official Baidu recall source for this match, or null when unavailable. */
+          /** The official Baidu recall source, or null when unavailable. */
           matchSource: "filename" | "image_ocr" | "document_text" | "document_semantic" | "video_semantic" | "audio_semantic" | "image_semantic" | "card" | null;
-          /** The matched document, audio, or video text passage, or null when unavailable. */
+          /** The matched document, audio, or video passage. */
           matchedContent: string | null;
           /** The matched image OCR text, or null when unavailable. */
           ocrText: string | null;
-          /** The lossless Baidu semantic passage pid decimal string, or null when unavailable. */
+          /** The lossless semantic passage ID, or null when unavailable. */
           passageId: string | null;
         }>;
-        /** Whether Baidu reports that more semantic matches may be available. */
+        /** Whether Baidu reports that more matches may be available. */
         truncated: boolean;
       };
     };
-    /** Download one public URL and upload its bytes to the configured Baidu Netdisk app directory. */
+    /** Ask Baidu Netdisk to fetch one public URL into an absolute destination path. */
     "baidu_netdisk.upload_file_from_url": {
       input: {
         /**
-         * A public HTTP or HTTPS URL whose bytes should be uploaded. For local files, use oo file upload and pass its downloadUrl.
+         * A public HTTP or HTTPS URL that Baidu Netdisk should fetch.
          * @format uri
          */
         fileUrl: string;
         /**
-         * The app-relative destination file path.
+         * The absolute destination file path.
          * @minLength 1
          */
         destinationPath: string;
-        /**
-         * How Baidu Netdisk should handle an existing destination path.
-         * @default "fail"
-         */
-        conflictStrategy?: "fail" | "rename" | "overwrite";
       };
       output: {
-        /** The lossless Baidu Netdisk fs_id decimal string, or null when instant upload succeeds without returning fs_id. */
-        id: string | null;
+        /** The lossless Baidu Netdisk fs_id decimal string. */
+        id: string;
         /** The file or folder name. */
         name: string;
-        /** The app-directory-relative path beginning with a slash. */
+        /** The absolute path below the user's Baidu Netdisk root. */
         path: string;
         /** Whether this item is a file or folder. */
         kind: "file" | "folder";

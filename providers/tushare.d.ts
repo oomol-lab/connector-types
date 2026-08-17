@@ -186,6 +186,76 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
+    /** Get A-share important shareholder increases and decreases through Tushare stk_holdertrade. */
+    "tushare.get_shareholder_trades": {
+      input: {
+        /**
+         * Tushare security code, such as 000001.SZ.
+         * @minLength 1
+         */
+        tsCode?: string;
+        /**
+         * Announcement date in YYYYMMDD format.
+         * @minLength 8
+         * @maxLength 8
+         * @pattern ^[0-9]{8}$
+         */
+        announcementDate?: string;
+        /**
+         * Announcement start date in YYYYMMDD format.
+         * @minLength 8
+         * @maxLength 8
+         * @pattern ^[0-9]{8}$
+         */
+        startDate?: string;
+        /**
+         * Announcement end date in YYYYMMDD format.
+         * @minLength 8
+         * @maxLength 8
+         * @pattern ^[0-9]{8}$
+         */
+        endDate?: string;
+        /** Share trade type: IN for an increase or DE for a decrease. */
+        tradeType?: "IN" | "DE";
+        /** Shareholder type: C for a company, P for an individual, or G for an executive. */
+        holderType?: "C" | "P" | "G";
+      };
+      output: {
+        /** Tushare request identifier returned by the API. */
+        requestId: string;
+        /** Tushare response message, or null for successful responses. */
+        message: string | null;
+        /** A-share important shareholder increase and decrease records. */
+        shareholderTrades: Array<{
+          /** Tushare security code. */
+          tsCode: string | null;
+          /** Announcement date in YYYYMMDD format. */
+          announcementDate: string | null;
+          /** Shareholder name. */
+          holderName: string | null;
+          /** Shareholder type: G executive, P individual, or C company. */
+          holderType: string | null;
+          /** Share trade type: IN increase or DE decrease. */
+          tradeType: string | null;
+          /** Number of shares changed. */
+          changeVolume: number | null;
+          /** Change as a percentage of circulating shares. */
+          changeRatio: number | null;
+          /** Shares held after the change. */
+          sharesAfterChange: number | null;
+          /** Holding after the change as a percentage of circulating shares. */
+          ratioAfterChange: number | null;
+          /** Average transaction price. */
+          averagePrice: number | null;
+          /** Total shares held. */
+          totalShares: number | null;
+          /** Shareholding change start date in YYYYMMDD format. */
+          beginDate: string | null;
+          /** Shareholding change end date in YYYYMMDD format. */
+          closeDate: string | null;
+        }>;
+      };
+    };
     /** Get exchange trading calendar rows through Tushare trade_cal with normalized dates. */
     "tushare.get_trade_calendar": {
       input: {

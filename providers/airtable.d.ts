@@ -473,7 +473,7 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** List Airtable bases accessible to the authenticated personal access token. */
+    /** List Airtable bases accessible to the authenticated credential. */
     "airtable.list_bases": {
       input: {
         /**
