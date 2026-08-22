@@ -72,6 +72,56 @@ declare module "@oomol-lab/connector" {
         deleted: boolean;
       };
     };
+    /** Download one R2 object and upload it to connector transit storage. */
+    "cloudflare_r2.download_object": {
+      input: {
+        /**
+         * The R2 bucket name.
+         * @minLength 3
+         * @maxLength 64
+         */
+        bucketName: string;
+        /**
+         * The exact R2 object key, including path separators.
+         * @minLength 1
+         */
+        objectKey: string;
+        /**
+         * The filename used for the transit file.
+         * @minLength 1
+         */
+        fileName?: string;
+        /** The jurisdiction where objects in the bucket are guaranteed to be stored. */
+        jurisdiction?: "default" | "eu" | "fedramp";
+      };
+      output: {
+        /**
+         * The R2 object key.
+         * @minLength 1
+         */
+        fileId: string;
+        /**
+         * The transit file name.
+         * @minLength 1
+         */
+        name: string;
+        /**
+         * The downloaded object MIME type.
+         * @minLength 1
+         */
+        mimeType: string;
+        /**
+         * The object size, or null when unavailable.
+         * @minimum 0
+         */
+        sizeBytes: number | null;
+        /**
+         * The temporary transit URL for downloading the object.
+         * @format uri
+         */
+        transitUrl: string;
+      };
+    };
     /** Get one R2 bucket by name. */
     "cloudflare_r2.get_bucket": {
       input: {

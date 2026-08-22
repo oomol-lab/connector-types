@@ -32,6 +32,48 @@ declare module "@oomol-lab/connector" {
         deleted: boolean;
       };
     };
+    /** Download one S3 object into connector transit storage. */
+    "aws_s3.download_object": {
+      input: {
+        /**
+         * The S3 bucket name.
+         * @minLength 1
+         */
+        bucket?: string;
+        /**
+         * The S3 object key.
+         * @minLength 1
+         */
+        objectKey: string;
+        /**
+         * The AWS region, for example `us-east-1`. Connections can omit it on each call to reuse the connected default region.
+         * @minLength 1
+         */
+        region?: string;
+        /** The optional object version ID. */
+        versionId?: string;
+        /**
+         * An optional transit filename override.
+         * @minLength 1
+         */
+        fileName?: string;
+      };
+      output: {
+        /** The downloaded S3 object key. */
+        objectKey: string;
+        /** The transit filename. */
+        name: string;
+        /** The downloaded object MIME type. */
+        mimeType: string;
+        /** The downloaded object size in bytes. */
+        sizeBytes: number;
+        /**
+         * The temporary URL for downloading the transit file.
+         * @format uri
+         */
+        transitUrl: string;
+      };
+    };
     /** Generate a pre-signed S3 URL for reading, uploading, or deleting one object. */
     "aws_s3.generate_presigned_url": {
       input: {

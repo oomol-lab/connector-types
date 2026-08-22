@@ -283,6 +283,20 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
+    /** Delete a Vercel webhook. */
+    "vercel.delete_webhook": {
+      input: {
+        /**
+         * Vercel webhook ID.
+         * @minLength 1
+         */
+        webhookId: string;
+      };
+      output: {
+        /** Whether the Vercel webhook was deleted. */
+        success: boolean;
+      };
+    };
     /** Get the authenticated Vercel user. */
     "vercel.get_auth_user": {
       input: Record<string, never>;

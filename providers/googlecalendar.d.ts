@@ -2,6 +2,226 @@ import "@oomol-lab/connector";
 
 declare module "@oomol-lab/connector" {
   interface ActionRegistry {
+    /** Add one attendee without replacing existing Google Calendar guests. */
+    "googlecalendar.add_attendee": {
+      input: {
+        /**
+         * Google Calendar event ID.
+         * @minLength 1
+         */
+        eventId: string;
+        /**
+         * Attendee email address to add.
+         * @minLength 1
+         */
+        attendeeEmail: string;
+        /**
+         * Google Calendar ID.
+         * @minLength 1
+         */
+        calendarId?: string;
+        /** Attendee display name. */
+        displayName?: string;
+        /** Whether attendance is optional. */
+        optional?: boolean;
+        /** Which guests receive notifications about this change. */
+        sendUpdates?: "all" | "externalOnly" | "none";
+      };
+      output: {
+        /**
+         * Event ID.
+         * @minLength 1
+         */
+        id: string;
+        /**
+         * Event status.
+         * @minLength 1
+         */
+        status: string;
+        /** Event title. */
+        summary?: string;
+        /** Event description. */
+        description?: string;
+        /** Event location. */
+        location?: string;
+        /** Google Calendar web URL for the event. */
+        htmlLink?: string;
+        /** Timestamp when the event was created. */
+        created?: string;
+        /** Timestamp when the event was last updated. */
+        updated?: string;
+        /** Event start time. */
+        start?: {
+          /**
+           * All-day event date in YYYY-MM-DD format.
+           * @minLength 1
+           */
+          date?: string;
+          /**
+           * Event timestamp in RFC 3339 format.
+           * @format date-time
+           */
+          dateTime?: string;
+          /**
+           * IANA time zone used to interpret the event time.
+           * @minLength 1
+           */
+          timeZone?: string;
+        };
+        /** Event end time. */
+        end?: {
+          /**
+           * All-day event date in YYYY-MM-DD format.
+           * @minLength 1
+           */
+          date?: string;
+          /**
+           * Event timestamp in RFC 3339 format.
+           * @format date-time
+           */
+          dateTime?: string;
+          /**
+           * IANA time zone used to interpret the event time.
+           * @minLength 1
+           */
+          timeZone?: string;
+        };
+        /** Event organizer. */
+        organizer?: {
+          /** Organizer or creator email address. */
+          email?: string;
+          /** Organizer or creator display name. */
+          displayName?: string;
+          /** Whether this person is the authenticated user. */
+          self?: boolean;
+          [key: string]: unknown;
+        };
+        /** Event creator. */
+        creator?: {
+          /** Organizer or creator email address. */
+          email?: string;
+          /** Organizer or creator display name. */
+          displayName?: string;
+          /** Whether this person is the authenticated user. */
+          self?: boolean;
+          [key: string]: unknown;
+        };
+        /** Attendees returned for the event. */
+        attendees?: Array<{
+          /**
+           * Attendee email address.
+           * @minLength 1
+           */
+          email: string;
+          /** Attendee display name. */
+          displayName?: string;
+          /** Whether attendance is optional. */
+          optional?: boolean;
+          /** Whether the attendee represents a resource. */
+          resource?: boolean;
+          /** Attendee response status, such as accepted or declined. */
+          responseStatus?: string;
+          /** Additional attendee comment. */
+          comment?: string;
+          /** Number of additional guests invited by this attendee. */
+          additionalGuests?: number;
+        }>;
+        /** Recurrence rules for the event. */
+        recurrence?: Array<string>;
+        /** Recurring master event ID when this item is an instance. */
+        recurringEventId?: string;
+        /** Original start time for a recurring event instance. */
+        originalStartTime?: {
+          /**
+           * All-day event date in YYYY-MM-DD format.
+           * @minLength 1
+           */
+          date?: string;
+          /**
+           * Event timestamp in RFC 3339 format.
+           * @format date-time
+           */
+          dateTime?: string;
+          /**
+           * IANA time zone used to interpret the event time.
+           * @minLength 1
+           */
+          timeZone?: string;
+        };
+        /** Event type returned by Google Calendar. */
+        eventType?: string;
+        /** Conference data for the event. */
+        conferenceData?: {
+          /** Conference identifier for the event. */
+          conferenceId?: string;
+          /** Additional conference notes. */
+          notes?: string;
+          /** Conference entry points returned by Google Calendar. */
+          entryPoints?: Array<unknown>;
+          /** Conference solution metadata. */
+          conferenceSolution?: unknown;
+          /** Conference creation request details. */
+          createRequest?: {
+            /**
+             * Client-generated request ID used to create conference details.
+             * @minLength 1
+             */
+            requestId: string;
+            /** Conference solution payload accepted by Google Calendar. */
+            conferenceSolutionKey?: unknown;
+            [key: string]: unknown;
+          };
+          [key: string]: unknown;
+        };
+        /** Extended event properties. */
+        extendedProperties?: {
+          /** Private extended properties keyed by name. */
+          private?: Record<string, string>;
+          /** Shared extended properties keyed by name. */
+          shared?: Record<string, string>;
+        };
+        /** Attachments on the event. */
+        attachments?: Array<{
+          /**
+           * Attachment URL.
+           * @format uri
+           */
+          fileUrl: string;
+          /** Attachment title. */
+          title?: string;
+          /** Attachment MIME type. */
+          mimeType?: string;
+          /** Icon URL for the attachment. */
+          iconLink?: string;
+        }>;
+        /** Reminder settings for the event. */
+        reminders?: {
+          /** Whether to use the calendar's default reminders. */
+          useDefault?: boolean;
+          /** Reminder overrides for the event. */
+          overrides?: Array<{
+            /**
+             * Reminder delivery method, such as email or popup.
+             * @minLength 1
+             */
+            method: string;
+            /** Minutes before the event when the reminder triggers. */
+            minutes: number;
+          }>;
+        };
+        /** Source metadata for the event. */
+        source?: {
+          /**
+           * Source URL associated with the event.
+           * @format uri
+           */
+          url: string;
+          /** Human-readable title for the source. */
+          title?: string;
+          [key: string]: unknown;
+        };
+      };
+    };
     /** Add a calendar to the current user's Google Calendar list. */
     "googlecalendar.add_calendar_to_list": {
       input: {
@@ -311,6 +531,8 @@ declare module "@oomol-lab/connector" {
             [key: string]: unknown;
           };
         };
+        /** Which guests receive notifications about this change. */
+        sendUpdates?: "all" | "externalOnly" | "none";
       };
       output: {
         /**
@@ -553,6 +775,8 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         eventId?: string;
+        /** Which guests receive notifications about this change. */
+        sendUpdates?: "all" | "externalOnly" | "none";
       };
       output: {
         /** Whether the Google Calendar operation completed successfully. */
@@ -2773,6 +2997,8 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         destinationCalendarId: string;
+        /** Which guests receive notifications about this change. */
+        sendUpdates?: "all" | "externalOnly" | "none";
       };
       output: {
         /**
@@ -3321,6 +3547,8 @@ declare module "@oomol-lab/connector" {
             [key: string]: unknown;
           };
         };
+        /** Which guests receive notifications about this change. */
+        sendUpdates?: "all" | "externalOnly" | "none";
       };
       output: {
         /**
@@ -3530,6 +3758,8 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         text: string;
+        /** Which guests receive notifications about this change. */
+        sendUpdates?: "all" | "externalOnly" | "none";
       };
       output: {
         /**
@@ -3744,6 +3974,8 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         calendarId?: string;
+        /** Which guests receive notifications about this change. */
+        sendUpdates?: "all" | "externalOnly" | "none";
       };
       output: {
         /**
@@ -4571,6 +4803,8 @@ declare module "@oomol-lab/connector" {
             [key: string]: unknown;
           };
         };
+        /** Which guests receive notifications about this change. */
+        sendUpdates?: "all" | "externalOnly" | "none";
       };
       output: {
         /**

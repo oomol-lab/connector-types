@@ -1229,7 +1229,7 @@ declare module "@oomol-lab/connector" {
         kind: string;
       };
     };
-    /** Get metadata for a Drive file by ID. */
+    /** Get metadata for a Drive file by ID, or download stored file content with alt=media. */
     "googledrive.files.get": {
       input: {
         /**
@@ -1239,6 +1239,10 @@ declare module "@oomol-lab/connector" {
         fileId?: string;
         /** When true, includes files from shared drives. */
         includeSharedDrives?: boolean;
+        /** Return the file content instead of metadata. */
+        alt?: "media";
+        /** Whether to acknowledge the risk of downloading known malware or other abusive files. */
+        acknowledgeAbuse?: boolean;
       };
       output: {
         /** The unique identifier of the file. */
@@ -1276,6 +1280,17 @@ declare module "@oomol-lab/connector" {
         starred?: boolean;
         /** Whether the file has been trashed. */
         trashed?: boolean;
+      } | {
+        /** The unique identifier of the downloaded file. */
+        fileId: string;
+        /** The name of the downloaded file. */
+        name: string;
+        /** The MIME type of the downloaded file content. */
+        mimeType: string;
+        /** The size of the downloaded file content in bytes. */
+        sizeBytes: number | null;
+        /** A temporary transit URL from which the file content can be retrieved. */
+        transitUrl: string;
       };
     };
     /** List Google Drive files using the official Drive query and pagination parameters. */

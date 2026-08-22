@@ -74,6 +74,51 @@ declare module "@oomol-lab/connector" {
         cloudMd5: string | null;
       };
     };
+    /** Create one Baidu Netdisk share link for one or more files or folders. */
+    "baidu_netdisk.create_share_link": {
+      input: {
+        /**
+         * The file and folder IDs to include in the share.
+         * @minItems 1
+         */
+        fileIds: Array<string>;
+        /**
+         * The share validity period in days.
+         * @minimum 1
+         * @default 7
+         */
+        periodDays?: number;
+        /**
+         * The four-character access code required to open the share link.
+         * @minLength 4
+         * @maxLength 4
+         */
+        accessCode: string;
+      };
+      output: {
+        /**
+         * The full Baidu Netdisk share URL.
+         * @format uri
+         */
+        link: string;
+        /**
+         * The shortened Baidu Netdisk share URL, or the full URL when Baidu omits or returns an invalid short URL.
+         * @format uri
+         */
+        shortUrl: string;
+        /**
+         * The share validity period in days.
+         * @minimum 1
+         */
+        periodDays: number;
+        /**
+         * The four-character access code required to open the share link.
+         * @minLength 4
+         * @maxLength 4
+         */
+        accessCode: string;
+      };
+    };
     /** Create one UTF-8 text file through Baidu MCP. */
     "baidu_netdisk.create_text_file": {
       input: {
@@ -115,6 +160,43 @@ declare module "@oomol-lab/connector" {
         cloudMd5: string | null;
       };
     };
+    /** Download one Baidu Netdisk file and upload it to connector transit storage. */
+    "baidu_netdisk.download_file": {
+      input: {
+        /**
+         * A lossless Baidu Netdisk fs_id decimal string.
+         * @minLength 1
+         */
+        fsId: string;
+      };
+      output: {
+        /**
+         * A lossless Baidu Netdisk fs_id decimal string.
+         * @minLength 1
+         */
+        fileId: string;
+        /**
+         * The original Baidu Netdisk file name.
+         * @minLength 1
+         */
+        name: string;
+        /**
+         * The downloaded file MIME type.
+         * @minLength 1
+         */
+        mimeType: string;
+        /**
+         * The file size reported by Baidu Netdisk.
+         * @minimum 0
+         */
+        sizeBytes: number;
+        /**
+         * The temporary transit URL for downloading the file.
+         * @format uri
+         */
+        transitUrl: string;
+      };
+    };
     /** Get the current Baidu Netdisk account and membership summary. */
     "baidu_netdisk.get_current_account": {
       input: Record<string, never>;
@@ -145,7 +227,7 @@ declare module "@oomol-lab/connector" {
         expiresWithinSevenDays: boolean;
       };
     };
-    /** List files and folders from the user's Baidu Netdisk root. */
+    /** List all files and folders, or only documents, images, or videos, from the user's Baidu Netdisk root. */
     "baidu_netdisk.list_files": {
       input: {
         /**
@@ -160,6 +242,11 @@ declare module "@oomol-lab/connector" {
          * @default 1
          */
         page?: number;
+        /**
+         * The file type to list through the matching Baidu MCP tool.
+         * @default "all"
+         */
+        type?: "all" | "document" | "image" | "video";
       };
       output: {
         /** The files and folders in this page. */

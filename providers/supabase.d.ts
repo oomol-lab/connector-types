@@ -126,6 +126,64 @@ declare module "@oomol-lab/connector" {
         success: boolean;
       };
     };
+    /** Download a private Supabase Storage object to connector transit storage. */
+    "supabase.download_storage_object": {
+      input: {
+        /**
+         * The 20-character Supabase project reference, for example 'abcdefghijklmnopqrst'.
+         * @minLength 1
+         * @maxLength 64
+         */
+        projectRef: string;
+        /**
+         * The Storage bucket ID.
+         * @minLength 1
+         */
+        bucketId: string;
+        /**
+         * The object path below the bucket root.
+         * @minLength 1
+         */
+        objectPath: string;
+        /**
+         * A specific elevated project API key ID.
+         * @minLength 1
+         */
+        apiKeyId?: string;
+        /**
+         * The filename used for the transit file.
+         * @minLength 1
+         */
+        fileName?: string;
+      };
+      output: {
+        /**
+         * The bucket-qualified Storage object path.
+         * @minLength 1
+         */
+        fileId: string;
+        /**
+         * The transit file name.
+         * @minLength 1
+         */
+        name: string;
+        /**
+         * The downloaded object MIME type.
+         * @minLength 1
+         */
+        mimeType: string;
+        /**
+         * The object size, or null when unavailable.
+         * @minimum 0
+         */
+        sizeBytes: number | null;
+        /**
+         * The temporary transit URL for downloading the object.
+         * @format uri
+         */
+        transitUrl: string;
+      };
+    };
     /** Generate TypeScript database types for a Supabase project. */
     "supabase.generate_typescript_types": {
       input: {
