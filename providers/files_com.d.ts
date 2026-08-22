@@ -56,6 +56,36 @@ declare module "@oomol-lab/connector" {
         raw: Record<string, unknown>;
       };
     };
+    /** Download one Files.com file into connector transit storage. */
+    "files_com.download_file": {
+      input: {
+        /**
+         * The Files.com file path to download.
+         * @minLength 1
+         */
+        path: string;
+        /**
+         * An optional transit filename override.
+         * @minLength 1
+         */
+        fileName?: string;
+      };
+      output: {
+        /** The remote Files.com path. */
+        fileId: string;
+        /** The remote file name. */
+        name: string;
+        /** The downloaded file MIME type. */
+        mimeType: string;
+        /** The downloaded file size in bytes. */
+        sizeBytes: number;
+        /**
+         * The temporary URL for downloading the transit file.
+         * @format uri
+         */
+        transitUrl: string;
+      };
+    };
     /** Retrieve Files.com metadata for a single file or folder path. */
     "files_com.get_file": {
       input: {

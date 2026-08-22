@@ -32,6 +32,48 @@ declare module "@oomol-lab/connector" {
         deleted: boolean;
       };
     };
+    /** Download one OSS object into connector transit storage. */
+    "aliyun_oss.download_object": {
+      input: {
+        /**
+         * The OSS bucket name.
+         * @minLength 1
+         */
+        bucket?: string;
+        /**
+         * The OSS object key.
+         * @minLength 1
+         */
+        objectKey: string;
+        /**
+         * The OSS endpoint, for example `oss-cn-hangzhou.aliyuncs.com`. Federated connections must provide it on each call. AK/SK connections can omit it to reuse the connected default endpoint.
+         * @minLength 1
+         */
+        endpoint?: string;
+        /** The optional object version ID. */
+        versionId?: string;
+        /**
+         * An optional transit filename override.
+         * @minLength 1
+         */
+        fileName?: string;
+      };
+      output: {
+        /** The downloaded OSS object key. */
+        objectKey: string;
+        /** The transit filename. */
+        name: string;
+        /** The downloaded object MIME type. */
+        mimeType: string;
+        /** The downloaded object size in bytes. */
+        sizeBytes: number;
+        /**
+         * The temporary URL for downloading the transit file.
+         * @format uri
+         */
+        transitUrl: string;
+      };
+    };
     /** Generate a pre-signed OSS URL for reading, uploading, or deleting one object. */
     "aliyun_oss.generate_presigned_url": {
       input: {

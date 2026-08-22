@@ -511,7 +511,7 @@ declare module "@oomol-lab/connector" {
         data: unknown;
       };
     };
-    /** Search Xiaohongshu works through RedFoxHub and return the upstream result payload. */
+    /** Search Xiaohongshu works in the RedFoxHub curated database and return matching works. */
     "redfox.search_xiaohongshu_works": {
       input: {
         /**
@@ -520,15 +520,25 @@ declare module "@oomol-lab/connector" {
          */
         keyword: string;
         /**
-         * Zero-based pagination offset accepted by RedFoxHub.
-         * @minimum 0
-         */
-        offset?: number;
-        /**
-         * Sort type accepted by RedFoxHub for this endpoint.
+         * Publish time range accepted by RedFoxHub, such as 一周内 or 不限.
          * @minLength 1
          */
-        sortType?: string;
+        noteTime?: string;
+        /**
+         * Sort order accepted by RedFoxHub, such as 最多点赞 or 综合.
+         * @minLength 1
+         */
+        sort?: string;
+        /**
+         * One-based page number accepted by RedFoxHub.
+         * @exclusiveMinimum 0
+         */
+        page?: number;
+        /**
+         * Xiaohongshu note type accepted by RedFoxHub, such as 不限.
+         * @minLength 1
+         */
+        noteType?: string;
       };
       output: {
         /** RedFoxHub business status code. A value of 2000 means success. */

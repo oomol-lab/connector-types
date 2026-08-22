@@ -3266,7 +3266,7 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** List monday teams with official filters and pagination. */
+    /** List monday teams, optionally filtering by team IDs. */
     "monday.list_teams": {
       input: {
         /**
@@ -3274,16 +3274,6 @@ declare module "@oomol-lab/connector" {
          * @minItems 1
          */
         ids?: Array<string | number>;
-        /**
-         * The number of teams to return.
-         * @exclusiveMinimum 0
-         */
-        limit?: number;
-        /**
-         * The 1-based page number of teams to return.
-         * @exclusiveMinimum 0
-         */
-        page?: number;
       };
       output: {
         /** The monday teams returned by the query. */

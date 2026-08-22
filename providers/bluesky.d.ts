@@ -117,6 +117,66 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
+    /** Get the authenticated account's home timeline with cursor pagination. */
+    "bluesky.get_timeline": {
+      input: {
+        /**
+         * Optional Bluesky feed algorithm identifier.
+         * @minLength 1
+         */
+        algorithm?: string;
+        /**
+         * The maximum number of posts to return.
+         * @minimum 1
+         * @maximum 100
+         */
+        limit?: number;
+        /**
+         * A cursor returned by Bluesky pagination.
+         * @minLength 1
+         */
+        cursor?: string;
+      };
+      output: {
+        /** Timeline feed items returned by Bluesky. */
+        feed: Array<{
+          /** The raw Bluesky post view returned by a feed or search. */
+          post: {
+            /**
+             * A Bluesky AT URI for a post or record.
+             * @minLength 1
+             */
+            uri?: string;
+            /**
+             * A Bluesky content identifier.
+             * @minLength 1
+             */
+            cid?: string;
+            /** The Bluesky author view for the post. */
+            author?: Record<string, unknown>;
+            /** The raw Bluesky object returned by the API. */
+            record?: Record<string, unknown>;
+            /**
+             * The server timestamp when the post was indexed.
+             * @format date-time
+             */
+            indexedAt?: string;
+            [key: string]: unknown;
+          };
+          /** The raw Bluesky object returned by the API. */
+          reply?: Record<string, unknown>;
+          /** The raw Bluesky object returned by the API. */
+          reason?: Record<string, unknown>;
+          /** Opaque feed-specific context returned by Bluesky. */
+          feedContext?: string;
+        }>;
+        /**
+         * A cursor returned by Bluesky pagination.
+         * @minLength 1
+         */
+        cursor: string | null;
+      };
+    };
     /** Search Bluesky posts with common filters and pagination. */
     "bluesky.search_posts": {
       input: {
@@ -193,7 +253,10 @@ declare module "@oomol-lab/connector" {
           author?: Record<string, unknown>;
           /** The raw Bluesky object returned by the API. */
           record?: Record<string, unknown>;
-          /** The server timestamp when the post was indexed. */
+          /**
+           * The server timestamp when the post was indexed.
+           * @format date-time
+           */
           indexedAt?: string;
           [key: string]: unknown;
         }>;

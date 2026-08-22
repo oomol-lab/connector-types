@@ -532,12 +532,12 @@ declare module "@oomol-lab/connector" {
         /** The advertising account type. */
         accountType: "dsp" | "seller" | "vendor";
         /**
-         * The zero-based pagination offset.
+         * The zero-based pagination offset. Defaults to 0.
          * @minimum 0
          */
         offset?: number;
         /**
-         * The maximum number of advertising accounts to return.
+         * The maximum number of advertising accounts to return. Defaults to 100.
          * @exclusiveMinimum 0
          */
         length?: number;
