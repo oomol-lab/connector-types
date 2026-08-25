@@ -28,8 +28,39 @@ declare module "@oomol-lab/connector" {
         languageCode?: string;
       };
       output: {
-        /** The current Gupshup template-list response payload. */
-        data: unknown;
+        /** The template-list request status. */
+        status: "success";
+        /** The templates returned for the connected app. */
+        templates: Array<{
+          /**
+           * The Gupshup template ID.
+           * @minLength 1
+           */
+          id?: string;
+          /**
+           * The Gupshup app ID that owns the template.
+           * @minLength 1
+           */
+          appId?: string;
+          /** The template name. */
+          elementName?: string;
+          /** The template category. */
+          category?: string;
+          /** The template language code. */
+          languageCode?: string;
+          /** The template approval status. */
+          status?: string;
+          /** The template type. */
+          templateType?: string;
+          /** The template quality rating. */
+          quality?: string;
+          /** The template creation timestamp in milliseconds. */
+          createdOn?: number;
+          /** The template modification timestamp in milliseconds. */
+          modifiedOn?: number;
+          [key: string]: unknown;
+        }>;
+        [key: string]: unknown;
       };
     };
     /** Send an approved text template message through Gupshup. */
@@ -89,6 +120,7 @@ declare module "@oomol-lab/connector" {
         /**
          * The text content to send to the recipient.
          * @minLength 1
+         * @maxLength 4096
          */
         text: string;
         /** Whether to disable link previews in the text message. */

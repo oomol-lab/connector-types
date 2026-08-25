@@ -92,7 +92,52 @@ declare module "@oomol-lab/connector" {
            * The pivot report ordering rules.
            * @minItems 1
            */
-          orderBys?: Array<Record<string, unknown>>;
+          orderBys?: Array<{
+            /** The metric ordering configuration. */
+            metric: {
+              /**
+               * The requested metric name to sort by.
+               * @minLength 1
+               */
+              metricName: string;
+            };
+            /** Whether to sort the values in descending order. */
+            desc?: boolean;
+          } | {
+            /** The dimension ordering configuration. */
+            dimension: {
+              /**
+               * The requested dimension name to sort by.
+               * @minLength 1
+               */
+              dimensionName: string;
+              /** The rule used to order dimension string values. */
+              orderType?: "ORDER_TYPE_UNSPECIFIED" | "ALPHANUMERIC" | "CASE_INSENSITIVE_ALPHANUMERIC" | "NUMERIC";
+            };
+            /** Whether to sort the values in descending order. */
+            desc?: boolean;
+          } | {
+            /** The pivot ordering configuration. */
+            pivot: {
+              /**
+               * The requested metric name to sort by.
+               * @minLength 1
+               */
+              metricName: string;
+              /** The dimension name and value pairs selecting the pivot column group. */
+              pivotSelections?: Array<{
+                /**
+                 * The pivot dimension name.
+                 * @minLength 1
+                 */
+                dimensionName: string;
+                /** The pivot dimension value. */
+                dimensionValue: string;
+              }>;
+            };
+            /** Whether to sort the values in descending order. */
+            desc?: boolean;
+          }>;
           /**
            * The ISO 4217 currency code for currency metrics.
            * @minLength 1
@@ -221,7 +266,52 @@ declare module "@oomol-lab/connector" {
            * The report ordering rules.
            * @minItems 1
            */
-          orderBys?: Array<Record<string, unknown>>;
+          orderBys?: Array<{
+            /** The metric ordering configuration. */
+            metric: {
+              /**
+               * The requested metric name to sort by.
+               * @minLength 1
+               */
+              metricName: string;
+            };
+            /** Whether to sort the values in descending order. */
+            desc?: boolean;
+          } | {
+            /** The dimension ordering configuration. */
+            dimension: {
+              /**
+               * The requested dimension name to sort by.
+               * @minLength 1
+               */
+              dimensionName: string;
+              /** The rule used to order dimension string values. */
+              orderType?: "ORDER_TYPE_UNSPECIFIED" | "ALPHANUMERIC" | "CASE_INSENSITIVE_ALPHANUMERIC" | "NUMERIC";
+            };
+            /** Whether to sort the values in descending order. */
+            desc?: boolean;
+          } | {
+            /** The pivot ordering configuration. */
+            pivot: {
+              /**
+               * The requested metric name to sort by.
+               * @minLength 1
+               */
+              metricName: string;
+              /** The dimension name and value pairs selecting the pivot column group. */
+              pivotSelections?: Array<{
+                /**
+                 * The pivot dimension name.
+                 * @minLength 1
+                 */
+                dimensionName: string;
+                /** The pivot dimension value. */
+                dimensionValue: string;
+              }>;
+            };
+            /** Whether to sort the values in descending order. */
+            desc?: boolean;
+          }>;
           /**
            * The ISO 4217 currency code for currency metrics.
            * @minLength 1
@@ -1847,7 +1937,52 @@ declare module "@oomol-lab/connector" {
          * The pivot report ordering rules.
          * @minItems 1
          */
-        orderBys?: Array<Record<string, unknown>>;
+        orderBys?: Array<{
+          /** The metric ordering configuration. */
+          metric: {
+            /**
+             * The requested metric name to sort by.
+             * @minLength 1
+             */
+            metricName: string;
+          };
+          /** Whether to sort the values in descending order. */
+          desc?: boolean;
+        } | {
+          /** The dimension ordering configuration. */
+          dimension: {
+            /**
+             * The requested dimension name to sort by.
+             * @minLength 1
+             */
+            dimensionName: string;
+            /** The rule used to order dimension string values. */
+            orderType?: "ORDER_TYPE_UNSPECIFIED" | "ALPHANUMERIC" | "CASE_INSENSITIVE_ALPHANUMERIC" | "NUMERIC";
+          };
+          /** Whether to sort the values in descending order. */
+          desc?: boolean;
+        } | {
+          /** The pivot ordering configuration. */
+          pivot: {
+            /**
+             * The requested metric name to sort by.
+             * @minLength 1
+             */
+            metricName: string;
+            /** The dimension name and value pairs selecting the pivot column group. */
+            pivotSelections?: Array<{
+              /**
+               * The pivot dimension name.
+               * @minLength 1
+               */
+              dimensionName: string;
+              /** The pivot dimension value. */
+              dimensionValue: string;
+            }>;
+          };
+          /** Whether to sort the values in descending order. */
+          desc?: boolean;
+        }>;
         /**
          * The ISO 4217 currency code for currency metrics.
          * @minLength 1
@@ -1946,7 +2081,52 @@ declare module "@oomol-lab/connector" {
          * The realtime report ordering rules.
          * @minItems 1
          */
-        orderBys?: Array<Record<string, unknown>>;
+        orderBys?: Array<{
+          /** The metric ordering configuration. */
+          metric: {
+            /**
+             * The requested metric name to sort by.
+             * @minLength 1
+             */
+            metricName: string;
+          };
+          /** Whether to sort the values in descending order. */
+          desc?: boolean;
+        } | {
+          /** The dimension ordering configuration. */
+          dimension: {
+            /**
+             * The requested dimension name to sort by.
+             * @minLength 1
+             */
+            dimensionName: string;
+            /** The rule used to order dimension string values. */
+            orderType?: "ORDER_TYPE_UNSPECIFIED" | "ALPHANUMERIC" | "CASE_INSENSITIVE_ALPHANUMERIC" | "NUMERIC";
+          };
+          /** Whether to sort the values in descending order. */
+          desc?: boolean;
+        } | {
+          /** The pivot ordering configuration. */
+          pivot: {
+            /**
+             * The requested metric name to sort by.
+             * @minLength 1
+             */
+            metricName: string;
+            /** The dimension name and value pairs selecting the pivot column group. */
+            pivotSelections?: Array<{
+              /**
+               * The pivot dimension name.
+               * @minLength 1
+               */
+              dimensionName: string;
+              /** The pivot dimension value. */
+              dimensionValue: string;
+            }>;
+          };
+          /** Whether to sort the values in descending order. */
+          desc?: boolean;
+        }>;
         /** A Google Analytics int64 request value. */
         limit?: string | number;
         /**
@@ -2096,7 +2276,52 @@ declare module "@oomol-lab/connector" {
          * The report ordering rules.
          * @minItems 1
          */
-        orderBys?: Array<Record<string, unknown>>;
+        orderBys?: Array<{
+          /** The metric ordering configuration. */
+          metric: {
+            /**
+             * The requested metric name to sort by.
+             * @minLength 1
+             */
+            metricName: string;
+          };
+          /** Whether to sort the values in descending order. */
+          desc?: boolean;
+        } | {
+          /** The dimension ordering configuration. */
+          dimension: {
+            /**
+             * The requested dimension name to sort by.
+             * @minLength 1
+             */
+            dimensionName: string;
+            /** The rule used to order dimension string values. */
+            orderType?: "ORDER_TYPE_UNSPECIFIED" | "ALPHANUMERIC" | "CASE_INSENSITIVE_ALPHANUMERIC" | "NUMERIC";
+          };
+          /** Whether to sort the values in descending order. */
+          desc?: boolean;
+        } | {
+          /** The pivot ordering configuration. */
+          pivot: {
+            /**
+             * The requested metric name to sort by.
+             * @minLength 1
+             */
+            metricName: string;
+            /** The dimension name and value pairs selecting the pivot column group. */
+            pivotSelections?: Array<{
+              /**
+               * The pivot dimension name.
+               * @minLength 1
+               */
+              dimensionName: string;
+              /** The pivot dimension value. */
+              dimensionValue: string;
+            }>;
+          };
+          /** Whether to sort the values in descending order. */
+          desc?: boolean;
+        }>;
         /**
          * The ISO 4217 currency code for currency metrics.
          * @minLength 1

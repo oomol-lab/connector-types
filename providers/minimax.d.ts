@@ -646,6 +646,165 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
+    /** Synthesize text into audio with the MiniMax T2A v2 API. */
+    "minimax.text_to_audio": {
+      input: {
+        /** MiniMax speech model to invoke. */
+        model: "speech-2.8-hd" | "speech-2.8-turbo" | "speech-2.6-hd" | "speech-2.6-turbo" | "speech-02-hd" | "speech-02-turbo" | "speech-01-hd" | "speech-01-turbo";
+        /**
+         * Text to synthesize into audio. Must be shorter than 10,000 characters.
+         * @minLength 1
+         * @maxLength 9999
+         * @pattern \S
+         */
+        text: string;
+        /** Set to false for the non-streaming connector action. */
+        stream?: false;
+        /** Language or dialect hint that improves pronunciation. Set auto to let MiniMax detect it. */
+        language_boost?: "Chinese" | "Chinese,Yue" | "English" | "Arabic" | "Russian" | "Spanish" | "French" | "Portuguese" | "German" | "Turkish" | "Dutch" | "Ukrainian" | "Vietnamese" | "Indonesian" | "Japanese" | "Italian" | "Korean" | "Thai" | "Polish" | "Romanian" | "Greek" | "Czech" | "Finnish" | "Hindi" | "Bulgarian" | "Danish" | "Hebrew" | "Malay" | "Persian" | "Slovak" | "Swedish" | "Croatian" | "Filipino" | "Hungarian" | "Norwegian" | "Slovenian" | "Catalan" | "Nynorsk" | "Tamil" | "Afrikaans" | "auto";
+        /** How MiniMax delivers the audio. url returns a download link valid for 24 hours, while hex, the MiniMax default, inlines hex-encoded audio, so prefer url for long text. */
+        output_format?: "url" | "hex";
+        /** MiniMax voice settings. */
+        voice_setting?: {
+          /** Identifier of the system, cloned, or generated voice to speak with. Required unless timbre_weights mixes voices. */
+          voice_id?: string;
+          /**
+           * Speech speed where higher values speak faster. MiniMax defaults to 1.
+           * @minimum 0.5
+           * @maximum 2
+           */
+          speed?: number;
+          /**
+           * Speech volume where higher values are louder. MiniMax defaults to 1.
+           * @maximum 10
+           * @exclusiveMinimum 0
+           */
+          vol?: number;
+          /**
+           * Speech pitch offset where 0 keeps the original pitch.
+           * @minimum -12
+           * @maximum 12
+           */
+          pitch?: number;
+          /** Emotion of the synthesized speech. MiniMax picks one from the text when omitted. */
+          emotion?: "happy" | "sad" | "angry" | "fearful" | "disgusted" | "surprised" | "calm" | "fluent" | "whisper";
+          /** Whether to normalize Chinese and English text, which reads digits better at the cost of latency. */
+          text_normalization?: boolean;
+          /** Whether to read LaTeX formulas wrapped in double dollar signs. Chinese only, and it forces language_boost to Chinese. */
+          latex_read?: boolean;
+          [key: string]: unknown;
+        };
+        /**
+         * Voices to blend into one mixed timbre. Leave voice_setting.voice_id empty when mixing voices.
+         * @minItems 1
+         * @maxItems 4
+         */
+        timbre_weights?: Array<{
+          /**
+           * Identifier of the voice to mix.
+           * @minLength 1
+           */
+          voice_id: string;
+          /**
+           * Weight of this voice, where a higher value sounds more like it.
+           * @minimum 1
+           * @maximum 100
+           */
+          weight: number;
+        }>;
+        /** MiniMax pronunciation overrides. */
+        pronunciation_dict?: {
+          /** Pronunciation rules written as original/replacement, for example omg/oh my god. Replacements accept plain text, parenthesized pinyin with tone digits, parenthesized IPA, or Japanese kana. */
+          tone?: Array<string>;
+          [key: string]: unknown;
+        };
+        /** MiniMax audio settings. */
+        audio_setting?: {
+          /** Sample rate of the generated audio in hertz. MiniMax defaults to 32000. */
+          sample_rate?: 8000 | 16000 | 22050 | 24000 | 32000 | 44100;
+          /** Bitrate of the generated audio, applied to mp3 output only. MiniMax defaults to 128000. */
+          bitrate?: 32000 | 64000 | 128000 | 256000;
+          /** Format of the generated audio. MiniMax defaults to mp3, pcmu_raw and pcmu_wav are G.711 mu-law, and opus is Ogg/Opus. */
+          format?: "mp3" | "pcm" | "flac" | "wav" | "pcmu_raw" | "pcmu_wav" | "opus";
+          /** Number of audio channels where 1 is mono and 2 is stereo. MiniMax defaults to 1. */
+          channel?: 1 | 2;
+          [key: string]: unknown;
+        };
+        /** MiniMax voice effect settings. Non-streaming synthesis supports mp3, wav, and flac output. */
+        voice_modify?: {
+          /**
+           * Voice depth where -100 is deepest and 100 is brightest.
+           * @minimum -100
+           * @maximum 100
+           */
+          pitch?: number;
+          /**
+           * Voice intensity where -100 is strongest and 100 is softest.
+           * @minimum -100
+           * @maximum 100
+           */
+          intensity?: number;
+          /**
+           * Voice timbre where -100 is fullest and 100 is crispest.
+           * @minimum -100
+           * @maximum 100
+           */
+          timbre?: number;
+          /** Sound effect to apply. Only one effect can be active at a time. */
+          sound_effects?: "spacious_echo" | "auditorium_echo" | "lofi_telephone" | "robotic";
+          [key: string]: unknown;
+        };
+        /** Whether MiniMax also generates a subtitle file and returns its download link. */
+        subtitle_enable?: boolean;
+        /** Granularity of the generated subtitle timestamps. MiniMax defaults to sentence. */
+        subtitle_type?: "sentence" | "word";
+      };
+      output: {
+        /** Synthesized audio payload. MiniMax may return null. */
+        data?: {
+          /** Hex-encoded audio, or a download URL when output_format is url. */
+          audio?: string;
+          /** Synthesis status where 1 means synthesizing and 2 means finished. */
+          status?: number;
+          /** Download link for the generated subtitle file. */
+          subtitle_file?: string;
+          [key: string]: unknown;
+        } | null;
+        /** Additional information about the synthesized audio. */
+        extra_info?: {
+          /** Audio duration in milliseconds. */
+          audio_length?: number;
+          /** Sample rate of the generated audio. */
+          audio_sample_rate?: number;
+          /** Size of the generated audio in bytes. */
+          audio_size?: number;
+          /** Bitrate of the generated audio. */
+          bitrate?: number;
+          /** Format of the generated audio, for example mp3, pcm, or flac. */
+          audio_format?: string;
+          /** Number of audio channels where 1 is mono and 2 is stereo. */
+          audio_channel?: number;
+          /** Share of invalid characters in the submitted text. */
+          invisible_character_ratio?: number;
+          /** Number of billable characters used by this synthesis. */
+          usage_characters?: number;
+          /** Spoken word count covering Chinese characters, digits, and letters, but not punctuation. */
+          word_count?: number;
+          [key: string]: unknown;
+        };
+        /** MiniMax session identifier used when reporting an issue. */
+        trace_id?: string;
+        /** MiniMax base response wrapper. */
+        base_resp?: {
+          /** MiniMax status code where 0 indicates success. */
+          status_code?: number;
+          /** Human-readable MiniMax status message. */
+          status_msg?: string;
+          [key: string]: unknown;
+        };
+        [key: string]: unknown;
+      };
+    };
     /** Create a MiniMax asynchronous text-to-video generation task. */
     "minimax.text_to_video": {
       input: {
