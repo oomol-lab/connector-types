@@ -3,7 +3,7 @@ import "@oomol-lab/connector";
 declare module "@oomol-lab/connector" {
   interface ActionRegistry {
     /** Add an emoji reaction to a Slack message. */
-    "slack.add_reaction": {
+    "slackbot.add_reaction": {
       input: {
         /**
          * The Slack conversation or channel ID.
@@ -27,7 +27,7 @@ declare module "@oomol-lab/connector" {
       };
     };
     /** Delete a Slack file. */
-    "slack.delete_file": {
+    "slackbot.delete_file": {
       input: {
         /**
          * The Slack file ID.
@@ -43,7 +43,7 @@ declare module "@oomol-lab/connector" {
       };
     };
     /** Delete a Slack message posted through this connection. */
-    "slack.delete_message": {
+    "slackbot.delete_message": {
       input: {
         /**
          * The Slack conversation or channel ID.
@@ -64,7 +64,7 @@ declare module "@oomol-lab/connector" {
       };
     };
     /** Get recent messages from a Slack conversation. */
-    "slack.get_channel_messages": {
+    "slackbot.get_channel_messages": {
       input: {
         /**
          * The Slack conversation or channel ID.
@@ -94,7 +94,7 @@ declare module "@oomol-lab/connector" {
       };
     };
     /** Get metadata for a Slack conversation. */
-    "slack.get_conversation": {
+    "slackbot.get_conversation": {
       input: {
         /**
          * The Slack conversation or channel ID.
@@ -135,7 +135,7 @@ declare module "@oomol-lab/connector" {
       };
     };
     /** Get metadata for a Slack file. */
-    "slack.get_file": {
+    "slackbot.get_file": {
       input: {
         /**
          * The Slack file ID.
@@ -161,7 +161,7 @@ declare module "@oomol-lab/connector" {
       };
     };
     /** Get a permalink for a Slack message. */
-    "slack.get_message_permalink": {
+    "slackbot.get_message_permalink": {
       input: {
         /**
          * The Slack conversation or channel ID.
@@ -184,7 +184,7 @@ declare module "@oomol-lab/connector" {
       };
     };
     /** Get reactions for a Slack message. */
-    "slack.get_reactions": {
+    "slackbot.get_reactions": {
       input: {
         /**
          * The Slack conversation or channel ID.
@@ -205,7 +205,7 @@ declare module "@oomol-lab/connector" {
       };
     };
     /** Get messages in a Slack thread. */
-    "slack.get_thread": {
+    "slackbot.get_thread": {
       input: {
         /**
          * The Slack conversation or channel ID.
@@ -234,7 +234,7 @@ declare module "@oomol-lab/connector" {
       };
     };
     /** Get metadata for a Slack user. */
-    "slack.get_user": {
+    "slackbot.get_user": {
       input: {
         /**
          * The Slack user ID.
@@ -269,7 +269,7 @@ declare module "@oomol-lab/connector" {
       };
     };
     /** List Slack public channels visible to the connected Slack identity. */
-    "slack.list_channels": {
+    "slackbot.list_channels": {
       input: {
         /**
          * The maximum number of channels to return.
@@ -289,7 +289,7 @@ declare module "@oomol-lab/connector" {
       };
     };
     /** List Slack conversations visible to the connected Slack identity. */
-    "slack.list_conversations": {
+    "slackbot.list_conversations": {
       input: {
         /**
          * The maximum number of conversations to return.
@@ -338,7 +338,7 @@ declare module "@oomol-lab/connector" {
       };
     };
     /** List Slack files visible to the connected Slack identity, optionally filtered by channel or user. */
-    "slack.list_files": {
+    "slackbot.list_files": {
       input: {
         /**
          * The Slack conversation or channel ID.
@@ -384,7 +384,7 @@ declare module "@oomol-lab/connector" {
       };
     };
     /** List Slack users visible to the connected Slack identity. */
-    "slack.list_users": {
+    "slackbot.list_users": {
       input: {
         /**
          * The maximum number of users to return.
@@ -424,7 +424,7 @@ declare module "@oomol-lab/connector" {
       };
     };
     /** Open or resume a direct message with one Slack user. */
-    "slack.open_conversation": {
+    "slackbot.open_conversation": {
       input: {
         /**
          * The single Slack user to include in the DM.
@@ -466,7 +466,7 @@ declare module "@oomol-lab/connector" {
       };
     };
     /** Post an ephemeral Slack message visible only to one user in a conversation. */
-    "slack.post_ephemeral_message": {
+    "slackbot.post_ephemeral_message": {
       input: {
         /**
          * The Slack conversation or channel ID.
@@ -502,7 +502,7 @@ declare module "@oomol-lab/connector" {
       };
     };
     /** Post a Slack message. Use text for plain messages, or blocks for rich Block Kit layouts with text as fallback. */
-    "slack.post_message": {
+    "slackbot.post_message": {
       input: {
         /**
          * The Slack conversation or channel ID.
@@ -536,7 +536,7 @@ declare module "@oomol-lab/connector" {
       };
     };
     /** Remove an emoji reaction from a Slack message. */
-    "slack.remove_reaction": {
+    "slackbot.remove_reaction": {
       input: {
         /**
          * The Slack conversation or channel ID.
@@ -560,7 +560,7 @@ declare module "@oomol-lab/connector" {
       };
     };
     /** Reply to a Slack thread. Use text, blocks, or attachments for the reply content. */
-    "slack.reply_message": {
+    "slackbot.reply_message": {
       input: {
         /**
          * The Slack conversation or channel ID.
@@ -601,7 +601,7 @@ declare module "@oomol-lab/connector" {
       };
     };
     /** Schedule a Slack message to be posted later. Use text or blocks for the scheduled content. */
-    "slack.schedule_message": {
+    "slackbot.schedule_message": {
       input: {
         /**
          * The Slack conversation or channel ID.
@@ -638,76 +638,8 @@ declare module "@oomol-lab/connector" {
         postAt: number;
       };
     };
-    /** Search messages visible to the Slack user who authorized the connection. Slack search modifiers such as in:channel_name and from:<@UserID> are supported. */
-    "slack.search_messages": {
-      input: {
-        /**
-         * The Slack search query.
-         * @minLength 1
-         */
-        query: string;
-        /**
-         * The number of results to return per page.
-         * @minimum 1
-         * @maximum 100
-         */
-        count?: number;
-        /**
-         * The Slack page number to fetch.
-         * @minimum 1
-         * @maximum 100
-         */
-        page?: number;
-        /** The Slack cursor for cursormark pagination. Use '*' for the first request. */
-        cursor?: string;
-        /** Whether Slack should mark query terms in matching text. */
-        highlight?: boolean;
-        /** How Slack should sort search results. */
-        sort?: "score" | "timestamp";
-        /** The sort direction for search results. */
-        sortDir?: "asc" | "desc";
-        /** The encoded team ID to search when using an org-level token. */
-        teamId?: string;
-      };
-      output: {
-        /** The search query Slack executed. */
-        query: string;
-        /** The matching Slack messages. */
-        matches: Array<{
-          /** Slack's search result item identifier. */
-          matchId?: string;
-          /** The conversation identifier containing the message. */
-          channelId?: string;
-          /** The conversation name when Slack returns one. */
-          channelName?: string | null;
-          /** The message timestamp identifier. */
-          ts?: string;
-          /** The user ID of the message author. */
-          userId?: string;
-          /** The username of the message author when Slack returns one. */
-          username?: string;
-          /** The matching message text. */
-          text?: string;
-          /** A Slack permalink for the matching message. */
-          permalink?: string;
-          /** The Slack team ID returned for the match. */
-          teamId?: string;
-          /** The Slack result type. */
-          type?: string;
-          [key: string]: unknown;
-        }>;
-        /** The total number of matches Slack reports. */
-        total: number;
-        /** Slack pagination metadata when returned. */
-        pagination: Record<string, unknown>;
-        /** Slack legacy paging metadata when returned. */
-        paging: Record<string, unknown>;
-        /** The cursor for the next page when Slack returns one. */
-        nextCursor: string | null;
-      };
-    };
     /** Update a Slack message posted through this connection. Provide text, blocks, or attachments as the new message content. */
-    "slack.update_message": {
+    "slackbot.update_message": {
       input: {
         /**
          * The Slack conversation or channel ID.
@@ -746,7 +678,7 @@ declare module "@oomol-lab/connector" {
       };
     };
     /** Upload a file to Slack using the current external upload flow. Provide fileUrl; binary content is fetched by the connector runtime. */
-    "slack.upload_file": {
+    "slackbot.upload_file": {
       input: {
         /**
          * The file name Slack should display.

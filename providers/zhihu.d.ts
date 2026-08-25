@@ -2,6 +2,136 @@ import "@oomol-lab/connector";
 
 declare module "@oomol-lab/connector" {
   interface ActionRegistry {
+    /** List public content in one collection owned by the current Access Secret account. */
+    "zhihu.favlist_contents": {
+      input: {
+        /** The collection URL token. */
+        favlistUrlToken: number;
+        /**
+         * The pagination offset.
+         * @minimum 0
+         */
+        offset?: number;
+        /**
+         * The number of items to return, up to 50.
+         * @minimum 1
+         * @maximum 50
+         */
+        limit?: number;
+      };
+      output: {
+        /** The upstream response code. */
+        Code?: number;
+        /** The upstream response message. */
+        Message?: string;
+        /** The response data. */
+        Data?: {
+          /** Collection content items. */
+          Items?: Array<{
+            /** The content type. */
+            ContentType?: string;
+            /**
+             * The content URL.
+             * @format uri
+             */
+            Url?: string;
+            /** The creation Unix timestamp in seconds. */
+            CreatedAt?: number;
+            /** The number of likes. */
+            LikeCount?: number;
+            /** The number of comments. */
+            CommentCount?: number;
+            /** The number of favorites. */
+            FavoriteCount?: number;
+            /** The content title. */
+            Title?: string;
+            /** The content summary. */
+            Summary?: string;
+            /** The favorite Unix timestamp in seconds. */
+            FavTime?: number;
+            /** The collections containing this item. */
+            Favlists?: Array<Record<string, unknown>>;
+            /** The content author when available. */
+            Author?: Record<string, unknown>;
+            [key: string]: unknown;
+          }>;
+          /** Pagination information returned by Zhihu. */
+          Paging?: {
+            /** Whether this is the last page. */
+            IsEnd?: boolean;
+            /** The opaque offset for the next page. */
+            NextOffset?: string;
+            /** The total number of records. */
+            Totals?: number;
+            [key: string]: unknown;
+          };
+          [key: string]: unknown;
+        };
+        [key: string]: unknown;
+      };
+    };
+    /** Get the status and temporary result URL for a Zhihu PDF parsing task. */
+    "zhihu.get_pdf_parse": {
+      input: {
+        /**
+         * The PDF parsing task identifier.
+         * @minLength 1
+         */
+        taskId: string;
+      };
+      output: {
+        /** The upstream response code. */
+        Code?: number;
+        /** The upstream response message. */
+        Message?: string;
+        /** The current asynchronous task state. */
+        Data?: {
+          /** The task identifier. */
+          task_id?: string;
+          /** The task status. */
+          task_status?: "pending" | "running" | "succeeded" | "failed";
+          /** The task progress from zero to one. */
+          progress?: number;
+          /** The completed task result. */
+          result?: Record<string, unknown> | null;
+          /** The task error when failed. */
+          error?: Record<string, unknown> | null;
+          [key: string]: unknown;
+        };
+        [key: string]: unknown;
+      };
+    };
+    /** Get the status and temporary PPTX download URL for a PPT generation task. */
+    "zhihu.get_ppt_generation": {
+      input: {
+        /**
+         * The PPT generation task identifier.
+         * @minLength 1
+         */
+        taskId: string;
+      };
+      output: {
+        /** The upstream response code. */
+        Code?: number;
+        /** The upstream response message. */
+        Message?: string;
+        /** The current asynchronous task state. */
+        Data?: {
+          /** The task identifier. */
+          task_id?: string;
+          /** The task status. */
+          task_status?: "pending" | "running" | "succeeded" | "failed";
+          /** The task progress from zero to one. */
+          progress?: number;
+          /** The completed task result. */
+          result?: Record<string, unknown> | null;
+          /** The task error when failed. */
+          error?: Record<string, unknown> | null;
+          [key: string]: unknown;
+        };
+        [key: string]: unknown;
+      };
+    };
     /** Search the global web index exposed by Zhihu Open Platform. */
     "zhihu.global_search": {
       input: {
@@ -113,6 +243,392 @@ declare module "@oomol-lab/connector" {
             Summary?: string;
             [key: string]: unknown;
           }>;
+          [key: string]: unknown;
+        };
+        [key: string]: unknown;
+      };
+    };
+    /** List content in a Zhida knowledge base using cursor pagination. */
+    "zhihu.knowledge_base_items": {
+      input: {
+        /**
+         * The knowledge base identifier.
+         * @minLength 1
+         */
+        knowledgeBaseId: string;
+        /** The opaque cursor returned by the previous page. */
+        cursor?: string;
+        /**
+         * The number of items to return, up to 20.
+         * @minimum 1
+         * @maximum 20
+         */
+        limit?: number;
+      };
+      output: {
+        /** The upstream response code. */
+        Code?: number;
+        /** The upstream response message. */
+        Message?: string;
+        /** The response data. */
+        Data?: {
+          /** Knowledge base content items. */
+          Items?: Array<Record<string, unknown>>;
+          /** The total number of content items. */
+          Total?: number;
+          /** Whether another page is available. */
+          HasMore?: boolean;
+          /** The opaque cursor for the next page. */
+          NextCursor?: string;
+          [key: string]: unknown;
+        };
+        [key: string]: unknown;
+      };
+    };
+    /** List Zhida knowledge bases created by or subscribed to by the current account. */
+    "zhihu.knowledge_bases": {
+      input: {
+        /** The relationship used to filter knowledge bases. */
+        scope?: "all" | "created" | "subscribed";
+      };
+      output: {
+        /** The upstream response code. */
+        Code?: number;
+        /** The upstream response message. */
+        Message?: string;
+        /** The response data. */
+        Data?: {
+          /** Knowledge bases. */
+          Items?: Array<Record<string, unknown>>;
+          [key: string]: unknown;
+        };
+        [key: string]: unknown;
+      };
+    };
+    /** Download a file from an HTTP URL and upload it into a Zhida knowledge base. */
+    "zhihu.knowledge_file_upload": {
+      input: {
+        /**
+         * The HTTP or HTTPS URL whose file should be uploaded.
+         * @format uri
+         */
+        fileUrl: string;
+        /**
+         * The file name, including a supported extension.
+         * @minLength 1
+         */
+        fileName: string;
+        /**
+         * The target knowledge base identifier.
+         * @minLength 1
+         */
+        knowledgeBaseId?: string;
+      };
+      output: {
+        /** The upstream response code. */
+        Code?: number;
+        /** The upstream response message. */
+        Message?: string;
+        /** The response data. */
+        Data?: {
+          /** The knowledge base that received the file. */
+          KnowledgeBaseID?: string;
+          /** The uploaded content identifier. */
+          RecallContentID?: string;
+          /** The normalized uploaded file name. */
+          FileName?: string;
+          /** The uploaded file size in bytes. */
+          FileSize?: number;
+          /** The parsed content title when available. */
+          Title?: string;
+          /** The parsed content summary when available. */
+          Abstract?: string;
+          /** The source file URL returned by Zhihu when available. */
+          OriginUrl?: string;
+          [key: string]: unknown;
+        };
+        [key: string]: unknown;
+      };
+    };
+    /** Retrieve relevant document fragments from Zhida knowledge bases with RAG search. */
+    "zhihu.knowledge_search": {
+      input: ({
+        /**
+         * The retrieval question.
+         * @minLength 1
+         */
+        query: string;
+        /**
+         * Knowledge base identifiers to search. Required when recallScopes is omitted.
+         * @minItems 1
+         */
+        knowledgeBaseIds?: Array<string>;
+        /**
+         * Built-in recall scopes to search. Required when knowledgeBaseIds is omitted.
+         * @minItems 1
+         */
+        recallScopes?: Array<"personal" | "subscription" | "public">;
+        /**
+         * The number of documents to return, up to 10.
+         * @minimum 1
+         * @maximum 10
+         */
+        limit?: number;
+      }) & (Record<string, unknown>);
+      output: {
+        /** The upstream response code. */
+        Code?: number;
+        /** The upstream response message. */
+        Message?: string;
+        /** The response data. */
+        Data?: {
+          /** Relevant documents and fragments. */
+          Items?: Array<Record<string, unknown>>;
+          [key: string]: unknown;
+        };
+        [key: string]: unknown;
+      };
+    };
+    /** Download a PDF from an HTTP URL, upload it to Zhihu, and submit an asynchronous parse task. */
+    "zhihu.submit_pdf_parse": {
+      input: {
+        /**
+         * The HTTP or HTTPS URL of a PDF file up to 100 MB.
+         * @format uri
+         */
+        fileUrl: string;
+        /**
+         * The PDF file name, ending in .pdf.
+         * @minLength 1
+         */
+        fileName: string;
+        /** A key that makes repeated identical task submissions idempotent. */
+        idempotencyKey?: string;
+      };
+      output: {
+        /** The upstream response code. */
+        Code?: number;
+        /** The upstream response message. */
+        Message?: string;
+        /** The response data. */
+        Data?: {
+          /** The PDF parsing task identifier. */
+          task_id?: string;
+          /** The initial task status. */
+          task_status?: string;
+          [key: string]: unknown;
+        };
+        [key: string]: unknown;
+      };
+    };
+    /** Submit a Zhihu answer or article URL for asynchronous PPTX generation. */
+    "zhihu.submit_ppt_generation": {
+      input: {
+        /**
+         * A supported Zhihu answer or article URL.
+         * @format uri
+         */
+        resourceUrl: string;
+        /**
+         * The requested number of slides, from 6 to 21.
+         * @minimum 6
+         * @maximum 21
+         */
+        numPages: number;
+        /** A key that makes repeated identical submissions idempotent. */
+        idempotencyKey?: string;
+      };
+      output: {
+        /** The upstream response code. */
+        Code?: number;
+        /** The upstream response message. */
+        Message?: string;
+        /** The response data. */
+        Data?: {
+          /** The PPT generation task identifier. */
+          task_id?: string;
+          /** The initial task status. */
+          task_status?: string;
+          [key: string]: unknown;
+        };
+        [key: string]: unknown;
+      };
+    };
+    /** List the current Access Secret owner's recently favorited public content. */
+    "zhihu.user_collections": {
+      input: {
+        /**
+         * The number of recent favorites to return, up to 50.
+         * @minimum 1
+         * @maximum 50
+         */
+        limit?: number;
+      };
+      output: {
+        /** The upstream response code. */
+        Code?: number;
+        /** The upstream response message. */
+        Message?: string;
+        /** The response data. */
+        Data?: {
+          /** Recently favorited content. */
+          Items?: Array<{
+            /** The content type. */
+            ContentType?: string;
+            /**
+             * The content URL.
+             * @format uri
+             */
+            Url?: string;
+            /** The creation Unix timestamp in seconds. */
+            CreatedAt?: number;
+            /** The number of likes. */
+            LikeCount?: number;
+            /** The number of comments. */
+            CommentCount?: number;
+            /** The number of favorites. */
+            FavoriteCount?: number;
+            /** The content title. */
+            Title?: string;
+            /** The content summary. */
+            Summary?: string;
+            /** The favorite Unix timestamp in seconds. */
+            FavTime?: number;
+            /** The collections containing this item. */
+            Favlists?: Array<Record<string, unknown>>;
+            /** The content author when available. */
+            Author?: Record<string, unknown>;
+            [key: string]: unknown;
+          }>;
+          [key: string]: unknown;
+        };
+        [key: string]: unknown;
+      };
+    };
+    /** List the current Access Secret owner's public Zhihu creations. */
+    "zhihu.user_contents": {
+      input: {
+        /** The content type to include. */
+        contentType: "all" | "answer" | "article" | "zvideo" | "pin" | "question";
+        /**
+         * The pagination offset.
+         * @minimum 0
+         */
+        offset?: number;
+        /**
+         * The number of items to return, up to 50.
+         * @minimum 1
+         * @maximum 50
+         */
+        limit?: number;
+        /** The field used to sort results. */
+        sortField?: "like_count" | "ts";
+        /** The result sort direction. */
+        sortOrder?: "asc" | "desc";
+      };
+      output: {
+        /** The upstream response code. */
+        Code?: number;
+        /** The upstream response message. */
+        Message?: string;
+        /** The response data. */
+        Data?: {
+          /** User creation items. */
+          Items?: Array<{
+            /** The content type. */
+            ContentType?: string;
+            /**
+             * The content URL.
+             * @format uri
+             */
+            Url?: string;
+            /** The creation Unix timestamp in seconds. */
+            CreatedAt?: number;
+            /** The number of likes. */
+            LikeCount?: number;
+            /** The number of comments. */
+            CommentCount?: number;
+            /** The number of favorites. */
+            FavoriteCount?: number;
+            /** The content title. */
+            Title?: string;
+            /** The content summary. */
+            Summary?: string;
+            [key: string]: unknown;
+          }>;
+          /** Pagination information returned by Zhihu. */
+          Paging?: {
+            /** Whether this is the last page. */
+            IsEnd?: boolean;
+            /** The opaque offset for the next page. */
+            NextOffset?: string;
+            /** The total number of records. */
+            Totals?: number;
+            [key: string]: unknown;
+          };
+          [key: string]: unknown;
+        };
+        [key: string]: unknown;
+      };
+    };
+    /** List the current Access Secret owner's public Zhihu collections. */
+    "zhihu.user_favlists": {
+      input: {
+        /**
+         * The number of collections to return, up to 50.
+         * @minimum 1
+         * @maximum 50
+         */
+        limit?: number;
+      };
+      output: {
+        /** The upstream response code. */
+        Code?: number;
+        /** The upstream response message. */
+        Message?: string;
+        /** The response data. */
+        Data?: {
+          /** Zhihu collections. */
+          Items?: Array<Record<string, unknown>>;
+          [key: string]: unknown;
+        };
+        [key: string]: unknown;
+      };
+    };
+    /** List the current Access Secret owner's public Zhihu followees. */
+    "zhihu.user_followees": {
+      input: {
+        /**
+         * The pagination offset.
+         * @minimum 0
+         */
+        offset?: number;
+        /**
+         * The number of followees to return, up to 50.
+         * @minimum 1
+         * @maximum 50
+         */
+        limit?: number;
+      };
+      output: {
+        /** The upstream response code. */
+        Code?: number;
+        /** The upstream response message. */
+        Message?: string;
+        /** The response data. */
+        Data?: {
+          /** Followed users. */
+          Items?: Array<Record<string, unknown>>;
+          /** Pagination information returned by Zhihu. */
+          Paging?: {
+            /** Whether this is the last page. */
+            IsEnd?: boolean;
+            /** The opaque offset for the next page. */
+            NextOffset?: string;
+            /** The total number of records. */
+            Totals?: number;
+            [key: string]: unknown;
+          };
           [key: string]: unknown;
         };
         [key: string]: unknown;
