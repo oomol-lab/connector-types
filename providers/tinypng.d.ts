@@ -62,9 +62,11 @@ declare module "@oomol-lab/connector" {
           /** The filename of the transformed image. */
           name: string;
           /** The MIME type of the transformed image. */
-          mimetype: string;
+          mimeType: string;
           /** The transit URL for downloading the transformed image. */
-          s3url: string;
+          downloadUrl: string;
+          /** The transformed image size in bytes. */
+          sizeBytes: number;
         };
       };
     };

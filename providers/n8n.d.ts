@@ -214,14 +214,12 @@ declare module "@oomol-lab/connector" {
            * @minLength 1
            */
           name: string;
-          /**
-           * The n8n data table identifier.
-           * @minLength 1
-           */
-          dataTableId: string;
           /** The n8n data table column type. */
           type: "string" | "number" | "boolean" | "date";
-          /** The zero-based column position. */
+          /**
+           * The zero-based column position.
+           * @minimum 0
+           */
           index: number;
           [key: string]: unknown;
         }>;
@@ -549,14 +547,12 @@ declare module "@oomol-lab/connector" {
            * @minLength 1
            */
           name: string;
-          /**
-           * The n8n data table identifier.
-           * @minLength 1
-           */
-          dataTableId: string;
           /** The n8n data table column type. */
           type: "string" | "number" | "boolean" | "date";
-          /** The zero-based column position. */
+          /**
+           * The zero-based column position.
+           * @minimum 0
+           */
           index: number;
           [key: string]: unknown;
         }>;
@@ -1017,14 +1013,12 @@ declare module "@oomol-lab/connector" {
              * @minLength 1
              */
             name: string;
-            /**
-             * The n8n data table identifier.
-             * @minLength 1
-             */
-            dataTableId: string;
             /** The n8n data table column type. */
             type: "string" | "number" | "boolean" | "date";
-            /** The zero-based column position. */
+            /**
+             * The zero-based column position.
+             * @minimum 0
+             */
             index: number;
             [key: string]: unknown;
           }>;
@@ -1513,14 +1507,12 @@ declare module "@oomol-lab/connector" {
            * @minLength 1
            */
           name: string;
-          /**
-           * The n8n data table identifier.
-           * @minLength 1
-           */
-          dataTableId: string;
           /** The n8n data table column type. */
           type: "string" | "number" | "boolean" | "date";
-          /** The zero-based column position. */
+          /**
+           * The zero-based column position.
+           * @minimum 0
+           */
           index: number;
           [key: string]: unknown;
         }>;

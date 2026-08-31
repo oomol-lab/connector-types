@@ -2,13 +2,14 @@ import "@oomol-lab/connector";
 
 declare module "@oomol-lab/connector" {
   interface ActionRegistry {
-    /** Request cancellation of a queued or in-progress fal request by model ID and request ID. */
+    /** Cancel a queued or in-progress fal request using its cancellation URL. */
     "fal_ai.cancel_queue_request": {
       input: {
-        /** The model identifier in namespace/name format. */
-        modelId: string;
-        /** The queued request identifier. */
-        requestId: string;
+        /**
+         * The exact cancel URL returned by submit_queue_request.
+         * @format uri
+         */
+        cancelUrl: string;
       };
       output: {
         /** The cancellation result status. */
@@ -88,25 +89,15 @@ declare module "@oomol-lab/connector" {
     /** Retrieve the stored final result payload for a completed fal queued request. */
     "fal_ai.get_queue_request_result": {
       input: {
-        /** The model identifier in namespace/name format. */
-        modelId: string;
-        /** The queued request identifier. */
-        requestId: string;
+        /**
+         * The exact response URL returned by submit_queue_request.
+         * @format uri
+         */
+        responseUrl: string;
       };
       output: {
-        /** The final request status returned by the queue API. */
+        /** The completed request status. */
         status: string;
-        /** The logs captured for the queued request. */
-        logs: Array<{
-          /** The log message text. */
-          message: string;
-          /** The log severity level. */
-          level: string;
-          /** The log source identifier. */
-          source: string;
-          /** The log timestamp in ISO 8601 format. */
-          timestamp: string;
-        }>;
         /** The raw fal object payload. */
         response: Record<string, unknown>;
       };
@@ -114,10 +105,11 @@ declare module "@oomol-lab/connector" {
     /** Check the status of a queued fal request, with optional log retrieval for in-progress or completed work. */
     "fal_ai.queue_get_status": {
       input: {
-        /** The model identifier in namespace/name format. */
-        modelId: string;
-        /** The queued request identifier. */
-        requestId: string;
+        /**
+         * The exact status URL returned by submit_queue_request.
+         * @format uri
+         */
+        statusUrl: string;
         /**
          * Set to 1 to include logs in the response.
          * @minimum 0
@@ -148,10 +140,11 @@ declare module "@oomol-lab/connector" {
     /** Consume fal queue status updates as a streamed sequence of SSE events until the server closes the stream. */
     "fal_ai.queue_get_status_stream": {
       input: {
-        /** The model identifier in namespace/name format. */
-        modelId: string;
-        /** The queued request identifier. */
-        requestId: string;
+        /**
+         * The exact status URL returned by submit_queue_request.
+         * @format uri
+         */
+        statusUrl: string;
         /**
          * Set to 1 to include logs inside streamed updates.
          * @minimum 0
@@ -166,6 +159,37 @@ declare module "@oomol-lab/connector" {
         finalStatus?: string | null;
         /** The final response URL seen in the stream, if present. */
         responseUrl?: string | null;
+      };
+    };
+    /** Submit a job to a fal model endpoint's async queue and return the URLs used to track it. */
+    "fal_ai.submit_queue_request": {
+      input: {
+        /**
+         * The model identifier, such as fal-ai/flux/schnell.
+         * @minLength 1
+         */
+        modelId: string;
+        /** The raw fal object payload. */
+        input: Record<string, unknown>;
+        /**
+         * An optional URL fal calls with the final result.
+         * @format uri
+         */
+        webhookUrl?: string;
+      };
+      output: {
+        /** The queue request identifier. */
+        requestId: string;
+        /** The initial queue status. */
+        status: string;
+        /** The initial queue position when available. */
+        queuePosition: number | null;
+        /** The exact URL used to poll request status. */
+        statusUrl: string;
+        /** The exact URL used to fetch the result. */
+        responseUrl: string;
+        /** The exact URL used to cancel the request. */
+        cancelUrl: string;
       };
     };
   }

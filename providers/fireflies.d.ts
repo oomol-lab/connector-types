@@ -492,6 +492,24 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         id: string;
+        /** Whether to include transcript summary data. Defaults to true. */
+        include_summary?: boolean;
+        /** Whether to include transcript analytics data. Defaults to false. */
+        include_analytics?: boolean;
+        /** Whether to include the transcript audio URL. Defaults to false. */
+        include_audio_url?: boolean;
+        /** Whether to include the transcript video URL. Defaults to false. */
+        include_video_url?: boolean;
+        /** Whether to include transcript sentences. Defaults to true. */
+        include_sentences?: boolean;
+        /** Whether to include transcript app preview data. Defaults to false. */
+        include_apps_preview?: boolean;
+        /** Whether to include detailed user information. Defaults to true. */
+        include_user_details?: boolean;
+        /** Whether to include meeting attendees. Defaults to true. */
+        include_meeting_attendees?: boolean;
+        /** Whether to include meeting attendance details. Defaults to false. */
+        include_meeting_attendance?: boolean;
       };
       output: {
         /** The requested Fireflies transcript. */
@@ -592,6 +610,92 @@ declare module "@oomol-lab/connector" {
             email?: string;
             /** The attendee phone number. */
             phone_number?: string;
+            [key: string]: unknown;
+          }>;
+          /** The transcript audio URL. */
+          audio_url?: string;
+          /** The transcript video URL. */
+          video_url?: string;
+          /** Analytics for the transcript. */
+          analytics?: {
+            /** Sentiment percentages for the transcript. */
+            sentiments?: {
+              /** The percentage of negative sentiment. */
+              negative_pct?: number;
+              /** The percentage of neutral sentiment. */
+              neutral_pct?: number;
+              /** The percentage of positive sentiment. */
+              positive_pct?: number;
+              [key: string]: unknown;
+            };
+            /** Content category counts. */
+            categories?: {
+              /** The number of questions in the transcript. */
+              questions?: number;
+              /** The number of date and time references. */
+              date_times?: number;
+              /** The number of metrics mentioned in the transcript. */
+              metrics?: number;
+              /** The number of tasks identified in the transcript. */
+              tasks?: number;
+              [key: string]: unknown;
+            };
+            /** Per-speaker analytics for the transcript. */
+            speakers?: Array<{
+              /** The speaker identifier. */
+              speaker_id?: number;
+              /** The speaker name. */
+              name?: string;
+              /** The speaker's total speaking time in seconds. */
+              duration?: number;
+              /** The number of words spoken. */
+              word_count?: number;
+              /** The speaker's longest continuous speaking time in seconds. */
+              longest_monologue?: number;
+              /** The number of times the speaker spoke. */
+              monologues_count?: number;
+              /** The number of filler words used by the speaker. */
+              filler_words?: number;
+              /** The number of questions asked by the speaker. */
+              questions?: number;
+              /** The percentage of meeting time used by the speaker. */
+              duration_pct?: number;
+              /** The speaker's average words per minute. */
+              words_per_minute?: number;
+              [key: string]: unknown;
+            }>;
+            [key: string]: unknown;
+          };
+          /** A preview of AI app outputs. */
+          apps_preview?: {
+            /** AI app outputs for the transcript. */
+            outputs?: Array<{
+              /** The meeting title for the AI app output. */
+              title?: string;
+              /** The Fireflies AI app identifier. */
+              app_id?: string;
+              /** The prompt sent to the AI app. */
+              prompt?: string;
+              /** The Fireflies user identifier for the AI app output. */
+              user_id?: string;
+              /** The AI app response text. */
+              response?: string;
+              /** The AI app output creation timestamp. */
+              created_at?: string;
+              /** The Fireflies transcript identifier. */
+              transcript_id?: string;
+              [key: string]: unknown;
+            }>;
+            [key: string]: unknown;
+          };
+          /** Attendance records for the transcript. */
+          meeting_attendance?: Array<{
+            /** The participant name. */
+            name?: string;
+            /** The ISO 8601 timestamp when the participant joined. */
+            join_time?: string;
+            /** The ISO 8601 timestamp when the participant left. */
+            leave_time?: string | null;
             [key: string]: unknown;
           }>;
           /** Channels linked to the transcript. */
@@ -926,23 +1030,23 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         channel_id?: string;
-        /** Whether to include transcript summary data. */
+        /** Whether to include transcript summary data. Defaults to true. */
         include_summary?: boolean;
-        /** Whether to include transcript analytics data. */
+        /** Whether to include transcript analytics data. Defaults to false. */
         include_analytics?: boolean;
-        /** Whether to include the transcript audio URL. */
+        /** Whether to include the transcript audio URL. Defaults to false. */
         include_audio_url?: boolean;
-        /** Whether to include the transcript video URL. */
+        /** Whether to include the transcript video URL. Defaults to false. */
         include_video_url?: boolean;
-        /** Whether to include transcript sentences. */
+        /** Whether to include transcript sentences. Defaults to true. */
         include_sentences?: boolean;
-        /** Whether to include transcript app preview data. */
+        /** Whether to include transcript app preview data. Defaults to false. */
         include_apps_preview?: boolean;
-        /** Whether to include detailed user information. */
+        /** Whether to include detailed user information. Defaults to true. */
         include_user_details?: boolean;
-        /** Whether to include meeting attendees. */
+        /** Whether to include meeting attendees. Defaults to true. */
         include_meeting_attendees?: boolean;
-        /** Whether to include meeting attendance details. */
+        /** Whether to include meeting attendance details. Defaults to false. */
         include_meeting_attendance?: boolean;
         [key: string]: unknown;
       };
@@ -1045,6 +1149,92 @@ declare module "@oomol-lab/connector" {
             email?: string;
             /** The attendee phone number. */
             phone_number?: string;
+            [key: string]: unknown;
+          }>;
+          /** The transcript audio URL. */
+          audio_url?: string;
+          /** The transcript video URL. */
+          video_url?: string;
+          /** Analytics for the transcript. */
+          analytics?: {
+            /** Sentiment percentages for the transcript. */
+            sentiments?: {
+              /** The percentage of negative sentiment. */
+              negative_pct?: number;
+              /** The percentage of neutral sentiment. */
+              neutral_pct?: number;
+              /** The percentage of positive sentiment. */
+              positive_pct?: number;
+              [key: string]: unknown;
+            };
+            /** Content category counts. */
+            categories?: {
+              /** The number of questions in the transcript. */
+              questions?: number;
+              /** The number of date and time references. */
+              date_times?: number;
+              /** The number of metrics mentioned in the transcript. */
+              metrics?: number;
+              /** The number of tasks identified in the transcript. */
+              tasks?: number;
+              [key: string]: unknown;
+            };
+            /** Per-speaker analytics for the transcript. */
+            speakers?: Array<{
+              /** The speaker identifier. */
+              speaker_id?: number;
+              /** The speaker name. */
+              name?: string;
+              /** The speaker's total speaking time in seconds. */
+              duration?: number;
+              /** The number of words spoken. */
+              word_count?: number;
+              /** The speaker's longest continuous speaking time in seconds. */
+              longest_monologue?: number;
+              /** The number of times the speaker spoke. */
+              monologues_count?: number;
+              /** The number of filler words used by the speaker. */
+              filler_words?: number;
+              /** The number of questions asked by the speaker. */
+              questions?: number;
+              /** The percentage of meeting time used by the speaker. */
+              duration_pct?: number;
+              /** The speaker's average words per minute. */
+              words_per_minute?: number;
+              [key: string]: unknown;
+            }>;
+            [key: string]: unknown;
+          };
+          /** A preview of AI app outputs. */
+          apps_preview?: {
+            /** AI app outputs for the transcript. */
+            outputs?: Array<{
+              /** The meeting title for the AI app output. */
+              title?: string;
+              /** The Fireflies AI app identifier. */
+              app_id?: string;
+              /** The prompt sent to the AI app. */
+              prompt?: string;
+              /** The Fireflies user identifier for the AI app output. */
+              user_id?: string;
+              /** The AI app response text. */
+              response?: string;
+              /** The AI app output creation timestamp. */
+              created_at?: string;
+              /** The Fireflies transcript identifier. */
+              transcript_id?: string;
+              [key: string]: unknown;
+            }>;
+            [key: string]: unknown;
+          };
+          /** Attendance records for the transcript. */
+          meeting_attendance?: Array<{
+            /** The participant name. */
+            name?: string;
+            /** The ISO 8601 timestamp when the participant joined. */
+            join_time?: string;
+            /** The ISO 8601 timestamp when the participant left. */
+            leave_time?: string | null;
             [key: string]: unknown;
           }>;
           /** Channels linked to the transcript. */

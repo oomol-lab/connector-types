@@ -16,7 +16,7 @@ declare module "@oomol-lab/connector" {
         /** The default storage class for newly uploaded objects. */
         storageClass?: "Standard" | "InfrequentAccess";
         /** The jurisdiction where objects in the bucket are guaranteed to be stored. */
-        jurisdiction?: "default" | "eu" | "fedramp";
+        jurisdiction?: "default" | "eu" | "fedramp" | "us";
       };
       output: {
         /** A Cloudflare R2 bucket. */
@@ -28,7 +28,7 @@ declare module "@oomol-lab/connector" {
           /** The bucket location. */
           location?: "apac" | "eeur" | "enam" | "weur" | "wnam" | "oc";
           /** The bucket jurisdiction. */
-          jurisdiction?: "default" | "eu" | "fedramp";
+          jurisdiction?: "default" | "eu" | "fedramp" | "us";
           /** The bucket default storage class. */
           storageClass?: "Standard" | "InfrequentAccess";
         };
@@ -44,7 +44,7 @@ declare module "@oomol-lab/connector" {
          */
         bucketName: string;
         /** The jurisdiction where objects in the bucket are guaranteed to be stored. */
-        jurisdiction?: "default" | "eu" | "fedramp";
+        jurisdiction?: "default" | "eu" | "fedramp" | "us";
       };
       output: {
         /** The deleted bucket name. */
@@ -63,7 +63,7 @@ declare module "@oomol-lab/connector" {
          */
         bucketName: string;
         /** The jurisdiction where objects in the bucket are guaranteed to be stored. */
-        jurisdiction?: "default" | "eu" | "fedramp";
+        jurisdiction?: "default" | "eu" | "fedramp" | "us";
       };
       output: {
         /** The bucket whose CORS policy was removed. */
@@ -92,7 +92,7 @@ declare module "@oomol-lab/connector" {
          */
         fileName?: string;
         /** The jurisdiction where objects in the bucket are guaranteed to be stored. */
-        jurisdiction?: "default" | "eu" | "fedramp";
+        jurisdiction?: "default" | "eu" | "fedramp" | "us";
       };
       output: {
         /**
@@ -122,6 +122,58 @@ declare module "@oomol-lab/connector" {
         transitUrl: string;
       };
     };
+    /** Generate a pre-signed R2 URL for one GET, PUT, or HEAD request using a custom API token credential. */
+    "cloudflare_r2.generate_presigned_url": {
+      input: {
+        /**
+         * The Cloudflare account ID.
+         * @minLength 1
+         */
+        accountId?: string;
+        /**
+         * The R2 bucket name.
+         * @minLength 3
+         * @maxLength 64
+         */
+        bucketName: string;
+        /**
+         * The complete R2 object key. Slashes are preserved as key delimiters.
+         * @minLength 1
+         */
+        objectKey: string;
+        /** The HTTP method that the signed URL should allow. */
+        method?: "GET" | "PUT" | "HEAD";
+        /**
+         * How long the signed URL remains valid, in seconds.
+         * @minimum 1
+         * @maximum 604800
+         */
+        expiresSeconds?: number;
+        /** The Content-Type required for a signed PUT request. */
+        contentType?: string;
+        /** The jurisdiction where objects in the bucket are guaranteed to be stored. */
+        jurisdiction?: "default" | "eu" | "fedramp" | "us";
+      };
+      output: {
+        /** The bucket used to build the signed URL. */
+        bucketName: string;
+        /** The object key used to build the signed URL. */
+        objectKey: string;
+        /** The signed HTTP method. */
+        method: string;
+        /** The URL validity duration in seconds. */
+        expiresSeconds: number;
+        /**
+         * The timestamp when the signed URL expires.
+         * @format date-time
+         */
+        expiresAt: string;
+        /** The generated pre-signed URL. */
+        url: string;
+        /** HTTP headers included in the signature that must be sent with the request. */
+        requiredHeaders: Record<string, string>;
+      };
+    };
     /** Get one R2 bucket by name. */
     "cloudflare_r2.get_bucket": {
       input: {
@@ -132,7 +184,7 @@ declare module "@oomol-lab/connector" {
          */
         bucketName: string;
         /** The jurisdiction where objects in the bucket are guaranteed to be stored. */
-        jurisdiction?: "default" | "eu" | "fedramp";
+        jurisdiction?: "default" | "eu" | "fedramp" | "us";
       };
       output: {
         /** A Cloudflare R2 bucket. */
@@ -144,7 +196,7 @@ declare module "@oomol-lab/connector" {
           /** The bucket location. */
           location?: "apac" | "eeur" | "enam" | "weur" | "wnam" | "oc";
           /** The bucket jurisdiction. */
-          jurisdiction?: "default" | "eu" | "fedramp";
+          jurisdiction?: "default" | "eu" | "fedramp" | "us";
           /** The bucket default storage class. */
           storageClass?: "Standard" | "InfrequentAccess";
         };
@@ -160,7 +212,7 @@ declare module "@oomol-lab/connector" {
          */
         bucketName: string;
         /** The jurisdiction where objects in the bucket are guaranteed to be stored. */
-        jurisdiction?: "default" | "eu" | "fedramp";
+        jurisdiction?: "default" | "eu" | "fedramp" | "us";
       };
       output: {
         /** The bucket CORS rules. */
@@ -259,7 +311,7 @@ declare module "@oomol-lab/connector" {
           /** The bucket location. */
           location?: "apac" | "eeur" | "enam" | "weur" | "wnam" | "oc";
           /** The bucket jurisdiction. */
-          jurisdiction?: "default" | "eu" | "fedramp";
+          jurisdiction?: "default" | "eu" | "fedramp" | "us";
           /** The bucket default storage class. */
           storageClass?: "Standard" | "InfrequentAccess";
         }>;
@@ -279,7 +331,7 @@ declare module "@oomol-lab/connector" {
         /** The default storage class for newly uploaded objects. */
         storageClass?: "Standard" | "InfrequentAccess";
         /** The jurisdiction where objects in the bucket are guaranteed to be stored. */
-        jurisdiction?: "default" | "eu" | "fedramp";
+        jurisdiction?: "default" | "eu" | "fedramp" | "us";
       };
       output: {
         /** A Cloudflare R2 bucket. */
@@ -291,7 +343,7 @@ declare module "@oomol-lab/connector" {
           /** The bucket location. */
           location?: "apac" | "eeur" | "enam" | "weur" | "wnam" | "oc";
           /** The bucket jurisdiction. */
-          jurisdiction?: "default" | "eu" | "fedramp";
+          jurisdiction?: "default" | "eu" | "fedramp" | "us";
           /** The bucket default storage class. */
           storageClass?: "Standard" | "InfrequentAccess";
         };
@@ -334,7 +386,7 @@ declare module "@oomol-lab/connector" {
           maxAgeSeconds?: number;
         }>;
         /** The jurisdiction where objects in the bucket are guaranteed to be stored. */
-        jurisdiction?: "default" | "eu" | "fedramp";
+        jurisdiction?: "default" | "eu" | "fedramp" | "us";
       };
       output: {
         /** The bucket whose CORS policy was updated. */
