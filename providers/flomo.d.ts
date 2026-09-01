@@ -48,8 +48,12 @@ declare module "@oomol-lab/connector" {
       } | {
         /** The flomo memo ID. */
         id: string;
+        /** The flomo memo URL. */
+        url: string;
         /** The memo content in Markdown. */
         content?: string;
+        /** Whether the returned memo content was truncated by flomo. */
+        content_truncated: boolean;
         /** The memo creation time in ISO 8601 format. */
         created_at: string;
         /** The memo update time in ISO 8601 format. */
@@ -86,8 +90,12 @@ declare module "@oomol-lab/connector" {
       output: Record<string, Array<{
           /** The flomo memo ID. */
           id: string;
+          /** The flomo memo URL. */
+          url: string;
           /** The memo content in Markdown. */
           content?: string;
+          /** Whether the returned memo content was truncated by flomo. */
+          content_truncated: boolean;
           /** The memo creation time in ISO 8601 format. */
           created_at: string;
           /** The memo update time in ISO 8601 format. */
@@ -147,8 +155,12 @@ declare module "@oomol-lab/connector" {
       output: Record<string, Array<{
           /** The flomo memo ID. */
           id: string;
+          /** The flomo memo URL. */
+          url: string;
           /** The memo content in Markdown. */
           content?: string;
+          /** Whether the returned memo content was truncated by flomo. */
+          content_truncated: boolean;
           /** The memo creation time in ISO 8601 format. */
           created_at: string;
           /** The memo update time in ISO 8601 format. */
@@ -194,8 +206,12 @@ declare module "@oomol-lab/connector" {
       output: Record<string, Array<{
           /** The flomo memo ID. */
           id: string;
+          /** The flomo memo URL. */
+          url: string;
           /** The memo content in Markdown. */
           content?: string;
+          /** Whether the returned memo content was truncated by flomo. */
+          content_truncated: boolean;
           /** The memo creation time in ISO 8601 format. */
           created_at: string;
           /** The memo update time in ISO 8601 format. */
@@ -249,8 +265,12 @@ declare module "@oomol-lab/connector" {
       output: Record<string, Array<{
           /** The flomo memo ID. */
           id: string;
+          /** The flomo memo URL. */
+          url: string;
           /** The memo content in Markdown. */
           content?: string;
+          /** Whether the returned memo content was truncated by flomo. */
+          content_truncated: boolean;
           /** The memo creation time in ISO 8601 format. */
           created_at: string;
           /** The memo update time in ISO 8601 format. */
@@ -298,8 +318,12 @@ declare module "@oomol-lab/connector" {
       output: {
         /** The flomo memo ID. */
         id: string;
+        /** The flomo memo URL. */
+        url: string;
         /** The memo content in Markdown. */
         content?: string;
+        /** Whether the returned memo content was truncated by flomo. */
+        content_truncated: boolean;
         /** The memo creation time in ISO 8601 format. */
         created_at: string;
         /** The memo update time in ISO 8601 format. */

@@ -2,7 +2,7 @@ import "@oomol-lab/connector";
 
 declare module "@oomol-lab/connector" {
   interface ActionRegistry {
-    /** Mark a Dida365 (滴答清单) task as completed by project ID and task ID. */
+    /** Mark a Dida365 task as completed by project ID and task ID. */
     "dida365.complete_task": {
       input: {
         /**
@@ -25,7 +25,7 @@ declare module "@oomol-lab/connector" {
         taskId: string;
       };
     };
-    /** Create or update a Dida365 (滴答清单) habit check-in for a date stamp. */
+    /** Create or update a Dida365 habit check-in for a date stamp. */
     "dida365.create_or_update_habit_checkin": {
       input: {
         /**
@@ -73,7 +73,7 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** Create a Dida365 (滴答清单) project with optional color, sort order, view mode, and kind. */
+    /** Create a Dida365 project with optional color, sort order, view mode, and kind. */
     "dida365.create_project": {
       input: {
         /**
@@ -115,7 +115,7 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** Create a Dida365 (滴答清单) task under a project with optional schedule, reminders, recurrence, and checklist items. */
+    /** Create a Dida365 task under a project with optional schedule, reminders, recurrence, and checklist items. */
     "dida365.create_task": {
       input: {
         /**
@@ -236,7 +236,7 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** Delete a Dida365 (滴答清单) project by project ID. The connector treats a missing project as already deleted. */
+    /** Delete a Dida365 project by project ID. The connector treats a missing project as already deleted. */
     "dida365.delete_project": {
       input: {
         /**
@@ -252,7 +252,7 @@ declare module "@oomol-lab/connector" {
         projectId: string;
       };
     };
-    /** Delete a Dida365 (滴答清单) task by project ID and task ID. The connector treats a missing task as already deleted. */
+    /** Delete a Dida365 task by project ID and task ID. The connector treats a missing task as already deleted. */
     "dida365.delete_task": {
       input: {
         /**
@@ -275,7 +275,7 @@ declare module "@oomol-lab/connector" {
         taskId: string;
       };
     };
-    /** Filter Dida365 (滴答清单) tasks by project, date range, priority, tags, and status by using the official filter endpoint. */
+    /** Filter Dida365 tasks by project, date range, priority, tags, and status by using the official filter endpoint. */
     "dida365.filter_tasks": {
       input: {
         /** An optional list of project IDs to filter by. */
@@ -354,7 +354,7 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** Get a Dida365 (滴答清单) habit by its habit ID. */
+    /** Get a Dida365 habit by its habit ID. */
     "dida365.get_habit": {
       input: {
         /**
@@ -418,7 +418,7 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** Get a Dida365 (滴答清单) project by its project ID. */
+    /** Get a Dida365 project by its project ID. */
     "dida365.get_project_by_id": {
       input: {
         /**
@@ -452,7 +452,7 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** Get a Dida365 (滴答清单) project together with its undone tasks and columns by project ID. */
+    /** Get a Dida365 project together with its undone tasks and columns by project ID. */
     "dida365.get_project_with_data": {
       input: {
         /**
@@ -558,7 +558,7 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** Get a Dida365 (滴答清单) task by project ID and task ID. */
+    /** Get a Dida365 task by project ID and task ID. */
     "dida365.get_task_by_project_and_id": {
       input: {
         /**
@@ -635,7 +635,7 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** List the projects available to the connected Dida365 (滴答清单) account. */
+    /** List the projects available to the connected Dida365 account. */
     "dida365.get_user_project": {
       input: Record<string, never>;
       output: {
@@ -663,7 +663,7 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** List undone Dida365 (滴答清单) tasks across projects. This is a connector-level aggregate helper over list-projects plus project-data fetches. */
+    /** List undone Dida365 tasks across projects. This is a connector-level aggregate helper over list-projects plus project-data fetches. */
     "dida365.list_all_tasks": {
       input: {
         /**
@@ -749,7 +749,7 @@ declare module "@oomol-lab/connector" {
         projectsScanned: number;
       };
     };
-    /** List completed Dida365 (滴答清单) tasks within optional project and date filters by using the official completed-tasks endpoint. */
+    /** List completed Dida365 tasks within optional project and date filters by using the official completed-tasks endpoint. */
     "dida365.list_completed_tasks": {
       input: {
         /** An optional list of project IDs to filter by. */
@@ -822,7 +822,7 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** List Dida365 (滴答清单) habit check-ins for one or more habits over a date stamp range. */
+    /** List Dida365 habit check-ins for one or more habits over a date stamp range. */
     "dida365.list_habit_checkins": {
       input: {
         /**
@@ -862,7 +862,7 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** List habits available to the connected Dida365 (滴答清单) account. */
+    /** List habits available to the connected Dida365 account. */
     "dida365.list_habits": {
       input: Record<string, never>;
       output: {
@@ -920,7 +920,7 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** Move one or more Dida365 (滴答清单) tasks between projects by using the official move endpoint. */
+    /** Move one or more Dida365 tasks between projects by using the official move endpoint. */
     "dida365.move_tasks": {
       input: {
         /**
@@ -956,7 +956,7 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** Update a Dida365 (滴答清单) project by project ID. */
+    /** Update a Dida365 project by project ID. */
     "dida365.update_project": {
       input: {
         /**
@@ -1003,7 +1003,7 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** Update a Dida365 (滴答清单) task by task ID and project ID, including checklist items and recurrence fields. */
+    /** Update a Dida365 task by task ID and project ID, including checklist items and recurrence fields. */
     "dida365.update_task": {
       input: {
         /**

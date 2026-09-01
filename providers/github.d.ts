@@ -2661,6 +2661,36 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
+    /** Get the tail of the plain-text logs for a completed GitHub Actions workflow job. */
+    "github.get_workflow_job_logs": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The workflow job ID.
+         * @exclusiveMinimum 0
+         */
+        jobId: number;
+      };
+      output: {
+        /** The complete log text or its trailing 256 KiB when truncated. */
+        logs: string;
+        /** The total size of the downloaded log in bytes. */
+        sizeBytes: number;
+        /** The number of source log bytes represented by logs. */
+        returnedBytes: number;
+        /** Whether logs omits bytes from the beginning of the job log. */
+        truncated: boolean;
+      };
+    };
     /** Get a GitHub workflow run by id. */
     "github.get_workflow_run": {
       input: {

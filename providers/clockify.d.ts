@@ -124,7 +124,7 @@ declare module "@oomol-lab/connector" {
                */
               since?: string;
               [key: string]: unknown;
-            };
+            } | null;
             /** The membership hourly rate. */
             hourlyRate?: {
               /** The rate amount in the smallest currency unit. */
@@ -137,7 +137,7 @@ declare module "@oomol-lab/connector" {
                */
               since?: string;
               [key: string]: unknown;
-            };
+            } | null;
             [key: string]: unknown;
           }>;
           /** The project cost rate. */
@@ -229,11 +229,11 @@ declare module "@oomol-lab/connector" {
           /** The legacy assignee ID returned by Clockify. */
           assigneeId?: string | null;
           /** The assignee IDs returned by Clockify. */
-          assigneeIds?: Array<string>;
+          assigneeIds?: Array<string> | null;
           /** The user group IDs returned by Clockify. */
-          userGroupIds?: Array<string>;
+          userGroupIds?: Array<string> | null;
           /** The budget estimate returned by Clockify. */
-          budgetEstimate?: number;
+          budgetEstimate?: number | null;
           /** The task cost rate. */
           costRate?: {
             /** The rate amount in the smallest currency unit. */
@@ -350,7 +350,7 @@ declare module "@oomol-lab/connector" {
            */
           taskId?: string | null;
           /** The tag IDs attached to the time entry. */
-          tagIds?: Array<string>;
+          tagIds?: Array<string> | null;
           /** Whether the time entry is billable. */
           billable?: boolean;
           /** Whether the time entry is locked. */
@@ -472,7 +472,7 @@ declare module "@oomol-lab/connector" {
             customFieldId: string;
             /** The value assigned to the custom field. */
             value: string | number | boolean;
-          }>;
+          }> | null;
           [key: string]: unknown;
         };
       };
@@ -545,7 +545,7 @@ declare module "@oomol-lab/connector" {
                */
               since?: string;
               [key: string]: unknown;
-            };
+            } | null;
             /** The membership hourly rate. */
             hourlyRate?: {
               /** The rate amount in the smallest currency unit. */
@@ -558,7 +558,7 @@ declare module "@oomol-lab/connector" {
                */
               since?: string;
               [key: string]: unknown;
-            };
+            } | null;
             [key: string]: unknown;
           }>;
           /** The user settings object returned by Clockify. */
@@ -652,7 +652,7 @@ declare module "@oomol-lab/connector" {
                */
               since?: string;
               [key: string]: unknown;
-            };
+            } | null;
             /** The membership hourly rate. */
             hourlyRate?: {
               /** The rate amount in the smallest currency unit. */
@@ -665,7 +665,7 @@ declare module "@oomol-lab/connector" {
                */
               since?: string;
               [key: string]: unknown;
-            };
+            } | null;
             [key: string]: unknown;
           }>;
           /** The project cost rate. */
@@ -722,7 +722,7 @@ declare module "@oomol-lab/connector" {
           /** The subscription tier returned by Clockify. */
           featureSubscriptionType?: string | null;
           /** The feature flags enabled for the workspace. */
-          features?: Array<string>;
+          features?: Array<string> | null;
           /** The memberships returned for the workspace. */
           memberships?: Array<{
             /** The user ID associated with the membership. */
@@ -747,7 +747,7 @@ declare module "@oomol-lab/connector" {
                */
               since?: string;
               [key: string]: unknown;
-            };
+            } | null;
             /** The membership hourly rate. */
             hourlyRate?: {
               /** The rate amount in the smallest currency unit. */
@@ -760,9 +760,9 @@ declare module "@oomol-lab/connector" {
                */
               since?: string;
               [key: string]: unknown;
-            };
+            } | null;
             [key: string]: unknown;
-          }>;
+          }> | null;
           /** The workspace settings object returned by Clockify. */
           settings?: Record<string, unknown>;
           [key: string]: unknown;
@@ -901,7 +901,7 @@ declare module "@oomol-lab/connector" {
                */
               since?: string;
               [key: string]: unknown;
-            };
+            } | null;
             /** The membership hourly rate. */
             hourlyRate?: {
               /** The rate amount in the smallest currency unit. */
@@ -914,7 +914,7 @@ declare module "@oomol-lab/connector" {
                */
               since?: string;
               [key: string]: unknown;
-            };
+            } | null;
             [key: string]: unknown;
           }>;
           /** The project cost rate. */
@@ -1028,11 +1028,11 @@ declare module "@oomol-lab/connector" {
           /** The legacy assignee ID returned by Clockify. */
           assigneeId?: string | null;
           /** The assignee IDs returned by Clockify. */
-          assigneeIds?: Array<string>;
+          assigneeIds?: Array<string> | null;
           /** The user group IDs returned by Clockify. */
-          userGroupIds?: Array<string>;
+          userGroupIds?: Array<string> | null;
           /** The budget estimate returned by Clockify. */
-          budgetEstimate?: number;
+          budgetEstimate?: number | null;
           /** The task cost rate. */
           costRate?: {
             /** The rate amount in the smallest currency unit. */
@@ -1166,7 +1166,7 @@ declare module "@oomol-lab/connector" {
            */
           taskId?: string | null;
           /** The tag IDs attached to the time entry. */
-          tagIds?: Array<string>;
+          tagIds?: Array<string> | null;
           /** Whether the time entry is billable. */
           billable?: boolean;
           /** Whether the time entry is locked. */
@@ -1288,7 +1288,7 @@ declare module "@oomol-lab/connector" {
             customFieldId: string;
             /** The value assigned to the custom field. */
             value: string | number | boolean;
-          }>;
+          }> | null;
           [key: string]: unknown;
         }>;
         /** The pagination metadata derived from the Clockify response. */
@@ -1332,7 +1332,7 @@ declare module "@oomol-lab/connector" {
           /** The subscription tier returned by Clockify. */
           featureSubscriptionType?: string | null;
           /** The feature flags enabled for the workspace. */
-          features?: Array<string>;
+          features?: Array<string> | null;
           /** The memberships returned for the workspace. */
           memberships?: Array<{
             /** The user ID associated with the membership. */
@@ -1357,7 +1357,7 @@ declare module "@oomol-lab/connector" {
                */
               since?: string;
               [key: string]: unknown;
-            };
+            } | null;
             /** The membership hourly rate. */
             hourlyRate?: {
               /** The rate amount in the smallest currency unit. */
@@ -1370,9 +1370,9 @@ declare module "@oomol-lab/connector" {
                */
               since?: string;
               [key: string]: unknown;
-            };
+            } | null;
             [key: string]: unknown;
-          }>;
+          }> | null;
           /** The workspace settings object returned by Clockify. */
           settings?: Record<string, unknown>;
           [key: string]: unknown;
@@ -1508,7 +1508,7 @@ declare module "@oomol-lab/connector" {
                */
               since?: string;
               [key: string]: unknown;
-            };
+            } | null;
             /** The membership hourly rate. */
             hourlyRate?: {
               /** The rate amount in the smallest currency unit. */
@@ -1521,7 +1521,7 @@ declare module "@oomol-lab/connector" {
                */
               since?: string;
               [key: string]: unknown;
-            };
+            } | null;
             [key: string]: unknown;
           }>;
           /** The project cost rate. */
