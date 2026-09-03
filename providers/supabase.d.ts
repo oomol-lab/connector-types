@@ -684,6 +684,73 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
+    /** Upload an object from a public URL to Supabase Storage. */
+    "supabase.upload_storage_object": {
+      input: {
+        /**
+         * The 20-character Supabase project reference, for example 'abcdefghijklmnopqrst'.
+         * @minLength 1
+         * @maxLength 64
+         */
+        projectRef: string;
+        /**
+         * The Storage bucket ID.
+         * @minLength 1
+         */
+        bucketId: string;
+        /**
+         * The object path below the bucket root.
+         * @minLength 1
+         */
+        objectPath: string;
+        /**
+         * A public HTTP or HTTPS URL containing the object bytes.
+         * @format uri
+         */
+        sourceUrl: string;
+        /**
+         * A specific elevated project API key ID.
+         * @minLength 1
+         */
+        apiKeyId?: string;
+        /**
+         * The object Content-Type.
+         * @minLength 1
+         */
+        contentType?: string;
+        /**
+         * The complete Cache-Control header value.
+         * @minLength 1
+         */
+        cacheControl?: string;
+        /** Whether to replace an existing object. */
+        upsert?: boolean;
+      };
+      output: {
+        /**
+         * The destination bucket ID.
+         * @minLength 1
+         */
+        bucketId: string;
+        /**
+         * The uploaded object path.
+         * @minLength 1
+         */
+        objectPath: string;
+        /**
+         * The uploaded object MIME type.
+         * @minLength 1
+         */
+        mimeType: string;
+        /**
+         * The number of uploaded bytes.
+         * @minimum 0
+         */
+        sizeBytes: number;
+        /** The uploaded object ETag, or null when unavailable. */
+        etag: string | null;
+      };
+    };
     /** Bulk create or update secrets for a Supabase project. */
     "supabase.upsert_project_secrets": {
       input: {

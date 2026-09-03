@@ -43,7 +43,7 @@ declare module "@oomol-lab/connector" {
         raw: Record<string, unknown>;
       };
     };
-    /** Discover current TikHub functional API endpoints from the official documentation catalog, excluding account APIs. */
+    /** Discover current TikHub functional API endpoints from the official OpenAPI catalog, excluding account APIs. */
     "tikhub.discover_endpoints": {
       input: {
         /**
@@ -62,7 +62,7 @@ declare module "@oomol-lab/connector" {
          */
         cursor?: string | null;
         /**
-         * The maximum number of endpoint documents to inspect in this page.
+         * The maximum number of OpenAPI operations to inspect in this page.
          * @minimum 1
          * @maximum 20
          * @default 10
@@ -70,19 +70,17 @@ declare module "@oomol-lab/connector" {
         limit?: number;
       };
       output: {
-        /** The SHA-256 digest of the current TikHub documentation index. */
+        /** The SHA-256 digest of the current TikHub OpenAPI catalog. */
         catalogVersion: string;
         /** The endpoints discovered in this page. */
         endpoints: Array<{
-          /** The TikHub documentation identifier for this endpoint. */
-          endpointId: string;
           /** The OpenAPI operation identifier reported by TikHub. */
           operationId: string;
-          /** The endpoint title from the TikHub documentation index. */
+          /** The endpoint title from the TikHub OpenAPI catalog. */
           title: string;
-          /** The TikHub API family from the documentation index. */
+          /** The TikHub API family from the OpenAPI catalog. */
           category: string;
-          /** The current endpoint description from TikHub documentation. */
+          /** The current endpoint description from the TikHub OpenAPI catalog. */
           description: string;
           /** The HTTP method accepted by this endpoint. */
           method: "GET" | "POST";
@@ -90,11 +88,6 @@ declare module "@oomol-lab/connector" {
           path: string;
           /** The TikHub token path scope required by this endpoint. */
           requiredScope: string;
-          /**
-           * The fixed-origin TikHub endpoint documentation URL.
-           * @format uri
-           */
-          documentationUrl: string;
           /** The SHA-256 digest of the normalized operation contract. */
           contractHash: string;
           /** The dynamic path, query, and JSON body request schema. */

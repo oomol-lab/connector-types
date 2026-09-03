@@ -2694,7 +2694,7 @@ declare module "@oomol-lab/connector" {
          * @default "doubao-seedance-2-0-260128"
          * @example "doubao-seedance-2-0-260128"
          */
-        model?: "doubao-seedance-2-0-260128" | "doubao-seedance-2-0-fast-260128";
+        model?: "doubao-seedance-2-0-260128" | "doubao-seedance-2-0-fast-260128" | "doubao-seedance-2-5-260628";
         /**
          * Video generation prompt
          * @minLength 1
@@ -2810,11 +2810,11 @@ declare module "@oomol-lab/connector" {
          */
         ratio?: "16:9" | "4:3" | "1:1" | "3:4" | "9:16" | "21:9" | "adaptive";
         /**
-         * Video duration in seconds. Use -1 to let the model choose automatically.
+         * Video duration in seconds. Supported values depend on the selected model; use -1 to let the model choose automatically. Unsupported values are rejected by the upstream API.
          * @default 5
          * @example 5
          */
-        duration?: -1 | number;
+        duration?: number;
         /**
          * Random seed
          * @minimum -1
