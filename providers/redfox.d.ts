@@ -2,11 +2,11 @@ import "@oomol-lab/connector";
 
 declare module "@oomol-lab/connector" {
   interface ActionRegistry {
-    /** Fetch a Douyin account detail payload through RedFoxHub. */
+    /** Get details about a Douyin account. */
     "redfox.get_douyin_user": {
       input: {
         /**
-         * Douyin account ID accepted by RedFoxHub.
+         * Douyin account ID.
          * @minLength 1
          */
         accountId: string;
@@ -20,16 +20,16 @@ declare module "@oomol-lab/connector" {
         data: unknown;
       };
     };
-    /** Fetch a Douyin work detail payload through RedFoxHub by work ID or work URL. */
+    /** Get a Douyin work by its ID or URL. */
     "redfox.get_douyin_work": {
       input: {
         /**
-         * Douyin work ID accepted by RedFoxHub.
+         * Douyin work ID.
          * @minLength 1
          */
         workId?: string;
         /**
-         * Douyin work URL accepted by RedFoxHub.
+         * Douyin work URL.
          * @minLength 1
          */
         workUrl?: string;
@@ -43,16 +43,16 @@ declare module "@oomol-lab/connector" {
         data: unknown;
       };
     };
-    /** Fetch a WeChat Official Account detail payload through RedFoxHub. */
+    /** Get details about a WeChat Official Account. */
     "redfox.get_wechat_account": {
       input: {
         /**
-         * WeChat Official Account ID accepted by RedFoxHub.
+         * WeChat Official Account ID.
          * @minLength 1
          */
         account: string;
         /**
-         * WeChat Official Account name accepted by RedFoxHub.
+         * WeChat Official Account name.
          * @minLength 1
          */
         accountName?: string;
@@ -66,11 +66,11 @@ declare module "@oomol-lab/connector" {
         data: unknown;
       };
     };
-    /** Fetch a WeChat Official Account article payload through RedFoxHub. */
+    /** Get a WeChat Official Account article by its UUID. */
     "redfox.get_wechat_article": {
       input: {
         /**
-         * WeChat article UUID accepted by RedFoxHub.
+         * WeChat article UUID.
          * @minLength 1
          */
         workUuid: string;
@@ -84,11 +84,11 @@ declare module "@oomol-lab/connector" {
         data: unknown;
       };
     };
-    /** Fetch WeChat Official Account article data through RedFoxHub by article URL. */
+    /** Get a WeChat Official Account article by its URL. */
     "redfox.get_wechat_article_by_url": {
       input: {
         /**
-         * WeChat article URL accepted by RedFoxHub.
+         * WeChat article URL.
          * @minLength 1
          */
         url: string;
@@ -102,16 +102,16 @@ declare module "@oomol-lab/connector" {
         data: unknown;
       };
     };
-    /** Fetch a Xiaohongshu account detail payload through RedFoxHub. */
+    /** Get details about a Xiaohongshu account. */
     "redfox.get_xiaohongshu_user": {
       input: {
         /**
-         * Xiaohongshu account display ID accepted by RedFoxHub.
+         * Xiaohongshu account display ID.
          * @minLength 1
          */
         accountId: string;
         /**
-         * Xiaohongshu account primary user ID accepted by RedFoxHub.
+         * Xiaohongshu account primary user ID.
          * @minLength 1
          */
         userId?: string;
@@ -125,16 +125,16 @@ declare module "@oomol-lab/connector" {
         data: unknown;
       };
     };
-    /** Fetch a Xiaohongshu work detail payload through RedFoxHub by work ID or link. */
+    /** Get a Xiaohongshu work by its ID or link. */
     "redfox.get_xiaohongshu_work": {
       input: {
         /**
-         * Xiaohongshu work ID accepted by RedFoxHub.
+         * Xiaohongshu work ID.
          * @minLength 1
          */
         workId?: string;
         /**
-         * Xiaohongshu work link accepted by RedFoxHub.
+         * Xiaohongshu work link.
          * @minLength 1
          */
         workLink?: string;
@@ -148,31 +148,31 @@ declare module "@oomol-lab/connector" {
         data: unknown;
       };
     };
-    /** List works published by a Douyin account through RedFoxHub. */
+    /** List works published by a Douyin account. */
     "redfox.list_douyin_user_works": {
       input: {
         /**
-         * Douyin account identifier accepted by RedFoxHub.
+         * Douyin account identifier.
          * @minLength 1
          */
         accountId?: string;
         /**
-         * Douyin author page URL accepted by RedFoxHub.
+         * Douyin author page URL.
          * @minLength 1
          */
         authorUrl?: string;
         /**
-         * Douyin sec_user_id accepted by RedFoxHub.
+         * Douyin sec_user_id.
          * @minLength 1
          */
         secUserId?: string;
         /**
-         * Zero-based pagination offset accepted by RedFoxHub.
+         * Zero-based pagination offset.
          * @minimum 0
          */
         offset?: number;
         /**
-         * Sort type accepted by RedFoxHub for this endpoint.
+         * Sort type for this endpoint.
          * @minLength 1
          */
         sortType?: string;
@@ -186,36 +186,36 @@ declare module "@oomol-lab/connector" {
         data: unknown;
       };
     };
-    /** List articles published by a WeChat Official Account through RedFoxHub. */
+    /** List articles published by a WeChat Official Account. */
     "redfox.list_wechat_account_articles": {
       input: {
         /**
-         * WeChat Official Account ID accepted by RedFoxHub.
+         * WeChat Official Account ID.
          * @minLength 1
          */
         account: string;
         /**
-         * WeChat Official Account name accepted by RedFoxHub.
+         * WeChat Official Account name.
          * @minLength 1
          */
         accountName?: string;
         /**
-         * Zero-based pagination offset accepted by RedFoxHub.
+         * Zero-based pagination offset.
          * @minimum 0
          */
         offset?: number;
         /**
-         * Sort type accepted by RedFoxHub for this endpoint.
+         * Sort type for this endpoint.
          * @minLength 1
          */
         sortType?: string;
         /**
-         * Earliest publish time accepted by RedFoxHub.
+         * Earliest publish time to include.
          * @minLength 1
          */
         publishTimeStart?: string;
         /**
-         * Latest publish time accepted by RedFoxHub.
+         * Latest publish time to include.
          * @minLength 1
          */
         publishTimeEnd?: string;
@@ -229,31 +229,31 @@ declare module "@oomol-lab/connector" {
         data: unknown;
       };
     };
-    /** Search Douyin AI creation data through RedFoxHub. */
+    /** Search Douyin works related to AI creation. */
     "redfox.search_douyin_ai_creations": {
       input: {
         /**
-         * Search keyword sent to RedFoxHub.
+         * Keyword to search for.
          * @minLength 1
          */
         keyword: string;
         /**
-         * One-based page number accepted by RedFoxHub.
+         * One-based page number.
          * @exclusiveMinimum 0
          */
         pageNum?: number;
         /**
-         * Page size accepted by RedFoxHub.
+         * Number of results per page.
          * @exclusiveMinimum 0
          */
         pageSize?: number;
         /**
-         * Time value accepted by RedFoxHub.
+         * Time value used to filter results.
          * @minLength 1
          */
         startTime?: string;
         /**
-         * Time value accepted by RedFoxHub.
+         * Time value used to filter results.
          * @minLength 1
          */
         endTime?: string;
@@ -267,21 +267,21 @@ declare module "@oomol-lab/connector" {
         data: unknown;
       };
     };
-    /** Search Douyin accounts through RedFoxHub and return the upstream result payload. */
+    /** Search Douyin accounts by keyword. */
     "redfox.search_douyin_users": {
       input: {
         /**
-         * Search keyword sent to RedFoxHub.
+         * Keyword to search for.
          * @minLength 1
          */
         keyword: string;
         /**
-         * Zero-based pagination offset accepted by RedFoxHub.
+         * Zero-based pagination offset.
          * @minimum 0
          */
         offset?: number;
         /**
-         * Sort type accepted by RedFoxHub for this endpoint.
+         * Sort type for this endpoint.
          * @minLength 1
          */
         sortType?: string;
@@ -295,21 +295,21 @@ declare module "@oomol-lab/connector" {
         data: unknown;
       };
     };
-    /** Search Douyin works through RedFoxHub and return the upstream result payload. */
+    /** Search Douyin works by keyword. */
     "redfox.search_douyin_works": {
       input: {
         /**
-         * Search keyword sent to RedFoxHub.
+         * Keyword to search for.
          * @minLength 1
          */
         keyword: string;
         /**
-         * Zero-based pagination offset accepted by RedFoxHub.
+         * Zero-based pagination offset.
          * @minimum 0
          */
         offset?: number;
         /**
-         * Sort type accepted by RedFoxHub for this endpoint.
+         * Sort type for this endpoint.
          * @minLength 1
          */
         sortType?: string;
@@ -323,11 +323,11 @@ declare module "@oomol-lab/connector" {
         data: unknown;
       };
     };
-    /** Search TikTok accounts through RedFoxHub. */
+    /** Search TikTok accounts by keyword. */
     "redfox.search_tiktok_users": {
       input: {
         /**
-         * Search keyword sent to RedFoxHub.
+         * Keyword to search for.
          * @minLength 1
          */
         keyword: string;
@@ -346,21 +346,21 @@ declare module "@oomol-lab/connector" {
         data: unknown;
       };
     };
-    /** Search WeChat Official Accounts through RedFoxHub and return the upstream payload. */
+    /** Search WeChat Official Accounts by keyword. */
     "redfox.search_wechat_accounts": {
       input: {
         /**
-         * Search keyword sent to RedFoxHub.
+         * Keyword to search for.
          * @minLength 1
          */
         keyword: string;
         /**
-         * Zero-based pagination offset accepted by RedFoxHub.
+         * Zero-based pagination offset.
          * @minimum 0
          */
         offset?: number;
         /**
-         * Sort type accepted by RedFoxHub for this endpoint.
+         * Sort type for this endpoint.
          * @minLength 1
          */
         sortType?: string;
@@ -374,31 +374,31 @@ declare module "@oomol-lab/connector" {
         data: unknown;
       };
     };
-    /** Search WeChat Official Account AI creation data through RedFoxHub. */
+    /** Search WeChat Official Account articles related to AI creation. */
     "redfox.search_wechat_ai_creations": {
       input: {
         /**
-         * Search keyword sent to RedFoxHub.
+         * Keyword to search for.
          * @minLength 1
          */
         keyword: string;
         /**
-         * One-based page number accepted by RedFoxHub.
+         * One-based page number.
          * @exclusiveMinimum 0
          */
         pageNum: number;
         /**
-         * Page size accepted by RedFoxHub.
+         * Number of results per page.
          * @exclusiveMinimum 0
          */
         pageSize: number;
         /**
-         * Time value accepted by RedFoxHub.
+         * Time value used to filter results.
          * @minLength 1
          */
         startTime?: string;
         /**
-         * Time value accepted by RedFoxHub.
+         * Time value used to filter results.
          * @minLength 1
          */
         endTime?: string;
@@ -412,21 +412,21 @@ declare module "@oomol-lab/connector" {
         data: unknown;
       };
     };
-    /** Search WeChat Official Account articles through RedFoxHub and return the upstream payload. */
+    /** Search WeChat Official Account articles by keyword. */
     "redfox.search_wechat_articles": {
       input: {
         /**
-         * Search keyword sent to RedFoxHub.
+         * Keyword to search for.
          * @minLength 1
          */
         keyword: string;
         /**
-         * Zero-based pagination offset accepted by RedFoxHub.
+         * Zero-based pagination offset.
          * @minimum 0
          */
         offset?: number;
         /**
-         * Sort type accepted by RedFoxHub for this endpoint.
+         * Sort type for this endpoint.
          * @minLength 1
          */
         sortType?: string;
@@ -440,36 +440,36 @@ declare module "@oomol-lab/connector" {
         data: unknown;
       };
     };
-    /** Search Xiaohongshu AI creation data through RedFoxHub. */
+    /** Search Xiaohongshu works related to AI creation. */
     "redfox.search_xiaohongshu_ai_creations": {
       input: {
         /**
-         * Search keyword sent to RedFoxHub.
+         * Keyword to search for.
          * @minLength 1
          */
         keyword: string;
         /**
-         * One-based page number accepted by RedFoxHub.
+         * One-based page number.
          * @exclusiveMinimum 0
          */
         pageNum?: number;
         /**
-         * Page size accepted by RedFoxHub.
+         * Number of results per page.
          * @exclusiveMinimum 0
          */
         pageSize?: number;
         /**
-         * Source filter accepted by RedFoxHub.
+         * Source to include in the results.
          * @minLength 1
          */
         source?: string;
         /**
-         * Time value accepted by RedFoxHub.
+         * Time value used to filter results.
          * @minLength 1
          */
         startTime: string;
         /**
-         * Time value accepted by RedFoxHub.
+         * Time value used to filter results.
          * @minLength 1
          */
         endTime: string;
@@ -483,21 +483,21 @@ declare module "@oomol-lab/connector" {
         data: unknown;
       };
     };
-    /** Search Xiaohongshu accounts through RedFoxHub and return the upstream result payload. */
+    /** Search Xiaohongshu accounts by keyword. */
     "redfox.search_xiaohongshu_users": {
       input: {
         /**
-         * Search keyword sent to RedFoxHub.
+         * Keyword to search for.
          * @minLength 1
          */
         keyword: string;
         /**
-         * Zero-based pagination offset accepted by RedFoxHub.
+         * Zero-based pagination offset.
          * @minimum 0
          */
         offset?: number;
         /**
-         * Sort type accepted by RedFoxHub for this endpoint.
+         * Sort type for this endpoint.
          * @minLength 1
          */
         sortType?: string;
@@ -511,31 +511,31 @@ declare module "@oomol-lab/connector" {
         data: unknown;
       };
     };
-    /** Search Xiaohongshu works in the RedFoxHub curated database and return matching works. */
+    /** Search Xiaohongshu works in the curated database. */
     "redfox.search_xiaohongshu_works": {
       input: {
         /**
-         * Search keyword sent to RedFoxHub.
+         * Keyword to search for.
          * @minLength 1
          */
         keyword: string;
         /**
-         * Publish time range accepted by RedFoxHub, such as 一周内 or 不限.
+         * Publish time range, such as 一周内 or 不限.
          * @minLength 1
          */
         noteTime?: string;
         /**
-         * Sort order accepted by RedFoxHub, such as 最多点赞 or 综合.
+         * Sort order, such as 最多点赞 or 综合.
          * @minLength 1
          */
         sort?: string;
         /**
-         * One-based page number accepted by RedFoxHub.
+         * One-based page number.
          * @exclusiveMinimum 0
          */
         page?: number;
         /**
-         * Xiaohongshu note type accepted by RedFoxHub, such as 不限.
+         * Xiaohongshu note type, such as 不限.
          * @minLength 1
          */
         noteType?: string;

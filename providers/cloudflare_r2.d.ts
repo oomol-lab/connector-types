@@ -319,6 +319,49 @@ declare module "@oomol-lab/connector" {
         cursor?: string;
       };
     };
+    /** Upload one R2 object from a public URL, plain text, or base64-encoded content. */
+    "cloudflare_r2.put_object": {
+      input: {
+        /**
+         * The R2 bucket name.
+         * @minLength 3
+         * @maxLength 64
+         */
+        bucketName: string;
+        /**
+         * The complete R2 object key. Slashes are preserved as key delimiters.
+         * @minLength 1
+         */
+        objectKey: string;
+        /**
+         * A public HTTP or HTTPS URL containing the object bytes.
+         * @format uri
+         */
+        sourceUrl?: string;
+        /** Plain UTF-8 text to upload as the object body. */
+        contentText?: string;
+        /**
+         * Base64-encoded object bytes.
+         * @minLength 1
+         */
+        contentBase64?: string;
+        /**
+         * The object Content-Type.
+         * @minLength 1
+         */
+        contentType?: string;
+        /** The jurisdiction where objects in the bucket are guaranteed to be stored. */
+        jurisdiction?: "default" | "eu" | "fedramp" | "us";
+      };
+      output: {
+        /** The destination bucket name. */
+        bucketName: string;
+        /** The uploaded object key. */
+        objectKey: string;
+        /** The uploaded object ETag, or null when unavailable. */
+        etag: string | null;
+      };
+    };
     /** Update mutable R2 bucket properties such as default storage class or jurisdiction. */
     "cloudflare_r2.update_bucket": {
       input: {

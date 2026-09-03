@@ -2,8 +2,8 @@ import "@oomol-lab/connector";
 
 declare module "@oomol-lab/connector" {
   interface ActionRegistry {
-    /** Cancel a queued Seedance task or delete a task according to Volcengine Ark task-state semantics. */
-    "volcengine_ark.delete_seedance_video_generation": {
+    /** Cancel a queued Seedance task or delete a task according to Seedance task-state semantics. */
+    "seedance.delete_video_generation": {
       input: {
         /**
          * The opaque Seedance task identifier returned by the selected connection.
@@ -17,12 +17,12 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         taskId: string;
-        /** Whether Volcengine Ark accepted the cancellation or deletion. */
+        /** Whether Seedance accepted the cancellation or deletion. */
         accepted: boolean;
       };
     };
     /** Retrieve a Seedance task state and its generated video when available. */
-    "volcengine_ark.get_seedance_video_generation": {
+    "seedance.get_video_generation": {
       input: {
         /**
          * The opaque Seedance task identifier returned by the selected connection.
@@ -134,7 +134,7 @@ declare module "@oomol-lab/connector" {
         updatedAt?: number;
         /** The task is failed. */
         state: "failed";
-        /** The terminal error reported by Volcengine Ark when the task did not succeed. */
+        /** The terminal error reported by Seedance when the task did not succeed. */
         error?: {
           /** The upstream error code when provided. */
           code?: string;
@@ -155,7 +155,7 @@ declare module "@oomol-lab/connector" {
         updatedAt?: number;
         /** The task is cancelled. */
         state: "cancelled";
-        /** The terminal error reported by Volcengine Ark when the task did not succeed. */
+        /** The terminal error reported by Seedance when the task did not succeed. */
         error?: {
           /** The upstream error code when provided. */
           code?: string;
@@ -176,7 +176,7 @@ declare module "@oomol-lab/connector" {
         updatedAt?: number;
         /** The task is expired. */
         state: "expired";
-        /** The terminal error reported by Volcengine Ark when the task did not succeed. */
+        /** The terminal error reported by Seedance when the task did not succeed. */
         error?: {
           /** The upstream error code when provided. */
           code?: string;
@@ -185,8 +185,8 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** List Seedance video generation tasks visible to the configured Volcengine Ark API key. */
-    "volcengine_ark.list_seedance_video_generations": {
+    /** List Seedance video generation tasks visible to the configured Seedance API key. */
+    "seedance.list_video_generations": {
       input: {
         /**
          * The result page number.
@@ -205,7 +205,7 @@ declare module "@oomol-lab/connector" {
         /** Filter by exact Seedance task identifiers. */
         taskIds?: Array<string>;
         /**
-         * Filter by an exact Volcengine Ark Endpoint ID.
+         * Filter by an exact Seedance Endpoint ID.
          * @minLength 1
          */
         model?: string;
@@ -318,7 +318,7 @@ declare module "@oomol-lab/connector" {
           updatedAt?: number;
           /** The task is failed. */
           state: "failed";
-          /** The terminal error reported by Volcengine Ark when the task did not succeed. */
+          /** The terminal error reported by Seedance when the task did not succeed. */
           error?: {
             /** The upstream error code when provided. */
             code?: string;
@@ -339,7 +339,7 @@ declare module "@oomol-lab/connector" {
           updatedAt?: number;
           /** The task is cancelled. */
           state: "cancelled";
-          /** The terminal error reported by Volcengine Ark when the task did not succeed. */
+          /** The terminal error reported by Seedance when the task did not succeed. */
           error?: {
             /** The upstream error code when provided. */
             code?: string;
@@ -360,7 +360,7 @@ declare module "@oomol-lab/connector" {
           updatedAt?: number;
           /** The task is expired. */
           state: "expired";
-          /** The terminal error reported by Volcengine Ark when the task did not succeed. */
+          /** The terminal error reported by Seedance when the task did not succeed. */
           error?: {
             /** The upstream error code when provided. */
             code?: string;
@@ -375,8 +375,8 @@ declare module "@oomol-lab/connector" {
         total: number;
       };
     };
-    /** Submit an asynchronous Seedance video generation task through Volcengine Ark. */
-    "volcengine_ark.submit_seedance_video_generation": {
+    /** Submit an asynchronous Seedance video generation task through Seedance. */
+    "seedance.submit_video_generation": {
       input: Record<string, unknown>;
       output: {
         /**
