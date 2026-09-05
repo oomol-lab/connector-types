@@ -31,6 +31,8 @@ declare module "@oomol-lab/connector" {
         sourcePath: string;
         /** The resulting absolute path, or null when Baidu omits it. */
         path: string | null;
+        /** The original successful MCP text response when it is not valid JSON, or null. */
+        rawResponse: string | null;
       };
     };
     /** Create one folder at an absolute path below the user's Baidu Netdisk root. */
@@ -309,6 +311,8 @@ declare module "@oomol-lab/connector" {
         sourcePath: string;
         /** The resulting absolute path, or null when Baidu omits it. */
         path: string | null;
+        /** The original successful MCP text response when it is not valid JSON, or null. */
+        rawResponse: string | null;
       };
     };
     /** Synchronously rename one Baidu Netdisk file or folder. */
@@ -335,6 +339,8 @@ declare module "@oomol-lab/connector" {
         sourcePath: string;
         /** The resulting absolute path, or null when Baidu omits it. */
         path: string | null;
+        /** The original successful MCP text response when it is not valid JSON, or null. */
+        rawResponse: string | null;
       };
     };
     /** Search files and folders below an absolute Baidu Netdisk directory. */
