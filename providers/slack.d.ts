@@ -638,6 +638,67 @@ declare module "@oomol-lab/connector" {
         postAt: number;
       };
     };
+    /** Search Slack messages with the granular Real-time Search API. */
+    "slack.search_context": {
+      input: {
+        /**
+         * The Slack search query.
+         * @minLength 1
+         */
+        query: string;
+        /**
+         * Channel types to search.
+         * @minItems 1
+         */
+        channelTypes?: Array<"public_channel" | "private_channel">;
+        /**
+         * The channel ID used to scope the search when applicable.
+         * @minLength 1
+         */
+        contextChannelId?: string;
+        /** The cursor for the next page. */
+        cursor?: string;
+        /**
+         * The number of results to return.
+         * @minimum 1
+         * @maximum 20
+         */
+        limit?: number;
+        /** How Slack should sort search results. */
+        sort?: "score" | "timestamp";
+        /** The sort direction for search results. */
+        sortDir?: "asc" | "desc";
+        /** Only return messages before this UNIX timestamp. */
+        before?: number;
+        /** Only return messages after this UNIX timestamp. */
+        after?: number;
+        /** Whether to include surrounding context messages. */
+        includeContextMessages?: boolean;
+        /** Whether to include messages posted by bots. */
+        includeBots?: boolean;
+        /** Whether to include message blocks in the results. */
+        includeMessageBlocks?: boolean;
+        /** Whether Slack should highlight matching terms. */
+        highlight?: boolean;
+        /**
+         * Search term clauses that every result must match.
+         * @minItems 1
+         */
+        termClauses?: Array<string>;
+        /** Slack search modifiers without free-text terms. */
+        modifiers?: string;
+        /** Whether to include archived channels in the search. */
+        includeArchivedChannels?: boolean;
+        /** Whether to use keyword search without semantic search. */
+        disableSemanticSearch?: boolean;
+      };
+      output: {
+        /** The matching Slack messages. */
+        messages: Array<Record<string, unknown>>;
+        /** The cursor for the next page. */
+        nextCursor: string | null;
+      };
+    };
     /** Search messages visible to the Slack user who authorized the connection. Slack search modifiers such as in:channel_name and from:<@UserID> are supported. */
     "slack.search_messages": {
       input: {

@@ -7968,7 +7968,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
-    /** List shipment and logistics information visible through OpenWeb. */
+    /** List one page of shipment records visible through Jushuitan OpenWeb, including shipment times, tracking numbers, and courier companies. The /open/logistic/query endpoint does not provide parcel tracking events or pickup status. Use a separate carrier tracking service to check pickup, delivery progress, or time since the last tracking event. */
     "jushuitan.list_shipments": {
       input: {
         /** The Jushuitan shop identifier. */
@@ -8023,7 +8023,7 @@ declare module "@oomol-lab/connector" {
             so_id: string;
             /** The as id value returned by the Jushuitan API. */
             as_id?: number;
-            /** The send date value returned by the Jushuitan API. */
+            /** The shipment time recorded in Jushuitan, not the carrier pickup time or the latest tracking event time. */
             send_date?: string;
             /** The freight value returned by the Jushuitan API. */
             freight?: number;
@@ -8031,11 +8031,11 @@ declare module "@oomol-lab/connector" {
             weight?: number;
             /** The shipping warehouse-company identifier; 0 denotes the main warehouse. */
             wms_co_id?: number;
-            /** The lc id value returned by the Jushuitan API. */
+            /** The courier company code in Jushuitan. */
             lc_id?: string;
-            /** The l id value returned by the Jushuitan API. */
+            /** The carrier tracking number. Its presence does not confirm carrier pickup. */
             l_id?: string;
-            /** The logistics company value returned by the Jushuitan API. */
+            /** The courier company name. */
             logistics_company?: string;
             /** The items value returned by the Jushuitan API. */
             items: Array<{

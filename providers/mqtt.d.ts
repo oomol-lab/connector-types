@@ -29,6 +29,16 @@ declare module "@oomol-lab/connector" {
          * @default false
          */
         retain?: boolean;
+        /**
+         * Alibaba Cloud device AccessKey ID. Provide it together with aliyunDeviceAccessKeySecret when the connection uses runtime device credentials.
+         * @minLength 1
+         */
+        aliyunDeviceAccessKeyId?: string;
+        /**
+         * Alibaba Cloud device AccessKey secret used to sign the Client ID.
+         * @minLength 1
+         */
+        aliyunDeviceAccessKeySecret?: string;
       };
       output: {
         /** The published topic. */
@@ -81,6 +91,16 @@ declare module "@oomol-lab/connector" {
          * @default "utf8"
          */
         payloadEncoding?: "utf8" | "base64";
+        /**
+         * Alibaba Cloud device AccessKey ID. Provide it together with aliyunDeviceAccessKeySecret when the connection uses runtime device credentials.
+         * @minLength 1
+         */
+        aliyunDeviceAccessKeyId?: string;
+        /**
+         * Alibaba Cloud device AccessKey secret used to sign the Client ID.
+         * @minLength 1
+         */
+        aliyunDeviceAccessKeySecret?: string;
       };
       output: {
         /**

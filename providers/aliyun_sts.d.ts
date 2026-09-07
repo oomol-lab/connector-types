@@ -28,22 +28,24 @@ declare module "@oomol-lab/connector" {
         policy?: string;
       };
       output: {
+        /** The credential mode expected by Alibaba Cloud CLI tools. */
+        mode: "StsToken";
         /** The temporary AccessKey ID. */
-        accessKeyId: string;
+        access_key_id: string;
         /** The temporary AccessKey secret. */
-        accessKeySecret: string;
+        access_key_secret: string;
         /** The STS security token used with the temporary AccessKey pair. */
-        securityToken: string;
+        sts_token: string;
         /** The ISO timestamp when the temporary credential expires. */
         expiration: string;
         /** The Alibaba Cloud STS request ID. */
-        requestId: string | null;
+        request_id: string | null;
         /** The assumed role user identity returned by Alibaba Cloud STS. */
-        assumedRoleUser: {
+        assumed_role_user: {
           /** The assumed role user ARN. */
           arn: string | null;
           /** The assumed role user ID. */
-          assumedRoleId: string | null;
+          assumed_role_id: string | null;
         } | null;
       };
     };
@@ -63,22 +65,24 @@ declare module "@oomol-lab/connector" {
         durationSeconds?: number;
       };
       output: {
+        /** The credential mode expected by Alibaba Cloud CLI tools. */
+        mode: "StsToken";
         /** The temporary AccessKey ID. */
-        accessKeyId: string;
+        access_key_id: string;
         /** The temporary AccessKey secret. */
-        accessKeySecret: string;
+        access_key_secret: string;
         /** The STS security token used with the temporary AccessKey pair. */
-        securityToken: string;
+        sts_token: string;
         /** The ISO timestamp when the temporary credential expires. */
         expiration: string;
         /** The Alibaba Cloud STS request ID. */
-        requestId: string | null;
+        request_id: string | null;
         /** The assumed role user identity returned by Alibaba Cloud STS. */
-        assumedRoleUser: {
+        assumed_role_user: {
           /** The assumed role user ARN. */
           arn: string | null;
           /** The assumed role user ID. */
-          assumedRoleId: string | null;
+          assumed_role_id: string | null;
         } | null;
       };
     };

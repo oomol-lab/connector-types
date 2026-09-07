@@ -7137,9 +7137,9 @@ declare module "@oomol-lab/connector" {
         /** Whether to return unread messages only. */
         onlyUnread?: boolean;
         /**
-         * The maximum number of results on this page.
-         * @maximum 50
-         * @exclusiveMinimum 0
+         * The maximum number of messages to return. Defaults to 20.
+         * @minimum 1
+         * @maximum 20
          */
         pageSize?: number;
         /**
@@ -7149,8 +7149,8 @@ declare module "@oomol-lab/connector" {
         pageToken?: string;
       };
       output: {
-        /** The mail objects returned on this page. */
-        items: Array<Record<string, unknown>>;
+        /** The message IDs returned on this page. */
+        items: Array<string>;
         /** Whether another page is available. */
         hasMore: boolean;
         /** The token for the next page. */
