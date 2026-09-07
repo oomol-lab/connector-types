@@ -179,6 +179,64 @@ declare module "@oomol-lab/connector" {
         voiceId: string;
       };
     };
+    /** Extract text and structured information from an image with Qwen3.5-OCR. */
+    "qwen.extract_text": {
+      input: {
+        /**
+         * A publicly accessible image URL.
+         * @format uri
+         */
+        fileUrl: string;
+        /**
+         * The OCR task to perform.
+         * @default "text_recognition"
+         */
+        task?: "text_recognition" | "advanced_recognition" | "key_information_extraction" | "table_parsing" | "document_parsing" | "formula_recognition" | "multi_lan";
+        /** Fields to extract for key_information_extraction, keyed by field name with descriptions or nested field definitions. */
+        resultSchema?: Record<string, unknown>;
+        /**
+         * Whether to automatically correct image rotation.
+         * @default false
+         */
+        enableRotate?: boolean;
+        /**
+         * The minimum number of image pixels used for model input.
+         * @minimum 1
+         */
+        minPixels?: number;
+        /**
+         * The maximum number of image pixels used for model input.
+         * @minimum 1
+         */
+        maxPixels?: number;
+      };
+      output: {
+        /** The extracted text or formatted OCR output. */
+        content: string;
+        /** Task-specific structured OCR details when returned by Qwen. */
+        details?: Record<string, unknown>;
+        /**
+         * The Qwen OCR model used for extraction.
+         * @minLength 1
+         */
+        model: string;
+        /**
+         * The number of input tokens billed by Qwen.
+         * @minimum 0
+         */
+        inputTokens: number;
+        /**
+         * The number of output tokens billed by Qwen.
+         * @minimum 0
+         */
+        outputTokens: number;
+        /**
+         * The number of image input tokens billed by Qwen.
+         * @minimum 0
+         */
+        imageTokens: number;
+      };
+    };
     /** Generate or edit images with the Qwen Image 3.0 family. */
     "qwen.generate_image": {
       input: {
@@ -744,6 +802,82 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         taskId: string;
+      };
+    };
+    /** Translate text with Qwen-MT and optional terminology, translation memory, and domain guidance. */
+    "qwen.translate_text": {
+      input: {
+        /**
+         * The Qwen-MT translation model.
+         * @default "qwen-mt-flash"
+         */
+        model?: "qwen-mt-flash" | "qwen-mt-plus";
+        /**
+         * The text to translate.
+         * @minLength 1
+         */
+        text: string;
+        /**
+         * The source language name or code, or auto for automatic detection.
+         * @minLength 1
+         * @default "auto"
+         */
+        sourceLanguage?: string;
+        /**
+         * The target language name or code.
+         * @minLength 1
+         */
+        targetLanguage: string;
+        /** Required translations for terms appearing in the source text. */
+        terms?: Array<{
+          /**
+           * The source term or sentence.
+           * @minLength 1
+           */
+          source: string;
+          /**
+           * The required or preferred translation.
+           * @minLength 1
+           */
+          target: string;
+        }>;
+        /** Previously translated sentence pairs whose style and phrasing should be followed. */
+        translationMemory?: Array<{
+          /**
+           * The source term or sentence.
+           * @minLength 1
+           */
+          source: string;
+          /**
+           * The required or preferred translation.
+           * @minLength 1
+           */
+          target: string;
+        }>;
+        /**
+         * English guidance describing the translation domain and preferred style.
+         * @minLength 1
+         */
+        domainPrompt?: string;
+      };
+      output: {
+        /** The translated text. */
+        text: string;
+        /**
+         * The Qwen-MT model reported by Qwen.
+         * @minLength 1
+         */
+        model: string;
+        /**
+         * The number of input tokens billed by Qwen.
+         * @minimum 0
+         */
+        inputTokens: number;
+        /**
+         * The number of output tokens billed by Qwen.
+         * @minimum 0
+         */
+        outputTokens: number;
       };
     };
   }
