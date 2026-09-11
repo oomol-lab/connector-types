@@ -492,9 +492,9 @@ declare module "@oomol-lab/connector" {
          * @maximum 1000
          */
         top?: number;
-        /** OData filter expression for the messages query. */
+        /** OData filter expression for the messages query. When combined with orderby, include every orderby property first, in the same order. Example: receivedDateTime ge 2026-01-01T00:00:00Z and isRead eq false. */
         filter?: string;
-        /** OData orderby expression for the messages query. */
+        /** OData orderby expression for the messages query. When combined with filter, every ordered property must appear first in the filter and in the same order. Example: receivedDateTime desc. */
         orderby?: string;
         /** Message fields to request from Microsoft Graph. */
         select?: Array<string>;

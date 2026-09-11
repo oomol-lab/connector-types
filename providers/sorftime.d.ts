@@ -44,6 +44,46 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
+    /** Find related Sorftime Walmart US keywords from a seed keyword. Consumes five Sorftime requests. */
+    "sorftime.extend_walmart_keywords": {
+      input: {
+        /**
+         * Walmart keyword to query.
+         * @minLength 1
+         */
+        keyword: string;
+        /**
+         * One-based result page number. Defaults to 1.
+         * @minimum 1
+         */
+        page_index?: number;
+        /**
+         * Number of Walmart keyword results per page. Defaults to 20.
+         * @minimum 20
+         * @maximum 200
+         */
+        page_size?: number;
+      };
+      output: {
+        /**
+         * Number of API requests remaining for the account.
+         * @minimum 0
+         */
+        RequestLeft: number;
+        /**
+         * Number of requests consumed by this call.
+         * @minimum 0
+         */
+        RequestConsumed: number;
+        /** Sorftime business status code. Zero indicates success. */
+        Code: 0;
+        /** Sorftime status message, or null when none is returned. */
+        Message: string | null;
+        /** Endpoint-specific structured data returned by Sorftime. */
+        Data: unknown;
+        [key: string]: unknown;
+      };
+    };
     /** Get up to two years of US Amazon rankings for an ASIN and keyword through Sorftime. Returns 200 records per page and consumes two Sorftime requests. */
     "sorftime.get_asin_keyword_rankings": {
       input: {
@@ -568,6 +608,206 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
+    /** Get Sorftime's Walmart US category report and Best Seller Top 80 products for a known node path. Consumes five Sorftime requests. */
+    "sorftime.get_walmart_category_report": {
+      input: {
+        /**
+         * Walmart category path made of numeric node IDs separated by underscores; obtain it from known product or category data.
+         * @minLength 1
+         */
+        node_path: string;
+      };
+      output: {
+        /**
+         * Number of API requests remaining for the account.
+         * @minimum 0
+         */
+        RequestLeft: number;
+        /**
+         * Number of requests consumed by this call.
+         * @minimum 0
+         */
+        RequestConsumed: number;
+        /** Sorftime business status code. Zero indicates success. */
+        Code: 0;
+        /** Sorftime status message, or null when none is returned. */
+        Message: string | null;
+        /** Endpoint-specific structured data returned by Sorftime. */
+        Data: unknown;
+        [key: string]: unknown;
+      };
+    };
+    /** Get Sorftime Walmart US keyword details such as search volume, competition, and first-page averages. Consumes one Sorftime request. */
+    "sorftime.get_walmart_keyword_details": {
+      input: {
+        /**
+         * Walmart keyword to query.
+         * @minLength 1
+         */
+        keyword: string;
+      };
+      output: {
+        /**
+         * Number of API requests remaining for the account.
+         * @minimum 0
+         */
+        RequestLeft: number;
+        /**
+         * Number of requests consumed by this call.
+         * @minimum 0
+         */
+        RequestConsumed: number;
+        /** Sorftime business status code. Zero indicates success. */
+        Code: 0;
+        /** Sorftime status message, or null when none is returned. */
+        Message: string | null;
+        /** Endpoint-specific structured data returned by Sorftime. */
+        Data: unknown;
+        [key: string]: unknown;
+      };
+    };
+    /** Get products appearing in the last 15 days of Walmart US results for a current Sorftime hot keyword. Consumes five Sorftime requests. */
+    "sorftime.get_walmart_keyword_search_results": {
+      input: {
+        /**
+         * Walmart keyword to query.
+         * @minLength 1
+         */
+        keyword: string;
+        /**
+         * One-based result page number. Defaults to 1.
+         * @minimum 1
+         */
+        page_index?: number;
+        /**
+         * Number of Walmart keyword results per page. Defaults to 20.
+         * @minimum 20
+         * @maximum 200
+         */
+        page_size?: number;
+      };
+      output: {
+        /**
+         * Number of API requests remaining for the account.
+         * @minimum 0
+         */
+        RequestLeft: number;
+        /**
+         * Number of requests consumed by this call.
+         * @minimum 0
+         */
+        RequestConsumed: number;
+        /** Sorftime business status code. Zero indicates success. */
+        Code: 0;
+        /** Sorftime status message, or null when none is returned. */
+        Message: string | null;
+        /** Endpoint-specific structured data returned by Sorftime. */
+        Data: unknown;
+        [key: string]: unknown;
+      };
+    };
+    /** Get current Sorftime Walmart US details for one product ID. Consumes one Sorftime request. */
+    "sorftime.get_walmart_product_details": {
+      input: {
+        /**
+         * Walmart product ID.
+         * @minLength 1
+         */
+        product_id: string;
+      };
+      output: {
+        /**
+         * Number of API requests remaining for the account.
+         * @minimum 0
+         */
+        RequestLeft: number;
+        /**
+         * Number of requests consumed by this call.
+         * @minimum 0
+         */
+        RequestConsumed: number;
+        /** Sorftime business status code. Zero indicates success. */
+        Code: 0;
+        /** Sorftime status message, or null when none is returned. */
+        Message: string | null;
+        /** Endpoint-specific structured data returned by Sorftime. */
+        Data: unknown;
+        [key: string]: unknown;
+      };
+    };
+    /** Get Sorftime Walmart US published variant sales history for one product ID. Defaults to the latest 30 days, returns up to 100 rows per page, and consumes one Sorftime request. */
+    "sorftime.get_walmart_product_sales_history": {
+      input: {
+        /**
+         * Walmart product ID.
+         * @minLength 1
+         */
+        product_id: string;
+        /**
+         * Sales history start date in YYYY-MM-DD format. Sorftime supports dates from 2023-09-01.
+         * @format date
+         */
+        query_start_date?: string;
+        /**
+         * Sales history end date in YYYY-MM-DD format. Requires query_start_date.
+         * @format date
+         */
+        query_end_date?: string;
+        /**
+         * One-based result page number. Defaults to 1.
+         * @minimum 1
+         */
+        page_index?: number;
+      };
+      output: {
+        /**
+         * Number of API requests remaining for the account.
+         * @minimum 0
+         */
+        RequestLeft: number;
+        /**
+         * Number of requests consumed by this call.
+         * @minimum 0
+         */
+        RequestConsumed: number;
+        /** Sorftime business status code. Zero indicates success. */
+        Code: 0;
+        /** Sorftime status message, or null when none is returned. */
+        Message: string | null;
+        /** Endpoint-specific structured data returned by Sorftime. */
+        Data: unknown;
+        [key: string]: unknown;
+      };
+    };
+    /** Get Sorftime Walmart US sales, price, review, rating, and category-rank trends for one product ID. Consumes two Sorftime requests. */
+    "sorftime.get_walmart_product_trend": {
+      input: {
+        /**
+         * Walmart product ID.
+         * @minLength 1
+         */
+        product_id: string;
+      };
+      output: {
+        /**
+         * Number of API requests remaining for the account.
+         * @minimum 0
+         */
+        RequestLeft: number;
+        /**
+         * Number of requests consumed by this call.
+         * @minimum 0
+         */
+        RequestConsumed: number;
+        /** Sorftime business status code. Zero indicates success. */
+        Code: 0;
+        /** Sorftime status message, or null when none is returned. */
+        Message: string | null;
+        /** Endpoint-specific structured data returned by Sorftime. */
+        Data: unknown;
+        [key: string]: unknown;
+      };
+    };
     /** List Sorftime Amazon products in a category ordered by monthly sales. Returns 100 products per page and consumes five Sorftime requests. */
     "sorftime.list_category_products": {
       input: {
@@ -773,6 +1013,46 @@ declare module "@oomol-lab/connector" {
         page_index?: number;
         /**
          * Number of keyword results per page. Defaults to 20.
+         * @minimum 20
+         * @maximum 200
+         */
+        page_size?: number;
+      };
+      output: {
+        /**
+         * Number of API requests remaining for the account.
+         * @minimum 0
+         */
+        RequestLeft: number;
+        /**
+         * Number of requests consumed by this call.
+         * @minimum 0
+         */
+        RequestConsumed: number;
+        /** Sorftime business status code. Zero indicates success. */
+        Code: 0;
+        /** Sorftime status message, or null when none is returned. */
+        Message: string | null;
+        /** Endpoint-specific structured data returned by Sorftime. */
+        Data: unknown;
+        [key: string]: unknown;
+      };
+    };
+    /** Find keywords that exposed a Walmart US product in the first three search-result pages during the last 30 days. Consumes one Sorftime request. */
+    "sorftime.reverse_lookup_walmart_product_keywords": {
+      input: {
+        /**
+         * Walmart product ID.
+         * @minLength 1
+         */
+        product_id: string;
+        /**
+         * One-based result page number. Defaults to 1.
+         * @minimum 1
+         */
+        page_index?: number;
+        /**
+         * Number of Walmart keyword results per page. Defaults to 20.
          * @minimum 20
          * @maximum 200
          */
@@ -1086,6 +1366,87 @@ declare module "@oomol-lab/connector" {
          * @minimum 1
          */
         page_index?: number;
+      };
+      output: {
+        /**
+         * Number of API requests remaining for the account.
+         * @minimum 0
+         */
+        RequestLeft: number;
+        /**
+         * Number of requests consumed by this call.
+         * @minimum 0
+         */
+        RequestConsumed: number;
+        /** Sorftime business status code. Zero indicates success. */
+        Code: 0;
+        /** Sorftime status message, or null when none is returned. */
+        Message: string | null;
+        /** Endpoint-specific structured data returned by Sorftime. */
+        Data: unknown;
+        [key: string]: unknown;
+      };
+    };
+    /** Search and filter Sorftime's current Walmart US hot-keyword database. Consumes five Sorftime requests. */
+    "sorftime.search_walmart_keywords": {
+      input: {
+        /**
+         * Keyword text to match.
+         * @minLength 1
+         */
+        keyword?: string;
+        /**
+         * Weekly search-rank range containing one lower bound or a lower and upper bound.
+         * @minItems 1
+         * @maxItems 2
+         */
+        rank_condition?: Array<string>;
+        /**
+         * Recent 30-day search-volume range containing one lower bound or a lower and upper bound.
+         * @minItems 1
+         * @maxItems 2
+         */
+        search_volume_condition?: Array<string>;
+        /**
+         * One-based result page number. Defaults to 1.
+         * @minimum 1
+         */
+        page_index?: number;
+        /**
+         * Number of Walmart keyword results per page. Defaults to 20.
+         * @minimum 20
+         * @maximum 200
+         */
+        page_size?: number;
+      };
+      output: {
+        /**
+         * Number of API requests remaining for the account.
+         * @minimum 0
+         */
+        RequestLeft: number;
+        /**
+         * Number of requests consumed by this call.
+         * @minimum 0
+         */
+        RequestConsumed: number;
+        /** Sorftime business status code. Zero indicates success. */
+        Code: 0;
+        /** Sorftime status message, or null when none is returned. */
+        Message: string | null;
+        /** Endpoint-specific structured data returned by Sorftime. */
+        Data: unknown;
+        [key: string]: unknown;
+      };
+    };
+    /** Search Sorftime Walmart US hot keywords from a natural-language name. Consumes one Sorftime request. */
+    "sorftime.search_walmart_keywords_by_name": {
+      input: {
+        /**
+         * Keyword name or phrase to search for.
+         * @minLength 1
+         */
+        name: string;
       };
       output: {
         /**

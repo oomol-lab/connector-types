@@ -25,11 +25,8 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         tags: string;
-        /**
-         * The callback URL used to receive completed results.
-         * @format uri
-         */
-        callBackUrl: string;
+        /** The callback URL, or an empty string to use the Fusion-managed callback with Marketplace. */
+        callBackUrl: string | "";
         /** The desired vocal gender. */
         vocalGender?: "m" | "f";
         /**
@@ -54,14 +51,19 @@ declare module "@oomol-lab/connector" {
          * The add instrumental model.
          * @default "V4_5PLUS"
          */
-        model: "V4_5PLUS" | "V5" | "V5_5";
+        model?: "V4_5PLUS" | "V5" | "V5_5";
       };
       output: {
         /**
-         * The SunoAPI task identifier.
+         * The opaque task identifier returned by this connection. Use the same connection to query it; Marketplace task identifiers differ from upstream callback identifiers.
          * @minLength 1
          */
         taskId: string;
+        /**
+         * The upstream task identifier included in SunoAPI callbacks; use taskId for Marketplace queries.
+         * @minLength 1
+         */
+        callbackTaskId?: string;
       };
     };
     /** Submit a SunoAPI add vocals task and return the task identifier. */
@@ -72,11 +74,8 @@ declare module "@oomol-lab/connector" {
          * @format uri
          */
         uploadUrl: string;
-        /**
-         * The callback URL used to receive completed results.
-         * @format uri
-         */
-        callBackUrl: string;
+        /** The callback URL, or an empty string to use the Fusion-managed callback with Marketplace. */
+        callBackUrl: string | "";
         /**
          * The vocal prompt.
          * @minLength 1
@@ -121,14 +120,19 @@ declare module "@oomol-lab/connector" {
          * The add vocals model.
          * @default "V4_5PLUS"
          */
-        model: "V4_5PLUS" | "V5" | "V5_5";
+        model?: "V4_5PLUS" | "V5" | "V5_5";
       };
       output: {
         /**
-         * The SunoAPI task identifier.
+         * The opaque task identifier returned by this connection. Use the same connection to query it; Marketplace task identifiers differ from upstream callback identifiers.
          * @minLength 1
          */
         taskId: string;
+        /**
+         * The upstream task identifier included in SunoAPI callbacks; use taskId for Marketplace queries.
+         * @minLength 1
+         */
+        callbackTaskId?: string;
       };
     };
     /** Boost a SunoAPI style prompt and return the generated style text. */
@@ -142,7 +146,7 @@ declare module "@oomol-lab/connector" {
       };
       output: {
         /**
-         * The SunoAPI task identifier.
+         * The opaque task identifier returned by this connection. Use the same connection to query it; Marketplace task identifiers differ from upstream callback identifiers.
          * @minLength 1
          */
         taskId?: string;
@@ -169,7 +173,7 @@ declare module "@oomol-lab/connector" {
     "sunoapi.convert_to_wav_format": {
       input: {
         /**
-         * The SunoAPI task identifier.
+         * The opaque task identifier returned by this connection. Use the same connection to query it; Marketplace task identifiers differ from upstream callback identifiers.
          * @minLength 1
          */
         taskId: string;
@@ -186,7 +190,7 @@ declare module "@oomol-lab/connector" {
       };
       output: {
         /**
-         * The SunoAPI task identifier.
+         * The opaque task identifier returned by this connection. Use the same connection to query it; Marketplace task identifiers differ from upstream callback identifiers.
          * @minLength 1
          */
         taskId: string;
@@ -196,7 +200,7 @@ declare module "@oomol-lab/connector" {
     "sunoapi.create_music_video": {
       input: {
         /**
-         * The SunoAPI task identifier.
+         * The opaque task identifier returned by this connection. Use the same connection to query it; Marketplace task identifiers differ from upstream callback identifiers.
          * @minLength 1
          */
         taskId: string;
@@ -217,7 +221,7 @@ declare module "@oomol-lab/connector" {
       };
       output: {
         /**
-         * The SunoAPI task identifier.
+         * The opaque task identifier returned by this connection. Use the same connection to query it; Marketplace task identifiers differ from upstream callback identifiers.
          * @minLength 1
          */
         taskId: string;
@@ -283,7 +287,7 @@ declare module "@oomol-lab/connector" {
       };
       output: {
         /**
-         * The SunoAPI task identifier.
+         * The opaque task identifier returned by this connection. Use the same connection to query it; Marketplace task identifiers differ from upstream callback identifiers.
          * @minLength 1
          */
         taskId: string;
@@ -298,18 +302,20 @@ declare module "@oomol-lab/connector" {
          * @maxLength 200
          */
         prompt: string;
-        /**
-         * The callback URL used to receive completed results.
-         * @format uri
-         */
-        callBackUrl: string;
+        /** The callback URL, or an empty string to use the Fusion-managed callback with Marketplace. */
+        callBackUrl: string | "";
       };
       output: {
         /**
-         * The SunoAPI task identifier.
+         * The opaque task identifier returned by this connection. Use the same connection to query it; Marketplace task identifiers differ from upstream callback identifiers.
          * @minLength 1
          */
         taskId: string;
+        /**
+         * The upstream task identifier included in SunoAPI callbacks; use taskId for Marketplace queries.
+         * @minLength 1
+         */
+        callbackTaskId?: string;
       };
     };
     /** Submit a SunoAPI mashup task and return the task identifier. */
@@ -361,7 +367,7 @@ declare module "@oomol-lab/connector" {
       };
       output: {
         /**
-         * The SunoAPI task identifier.
+         * The opaque task identifier returned by this connection. Use the same connection to query it; Marketplace task identifiers differ from upstream callback identifiers.
          * @minLength 1
          */
         taskId: string;
@@ -371,7 +377,7 @@ declare module "@oomol-lab/connector" {
     "sunoapi.generate_midi": {
       input: {
         /**
-         * The SunoAPI task identifier.
+         * The opaque task identifier returned by this connection. Use the same connection to query it; Marketplace task identifiers differ from upstream callback identifiers.
          * @minLength 1
          */
         taskId: string;
@@ -388,7 +394,7 @@ declare module "@oomol-lab/connector" {
       };
       output: {
         /**
-         * The SunoAPI task identifier.
+         * The opaque task identifier returned by this connection. Use the same connection to query it; Marketplace task identifiers differ from upstream callback identifiers.
          * @minLength 1
          */
         taskId: string;
@@ -429,6 +435,12 @@ declare module "@oomol-lab/connector" {
         /** The SunoAPI music generation model. */
         model: "V4" | "V4_5" | "V4_5PLUS" | "V4_5ALL" | "V5" | "V5_5";
         /**
+         * Audio duration in seconds. Only supported with V5_5 in custom mode.
+         * @minimum 10
+         * @maximum 360
+         */
+        duration?: number;
+        /**
          * Music styles or traits to avoid.
          * @minLength 1
          */
@@ -453,25 +465,27 @@ declare module "@oomol-lab/connector" {
          * @maximum 1
          */
         audioWeight?: number;
-        /**
-         * The callback URL used to receive completed results.
-         * @format uri
-         */
-        callBackUrl: string;
+        /** The callback URL, or an empty string to use the Fusion-managed callback with Marketplace. */
+        callBackUrl: string | "";
       };
       output: {
         /**
-         * The SunoAPI task identifier.
+         * The opaque task identifier returned by this connection. Use the same connection to query it; Marketplace task identifiers differ from upstream callback identifiers.
          * @minLength 1
          */
         taskId: string;
+        /**
+         * The upstream task identifier included in SunoAPI callbacks; use taskId for Marketplace queries.
+         * @minLength 1
+         */
+        callbackTaskId?: string;
       };
     };
     /** Submit a SunoAPI music cover task and return the task identifier. */
     "sunoapi.generate_music_cover": {
       input: {
         /**
-         * The SunoAPI task identifier.
+         * The opaque task identifier returned by this connection. Use the same connection to query it; Marketplace task identifiers differ from upstream callback identifiers.
          * @minLength 1
          */
         taskId: string;
@@ -483,7 +497,7 @@ declare module "@oomol-lab/connector" {
       };
       output: {
         /**
-         * The SunoAPI task identifier.
+         * The opaque task identifier returned by this connection. Use the same connection to query it; Marketplace task identifiers differ from upstream callback identifiers.
          * @minLength 1
          */
         taskId: string;
@@ -493,7 +507,7 @@ declare module "@oomol-lab/connector" {
     "sunoapi.generate_persona": {
       input: {
         /**
-         * The SunoAPI task identifier.
+         * The opaque task identifier returned by this connection. Use the same connection to query it; Marketplace task identifiers differ from upstream callback identifiers.
          * @minLength 1
          */
         taskId: string;
@@ -542,47 +556,54 @@ declare module "@oomol-lab/connector" {
         model: "V5";
         /** Whether to enable loop playback. */
         soundLoop?: boolean;
-        /** The sound tempo in BPM. */
-        soundTempo?: number;
+        /** Sound tempo in BPM; omit or use null for automatic tempo. */
+        soundTempo?: number | null;
         /** The pitch key of the generated sound. */
         soundKey?: "Any" | "Cm" | "C#m" | "Dm" | "D#m" | "Em" | "Fm" | "F#m" | "Gm" | "G#m" | "Am" | "A#m" | "Bm" | "C" | "C#" | "D" | "D#" | "E" | "F" | "F#" | "G" | "G#" | "A" | "A#" | "B";
         /** Whether to fetch lyric subtitle data. */
         grabLyrics?: boolean;
-        /**
-         * The callback URL used to receive completed results.
-         * @format uri
-         */
-        callBackUrl: string;
+        /** The callback URL, or an empty string to use the Fusion-managed callback with Marketplace. */
+        callBackUrl?: string | "";
       };
       output: {
         /**
-         * The SunoAPI task identifier.
+         * The opaque task identifier returned by this connection. Use the same connection to query it; Marketplace task identifiers differ from upstream callback identifiers.
          * @minLength 1
          */
         taskId: string;
+        /**
+         * The upstream task identifier included in SunoAPI callbacks; use taskId for Marketplace queries.
+         * @minLength 1
+         */
+        callbackTaskId?: string;
       };
     };
     /** Fetch SunoAPI lyrics generation details for a task. */
     "sunoapi.get_lyrics_generation_details": {
       input: {
         /**
-         * The SunoAPI task identifier.
+         * The opaque task identifier returned by this connection. Use the same connection to query it; Marketplace task identifiers differ from upstream callback identifiers.
          * @minLength 1
          */
         taskId: string;
       };
       output: {
         /**
-         * The SunoAPI task identifier.
+         * The opaque task identifier returned by this connection. Use the same connection to query it; Marketplace task identifiers differ from upstream callback identifiers.
          * @minLength 1
          */
         taskId: string;
+        /**
+         * The upstream task identifier included in SunoAPI callbacks; use taskId for Marketplace queries.
+         * @minLength 1
+         */
+        callbackTaskId?: string;
         /** A string returned by SunoAPI, or null when unavailable. */
         param?: string | null;
         /** The nested SunoAPI lyrics generation result. */
         response?: {
           /**
-           * The SunoAPI task identifier.
+           * The opaque task identifier returned by this connection. Use the same connection to query it; Marketplace task identifiers differ from upstream callback identifiers.
            * @minLength 1
            */
           taskId?: string;
@@ -615,14 +636,14 @@ declare module "@oomol-lab/connector" {
     "sunoapi.get_midi_generation_details": {
       input: {
         /**
-         * The SunoAPI task identifier.
+         * The opaque task identifier returned by this connection. Use the same connection to query it; Marketplace task identifiers differ from upstream callback identifiers.
          * @minLength 1
          */
         taskId: string;
       };
       output: {
         /**
-         * The SunoAPI task identifier.
+         * The opaque task identifier returned by this connection. Use the same connection to query it; Marketplace task identifiers differ from upstream callback identifiers.
          * @minLength 1
          */
         taskId: string;
@@ -673,14 +694,14 @@ declare module "@oomol-lab/connector" {
     "sunoapi.get_music_cover_details": {
       input: {
         /**
-         * The SunoAPI task identifier.
+         * The opaque task identifier returned by this connection. Use the same connection to query it; Marketplace task identifiers differ from upstream callback identifiers.
          * @minLength 1
          */
         taskId: string;
       };
       output: {
         /**
-         * The SunoAPI task identifier.
+         * The opaque task identifier returned by this connection. Use the same connection to query it; Marketplace task identifiers differ from upstream callback identifiers.
          * @minLength 1
          */
         taskId: string;
@@ -711,17 +732,22 @@ declare module "@oomol-lab/connector" {
     "sunoapi.get_music_generation_details": {
       input: {
         /**
-         * The SunoAPI task identifier.
+         * The opaque task identifier returned by this connection. Use the same connection to query it; Marketplace task identifiers differ from upstream callback identifiers.
          * @minLength 1
          */
         taskId: string;
       };
       output: {
         /**
-         * The SunoAPI task identifier.
+         * The opaque task identifier returned by this connection. Use the same connection to query it; Marketplace task identifiers differ from upstream callback identifiers.
          * @minLength 1
          */
         taskId: string;
+        /**
+         * The upstream task identifier included in SunoAPI callbacks; use taskId for Marketplace queries.
+         * @minLength 1
+         */
+        callbackTaskId?: string;
         /** A string returned by SunoAPI, or null when unavailable. */
         parentMusicId?: string | null;
         /** A string returned by SunoAPI, or null when unavailable. */
@@ -729,7 +755,7 @@ declare module "@oomol-lab/connector" {
         /** The nested SunoAPI music generation result. */
         response?: {
           /**
-           * The SunoAPI task identifier.
+           * The opaque task identifier returned by this connection. Use the same connection to query it; Marketplace task identifiers differ from upstream callback identifiers.
            * @minLength 1
            */
           taskId?: string;
@@ -785,14 +811,14 @@ declare module "@oomol-lab/connector" {
     "sunoapi.get_music_video_details": {
       input: {
         /**
-         * The SunoAPI task identifier.
+         * The opaque task identifier returned by this connection. Use the same connection to query it; Marketplace task identifiers differ from upstream callback identifiers.
          * @minLength 1
          */
         taskId: string;
       };
       output: {
         /**
-         * The SunoAPI task identifier.
+         * The opaque task identifier returned by this connection. Use the same connection to query it; Marketplace task identifiers differ from upstream callback identifiers.
          * @minLength 1
          */
         taskId: string;
@@ -825,7 +851,7 @@ declare module "@oomol-lab/connector" {
     "sunoapi.get_remaining_credits": {
       input: Record<string, never>;
       output: {
-        /** The current available SunoAPI credits. */
+        /** The current available SunoAPI credits, including fractional credits. */
         credits: number;
       };
     };
@@ -833,7 +859,7 @@ declare module "@oomol-lab/connector" {
     "sunoapi.get_timestamped_lyrics": {
       input: {
         /**
-         * The SunoAPI task identifier.
+         * The opaque task identifier returned by this connection. Use the same connection to query it; Marketplace task identifiers differ from upstream callback identifiers.
          * @minLength 1
          */
         taskId: string;
@@ -871,14 +897,14 @@ declare module "@oomol-lab/connector" {
     "sunoapi.get_vocal_separation_details": {
       input: {
         /**
-         * The SunoAPI task identifier.
+         * The opaque task identifier returned by this connection. Use the same connection to query it; Marketplace task identifiers differ from upstream callback identifiers.
          * @minLength 1
          */
         taskId: string;
       };
       output: {
         /**
-         * The SunoAPI task identifier.
+         * The opaque task identifier returned by this connection. Use the same connection to query it; Marketplace task identifiers differ from upstream callback identifiers.
          * @minLength 1
          */
         taskId: string;
@@ -957,14 +983,14 @@ declare module "@oomol-lab/connector" {
     "sunoapi.get_wav_conversion_details": {
       input: {
         /**
-         * The SunoAPI task identifier.
+         * The opaque task identifier returned by this connection. Use the same connection to query it; Marketplace task identifiers differ from upstream callback identifiers.
          * @minLength 1
          */
         taskId: string;
       };
       output: {
         /**
-         * The SunoAPI task identifier.
+         * The opaque task identifier returned by this connection. Use the same connection to query it; Marketplace task identifiers differ from upstream callback identifiers.
          * @minLength 1
          */
         taskId: string;
@@ -997,7 +1023,7 @@ declare module "@oomol-lab/connector" {
     "sunoapi.replace_music_section": {
       input: {
         /**
-         * The SunoAPI task identifier.
+         * The opaque task identifier returned by this connection. Use the same connection to query it; Marketplace task identifiers differ from upstream callback identifiers.
          * @minLength 1
          */
         taskId: string;
@@ -1035,7 +1061,7 @@ declare module "@oomol-lab/connector" {
       };
       output: {
         /**
-         * The SunoAPI task identifier.
+         * The opaque task identifier returned by this connection. Use the same connection to query it; Marketplace task identifiers differ from upstream callback identifiers.
          * @minLength 1
          */
         taskId: string;
@@ -1045,7 +1071,7 @@ declare module "@oomol-lab/connector" {
     "sunoapi.separate_vocals_from_music": {
       input: {
         /**
-         * The SunoAPI task identifier.
+         * The opaque task identifier returned by this connection. Use the same connection to query it; Marketplace task identifiers differ from upstream callback identifiers.
          * @minLength 1
          */
         taskId: string;
@@ -1067,7 +1093,7 @@ declare module "@oomol-lab/connector" {
       };
       output: {
         /**
-         * The SunoAPI task identifier.
+         * The opaque task identifier returned by this connection. Use the same connection to query it; Marketplace task identifiers differ from upstream callback identifiers.
          * @minLength 1
          */
         taskId: string;
@@ -1085,27 +1111,45 @@ declare module "@oomol-lab/connector" {
         customMode: boolean;
         /** Whether the output should be instrumental. */
         instrumental: boolean;
-        /**
-         * The callback URL used to receive completed results.
-         * @format uri
-         */
-        callBackUrl: string;
+        /** The callback URL, or an empty string to use the Fusion-managed callback with Marketplace. */
+        callBackUrl: string | "";
         /** The SunoAPI music generation model. */
         model: "V4" | "V4_5" | "V4_5PLUS" | "V4_5ALL" | "V5" | "V5_5";
-        /** The generation prompt. */
+        /**
+         * Audio duration in seconds. Only supported with V5_5 in custom mode.
+         * @minimum 10
+         * @maximum 360
+         */
+        duration?: number;
+        /**
+         * The generation prompt.
+         * @minLength 1
+         */
         prompt?: string;
-        /** The music style. */
+        /**
+         * The music style.
+         * @minLength 1
+         */
         style?: string;
-        /** The music title. */
+        /**
+         * The music title.
+         * @minLength 1
+         */
         title?: string;
-        /** The persona identifier. */
+        /**
+         * The persona identifier.
+         * @minLength 1
+         */
         personaId?: string;
         /**
          * The SunoAPI persona model.
          * @default "style_persona"
          */
         personaModel?: "style_persona" | "voice_persona";
-        /** Music styles or traits to avoid. */
+        /**
+         * Music styles or traits to avoid.
+         * @minLength 1
+         */
         negativeTags?: string;
         /** The desired vocal gender. */
         vocalGender?: "m" | "f";
@@ -1130,10 +1174,15 @@ declare module "@oomol-lab/connector" {
       };
       output: {
         /**
-         * The SunoAPI task identifier.
+         * The opaque task identifier returned by this connection. Use the same connection to query it; Marketplace task identifiers differ from upstream callback identifiers.
          * @minLength 1
          */
         taskId: string;
+        /**
+         * The upstream task identifier included in SunoAPI callbacks; use taskId for Marketplace queries.
+         * @minLength 1
+         */
+        callbackTaskId?: string;
       };
     };
     /** Submit a SunoAPI upload and extend task and return the task identifier. */
@@ -1144,31 +1193,48 @@ declare module "@oomol-lab/connector" {
          * @format uri
          */
         uploadUrl: string;
+        /**
+         * The extension start point in seconds. Required when defaultParamFlag is true.
+         * @exclusiveMinimum 0
+         */
+        continueAt?: number;
         /** Whether to use custom parameters. */
         defaultParamFlag: boolean;
-        /**
-         * The callback URL used to receive completed results.
-         * @format uri
-         */
-        callBackUrl: string;
+        /** The callback URL, or an empty string to use the Fusion-managed callback with Marketplace. */
+        callBackUrl: string | "";
         /** The SunoAPI music generation model. */
         model: "V4" | "V4_5" | "V4_5PLUS" | "V4_5ALL" | "V5" | "V5_5";
         /** Whether the output should be instrumental. */
         instrumental?: boolean;
-        /** The extension prompt. */
+        /**
+         * The extension prompt.
+         * @minLength 1
+         */
         prompt?: string;
-        /** The music style. */
+        /**
+         * The music style.
+         * @minLength 1
+         */
         style?: string;
-        /** The music title. */
+        /**
+         * The music title.
+         * @minLength 1
+         */
         title?: string;
-        /** The persona identifier. */
+        /**
+         * The persona identifier.
+         * @minLength 1
+         */
         personaId?: string;
         /**
          * The SunoAPI persona model.
          * @default "style_persona"
          */
         personaModel?: "style_persona" | "voice_persona";
-        /** Music styles or traits to avoid. */
+        /**
+         * Music styles or traits to avoid.
+         * @minLength 1
+         */
         negativeTags?: string;
         /** The desired vocal gender. */
         vocalGender?: "m" | "f";
@@ -1193,10 +1259,15 @@ declare module "@oomol-lab/connector" {
       };
       output: {
         /**
-         * The SunoAPI task identifier.
+         * The opaque task identifier returned by this connection. Use the same connection to query it; Marketplace task identifiers differ from upstream callback identifiers.
          * @minLength 1
          */
         taskId: string;
+        /**
+         * The upstream task identifier included in SunoAPI callbacks; use taskId for Marketplace queries.
+         * @minLength 1
+         */
+        callbackTaskId?: string;
       };
     };
   }

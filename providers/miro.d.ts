@@ -82,6 +82,174 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
+    /** Create a connector between two items on a Miro board. */
+    "miro.create_connector": {
+      input: {
+        /**
+         * Unique identifier of the Miro board.
+         * @minLength 1
+         */
+        boardId: string;
+        /** A Miro item attached to one end of the connector. */
+        startItem: {
+          /**
+           * Unique identifier of the Miro board item.
+           * @minLength 1
+           */
+          id: string;
+          /** Relative attachment position on the item. */
+          position?: {
+            /** Horizontal relative offset. */
+            x?: number;
+            /** Vertical relative offset. */
+            y?: number;
+          };
+          /** Side of the item where the connector snaps. */
+          snapTo?: "auto" | "top" | "right" | "bottom" | "left";
+        };
+        /** A Miro item attached to one end of the connector. */
+        endItem: {
+          /**
+           * Unique identifier of the Miro board item.
+           * @minLength 1
+           */
+          id: string;
+          /** Relative attachment position on the item. */
+          position?: {
+            /** Horizontal relative offset. */
+            x?: number;
+            /** Vertical relative offset. */
+            y?: number;
+          };
+          /** Side of the item where the connector snaps. */
+          snapTo?: "auto" | "top" | "right" | "bottom" | "left";
+        };
+        /** Connector line shape. */
+        shape?: "straight" | "elbowed" | "curved";
+        /** Captions displayed on the connector. */
+        captions?: Array<{
+          /**
+           * Caption text.
+           * @minLength 1
+           */
+          content: string;
+          /** Caption position along the connector, expressed as a percentage. */
+          position?: string;
+          /** Vertical alignment of the caption text. */
+          textAlignVertical?: "top" | "middle" | "bottom";
+        }>;
+        /** Additional provider fields returned by Miro. */
+        style?: Record<string, unknown>;
+      };
+      output: {
+        /** Additional provider fields returned by Miro. */
+        connector: Record<string, unknown>;
+      };
+    };
+    /** Create a shape on a Miro board. */
+    "miro.create_shape": {
+      input: {
+        /**
+         * Unique identifier of the Miro board.
+         * @minLength 1
+         */
+        boardId: string;
+        /** Miro shape data. */
+        data?: {
+          /**
+           * Text or supported HTML displayed inside the shape.
+           * @maxLength 6000
+           */
+          content?: string;
+          /**
+           * Miro shape type, such as rectangle, circle, or triangle.
+           * @minLength 1
+           */
+          shape?: string;
+          [key: string]: unknown;
+        };
+        /** Provider-native Miro item style fields. */
+        style?: {
+          /** Text color. */
+          color?: string;
+          /** Item fill color. */
+          fillColor?: string;
+          /**
+           * Fill opacity from 0 to 1.
+           * @minimum 0
+           * @maximum 1
+           */
+          fillOpacity?: number;
+          /** Font family used by a text item. */
+          fontFamily?: string;
+          /**
+           * Font size used by a text item.
+           * @exclusiveMinimum 0
+           */
+          fontSize?: number;
+          /** Horizontal text alignment. */
+          textAlign?: "left" | "center" | "right";
+          /** Vertical text alignment. */
+          textAlignVertical?: "top" | "middle" | "bottom";
+          [key: string]: unknown;
+        };
+        /** Position of the item on the board. */
+        position?: {
+          /** Horizontal coordinate relative to the origin. */
+          x?: number;
+          /** Vertical coordinate relative to the origin. */
+          y?: number;
+          /** Coordinate origin used by Miro. */
+          origin?: "center";
+          [key: string]: unknown;
+        };
+        /** Geometry of the Miro sticky note. */
+        geometry?: {
+          /**
+           * Item width.
+           * @exclusiveMinimum 0
+           */
+          width?: number;
+          /**
+           * Item height.
+           * @exclusiveMinimum 0
+           */
+          height?: number;
+          /** Clockwise item rotation in degrees. */
+          rotation?: number;
+          [key: string]: unknown;
+        };
+        /** Optional parent frame for the item. */
+        parent?: {
+          /**
+           * Identifier of the parent frame.
+           * @minLength 1
+           */
+          id?: string;
+          [key: string]: unknown;
+        };
+      };
+      output: {
+        /** A Miro board item. */
+        item: {
+          /** Miro item identifier. */
+          id?: string;
+          /** Miro item type. */
+          type?: string;
+          /** Additional provider fields returned by Miro. */
+          data?: Record<string, unknown>;
+          /** Additional provider fields returned by Miro. */
+          style?: Record<string, unknown>;
+          /** Additional provider fields returned by Miro. */
+          position?: Record<string, unknown>;
+          /** Additional provider fields returned by Miro. */
+          geometry?: Record<string, unknown>;
+          /** Additional provider fields returned by Miro. */
+          parent?: Record<string, unknown> | null;
+          [key: string]: unknown;
+        };
+      };
+    };
     /** Create a sticky note on a Miro board. */
     "miro.create_sticky_note": {
       input: {
@@ -276,6 +444,64 @@ declare module "@oomol-lab/connector" {
           parent?: Record<string, unknown> | null;
           [key: string]: unknown;
         };
+      };
+    };
+    /** Delete a connector from a Miro board. */
+    "miro.delete_connector": {
+      input: {
+        /**
+         * Unique identifier of the Miro board.
+         * @minLength 1
+         */
+        boardId: string;
+        /**
+         * Unique identifier of the Miro connector.
+         * @minLength 1
+         */
+        connectorId: string;
+      };
+      output: {
+        /**
+         * Unique identifier of the Miro board.
+         * @minLength 1
+         */
+        boardId: string;
+        /**
+         * Unique identifier of the Miro connector.
+         * @minLength 1
+         */
+        connectorId: string;
+        /** Whether the connector was deleted. */
+        deleted: true;
+      };
+    };
+    /** Delete an item from a Miro board. */
+    "miro.delete_item": {
+      input: {
+        /**
+         * Unique identifier of the Miro board.
+         * @minLength 1
+         */
+        boardId: string;
+        /**
+         * Unique identifier of the Miro board item.
+         * @minLength 1
+         */
+        itemId: string;
+      };
+      output: {
+        /**
+         * Unique identifier of the Miro board.
+         * @minLength 1
+         */
+        boardId: string;
+        /**
+         * Unique identifier of the Miro board item.
+         * @minLength 1
+         */
+        itemId: string;
+        /** Whether the item was deleted. */
+        deleted: true;
       };
     };
     /** Get one Miro board by ID. */
@@ -519,6 +745,109 @@ declare module "@oomol-lab/connector" {
         pagination: {
           /** Cursor for the next page. */
           cursor: string | null;
+        };
+      };
+    };
+    /** Update a sticky note on a Miro board. */
+    "miro.update_sticky_note": {
+      input: {
+        /**
+         * Unique identifier of the Miro board.
+         * @minLength 1
+         */
+        boardId: string;
+        /**
+         * Unique identifier of the Miro board item.
+         * @minLength 1
+         */
+        itemId: string;
+        /** Updated Miro sticky note data. */
+        data?: {
+          /**
+           * Updated text or supported HTML displayed by the sticky note.
+           * @maxLength 6000
+           */
+          content?: string;
+          /** Updated sticky note shape. */
+          shape?: "square" | "rectangle";
+          [key: string]: unknown;
+        };
+        /** Provider-native Miro item style fields. */
+        style?: {
+          /** Text color. */
+          color?: string;
+          /** Item fill color. */
+          fillColor?: string;
+          /**
+           * Fill opacity from 0 to 1.
+           * @minimum 0
+           * @maximum 1
+           */
+          fillOpacity?: number;
+          /** Font family used by a text item. */
+          fontFamily?: string;
+          /**
+           * Font size used by a text item.
+           * @exclusiveMinimum 0
+           */
+          fontSize?: number;
+          /** Horizontal text alignment. */
+          textAlign?: "left" | "center" | "right";
+          /** Vertical text alignment. */
+          textAlignVertical?: "top" | "middle" | "bottom";
+          [key: string]: unknown;
+        };
+        /** Position of the item on the board. */
+        position?: {
+          /** Horizontal coordinate relative to the origin. */
+          x?: number;
+          /** Vertical coordinate relative to the origin. */
+          y?: number;
+          /** Coordinate origin used by Miro. */
+          origin?: "center";
+          [key: string]: unknown;
+        };
+        /** Updated size of the Miro sticky note. */
+        geometry?: {
+          /**
+           * Updated item width.
+           * @exclusiveMinimum 0
+           */
+          width?: number;
+          /**
+           * Updated item height.
+           * @exclusiveMinimum 0
+           */
+          height?: number;
+        };
+        /** Optional parent frame for the item. */
+        parent?: {
+          /**
+           * Identifier of the parent frame.
+           * @minLength 1
+           */
+          id?: string;
+          [key: string]: unknown;
+        };
+      };
+      output: {
+        /** A Miro board item. */
+        item: {
+          /** Miro item identifier. */
+          id?: string;
+          /** Miro item type. */
+          type?: string;
+          /** Additional provider fields returned by Miro. */
+          data?: Record<string, unknown>;
+          /** Additional provider fields returned by Miro. */
+          style?: Record<string, unknown>;
+          /** Additional provider fields returned by Miro. */
+          position?: Record<string, unknown>;
+          /** Additional provider fields returned by Miro. */
+          geometry?: Record<string, unknown>;
+          /** Additional provider fields returned by Miro. */
+          parent?: Record<string, unknown> | null;
+          [key: string]: unknown;
         };
       };
     };
