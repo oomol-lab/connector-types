@@ -1536,6 +1536,44 @@ declare module "@oomol-lab/connector" {
         dispatched: boolean;
       };
     };
+    /** Download a GitHub Actions workflow artifact ZIP to temporary file transit. */
+    "github.download_workflow_artifact": {
+      input: {
+        /**
+         * The repository owner.
+         * @minLength 1
+         */
+        owner: string;
+        /**
+         * The repository name.
+         * @minLength 1
+         */
+        repo: string;
+        /**
+         * The artifact ID.
+         * @exclusiveMinimum 0
+         */
+        artifactId: number;
+        /**
+         * The file name to use for the ZIP in file transit.
+         * @minLength 1
+         */
+        fileName?: string;
+      };
+      output: {
+        /** The ZIP file name in file transit. */
+        name: string;
+        /** The artifact response MIME type. */
+        mimeType: string;
+        /** The number of downloaded bytes. */
+        sizeBytes: number;
+        /**
+         * The temporary URL for downloading the artifact ZIP.
+         * @format uri
+         */
+        transitUrl: string;
+      };
+    };
     /** Enable a GitHub Actions workflow. */
     "github.enable_workflow": {
       input: {

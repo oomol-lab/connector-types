@@ -244,6 +244,8 @@ declare module "@oomol-lab/connector" {
          * @default "adaptive"
          */
         ratio?: "adaptive" | "21:9" | "16:9" | "4:3" | "1:1" | "3:4" | "9:16";
+        /** Whether to add an AIGC watermark to the generated video. */
+        aigc_watermark?: boolean;
         /**
          * URL MiniMax calls with asynchronous task status updates.
          * @format uri
