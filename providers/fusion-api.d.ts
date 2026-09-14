@@ -1202,7 +1202,7 @@ declare module "@oomol-lab/connector" {
          */
         timeout?: number;
         /**
-         * Maximum number of tokens to return
+         * Maximum token budget for the request. Exceeding the budget fails the request instead of truncating the output.
          * @example 2000
          */
         tokenLimit?: number;
@@ -1890,11 +1890,11 @@ declare module "@oomol-lab/connector" {
          */
         systemPrompt?: string;
         /**
-         * File parsing strategy: auto selects automatically, fast parses quickly, and quality prioritizes parsing quality
+         * File parsing strategy: auto selects automatically, text_only parses text only, and text_and_images parses text and images
          * @default "auto"
          * @example "auto"
          */
-        fileParsingStrategy?: "auto" | "fast" | "quality";
+        fileParsingStrategy?: "auto" | "text_only" | "text_and_images";
         [key: string]: unknown;
       };
       output: Record<string, unknown>;
@@ -2574,8 +2574,17 @@ declare module "@oomol-lab/connector" {
          */
         prompt?: string;
         /**
+         * All-modal reference task type guidance
+         * @example "reference"
+         */
+        omniReferenceTaskType?: "auto" | "reference" | "edit" | "extend";
+        /**
+         * Output video file format
+         * @example "mp4"
+         */
+        outputFormat?: "mp4" | "mov";
+        /**
          * Reference, first-frame, or last-frame images
-         * @maxItems 9
          * @default []
          */
         images?: Array<{
@@ -2595,7 +2604,6 @@ declare module "@oomol-lab/connector" {
         }>;
         /**
          * Reference videos. Only reference_video is supported.
-         * @maxItems 3
          * @default []
          */
         videos?: Array<{
@@ -2615,7 +2623,6 @@ declare module "@oomol-lab/connector" {
         }>;
         /**
          * Reference audio files. Only reference_audio is supported.
-         * @maxItems 3
          * @default []
          */
         audios?: Array<{

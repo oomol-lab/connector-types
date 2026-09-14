@@ -34,11 +34,8 @@ declare module "@oomol-lab/connector" {
         enable_formula?: boolean;
         /** Whether to enable table recognition for pipeline and vlm models. */
         enable_table?: boolean;
-        /**
-         * The document language code used by pipeline and vlm models.
-         * @minLength 1
-         */
-        language?: string;
+        /** The document language pack used by pipeline and vlm models. */
+        language?: "ch" | "ch_server" | "en" | "japan" | "korean" | "chinese_cht" | "ta" | "te" | "ka" | "el" | "th" | "latin" | "arabic" | "cyrillic" | "east_slavic" | "devanagari";
         /**
          * Additional result formats to export besides Markdown and JSON.
          * @minItems 1
@@ -77,11 +74,8 @@ declare module "@oomol-lab/connector" {
         enable_formula?: boolean;
         /** Whether to enable table recognition for pipeline and vlm models. */
         enable_table?: boolean;
-        /**
-         * The document language code used by pipeline and vlm models.
-         * @minLength 1
-         */
-        language?: string;
+        /** The document language pack used by pipeline and vlm models. */
+        language?: "ch" | "ch_server" | "en" | "japan" | "korean" | "chinese_cht" | "ta" | "te" | "ka" | "el" | "th" | "latin" | "arabic" | "cyrillic" | "east_slavic" | "devanagari";
         /**
          * The caller-defined data identifier associated with the source document.
          * @minLength 1
