@@ -1090,8 +1090,6 @@ declare module "@oomol-lab/connector" {
         parents?: Array<string>;
         /** Whether the user has starred the file. */
         starred?: boolean;
-        /** Whether to move the file to the trash. */
-        trashed?: boolean;
         /** A collection of arbitrary key-value pairs which are private to the requesting app. */
         appProperties?: Record<string, string>;
         /** A collection of arbitrary key-value pairs which are visible to all apps. */

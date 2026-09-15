@@ -2,7 +2,58 @@ import "@oomol-lab/connector";
 
 declare module "@oomol-lab/connector" {
   interface ActionRegistry {
-    /** Get a Granola meeting note by ID, optionally including the transcript. */
+    /** Read a Granola meeting transcript with OAuth or an API key. Requires an eligible paid Granola plan. */
+    "granola.get_meeting_transcript": {
+      input: {
+        /**
+         * Meeting ID returned for this connection.
+         * @minLength 1
+         */
+        meeting_id: string;
+      };
+      output: {
+        /**
+         * Native Granola meeting ID.
+         * @minLength 1
+         */
+        meeting_id: string;
+        /**
+         * Transcript text with speaker labels and timestamps when available.
+         * @minLength 1
+         */
+        transcript: string;
+      };
+    };
+    /** Read Granola meeting details and summaries by ID with OAuth or an API key. Use IDs returned for the same connection. Free-plan OAuth access covers personal notes from the last 30 days. */
+    "granola.get_meetings": {
+      input: {
+        /**
+         * Meeting IDs to retrieve.
+         * @minItems 1
+         * @maxItems 10
+         */
+        meeting_ids: Array<string>;
+      };
+      output: {
+        /** The requested meetings. */
+        meetings: Array<{
+          /**
+           * Meeting ID for this connection. OAuth and API-key IDs are not interchangeable.
+           * @minLength 1
+           */
+          id: string;
+          /** Meeting title, when available. */
+          title: string | null;
+          /** Meeting date when available, not a creation or update timestamp. */
+          date?: string;
+          /** Participant names and email addresses when available. */
+          attendees?: string;
+          /** Meeting summary, preserving its original Markdown when present. */
+          summary?: string;
+        }>;
+      };
+    };
+    /** Get a Granola note and summary by ID with OAuth or an API key, optionally including the transcript on eligible paid plans. Use an ID returned for the same connection. */
     "granola.get_note": {
       input: {
         /**
@@ -114,11 +165,11 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** List accessible Granola folders with cursor pagination. */
+    /** List accessible Granola folders with OAuth or an API key and cursor pagination. MCP folder access requires a paid plan and uses local pagination of the returned list. */
     "granola.list_folders": {
       input: {
         /**
-         * Cursor token returned by a previous Granola page.
+         * Cursor returned by this action for the same connection and filters.
          * @minLength 1
          */
         cursor?: string;
@@ -150,31 +201,53 @@ declare module "@oomol-lab/connector" {
         nextCursor: string | null;
       };
     };
-    /** List accessible Granola meeting notes with optional date, folder, and cursor filters. */
+    /** List recent Granola meetings with OAuth or an API key. OAuth uses MCP's last-30-days window; API keys list notes created in the last 30 days. Use get_meetings to read summaries. */
+    "granola.list_meetings": {
+      input: Record<string, never>;
+      output: {
+        /** The recent meetings. */
+        meetings: Array<{
+          /**
+           * Meeting ID for this connection. OAuth and API-key IDs are not interchangeable.
+           * @minLength 1
+           */
+          id: string;
+          /** Meeting title, when available. */
+          title: string | null;
+          /** Meeting date when available, not a creation or update timestamp. */
+          date?: string;
+          /** Participant names and email addresses when available. */
+          attendees?: string;
+          /** Meeting summary, preserving its original Markdown when present. */
+          summary?: string;
+        }>;
+      };
+    };
+    /** List Granola notes with OAuth or an API key. MCP lists meetings from the last 30 days and supports folder filtering and local cursor pagination. Creation and update filters require an API key. */
     "granola.list_notes": {
       input: {
         /**
-         * Date or date-time filter accepted by Granola, such as 2026-01-27 or 2026-01-27T15:30:00Z.
+         * API-key-only date or date-time filter, such as 2026-01-27 or 2026-01-27T15:30:00Z. MCP does not expose note creation or update timestamps.
          * @minLength 1
          */
         created_before?: string;
         /**
-         * Date or date-time filter accepted by Granola, such as 2026-01-27 or 2026-01-27T15:30:00Z.
+         * API-key-only date or date-time filter, such as 2026-01-27 or 2026-01-27T15:30:00Z. MCP does not expose note creation or update timestamps.
          * @minLength 1
          */
         created_after?: string;
         /**
-         * Date or date-time filter accepted by Granola, such as 2026-01-27 or 2026-01-27T15:30:00Z.
+         * API-key-only date or date-time filter, such as 2026-01-27 or 2026-01-27T15:30:00Z. MCP does not expose note creation or update timestamps.
          * @minLength 1
          */
         updated_after?: string;
         /**
-         * Granola folder ID used to filter notes.
+         * Folder ID returned for this connection. Folder filtering through MCP requires a paid plan.
          * @minLength 1
          */
         folder_id?: string;
         /**
-         * Cursor token returned by a previous Granola page.
+         * Cursor returned by this action for the same connection and filters.
          * @minLength 1
          */
         cursor?: string;

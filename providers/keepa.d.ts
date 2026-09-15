@@ -309,7 +309,7 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** Retrieve named, timestamped Keepa price, rank, offer-count, rating, and review history for Amazon ASINs. */
+    /** Retrieve named Keepa price, rank, offer-count, rating, review, monthly-sales, and coupon history for Amazon ASINs. */
     "keepa.get_product_history": {
       input: {
         /** Amazon marketplace code using Keepa's official AmazonLocale names. */
@@ -326,7 +326,7 @@ declare module "@oomol-lab/connector" {
          */
         days?: number;
         /**
-         * Keepa history series to include in the normalized output.
+         * Keepa CSV history series to include in `series`; this does not suppress monthlySoldHistory, couponHistory, or salesRankHistory when Keepa returns them.
          * @minItems 1
          */
         historyTypes?: Array<"AMAZON" | "NEW" | "USED" | "SALES" | "LISTPRICE" | "COLLECTIBLE" | "REFURBISHED" | "NEW_FBM_SHIPPING" | "LIGHTNING_DEAL" | "WAREHOUSE" | "NEW_FBA" | "COUNT_NEW" | "COUNT_USED" | "COUNT_REFURBISHED" | "COUNT_COLLECTIBLE" | "EXTRA_INFO_UPDATES" | "RATING" | "COUNT_REVIEWS" | "BUY_BOX_SHIPPING" | "USED_NEW_SHIPPING" | "USED_VERY_GOOD_SHIPPING" | "USED_GOOD_SHIPPING" | "USED_ACCEPTABLE_SHIPPING" | "COLLECTIBLE_NEW_SHIPPING" | "COLLECTIBLE_VERY_GOOD_SHIPPING" | "COLLECTIBLE_GOOD_SHIPPING" | "COLLECTIBLE_ACCEPTABLE_SHIPPING" | "REFURBISHED_SHIPPING" | "EBAY_NEW_SHIPPING" | "EBAY_USED_SHIPPING" | "TRADE_IN" | "RENT" | "BUY_BOX_USED_SHIPPING" | "PRIME_EXCL" | "COUNT_NEW_FBA" | "COUNT_NEW_FBM">;
@@ -372,7 +372,7 @@ declare module "@oomol-lab/connector" {
             type: "AMAZON" | "NEW" | "USED" | "SALES" | "LISTPRICE" | "COLLECTIBLE" | "REFURBISHED" | "NEW_FBM_SHIPPING" | "LIGHTNING_DEAL" | "WAREHOUSE" | "NEW_FBA" | "COUNT_NEW" | "COUNT_USED" | "COUNT_REFURBISHED" | "COUNT_COLLECTIBLE" | "EXTRA_INFO_UPDATES" | "RATING" | "COUNT_REVIEWS" | "BUY_BOX_SHIPPING" | "USED_NEW_SHIPPING" | "USED_VERY_GOOD_SHIPPING" | "USED_GOOD_SHIPPING" | "USED_ACCEPTABLE_SHIPPING" | "COLLECTIBLE_NEW_SHIPPING" | "COLLECTIBLE_VERY_GOOD_SHIPPING" | "COLLECTIBLE_GOOD_SHIPPING" | "COLLECTIBLE_ACCEPTABLE_SHIPPING" | "REFURBISHED_SHIPPING" | "EBAY_NEW_SHIPPING" | "EBAY_USED_SHIPPING" | "TRADE_IN" | "RENT" | "BUY_BOX_USED_SHIPPING" | "PRIME_EXCL" | "COUNT_NEW_FBA" | "COUNT_NEW_FBM";
             /** Official Keepa Product.CsvType array index. */
             index: number;
-            /** Unit interpretation for values in this series. */
+            /** Unit interpretation for values in this series; lower sales-rank values indicate better rank. */
             unit: "minor_currency_unit" | "sales_rank" | "count" | "rating_tenths" | "metadata";
             /** Whether each raw point contains a separate shipping value after the main value. */
             includesShipping: boolean;
@@ -389,6 +389,49 @@ declare module "@oomol-lab/connector" {
               value: number;
               /** Shipping amount in the marketplace's smallest currency unit when this history type records it separately. */
               shipping: number | null;
+            }>;
+          }>;
+          /** Historical Amazon bought-in-past-month values returned by Keepa. */
+          monthlySoldHistory: Array<{
+            /** Original Keepa Time value in minutes. */
+            keepaTime: number;
+            /**
+             * UTC timestamp converted from Keepa Time.
+             * @format date-time
+             */
+            timestamp: string;
+            /** Amazon's bought-in-past-month value observed by Keepa; this is not a sales estimate. */
+            value: number;
+          }>;
+          /** Historical coupon observations returned by Keepa. */
+          couponHistory: Array<{
+            /** Original Keepa Time value in minutes. */
+            keepaTime: number;
+            /**
+             * UTC timestamp converted from Keepa Time.
+             * @format date-time
+             */
+            timestamp: string;
+            /** One-time coupon discount: zero means unavailable, positive values use the marketplace's smallest currency unit, and negative values are percentage discounts. */
+            oneTimeCoupon: number;
+            /** Subscribe-and-Save coupon discount: zero means unavailable, positive values use the marketplace's smallest currency unit, and negative values are percentage discounts. */
+            subscribeAndSaveCoupon: number;
+          }>;
+          /** Sales-rank histories grouped by Amazon subcategory. */
+          salesRankHistory: Array<{
+            /** Amazon subcategory node ID. */
+            categoryId: number;
+            /** Chronological sales-rank observations; lower values indicate better rank. */
+            points: Array<{
+              /** Original Keepa Time value in minutes. */
+              keepaTime: number;
+              /**
+               * UTC timestamp converted from Keepa Time.
+               * @format date-time
+               */
+              timestamp: string;
+              /** Amazon sales rank; lower values indicate better rank. */
+              value: number;
             }>;
           }>;
           /** The complete Keepa product object including raw history arrays. */

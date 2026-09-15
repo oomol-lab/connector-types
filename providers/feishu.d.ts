@@ -843,12 +843,46 @@ declare module "@oomol-lab/connector" {
            * @minItems 1
            */
           fields: Array<{
-            /** The field name. */
-            name?: string;
-            /** The field type such as `text`, `number`, or `select`. */
-            type?: string;
-            /** The type-specific field configuration. */
-            property?: Record<string, unknown>;
+            /**
+             * The field name.
+             * @minLength 1
+             */
+            name: string;
+            /** The Base v3 field type. Single and multiple choice both use select. */
+            type: "text" | "number" | "select" | "datetime" | "created_at" | "updated_at" | "user" | "group_chat" | "created_by" | "updated_by" | "link" | "formula" | "lookup" | "auto_number" | "attachment" | "location" | "checkbox" | "button";
+            /** The field description, in plain text or Markdown. */
+            description?: string;
+            /** The type-specific display style, such as { "type": "plain", "precision": 2 } for a number. */
+            style?: Record<string, unknown>;
+            /** Whether select, user, or group_chat accepts multiple values. */
+            multiple?: boolean;
+            /** Static select options. Use options or dynamic_options_source, not both. */
+            options?: Array<{
+              /**
+               * The option name.
+               * @minLength 1
+               */
+              name: string;
+              /** The option color hue, such as Blue or Green. */
+              hue?: string;
+              /** The option color lightness, such as Light or Standard. */
+              lightness?: string;
+            }>;
+            /** The source field for dynamic select options, available when creating a field. */
+            dynamic_options_source?: {
+              /**
+               * The source table ID or name.
+               * @minLength 1
+               */
+              table_id: string;
+              /**
+               * The source field ID or name.
+               * @minLength 1
+               */
+              field_id: string;
+            };
+            /** The default cell value for text, number, static select, datetime, or user. Select defaults are option-name arrays, even for single choice. Use null to clear the default. */
+            default_value?: unknown;
             [key: string]: unknown;
           }>;
         };
@@ -963,14 +997,48 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         tableId: string;
-        /** A Base field definition using the official field JSON shape. */
+        /** A Base v3 field definition. Put type-specific configuration at the top level, not in property. Use select with multiple for single/multiple choice, and datetime for dates. Advanced types accept their official top-level fields: link_table for link, expression for formula, from/select/where for lookup, and button_config for button. */
         field: {
-          /** The field name. */
-          name?: string;
-          /** The field type such as `text`, `number`, or `select`. */
-          type?: string;
-          /** The type-specific field configuration. */
-          property?: Record<string, unknown>;
+          /**
+           * The field name.
+           * @minLength 1
+           */
+          name: string;
+          /** The Base v3 field type. Single and multiple choice both use select. */
+          type: "text" | "number" | "select" | "datetime" | "created_at" | "updated_at" | "user" | "group_chat" | "created_by" | "updated_by" | "link" | "formula" | "lookup" | "auto_number" | "attachment" | "location" | "checkbox" | "button";
+          /** The field description, in plain text or Markdown. */
+          description?: string;
+          /** The type-specific display style, such as { "type": "plain", "precision": 2 } for a number. */
+          style?: Record<string, unknown>;
+          /** Whether select, user, or group_chat accepts multiple values. */
+          multiple?: boolean;
+          /** Static select options. Use options or dynamic_options_source, not both. */
+          options?: Array<{
+            /**
+             * The option name.
+             * @minLength 1
+             */
+            name: string;
+            /** The option color hue, such as Blue or Green. */
+            hue?: string;
+            /** The option color lightness, such as Light or Standard. */
+            lightness?: string;
+          }>;
+          /** The source field for dynamic select options, available when creating a field. */
+          dynamic_options_source?: {
+            /**
+             * The source table ID or name.
+             * @minLength 1
+             */
+            table_id: string;
+            /**
+             * The source field ID or name.
+             * @minLength 1
+             */
+            field_id: string;
+          };
+          /** The default cell value for text, number, static select, datetime, or user. Select defaults are option-name arrays, even for single choice. Use null to clear the default. */
+          default_value?: unknown;
           [key: string]: unknown;
         };
       };
@@ -1127,12 +1195,46 @@ declare module "@oomol-lab/connector" {
          * @minItems 1
          */
         fields?: Array<{
-          /** The field name. */
-          name?: string;
-          /** The field type such as `text`, `number`, or `select`. */
-          type?: string;
-          /** The type-specific field configuration. */
-          property?: Record<string, unknown>;
+          /**
+           * The field name.
+           * @minLength 1
+           */
+          name: string;
+          /** The Base v3 field type. Single and multiple choice both use select. */
+          type: "text" | "number" | "select" | "datetime" | "created_at" | "updated_at" | "user" | "group_chat" | "created_by" | "updated_by" | "link" | "formula" | "lookup" | "auto_number" | "attachment" | "location" | "checkbox" | "button";
+          /** The field description, in plain text or Markdown. */
+          description?: string;
+          /** The type-specific display style, such as { "type": "plain", "precision": 2 } for a number. */
+          style?: Record<string, unknown>;
+          /** Whether select, user, or group_chat accepts multiple values. */
+          multiple?: boolean;
+          /** Static select options. Use options or dynamic_options_source, not both. */
+          options?: Array<{
+            /**
+             * The option name.
+             * @minLength 1
+             */
+            name: string;
+            /** The option color hue, such as Blue or Green. */
+            hue?: string;
+            /** The option color lightness, such as Light or Standard. */
+            lightness?: string;
+          }>;
+          /** The source field for dynamic select options, available when creating a field. */
+          dynamic_options_source?: {
+            /**
+             * The source table ID or name.
+             * @minLength 1
+             */
+            table_id: string;
+            /**
+             * The source field ID or name.
+             * @minLength 1
+             */
+            field_id: string;
+          };
+          /** The default cell value for text, number, static select, datetime, or user. Select defaults are option-name arrays, even for single choice. Use null to clear the default. */
+          default_value?: unknown;
           [key: string]: unknown;
         }>;
       };
@@ -11471,7 +11573,7 @@ declare module "@oomol-lab/connector" {
         success: boolean;
       };
     };
-    /** Update one field in a Feishu Base table. */
+    /** Replace one field definition in a Feishu Base table. Read the field first and include all writable configuration to preserve; this is a full PUT replacement, not a partial update. */
     "feishu.update_base_field": {
       input: {
         /**
@@ -11489,14 +11591,35 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         fieldId: string;
-        /** A Base field definition using the official field JSON shape. */
+        /** A Base v3 field definition. Put type-specific configuration at the top level, not in property. Use select with multiple for single/multiple choice, and datetime for dates. Advanced types accept their official top-level fields: link_table for link, expression for formula, from/select/where for lookup, and button_config for button. */
         field: {
-          /** The field name. */
-          name?: string;
-          /** The field type such as `text`, `number`, or `select`. */
-          type?: string;
-          /** The type-specific field configuration. */
-          property?: Record<string, unknown>;
+          /**
+           * The field name.
+           * @minLength 1
+           */
+          name: string;
+          /** The Base v3 field type. Single and multiple choice both use select. */
+          type: "text" | "number" | "select" | "datetime" | "created_at" | "updated_at" | "user" | "group_chat" | "created_by" | "updated_by" | "link" | "formula" | "lookup" | "auto_number" | "attachment" | "location" | "checkbox" | "button";
+          /** The field description, in plain text or Markdown. */
+          description?: string;
+          /** The type-specific display style, such as { "type": "plain", "precision": 2 } for a number. */
+          style?: Record<string, unknown>;
+          /** Whether select, user, or group_chat accepts multiple values. */
+          multiple?: boolean;
+          /** The static select options. */
+          options?: Array<{
+            /**
+             * The option name.
+             * @minLength 1
+             */
+            name: string;
+            /** The option color hue, such as Blue or Green. */
+            hue?: string;
+            /** The option color lightness, such as Light or Standard. */
+            lightness?: string;
+          }>;
+          /** The default cell value for text, number, static select, datetime, or user. Select defaults are option-name arrays, even for single choice. Use null to clear the default. */
+          default_value?: unknown;
           [key: string]: unknown;
         };
       };

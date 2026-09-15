@@ -2,7 +2,7 @@ import "@oomol-lab/connector";
 
 declare module "@oomol-lab/connector" {
   interface ActionRegistry {
-    /** Inspect one 1688 product using its ID from ali1688_search_products. */
+    /** Inspect one 1688 product using its ID from ali1688_search_products through Sorftime. */
     "sorftime_mcp.ali1688_get_product": {
       input: {
         /**
@@ -21,7 +21,7 @@ declare module "@oomol-lab/connector" {
         metadata: Record<string, unknown>;
       };
     };
-    /** Browse 1688 categories. Omit parentId for the top levels, then pass a returned category ID to explore its children. */
+    /** Browse 1688 categories through Sorftime. Omit parentId for the top levels, then pass a returned category ID to explore its children. */
     "sorftime_mcp.ali1688_list_categories": {
       input: {
         /**
@@ -40,7 +40,7 @@ declare module "@oomol-lab/connector" {
         metadata: Record<string, unknown>;
       };
     };
-    /** Search 1688 products by name to find sourcing suppliers and procurement prices. */
+    /** Search 1688 products by name to find sourcing suppliers and procurement prices through Sorftime. */
     "sorftime_mcp.ali1688_search_products": {
       input: {
         /**
@@ -64,7 +64,7 @@ declare module "@oomol-lab/connector" {
         metadata: Record<string, unknown>;
       };
     };
-    /** Expand an Amazon keyword into related and long-tail search terms. */
+    /** Expand an Amazon keyword into related and long-tail search terms through Sorftime. */
     "sorftime_mcp.amazon_find_related_keywords": {
       input: {
         /** Amazon keyword marketplace region. GB denotes the United Kingdom. */
@@ -90,7 +90,7 @@ declare module "@oomol-lab/connector" {
         metadata: Record<string, unknown>;
       };
     };
-    /** Research an Amazon category market using a category ID from amazon_list_categories. */
+    /** Research an Amazon category market using a category ID from amazon_list_categories through Sorftime. */
     "sorftime_mcp.amazon_get_category_report": {
       input: {
         /** Amazon marketplace region. GB denotes the United Kingdom. */
@@ -111,7 +111,7 @@ declare module "@oomol-lab/connector" {
         metadata: Record<string, unknown>;
       };
     };
-    /** Inspect demand for a specific Amazon keyword. */
+    /** Inspect demand for a specific Amazon keyword through Sorftime. */
     "sorftime_mcp.amazon_get_keyword": {
       input: {
         /** Amazon keyword marketplace region. GB denotes the United Kingdom. */
@@ -132,7 +132,7 @@ declare module "@oomol-lab/connector" {
         metadata: Record<string, unknown>;
       };
     };
-    /** Inspect one Amazon product using its ID from amazon_search_products. */
+    /** Inspect one Amazon product using its ID from amazon_search_products through Sorftime. */
     "sorftime_mcp.amazon_get_product": {
       input: {
         /** Amazon marketplace region. GB denotes the United Kingdom. */
@@ -153,7 +153,7 @@ declare module "@oomol-lab/connector" {
         metadata: Record<string, unknown>;
       };
     };
-    /** Inspect historical Amazon product performance. Select one metric. */
+    /** Inspect historical Amazon product performance through Sorftime. Select one metric. */
     "sorftime_mcp.amazon_get_product_trend": {
       input: {
         /** Amazon marketplace region. GB denotes the United Kingdom. */
@@ -176,7 +176,7 @@ declare module "@oomol-lab/connector" {
         metadata: Record<string, unknown>;
       };
     };
-    /** Browse Amazon categories. Omit parentId for the top levels, then pass a returned category ID to explore its children. */
+    /** Browse Amazon categories through Sorftime. Omit parentId for the top levels, then pass a returned category ID to explore its children. */
     "sorftime_mcp.amazon_list_categories": {
       input: {
         /** Amazon marketplace region. GB denotes the United Kingdom. */
@@ -197,7 +197,7 @@ declare module "@oomol-lab/connector" {
         metadata: Record<string, unknown>;
       };
     };
-    /** Discover Amazon keywords ranked by weekly search volume. Supports optional rank and search-volume bounds. */
+    /** Discover Amazon keywords ranked by weekly search volume through Sorftime. Supports optional rank and search-volume bounds. */
     "sorftime_mcp.amazon_list_keywords": {
       input: {
         /** Amazon keyword marketplace region. GB denotes the United Kingdom. */
@@ -237,7 +237,7 @@ declare module "@oomol-lab/connector" {
         metadata: Record<string, unknown>;
       };
     };
-    /** Find Amazon products by name. */
+    /** Find Amazon products by name through Sorftime. */
     "sorftime_mcp.amazon_search_products": {
       input: {
         /** Amazon marketplace region. GB denotes the United Kingdom. */
@@ -300,7 +300,7 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** Inspect one Shopee product using its ID from shopee_search_products. */
+    /** Inspect one Shopee product using its ID from shopee_search_products through Sorftime. */
     "sorftime_mcp.shopee_get_product": {
       input: {
         /** Shopee marketplace region. */
@@ -321,7 +321,7 @@ declare module "@oomol-lab/connector" {
         metadata: Record<string, unknown>;
       };
     };
-    /** Inspect historical Shopee product performance. Returns available dimensions together. Ranges beyond one year cost 10 credits. */
+    /** Inspect historical Shopee product performance through Sorftime. Returns available dimensions together. Ranges beyond one year cost 10 credits. */
     "sorftime_mcp.shopee_get_product_trend": {
       input: {
         /** Shopee marketplace region. */
@@ -352,7 +352,7 @@ declare module "@oomol-lab/connector" {
         metadata: Record<string, unknown>;
       };
     };
-    /** Browse Shopee categories. Omit parentId for the top levels, then pass a returned category ID to explore its children. */
+    /** Browse Shopee categories through Sorftime. Omit parentId for the top levels, then pass a returned category ID to explore its children. */
     "sorftime_mcp.shopee_list_categories": {
       input: {
         /** Shopee marketplace region. */
@@ -373,7 +373,7 @@ declare module "@oomol-lab/connector" {
         metadata: Record<string, unknown>;
       };
     };
-    /** Find best-selling products in a Shopee category. Optionally query historical natural-week snapshots for leaf categories. */
+    /** Find best-selling products in a Shopee category through Sorftime. Optionally query historical natural-week snapshots for leaf categories. */
     "sorftime_mcp.shopee_list_category_products": {
       input: {
         /** Shopee marketplace region. */
@@ -404,7 +404,7 @@ declare module "@oomol-lab/connector" {
         metadata: Record<string, unknown>;
       };
     };
-    /** Discover Shopee keywords ranked by monthly search volume. Supports optional rank and search-volume bounds. */
+    /** Discover Shopee keywords ranked by monthly search volume through Sorftime. Supports optional rank and search-volume bounds. */
     "sorftime_mcp.shopee_list_keywords": {
       input: {
         /** Shopee marketplace region. */
@@ -450,7 +450,7 @@ declare module "@oomol-lab/connector" {
         metadata: Record<string, unknown>;
       };
     };
-    /** Find Shopee products by name. */
+    /** Find Shopee products by name through Sorftime. */
     "sorftime_mcp.shopee_search_products": {
       input: {
         /** Shopee marketplace region. */
@@ -476,7 +476,7 @@ declare module "@oomol-lab/connector" {
         metadata: Record<string, unknown>;
       };
     };
-    /** Inspect one Temu product using its ID from temu_search_products. */
+    /** Inspect one Temu product using its ID from temu_search_products through Sorftime. */
     "sorftime_mcp.temu_get_product": {
       input: {
         /** Temu marketplace region. */
@@ -497,7 +497,7 @@ declare module "@oomol-lab/connector" {
         metadata: Record<string, unknown>;
       };
     };
-    /** Inspect historical Temu product performance. Returns available dimensions together. Ranges beyond one year cost 10 credits. */
+    /** Inspect historical Temu product performance through Sorftime. Returns available dimensions together. Ranges beyond one year cost 10 credits. */
     "sorftime_mcp.temu_get_product_trend": {
       input: {
         /** Temu marketplace region. */
@@ -528,7 +528,7 @@ declare module "@oomol-lab/connector" {
         metadata: Record<string, unknown>;
       };
     };
-    /** Browse Temu categories. Omit parentId for the top levels, then pass a returned category ID to explore its children. */
+    /** Browse Temu categories through Sorftime. Omit parentId for the top levels, then pass a returned category ID to explore its children. */
     "sorftime_mcp.temu_list_categories": {
       input: {
         /** Temu marketplace region. */
@@ -549,7 +549,7 @@ declare module "@oomol-lab/connector" {
         metadata: Record<string, unknown>;
       };
     };
-    /** Find best-selling products in a Temu category. */
+    /** Find best-selling products in a Temu category through Sorftime. */
     "sorftime_mcp.temu_list_category_products": {
       input: {
         /** Temu marketplace region. */
@@ -575,7 +575,7 @@ declare module "@oomol-lab/connector" {
         metadata: Record<string, unknown>;
       };
     };
-    /** Find Temu products by name. */
+    /** Find Temu products by name through Sorftime. */
     "sorftime_mcp.temu_search_products": {
       input: {
         /** Temu marketplace region. */
@@ -601,7 +601,7 @@ declare module "@oomol-lab/connector" {
         metadata: Record<string, unknown>;
       };
     };
-    /** Research a TikTok category market using a category ID from tiktok_list_categories. */
+    /** Research a TikTok category market using a category ID from tiktok_list_categories through Sorftime. */
     "sorftime_mcp.tiktok_get_category_report": {
       input: {
         /** TikTok marketplace region. GB denotes the United Kingdom. */
@@ -622,7 +622,7 @@ declare module "@oomol-lab/connector" {
         metadata: Record<string, unknown>;
       };
     };
-    /** Inspect one TikTok product using its ID from tiktok_search_products. */
+    /** Inspect one TikTok product using its ID from tiktok_search_products through Sorftime. */
     "sorftime_mcp.tiktok_get_product": {
       input: {
         /** TikTok marketplace region. GB denotes the United Kingdom. */
@@ -643,7 +643,7 @@ declare module "@oomol-lab/connector" {
         metadata: Record<string, unknown>;
       };
     };
-    /** Inspect historical TikTok product performance. Returns available dimensions together. */
+    /** Inspect historical TikTok product performance through Sorftime. Returns available dimensions together. */
     "sorftime_mcp.tiktok_get_product_trend": {
       input: {
         /** TikTok marketplace region. GB denotes the United Kingdom. */
@@ -664,7 +664,7 @@ declare module "@oomol-lab/connector" {
         metadata: Record<string, unknown>;
       };
     };
-    /** Browse TikTok categories. Omit parentId for the top levels, then pass a returned category ID to explore its children. */
+    /** Browse TikTok categories through Sorftime. Omit parentId for the top levels, then pass a returned category ID to explore its children. */
     "sorftime_mcp.tiktok_list_categories": {
       input: {
         /** TikTok marketplace region. GB denotes the United Kingdom. */
@@ -685,7 +685,7 @@ declare module "@oomol-lab/connector" {
         metadata: Record<string, unknown>;
       };
     };
-    /** Find TikTok products by name. */
+    /** Find TikTok products by name through Sorftime. */
     "sorftime_mcp.tiktok_search_products": {
       input: {
         /** TikTok marketplace region. GB denotes the United Kingdom. */
@@ -713,7 +713,7 @@ declare module "@oomol-lab/connector" {
         metadata: Record<string, unknown>;
       };
     };
-    /** Expand a Walmart US keyword into related and long-tail search terms. */
+    /** Expand a Walmart US keyword into related and long-tail search terms through Sorftime. */
     "sorftime_mcp.walmart_find_related_keywords": {
       input: {
         /**
@@ -737,7 +737,7 @@ declare module "@oomol-lab/connector" {
         metadata: Record<string, unknown>;
       };
     };
-    /** Research a Walmart US category market using a category ID from walmart_list_categories. */
+    /** Research a Walmart US category market using a category ID from walmart_list_categories through Sorftime. */
     "sorftime_mcp.walmart_get_category_report": {
       input: {
         /**
@@ -756,7 +756,7 @@ declare module "@oomol-lab/connector" {
         metadata: Record<string, unknown>;
       };
     };
-    /** Inspect demand for a specific Walmart US keyword. */
+    /** Inspect demand for a specific Walmart US keyword through Sorftime. */
     "sorftime_mcp.walmart_get_keyword": {
       input: {
         /**
@@ -775,7 +775,7 @@ declare module "@oomol-lab/connector" {
         metadata: Record<string, unknown>;
       };
     };
-    /** Inspect one Walmart US product using its ID from walmart_search_products. */
+    /** Inspect one Walmart US product using its ID from walmart_search_products through Sorftime. */
     "sorftime_mcp.walmart_get_product": {
       input: {
         /**
@@ -794,7 +794,7 @@ declare module "@oomol-lab/connector" {
         metadata: Record<string, unknown>;
       };
     };
-    /** Inspect historical Walmart US product performance. Select one metric. */
+    /** Inspect historical Walmart US product performance through Sorftime. Select one metric. */
     "sorftime_mcp.walmart_get_product_trend": {
       input: {
         /**
@@ -825,7 +825,7 @@ declare module "@oomol-lab/connector" {
         metadata: Record<string, unknown>;
       };
     };
-    /** Browse Walmart US categories. Omit parentId for the top levels, then pass a returned category ID to explore its children. */
+    /** Browse Walmart US categories through Sorftime. Omit parentId for the top levels, then pass a returned category ID to explore its children. */
     "sorftime_mcp.walmart_list_categories": {
       input: {
         /**
@@ -844,7 +844,7 @@ declare module "@oomol-lab/connector" {
         metadata: Record<string, unknown>;
       };
     };
-    /** Discover Walmart US keywords ranked by monthly search volume. Requires minRank and maxRank. */
+    /** Discover Walmart US keywords ranked by monthly search volume through Sorftime. Requires minRank and maxRank. */
     "sorftime_mcp.walmart_list_keywords": {
       input: {
         /**
@@ -872,7 +872,7 @@ declare module "@oomol-lab/connector" {
         metadata: Record<string, unknown>;
       };
     };
-    /** Find Walmart US products by name. */
+    /** Find Walmart US products by name through Sorftime. */
     "sorftime_mcp.walmart_search_products": {
       input: {
         /**
