@@ -70,6 +70,147 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
+    /** Create a Netlify site, optionally assigning its account, name, domains, notification email, and HTTPS settings. */
+    "netlify.create_site": {
+      input: {
+        /**
+         * The desired Netlify site name. Netlify generates one when omitted.
+         * @minLength 1
+         */
+        name?: string;
+        /**
+         * The Netlify account ID that should own the site.
+         * @minLength 1
+         */
+        accountId?: string;
+        /**
+         * The custom domain to configure for the site.
+         * @minLength 1
+         */
+        customDomain?: string;
+        /** Additional domain aliases to configure for the site. */
+        domainAliases?: Array<string>;
+        /**
+         * The email address that should receive site notifications.
+         * @format email
+         */
+        notificationEmail?: string;
+        /** Whether Netlify should redirect HTTP requests to HTTPS. */
+        forceSsl?: boolean;
+        /** Whether Netlify should automatically configure DNS for the custom domain. */
+        configureDns?: boolean;
+      };
+      output: {
+        /** A Netlify site returned by the API. */
+        site: {
+          /** The Netlify site ID. */
+          id?: string;
+          /** The site state reported by Netlify. */
+          state?: string;
+          /** The site plan. */
+          plan?: string;
+          /** The Netlify site name. */
+          name?: string;
+          /** The custom domain configured for the site. */
+          custom_domain?: string;
+          /** The domain aliases configured for the site. */
+          domain_aliases?: Array<string>;
+          /** The primary site URL. */
+          url?: string;
+          /** The HTTPS site URL. */
+          ssl_url?: string;
+          /** The Netlify admin URL for the site. */
+          admin_url?: string;
+          /** The screenshot URL for the site. */
+          screenshot_url?: string;
+          /** The timestamp when the site was created. */
+          created_at?: string;
+          /** The timestamp when the site was last updated. */
+          updated_at?: string;
+          /** The Netlify user ID that owns the site. */
+          user_id?: string;
+          /** Whether SSL is enabled for the site. */
+          ssl?: boolean;
+          /** Whether HTTP requests are redirected to HTTPS. */
+          force_ssl?: boolean;
+          /** Whether Netlify manages DNS for the site. */
+          managed_dns?: boolean;
+          /** The latest unique deploy URL for the site. */
+          deploy_url?: string;
+          /** A Netlify deploy returned by the API. */
+          published_deploy?: {
+            /** The Netlify deploy ID. */
+            id?: string;
+            /** The Netlify site ID for this deploy. */
+            site_id?: string;
+            /** The Netlify user ID that created the deploy. */
+            user_id?: string;
+            /** The Netlify build ID associated with the deploy. */
+            build_id?: string;
+            /** The deploy state reported by Netlify. */
+            state?: string;
+            /** The site name for this deploy. */
+            name?: string;
+            /** The primary URL for this deploy. */
+            url?: string;
+            /** The HTTPS URL for this deploy. */
+            ssl_url?: string;
+            /** The Netlify admin URL for this deploy. */
+            admin_url?: string;
+            /** The unique deploy URL. */
+            deploy_url?: string;
+            /** The unique HTTPS deploy URL. */
+            deploy_ssl_url?: string;
+            /** The screenshot URL for this deploy. */
+            screenshot_url?: string;
+            /** Whether this deploy is a draft deploy. */
+            draft?: boolean;
+            /** The Git branch used for this deploy. */
+            branch?: string;
+            /** The commit reference used for this deploy. */
+            commit_ref?: string;
+            /** The commit URL used for this deploy. */
+            commit_url?: string;
+            /** Whether Netlify skipped this deploy. */
+            skipped?: boolean;
+            /** The timestamp when the deploy was created. */
+            created_at?: string;
+            /** The timestamp when the deploy was last updated. */
+            updated_at?: string;
+            /** The timestamp when the deploy was published. */
+            published_at?: string;
+            /** The deploy title. */
+            title?: string;
+            /** The deploy context such as production or deploy-preview. */
+            context?: string;
+            /** Whether the deploy is locked. */
+            locked?: boolean;
+            /** The deploy review URL. */
+            review_url?: string;
+            /** The framework detected for this deploy. */
+            framework?: string;
+            /** The deploy error message when Netlify returns one. */
+            error_message?: string;
+            [key: string]: unknown;
+          };
+          /** The Netlify account ID that owns the site. */
+          account_id?: string;
+          /** The Netlify account display name that owns the site. */
+          account_name?: string;
+          /** The Netlify account slug that owns the site. */
+          account_slug?: string;
+          /** The Git provider connected to the site. */
+          git_provider?: string;
+          /** The default deploy hook URL for the site. */
+          deploy_hook?: string;
+          /** The build image configured for the site. */
+          build_image?: string;
+          /** The functions region configured for the site. */
+          functions_region?: string;
+          [key: string]: unknown;
+        };
+      };
+    };
     /** Start a Netlify build for one site without uploading binary files. */
     "netlify.create_site_build": {
       input: {

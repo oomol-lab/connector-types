@@ -1613,6 +1613,201 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
+    /** Summarize natural, advertising, and recommendation traffic sources for up to ten Amazon ASINs through LinkFox and SIF. */
+    "linkfox.get_sif_asin_traffic_summary": {
+      input: {
+        /**
+         * One to ten comma-separated Amazon ASINs.
+         * @minLength 1
+         * @maxLength 1000
+         */
+        searchValue: string;
+        /** The Amazon marketplace code. LinkFox defaults to US when omitted. */
+        country?: "US" | "UK" | "DE" | "CA" | "JP" | "FR" | "ES" | "IT" | "MX" | "AU" | "AE" | "BR" | "SA";
+        /** Whether to use the latest seven days. Set false to use startDate and endDate; LinkFox defaults to true. */
+        last7d?: boolean;
+        /**
+         * The period start date, used when last7d is false.
+         * @format date
+         */
+        startDate?: string;
+        /**
+         * The period end date, paired with startDate.
+         * @format date
+         */
+        endDate?: string;
+        /**
+         * Comma-separated SIF filters: nf, sp, sb, sbv, ad, acAd, or totalPeriod.in.
+         * @maxLength 1000
+         */
+        conditions?: string;
+        /** The ASIN traffic-summary sort field. */
+        sortBy?: "totalKeywordNum" | "naturalKeywordNum" | "brandKeywordNum" | "vedioKeywordNum" | "acKeywordNum" | "erKeywordNum" | "trKeywordNum" | "sumScore" | "totalNfScore" | "totalSpSocre" | "totalBrandScore" | "totalVedioScore" | "totalAcScore" | "totalTrScore" | "totalErScore";
+        /**
+         * The one-based result page. LinkFox defaults to 1.
+         * @minimum 1
+         */
+        pageNum?: number;
+        /**
+         * The number of ASIN summaries per page. LinkFox defaults to 10000.
+         * @minimum 10
+         * @maximum 10000
+         */
+        pageSize?: number;
+        /** Whether to sort descending. LinkFox defaults to true. */
+        desc?: boolean;
+      };
+      output: {
+        /** The SIF business code; 1 indicates success. */
+        code: string;
+        /** The SIF response message. */
+        msg: string | null;
+        /**
+         * The number of records returned by this request.
+         * @minimum 0
+         */
+        total: number;
+        /** The SIF records returned by this request. */
+        data: Array<Record<string, unknown>>;
+        /** The LinkFox rendering-column definitions. */
+        columns: Array<Record<string, unknown>>;
+        /** The LinkFox rendering style when provided. */
+        type: string | null;
+        /** The result title when provided. */
+        title: string | null;
+        /** The upstream processing time in milliseconds. */
+        costTime: number | null;
+        /** The LinkFox token cost when provided. */
+        costToken: number | null;
+        /** Whether the search target is a parent ASIN. */
+        isParentAsin?: boolean;
+        /** The number of variants with traffic keywords. */
+        variantsNum: number | null;
+        /** The number of variants without traffic keywords. */
+        noKeywordVariantsNum: number | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get SIF search demand, supply-demand ratio, and advertising or recommendation competition for one Amazon keyword through LinkFox. */
+    "linkfox.get_sif_keyword_overview": {
+      input: {
+        /**
+         * The localized Amazon keyword to analyze.
+         * @minLength 1
+         * @maxLength 1000
+         */
+        keyword: string;
+        /** The Amazon marketplace code. LinkFox defaults to US when omitted. */
+        country?: "US" | "UK" | "DE" | "CA" | "JP" | "FR" | "ES" | "IT" | "MX" | "AU" | "AE" | "BR" | "SA";
+        /** Whether to use the latest seven days. Set false to use startDate and endDate; LinkFox defaults to true. */
+        last7d?: boolean;
+        /**
+         * The period start date, used when last7d is false.
+         * @format date
+         */
+        startDate?: string;
+        /**
+         * The period end date, paired with startDate.
+         * @format date
+         */
+        endDate?: string;
+      };
+      output: {
+        /** The SIF business code; 1 indicates success. */
+        code: string;
+        /** The SIF response message. */
+        msg: string | null;
+        /**
+         * The number of records returned by this request.
+         * @minimum 0
+         */
+        total: number;
+        /** The SIF records returned by this request. */
+        data: Array<Record<string, unknown>>;
+        /** The LinkFox rendering-column definitions. */
+        columns: Array<Record<string, unknown>>;
+        /** The LinkFox rendering style when provided. */
+        type: string | null;
+        /** The result title when provided. */
+        title: string | null;
+        /** The upstream processing time in milliseconds. */
+        costTime: number | null;
+        /** The LinkFox token cost when provided. */
+        costToken: number | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Analyze competitor ASIN traffic shares and natural, advertising, or recommendation exposure for one Amazon keyword through LinkFox and SIF. */
+    "linkfox.get_sif_keyword_traffic_summary": {
+      input: {
+        /**
+         * The localized Amazon keyword to analyze.
+         * @minLength 1
+         * @maxLength 1000
+         */
+        searchKeyword: string;
+        /** The Amazon marketplace code. LinkFox defaults to US when omitted. */
+        country?: "US" | "UK" | "DE" | "CA" | "JP" | "FR" | "ES" | "IT" | "MX" | "AU" | "AE" | "BR" | "SA";
+        /**
+         * An optional comma-separated ASIN filter.
+         * @maxLength 1000
+         */
+        asins?: string;
+        /** One SIF traffic or period filter, such as nfPosition, isSpAd, isBrandAd, isPPCAd, acAd, or totalPeriod.in. */
+        condition?: "nfPosition" | "isSpAd" | "isVedioAd" | "isBrandAd" | "isPPCAd" | "isSearchRecommend" | "acAd" | "totalPeriod.in" | "nfKeywordCnt.total" | "nfKeywordCnt.in" | "adKeywordCnt.total" | "adKeywordCnt.in" | "allSpKeywordCnt.total" | "allSpKeywordCnt.in" | "spKeywordCnt.total" | "spKeywordCnt.in" | "recSpKeywordCnt.total" | "recSpKeywordCnt.in" | "allSbKeywordCnt.total" | "allSbKeywordCnt.in" | "sbKeywordCnt.total" | "sbKeywordCnt.in" | "sbvKeywordCnt.total" | "sbvKeywordCnt.in";
+        /** Whether to use the latest seven days. Set false to use startDate and endDate; LinkFox defaults to true. */
+        last7d?: boolean;
+        /**
+         * The period start date, used when last7d is false.
+         * @format date
+         */
+        startDate?: string;
+        /**
+         * The period end date, paired with startDate.
+         * @format date
+         */
+        endDate?: string;
+        /** The competitor traffic-summary sort field. */
+        sortBy?: "totalKeywordNum" | "naturalKeywordNum" | "brandKeywordNum" | "vedioKeywordNum" | "acKeywordNum" | "erKeywordNum" | "trKeywordNum" | "sumScore" | "totalNfScore" | "totalSpSocre" | "totalBrandScore" | "totalVedioScore" | "totalAcScore" | "totalTrScore" | "totalErScore";
+        /**
+         * The one-based result page. LinkFox defaults to 1.
+         * @minimum 1
+         */
+        pageNum?: number;
+        /**
+         * The number of competitor ASINs per page. LinkFox defaults to 100.
+         * @minimum 10
+         * @maximum 100
+         */
+        pageSize?: number;
+        /** Whether to sort descending. LinkFox defaults to true. */
+        desc?: boolean;
+      };
+      output: {
+        /** The SIF business code; 1 indicates success. */
+        code: string;
+        /** The SIF response message. */
+        msg: string | null;
+        /**
+         * The number of records returned by this request.
+         * @minimum 0
+         */
+        total: number;
+        /** The SIF records returned by this request. */
+        data: Array<Record<string, unknown>>;
+        /** The LinkFox rendering-column definitions. */
+        columns: Array<Record<string, unknown>>;
+        /** The LinkFox rendering style when provided. */
+        type: string | null;
+        /** The result title when provided. */
+        title: string | null;
+        /** The upstream processing time in milliseconds. */
+        costTime: number | null;
+        /** The LinkFox token cost when provided. */
+        costToken: number | null;
+        [key: string]: unknown;
+      };
+    };
     /** Get public details for one TikTok Shop product through LinkFox. */
     "linkfox.get_tiktok_shop_product": {
       input: {
@@ -3703,6 +3898,81 @@ declare module "@oomol-lab/connector" {
         hasNextPage?: boolean;
         /** Shop fulfillment distribution; unlike product fulfillment arrays. */
         fulfillment?: Record<string, unknown>;
+        [key: string]: unknown;
+      };
+    };
+    /** Reverse-search one Amazon ASIN's SIF traffic keywords, ranks, traffic shares, and conversion markers through LinkFox. */
+    "linkfox.list_sif_asin_keywords": {
+      input: {
+        /**
+         * The single Amazon ASIN to analyze.
+         * @minLength 1
+         * @maxLength 1000
+         */
+        asin: string;
+        /** The Amazon marketplace code. LinkFox defaults to US when omitted. */
+        country?: "US" | "UK" | "DE" | "CA" | "JP" | "FR" | "ES" | "IT" | "MX" | "AU" | "AE" | "BR" | "SA";
+        /**
+         * An optional localized keyword used to filter the result.
+         * @maxLength 1000
+         */
+        keyword?: string;
+        /** The analysis period type. LinkFox defaults to latelyDay. */
+        timePieceType?: "latelyDay" | "month" | "week";
+        /**
+         * The period value: 7 or 30 for latelyDay, YYYY-MM for month, or the week-start date in YYYY-MM-DD format.
+         * @maxLength 1000
+         */
+        timePieceValue?: string;
+        /**
+         * Comma-separated SIF keyword filters, including traffic-position, advertising, conversion, stability, and period-entry markers.
+         * @maxLength 1000
+         */
+        conditions?: string;
+        /** The keyword sort field. Omit it to use SIF's system order. */
+        sortBy?: "lastRank" | "adLastRank" | "updateTime" | "searchesRank" | "estSearchesNum";
+        /** Whether to sort descending. LinkFox defaults to true. */
+        desc?: boolean;
+        /**
+         * The one-based result page. LinkFox defaults to 1.
+         * @minimum 1
+         */
+        pageNum?: number;
+        /**
+         * The number of keyword records per page. LinkFox defaults to 100.
+         * @minimum 10
+         * @maximum 100
+         */
+        pageSize?: number;
+      };
+      output: {
+        /** The SIF business code; 1 indicates success. */
+        code: string;
+        /** The SIF response message. */
+        msg: string | null;
+        /**
+         * The number of records returned by this request.
+         * @minimum 0
+         */
+        total: number;
+        /** The SIF records returned by this request. */
+        data: Array<Record<string, unknown>>;
+        /** The LinkFox rendering-column definitions. */
+        columns: Array<Record<string, unknown>>;
+        /** The LinkFox rendering style when provided. */
+        type: string | null;
+        /** The result title when provided. */
+        title: string | null;
+        /** The upstream processing time in milliseconds. */
+        costTime: number | null;
+        /** The LinkFox token cost when provided. */
+        costToken: number | null;
+        /** Whether the queried ASIN is a parent ASIN. */
+        isParentAsin?: boolean;
+        /** Whether the queried product has variants. */
+        hasVaiants?: boolean;
+        /** The latest week represented by the ABA data. */
+        abaCreateDateWeek: string | null;
         [key: string]: unknown;
       };
     };

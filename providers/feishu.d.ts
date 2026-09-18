@@ -1860,6 +1860,38 @@ declare module "@oomol-lab/connector" {
         raw: Record<string, unknown>;
       };
     };
+    /** Create or reply to a Feishu OKR comment. */
+    "feishu.create_okr_comment": {
+      input: {
+        /** The OKR entity type that owns the comment. */
+        targetType: "cycle" | "progress" | "objective" | "key_result";
+        /**
+         * The cycle, progress, objective, or key-result ID.
+         * @minLength 1
+         */
+        targetId: string;
+        /** The Feishu OKR ContentBlock payload for the comment. */
+        content: Record<string, unknown>;
+        /**
+         * The selected objective or key-result text to comment on.
+         * @minLength 1
+         */
+        selectedText?: string;
+        /**
+         * The existing comment ID to reply to.
+         * @minLength 1
+         */
+        refCommentId?: string;
+        /** The identifier type used for user fields. */
+        userIdType?: "open_id" | "union_id" | "user_id";
+      };
+      output: {
+        /** The created comment ID. */
+        commentId: string;
+        /** The created selection ID, when applicable. */
+        selectionId: string | null;
+      };
+    };
     /** Create a progress record for an objective or key result. */
     "feishu.create_okr_progress": {
       input: {
@@ -2896,6 +2928,22 @@ declare module "@oomol-lab/connector" {
         deleted: boolean;
         /** The deleted alignment ID. */
         alignmentId: string;
+      };
+    };
+    /** Permanently delete a Feishu OKR comment. */
+    "feishu.delete_okr_comment": {
+      input: {
+        /**
+         * The OKR comment ID.
+         * @minLength 1
+         */
+        commentId: string;
+      };
+      output: {
+        /** Whether the comment was deleted. */
+        deleted: boolean;
+        /** The deleted comment ID. */
+        commentId: string;
       };
     };
     /** Delete a Feishu OKR progress record. */
@@ -5193,6 +5241,22 @@ declare module "@oomol-lab/connector" {
         transcript: string;
       };
     };
+    /** Get one Feishu OKR comment by ID. */
+    "feishu.get_okr_comment": {
+      input: {
+        /**
+         * The OKR comment ID.
+         * @minLength 1
+         */
+        commentId: string;
+        /** The identifier type used for user fields. */
+        userIdType?: "open_id" | "union_id" | "user_id";
+      };
+      output: {
+        /** A Feishu OKR object. */
+        comment: Record<string, unknown>;
+      };
+    };
     /** List every objective in an OKR cycle and fetch the key results below each objective. */
     "feishu.get_okr_cycle_detail": {
       input: {
@@ -7419,6 +7483,39 @@ declare module "@oomol-lab/connector" {
         pageToken: string | null;
       };
     };
+    /** List one page of comments attached to a Feishu OKR entity. */
+    "feishu.list_okr_comments": {
+      input: {
+        /** The OKR entity type that owns the comment. */
+        targetType: "cycle" | "progress" | "objective" | "key_result";
+        /**
+         * The cycle, progress, objective, or key-result ID.
+         * @minLength 1
+         */
+        targetId: string;
+        /**
+         * The maximum number of results on this page.
+         * @maximum 100
+         * @exclusiveMinimum 0
+         */
+        pageSize?: number;
+        /**
+         * The page token returned by the previous request.
+         * @minLength 1
+         */
+        pageToken?: string;
+        /** The identifier type used for user fields. */
+        userIdType?: "open_id" | "union_id" | "user_id";
+      };
+      output: {
+        /** The OKR objects returned on this page. */
+        items: Array<Record<string, unknown>>;
+        /** Whether another page is available. */
+        hasMore: boolean;
+        /** The token for the next page. */
+        pageToken: string | null;
+      };
+    };
     /** List Feishu OKR cycles visible to a user. */
     "feishu.list_okr_cycles": {
       input: {
@@ -8951,6 +9048,22 @@ declare module "@oomol-lab/connector" {
            */
           sizeBytes: number;
         };
+      };
+    };
+    /** Reopen a solved Feishu OKR comment or selection thread. */
+    "feishu.reopen_okr_comment": {
+      input: {
+        /**
+         * The OKR comment ID.
+         * @minLength 1
+         */
+        commentId: string;
+        /** The identifier type used for user fields. */
+        userIdType?: "open_id" | "union_id" | "user_id";
+      };
+      output: {
+        /** The comments affected by this operation. */
+        comments: Array<Record<string, unknown>>;
       };
     };
     /** Reopen a completed Feishu task. */
@@ -10956,6 +11069,22 @@ declare module "@oomol-lab/connector" {
         raw: Record<string, unknown>;
       };
     };
+    /** Mark a Feishu OKR comment or its selection thread as solved. */
+    "feishu.solve_okr_comment": {
+      input: {
+        /**
+         * The OKR comment ID.
+         * @minLength 1
+         */
+        commentId: string;
+        /** The identifier type used for user fields. */
+        userIdType?: "open_id" | "union_id" | "user_id";
+      };
+      output: {
+        /** The comments affected by this operation. */
+        comments: Array<Record<string, unknown>>;
+      };
+    };
     /** Sort a cell range by one or more columns. */
     "feishu.sort_sheet_range": {
       input: {
@@ -12243,6 +12372,24 @@ declare module "@oomol-lab/connector" {
         minuteToken: string;
         /** The updated Minutes title. */
         topic: string;
+      };
+    };
+    /** Replace the content of a Feishu OKR comment. */
+    "feishu.update_okr_comment": {
+      input: {
+        /**
+         * The OKR comment ID.
+         * @minLength 1
+         */
+        commentId: string;
+        /** The Feishu OKR ContentBlock payload for the comment. */
+        content: Record<string, unknown>;
+        /** The identifier type used for user fields. */
+        userIdType?: "open_id" | "union_id" | "user_id";
+      };
+      output: {
+        /** A Feishu OKR object. */
+        comment: Record<string, unknown>;
       };
     };
     /** Find the first indicator for an objective or key result and update its current value. */

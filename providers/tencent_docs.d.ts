@@ -41,7 +41,31 @@ declare module "@oomol-lab/connector" {
          * @minItems 1
          * @maxItems 5
          */
-        requests: Array<Record<string, unknown>>;
+        requests: Array<{
+          /** The provider-defined body for one Tencent Docs spreadsheet operation. */
+          addSheetRequest: Record<string, unknown>;
+        } | {
+          /** The range data to update in one Tencent Docs sheet. */
+          updateRangeRequest: {
+            /**
+             * The unique Tencent Docs sheet ID.
+             * @minLength 1
+             */
+            sheetId: string;
+            /** The Tencent Docs grid data to write. */
+            gridData: Record<string, unknown>;
+            [key: string]: unknown;
+          };
+        } | {
+          /** The provider-defined body for one Tencent Docs spreadsheet operation. */
+          deleteDimensionRequest: Record<string, unknown>;
+        } | {
+          /** The provider-defined body for one Tencent Docs spreadsheet operation. */
+          deleteSheetRequest: Record<string, unknown>;
+        } | {
+          /** The provider-defined body for one Tencent Docs spreadsheet operation. */
+          insertImageRequest: Record<string, unknown>;
+        }>;
       };
       output: {
         /** The Tencent Docs business response code. 0 means success. */
