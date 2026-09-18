@@ -4801,6 +4801,22 @@ declare module "@oomol-lab/connector" {
         hasMore: boolean;
       };
     };
+    /** Get one Feishu OKR comment by ID. */
+    "feishu_app_bot.get_okr_comment": {
+      input: {
+        /**
+         * The OKR comment ID.
+         * @minLength 1
+         */
+        commentId: string;
+        /** The identifier type used for user fields. */
+        userIdType?: "open_id" | "union_id" | "user_id";
+      };
+      output: {
+        /** A Feishu OKR object. */
+        comment: Record<string, unknown>;
+      };
+    };
     /** List every objective in an OKR cycle and fetch the key results below each objective. */
     "feishu_app_bot.get_okr_cycle_detail": {
       input: {
@@ -6690,6 +6706,39 @@ declare module "@oomol-lab/connector" {
       };
       output: {
         /** The OKR categories returned on this page. */
+        items: Array<Record<string, unknown>>;
+        /** Whether another page is available. */
+        hasMore: boolean;
+        /** The token for the next page. */
+        pageToken: string | null;
+      };
+    };
+    /** List one page of comments attached to a Feishu OKR entity. */
+    "feishu_app_bot.list_okr_comments": {
+      input: {
+        /** The OKR entity type that owns the comment. */
+        targetType: "cycle" | "progress" | "objective" | "key_result";
+        /**
+         * The cycle, progress, objective, or key-result ID.
+         * @minLength 1
+         */
+        targetId: string;
+        /**
+         * The maximum number of results on this page.
+         * @maximum 100
+         * @exclusiveMinimum 0
+         */
+        pageSize?: number;
+        /**
+         * The page token returned by the previous request.
+         * @minLength 1
+         */
+        pageToken?: string;
+        /** The identifier type used for user fields. */
+        userIdType?: "open_id" | "union_id" | "user_id";
+      };
+      output: {
+        /** The OKR objects returned on this page. */
         items: Array<Record<string, unknown>>;
         /** Whether another page is available. */
         hasMore: boolean;

@@ -31,7 +31,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       } | {
         /** Task state. */
-        state: "not_found";
+        state: "failed" | "not_found";
         /** Error message. */
         error: string;
         [key: string]: unknown;
@@ -59,7 +59,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       } | {
         /** Task state. */
-        state: "not_found";
+        state: "failed" | "not_found";
         /** Error message. */
         error: string;
         [key: string]: unknown;
@@ -175,7 +175,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       } | {
         /** Task state. */
-        state: "not_found";
+        state: "failed" | "not_found";
         /** Error message. */
         error: string;
         [key: string]: unknown;
@@ -203,7 +203,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       } | {
         /** Task state. */
-        state: "not_found";
+        state: "failed" | "not_found";
         /** Error message. */
         error: string;
         [key: string]: unknown;
@@ -320,7 +320,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       } | {
         /** Task state. */
-        state: "not_found";
+        state: "failed" | "not_found";
         /** Error message. */
         error: string;
         [key: string]: unknown;
@@ -348,7 +348,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       } | {
         /** Task state. */
-        state: "not_found";
+        state: "failed" | "not_found";
         /** Error message. */
         error: string;
         [key: string]: unknown;
@@ -401,7 +401,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       } | {
         /** Task state. */
-        state: "not_found";
+        state: "failed" | "not_found";
         /** Error message. */
         error: string;
         [key: string]: unknown;
@@ -429,7 +429,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       } | {
         /** Task state. */
-        state: "not_found";
+        state: "failed" | "not_found";
         /** Error message. */
         error: string;
         [key: string]: unknown;
@@ -476,7 +476,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       } | {
         /** Task state. */
-        state: "not_found";
+        state: "failed" | "not_found";
         /** Error message. */
         error: string;
         [key: string]: unknown;
@@ -504,7 +504,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       } | {
         /** Task state. */
-        state: "not_found";
+        state: "failed" | "not_found";
         /** Error message. */
         error: string;
         [key: string]: unknown;
@@ -606,7 +606,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       } | {
         /** Task state. */
-        state: "not_found";
+        state: "failed" | "not_found";
         /** Error message. */
         error: string;
         [key: string]: unknown;
@@ -634,7 +634,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       } | {
         /** Task state. */
-        state: "not_found";
+        state: "failed" | "not_found";
         /** Error message. */
         error: string;
         [key: string]: unknown;
@@ -713,7 +713,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       } | {
         /** Task state. */
-        state: "not_found";
+        state: "failed" | "not_found";
         /** Error message. */
         error: string;
         [key: string]: unknown;
@@ -741,7 +741,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       } | {
         /** Task state. */
-        state: "not_found";
+        state: "failed" | "not_found";
         /** Error message. */
         error: string;
         [key: string]: unknown;
@@ -836,7 +836,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       } | {
         /** Task state. */
-        state: "not_found";
+        state: "failed" | "not_found";
         /** Error message. */
         error: string;
         [key: string]: unknown;
@@ -864,7 +864,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       } | {
         /** Task state. */
-        state: "not_found";
+        state: "failed" | "not_found";
         /** Error message. */
         error: string;
         [key: string]: unknown;
@@ -993,7 +993,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       } | {
         /** Task state. */
-        state: "not_found";
+        state: "failed" | "not_found";
         /** Error message. */
         error: string;
         [key: string]: unknown;
@@ -1021,7 +1021,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       } | {
         /** Task state. */
-        state: "not_found";
+        state: "failed" | "not_found";
         /** Error message. */
         error: string;
         [key: string]: unknown;
@@ -1318,7 +1318,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       } | {
         /** Task state. */
-        state: "not_found";
+        state: "failed" | "not_found";
         /** Error message. */
         error: string;
         [key: string]: unknown;
@@ -1425,7 +1425,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       } | {
         /** Task state. */
-        state: "not_found";
+        state: "failed" | "not_found";
         /** Error message. */
         error: string;
         [key: string]: unknown;
@@ -1536,7 +1536,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       } | {
         /** Task state. */
-        state: "not_found";
+        state: "failed" | "not_found";
         /** Error message. */
         error: string;
         [key: string]: unknown;
@@ -1564,7 +1564,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       } | {
         /** Task state. */
-        state: "not_found";
+        state: "failed" | "not_found";
         /** Error message. */
         error: string;
         [key: string]: unknown;
@@ -1660,7 +1660,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       } | {
         /** Task state. */
-        state: "not_found";
+        state: "failed" | "not_found";
         /** Error message. */
         error: string;
         [key: string]: unknown;
@@ -1688,7 +1688,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       } | {
         /** Task state. */
-        state: "not_found";
+        state: "failed" | "not_found";
         /** Error message. */
         error: string;
         [key: string]: unknown;
@@ -1784,7 +1784,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       } | {
         /** Task state. */
-        state: "not_found";
+        state: "failed" | "not_found";
         /** Error message. */
         error: string;
         [key: string]: unknown;
@@ -1812,7 +1812,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       } | {
         /** Task state. */
-        state: "not_found";
+        state: "failed" | "not_found";
         /** Error message. */
         error: string;
         [key: string]: unknown;
@@ -2038,7 +2038,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       } | {
         /** Task state. */
-        state: "not_found";
+        state: "failed" | "not_found";
         /** Error message. */
         error: string;
         [key: string]: unknown;
@@ -2066,7 +2066,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       } | {
         /** Task state. */
-        state: "not_found";
+        state: "failed" | "not_found";
         /** Error message. */
         error: string;
         [key: string]: unknown;
@@ -2523,7 +2523,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       } | {
         /** Task state. */
-        state: "not_found";
+        state: "failed" | "not_found";
         /** Error message. */
         error: string;
         [key: string]: unknown;
@@ -2551,7 +2551,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       } | {
         /** Task state. */
-        state: "not_found";
+        state: "failed" | "not_found";
         /** Error message. */
         error: string;
         [key: string]: unknown;
@@ -2763,7 +2763,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       } | {
         /** Task state. */
-        state: "not_found";
+        state: "failed" | "not_found";
         /** Error message. */
         error: string;
         [key: string]: unknown;
@@ -2791,7 +2791,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       } | {
         /** Task state. */
-        state: "not_found";
+        state: "failed" | "not_found";
         /** Error message. */
         error: string;
         [key: string]: unknown;
@@ -2908,7 +2908,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       } | {
         /** Task state. */
-        state: "not_found";
+        state: "failed" | "not_found";
         /** Error message. */
         error: string;
         [key: string]: unknown;
@@ -2936,7 +2936,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       } | {
         /** Task state. */
-        state: "not_found";
+        state: "failed" | "not_found";
         /** Error message. */
         error: string;
         [key: string]: unknown;
@@ -3044,7 +3044,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       } | {
         /** Task state. */
-        state: "not_found";
+        state: "failed" | "not_found";
         /** Error message. */
         error: string;
         [key: string]: unknown;
@@ -3072,7 +3072,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       } | {
         /** Task state. */
-        state: "not_found";
+        state: "failed" | "not_found";
         /** Error message. */
         error: string;
         [key: string]: unknown;
@@ -3188,7 +3188,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       } | {
         /** Task state. */
-        state: "not_found";
+        state: "failed" | "not_found";
         /** Error message. */
         error: string;
         [key: string]: unknown;
@@ -3216,7 +3216,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       } | {
         /** Task state. */
-        state: "not_found";
+        state: "failed" | "not_found";
         /** Error message. */
         error: string;
         [key: string]: unknown;
@@ -3339,7 +3339,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       } | {
         /** Task state. */
-        state: "not_found";
+        state: "failed" | "not_found";
         /** Error message. */
         error: string;
         [key: string]: unknown;
@@ -3367,7 +3367,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       } | {
         /** Task state. */
-        state: "not_found";
+        state: "failed" | "not_found";
         /** Error message. */
         error: string;
         [key: string]: unknown;

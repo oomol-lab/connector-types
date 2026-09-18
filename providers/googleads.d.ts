@@ -478,6 +478,11 @@ declare module "@oomol-lab/connector" {
     "googleads.search_stream_gaql": {
       input: {
         /**
+         * The Google Ads customer ID to query, overriding the connected account.
+         * @minLength 1
+         */
+        customerId?: string;
+        /**
          * The GAQL query to execute.
          * @minLength 1
          */
