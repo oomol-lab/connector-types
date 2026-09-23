@@ -231,6 +231,13 @@ declare module "@oomol-lab/connector" {
             starred?: boolean;
             /** Whether the file has been trashed. */
             trashed?: boolean;
+            /** Whether the authenticated user owns the file. */
+            ownedByMe?: boolean;
+            /** The projected Drive capabilities for the authenticated user. */
+            capabilities?: {
+              /** Whether the authenticated user may modify sharing settings. */
+              canShare: boolean;
+            };
           };
         }>;
         /** The page token for the next page of changes. */
@@ -1063,6 +1070,13 @@ declare module "@oomol-lab/connector" {
         starred?: boolean;
         /** Whether the file has been trashed. */
         trashed?: boolean;
+        /** Whether the authenticated user owns the file. */
+        ownedByMe?: boolean;
+        /** The projected Drive capabilities for the authenticated user. */
+        capabilities?: {
+          /** Whether the authenticated user may modify sharing settings. */
+          canShare: boolean;
+        };
       };
     };
     /** Create a Drive file with official File metadata and optional connector media upload content. */
@@ -1138,6 +1152,13 @@ declare module "@oomol-lab/connector" {
         starred?: boolean;
         /** Whether the file has been trashed. */
         trashed?: boolean;
+        /** Whether the authenticated user owns the file. */
+        ownedByMe?: boolean;
+        /** The projected Drive capabilities for the authenticated user. */
+        capabilities?: {
+          /** Whether the authenticated user may modify sharing settings. */
+          canShare: boolean;
+        };
       };
     };
     /** Permanently delete a Drive file or folder by ID. */
@@ -1278,6 +1299,13 @@ declare module "@oomol-lab/connector" {
         starred?: boolean;
         /** Whether the file has been trashed. */
         trashed?: boolean;
+        /** Whether the authenticated user owns the file. */
+        ownedByMe?: boolean;
+        /** The projected Drive capabilities for the authenticated user. */
+        capabilities?: {
+          /** Whether the authenticated user may modify sharing settings. */
+          canShare: boolean;
+        };
       } | {
         /** The unique identifier of the downloaded file. */
         fileId: string;
@@ -1372,6 +1400,13 @@ declare module "@oomol-lab/connector" {
           starred?: boolean;
           /** Whether the file has been trashed. */
           trashed?: boolean;
+          /** Whether the authenticated user owns the file. */
+          ownedByMe?: boolean;
+          /** The projected Drive capabilities for the authenticated user. */
+          capabilities?: {
+            /** Whether the authenticated user may modify sharing settings. */
+            canShare: boolean;
+          };
         }>;
         /** The page token for the next page of results, if any. */
         nextPageToken: string | null;
@@ -1639,6 +1674,13 @@ declare module "@oomol-lab/connector" {
         starred?: boolean;
         /** Whether the file has been trashed. */
         trashed?: boolean;
+        /** Whether the authenticated user owns the file. */
+        ownedByMe?: boolean;
+        /** The projected Drive capabilities for the authenticated user. */
+        capabilities?: {
+          /** Whether the authenticated user may modify sharing settings. */
+          canShare: boolean;
+        };
       };
     };
     /** Create a permission on a Drive file or shared drive. */

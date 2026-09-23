@@ -90,6 +90,250 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
+    /** Get a stock ticker's open, close, and extended-hours prices for one date. */
+    "polygon_io.get_daily_open_close": {
+      input: {
+        /**
+         * The case-sensitive Massive ticker symbol, for example AAPL.
+         * @minLength 1
+         */
+        ticker: string;
+        /**
+         * The trading date to retrieve.
+         * @format date
+         */
+        date: string;
+        /** Whether prices should be adjusted for splits. */
+        adjusted?: boolean;
+      };
+      output: {
+        /** Common response metadata returned by Massive. */
+        meta: {
+          /** The response status returned by Massive. */
+          status: string | null;
+          /** The request identifier assigned by Massive. */
+          requestId: string | null;
+          /** The response count when Massive reports one. */
+          count: number | null;
+        };
+        /** The result payload returned by Massive. */
+        result: unknown;
+      };
+    };
+    /** Get the EMA technical indicator for a Massive ticker. */
+    "polygon_io.get_ema": {
+      input: {
+        /**
+         * The case-sensitive Massive ticker symbol, for example AAPL.
+         * @minLength 1
+         */
+        ticker: string;
+        /**
+         * The aggregate timespan used to calculate the indicator.
+         * @minLength 1
+         */
+        timespan?: string;
+        /**
+         * The number of aggregate periods in the calculation window.
+         * @exclusiveMinimum 0
+         */
+        window?: number;
+        /** Whether the underlying aggregates should be split adjusted. */
+        adjusted?: boolean;
+        /** Whether to include the underlying aggregate bars used by the indicator. */
+        expandUnderlying?: boolean;
+        /** The aggregate price series used by the indicator. */
+        seriesType?: "open" | "high" | "low" | "close";
+        /**
+         * Filter by an exact date or millisecond timestamp.
+         * @minLength 1
+         */
+        timestamp?: string;
+        /**
+         * Return values at or after this date or timestamp.
+         * @minLength 1
+         */
+        timestampGte?: string;
+        /**
+         * Return values at or before this date or timestamp.
+         * @minLength 1
+         */
+        timestampLte?: string;
+        /** The order used when sorting returned results. */
+        order?: "asc" | "desc";
+        /**
+         * The maximum number of results to return.
+         * @minimum 1
+         * @maximum 50000
+         */
+        limit?: number;
+        /**
+         * The upstream field used to sort results.
+         * @minLength 1
+         */
+        sort?: string;
+        /**
+         * The pagination cursor from a previous response nextCursor value.
+         * @minLength 1
+         */
+        cursor?: string;
+      };
+      output: {
+        /** Common response metadata returned by Massive. */
+        meta: {
+          /** The response status returned by Massive. */
+          status: string | null;
+          /** The request identifier assigned by Massive. */
+          requestId: string | null;
+          /** The response count when Massive reports one. */
+          count: number | null;
+        };
+        /** The result payload returned by Massive. */
+        result: unknown;
+        /** Cursor pagination information returned by Massive. */
+        page: {
+          /** The next page URL when present. */
+          nextUrl: string | null;
+          /** The cursor extracted from nextUrl when present. */
+          nextCursor: string | null;
+        };
+      };
+    };
+    /** Get the latest national best bid and offer for a stock ticker. */
+    "polygon_io.get_last_stock_quote": {
+      input: {
+        /**
+         * The case-sensitive Massive ticker symbol, for example AAPL.
+         * @minLength 1
+         */
+        ticker: string;
+      };
+      output: {
+        /** Common response metadata returned by Massive. */
+        meta: {
+          /** The response status returned by Massive. */
+          status: string | null;
+          /** The request identifier assigned by Massive. */
+          requestId: string | null;
+          /** The response count when Massive reports one. */
+          count: number | null;
+        };
+        /** The result payload returned by Massive. */
+        result: unknown;
+      };
+    };
+    /** Get the latest available trade for a stock ticker. */
+    "polygon_io.get_last_stock_trade": {
+      input: {
+        /**
+         * The case-sensitive Massive ticker symbol, for example AAPL.
+         * @minLength 1
+         */
+        ticker: string;
+      };
+      output: {
+        /** Common response metadata returned by Massive. */
+        meta: {
+          /** The response status returned by Massive. */
+          status: string | null;
+          /** The request identifier assigned by Massive. */
+          requestId: string | null;
+          /** The response count when Massive reports one. */
+          count: number | null;
+        };
+        /** The result payload returned by Massive. */
+        result: unknown;
+      };
+    };
+    /** Get the MACD technical indicator for a Massive ticker. */
+    "polygon_io.get_macd": {
+      input: {
+        /**
+         * The case-sensitive Massive ticker symbol, for example AAPL.
+         * @minLength 1
+         */
+        ticker: string;
+        /**
+         * The aggregate timespan used to calculate MACD.
+         * @minLength 1
+         */
+        timespan?: string;
+        /**
+         * The short exponential moving-average window.
+         * @exclusiveMinimum 0
+         */
+        shortWindow?: number;
+        /**
+         * The long exponential moving-average window.
+         * @exclusiveMinimum 0
+         */
+        longWindow?: number;
+        /**
+         * The signal-line exponential moving-average window.
+         * @exclusiveMinimum 0
+         */
+        signalWindow?: number;
+        /** Whether the underlying aggregates should be split adjusted. */
+        adjusted?: boolean;
+        /** Whether to include the underlying aggregate bars used by MACD. */
+        expandUnderlying?: boolean;
+        /** The aggregate price series used by MACD. */
+        seriesType?: "open" | "high" | "low" | "close";
+        /**
+         * Filter by an exact date or millisecond timestamp.
+         * @minLength 1
+         */
+        timestamp?: string;
+        /**
+         * Return values at or after this date or timestamp.
+         * @minLength 1
+         */
+        timestampGte?: string;
+        /**
+         * Return values at or before this date or timestamp.
+         * @minLength 1
+         */
+        timestampLte?: string;
+        /** The order used when sorting returned results. */
+        order?: "asc" | "desc";
+        /**
+         * The maximum number of results to return.
+         * @minimum 1
+         * @maximum 50000
+         */
+        limit?: number;
+        /**
+         * The upstream field used to sort results.
+         * @minLength 1
+         */
+        sort?: string;
+        /**
+         * The pagination cursor from a previous response nextCursor value.
+         * @minLength 1
+         */
+        cursor?: string;
+      };
+      output: {
+        /** Common response metadata returned by Massive. */
+        meta: {
+          /** The response status returned by Massive. */
+          status: string | null;
+          /** The request identifier assigned by Massive. */
+          requestId: string | null;
+          /** The response count when Massive reports one. */
+          count: number | null;
+        };
+        /** The result payload returned by Massive. */
+        result: unknown;
+        /** Cursor pagination information returned by Massive. */
+        page: {
+          /** The next page URL when present. */
+          nextUrl: string | null;
+          /** The cursor extracted from nextUrl when present. */
+          nextCursor: string | null;
+        };
+      };
+    };
     /** Get the current Polygon.io market status for stocks, currencies, and indices. */
     "polygon_io.get_market_status": {
       input: Record<string, never>;
@@ -119,6 +363,133 @@ declare module "@oomol-lab/connector" {
         indicesGroups: Record<string, string>;
         /** The raw market status object returned by Polygon.io. */
         raw: Record<string, unknown>;
+      };
+    };
+    /** Get an options chain with prices, Greeks, implied volatility, and open interest. */
+    "polygon_io.get_option_chain_snapshot": {
+      input: {
+        /**
+         * The case-sensitive Massive ticker symbol, for example AAPL.
+         * @minLength 1
+         */
+        underlyingTicker: string;
+        /** Filter by options contract type. */
+        contractType?: "call" | "put";
+        /**
+         * Filter by an exact expiration date.
+         * @format date
+         */
+        expirationDate?: string;
+        /**
+         * Return contracts expiring on or after this date.
+         * @format date
+         */
+        expirationDateGte?: string;
+        /**
+         * Return contracts expiring on or before this date.
+         * @format date
+         */
+        expirationDateLte?: string;
+        /** Filter by an exact strike price. */
+        strikePrice?: number;
+        /** Return contracts at or above this strike price. */
+        strikePriceGte?: number;
+        /** Return contracts at or below this strike price. */
+        strikePriceLte?: number;
+        /** The order used when sorting returned results. */
+        order?: "asc" | "desc";
+        /**
+         * The maximum number of results to return.
+         * @minimum 1
+         * @maximum 50000
+         */
+        limit?: number;
+        /**
+         * The upstream field used to sort results.
+         * @minLength 1
+         */
+        sort?: string;
+        /**
+         * The pagination cursor from a previous response nextCursor value.
+         * @minLength 1
+         */
+        cursor?: string;
+      };
+      output: {
+        /** Common response metadata returned by Massive. */
+        meta: {
+          /** The response status returned by Massive. */
+          status: string | null;
+          /** The request identifier assigned by Massive. */
+          requestId: string | null;
+          /** The response count when Massive reports one. */
+          count: number | null;
+        };
+        /** The result records returned by Massive. */
+        results: Array<Record<string, unknown>>;
+        /** Cursor pagination information returned by Massive. */
+        page: {
+          /** The next page URL when present. */
+          nextUrl: string | null;
+          /** The cursor extracted from nextUrl when present. */
+          nextCursor: string | null;
+        };
+      };
+    };
+    /** Get reference details for one Massive options contract. */
+    "polygon_io.get_option_contract": {
+      input: {
+        /**
+         * The case-sensitive Massive options contract ticker.
+         * @minLength 1
+         */
+        optionsTicker: string;
+        /**
+         * Return the contract definition valid as of this date.
+         * @format date
+         */
+        asOf?: string;
+      };
+      output: {
+        /** Common response metadata returned by Massive. */
+        meta: {
+          /** The response status returned by Massive. */
+          status: string | null;
+          /** The request identifier assigned by Massive. */
+          requestId: string | null;
+          /** The response count when Massive reports one. */
+          count: number | null;
+        };
+        /** The result payload returned by Massive. */
+        result: unknown;
+      };
+    };
+    /** Get prices, Greeks, implied volatility, and open interest for one options contract. */
+    "polygon_io.get_option_contract_snapshot": {
+      input: {
+        /**
+         * The case-sensitive Massive ticker symbol, for example AAPL.
+         * @minLength 1
+         */
+        underlyingTicker: string;
+        /**
+         * The case-sensitive Massive options contract ticker.
+         * @minLength 1
+         */
+        optionsTicker: string;
+      };
+      output: {
+        /** Common response metadata returned by Massive. */
+        meta: {
+          /** The response status returned by Massive. */
+          status: string | null;
+          /** The request identifier assigned by Massive. */
+          requestId: string | null;
+          /** The response count when Massive reports one. */
+          count: number | null;
+        };
+        /** The result payload returned by Massive. */
+        result: unknown;
       };
     };
     /** Get the previous trading day's OHLC aggregate bar for a stock ticker. */
@@ -182,6 +553,214 @@ declare module "@oomol-lab/connector" {
           /** The cursor extracted from nextUrl when present. */
           nextCursor: string | null;
         };
+      };
+    };
+    /** Get the RSI technical indicator for a Massive ticker. */
+    "polygon_io.get_rsi": {
+      input: {
+        /**
+         * The case-sensitive Massive ticker symbol, for example AAPL.
+         * @minLength 1
+         */
+        ticker: string;
+        /**
+         * The aggregate timespan used to calculate the indicator.
+         * @minLength 1
+         */
+        timespan?: string;
+        /**
+         * The number of aggregate periods in the calculation window.
+         * @exclusiveMinimum 0
+         */
+        window?: number;
+        /** Whether the underlying aggregates should be split adjusted. */
+        adjusted?: boolean;
+        /** Whether to include the underlying aggregate bars used by the indicator. */
+        expandUnderlying?: boolean;
+        /** The aggregate price series used by the indicator. */
+        seriesType?: "open" | "high" | "low" | "close";
+        /**
+         * Filter by an exact date or millisecond timestamp.
+         * @minLength 1
+         */
+        timestamp?: string;
+        /**
+         * Return values at or after this date or timestamp.
+         * @minLength 1
+         */
+        timestampGte?: string;
+        /**
+         * Return values at or before this date or timestamp.
+         * @minLength 1
+         */
+        timestampLte?: string;
+        /** The order used when sorting returned results. */
+        order?: "asc" | "desc";
+        /**
+         * The maximum number of results to return.
+         * @minimum 1
+         * @maximum 50000
+         */
+        limit?: number;
+        /**
+         * The upstream field used to sort results.
+         * @minLength 1
+         */
+        sort?: string;
+        /**
+         * The pagination cursor from a previous response nextCursor value.
+         * @minLength 1
+         */
+        cursor?: string;
+      };
+      output: {
+        /** Common response metadata returned by Massive. */
+        meta: {
+          /** The response status returned by Massive. */
+          status: string | null;
+          /** The request identifier assigned by Massive. */
+          requestId: string | null;
+          /** The response count when Massive reports one. */
+          count: number | null;
+        };
+        /** The result payload returned by Massive. */
+        result: unknown;
+        /** Cursor pagination information returned by Massive. */
+        page: {
+          /** The next page URL when present. */
+          nextUrl: string | null;
+          /** The cursor extracted from nextUrl when present. */
+          nextCursor: string | null;
+        };
+      };
+    };
+    /** Get the SMA technical indicator for a Massive ticker. */
+    "polygon_io.get_sma": {
+      input: {
+        /**
+         * The case-sensitive Massive ticker symbol, for example AAPL.
+         * @minLength 1
+         */
+        ticker: string;
+        /**
+         * The aggregate timespan used to calculate the indicator.
+         * @minLength 1
+         */
+        timespan?: string;
+        /**
+         * The number of aggregate periods in the calculation window.
+         * @exclusiveMinimum 0
+         */
+        window?: number;
+        /** Whether the underlying aggregates should be split adjusted. */
+        adjusted?: boolean;
+        /** Whether to include the underlying aggregate bars used by the indicator. */
+        expandUnderlying?: boolean;
+        /** The aggregate price series used by the indicator. */
+        seriesType?: "open" | "high" | "low" | "close";
+        /**
+         * Filter by an exact date or millisecond timestamp.
+         * @minLength 1
+         */
+        timestamp?: string;
+        /**
+         * Return values at or after this date or timestamp.
+         * @minLength 1
+         */
+        timestampGte?: string;
+        /**
+         * Return values at or before this date or timestamp.
+         * @minLength 1
+         */
+        timestampLte?: string;
+        /** The order used when sorting returned results. */
+        order?: "asc" | "desc";
+        /**
+         * The maximum number of results to return.
+         * @minimum 1
+         * @maximum 50000
+         */
+        limit?: number;
+        /**
+         * The upstream field used to sort results.
+         * @minLength 1
+         */
+        sort?: string;
+        /**
+         * The pagination cursor from a previous response nextCursor value.
+         * @minLength 1
+         */
+        cursor?: string;
+      };
+      output: {
+        /** Common response metadata returned by Massive. */
+        meta: {
+          /** The response status returned by Massive. */
+          status: string | null;
+          /** The request identifier assigned by Massive. */
+          requestId: string | null;
+          /** The response count when Massive reports one. */
+          count: number | null;
+        };
+        /** The result payload returned by Massive. */
+        result: unknown;
+        /** Cursor pagination information returned by Massive. */
+        page: {
+          /** The next page URL when present. */
+          nextUrl: string | null;
+          /** The cursor extracted from nextUrl when present. */
+          nextCursor: string | null;
+        };
+      };
+    };
+    /** Get the current top gaining or losing U.S. stocks. */
+    "polygon_io.get_stock_movers": {
+      input: {
+        /** Whether to return gainers or losers. */
+        direction: "gainers" | "losers";
+      };
+      output: {
+        /** Common response metadata returned by Massive. */
+        meta: {
+          /** The response status returned by Massive. */
+          status: string | null;
+          /** The request identifier assigned by Massive. */
+          requestId: string | null;
+          /** The response count when Massive reports one. */
+          count: number | null;
+        };
+        /** The result records returned by Massive. */
+        results: Array<Record<string, unknown>>;
+        /** Cursor pagination information returned by Massive. */
+        page: {
+          /** The next page URL when present. */
+          nextUrl: string | null;
+          /** The cursor extracted from nextUrl when present. */
+          nextCursor: string | null;
+        };
+      };
+    };
+    /** Get the latest trade, quote, minute, day, and previous-day data for one stock. */
+    "polygon_io.get_stock_snapshot": {
+      input: {
+        /**
+         * The case-sensitive Massive ticker symbol, for example AAPL.
+         * @minLength 1
+         */
+        ticker: string;
+      };
+      output: {
+        /** Common response metadata returned by Massive. */
+        meta: {
+          /** The response status returned by Massive. */
+          status: string | null;
+          /** The request identifier assigned by Massive. */
+          requestId: string | null;
+          /** The response count when Massive reports one. */
+          count: number | null;
+        };
+        /** The result payload returned by Massive. */
+        result: unknown;
       };
     };
     /** Get comprehensive details for a single Polygon.io ticker. */
@@ -281,6 +860,337 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
+    /** Get current snapshots for an explicit list of Massive tickers across asset classes. */
+    "polygon_io.get_unified_snapshot": {
+      input: {
+        /**
+         * The ticker symbols to retrieve.
+         * @minItems 1
+         * @maxItems 250
+         */
+        tickers: Array<string>;
+        /** The optional asset type filter. */
+        assetType?: "stocks" | "options" | "fx" | "crypto" | "indices";
+        /** The order used when sorting returned results. */
+        order?: "asc" | "desc";
+        /**
+         * The maximum number of snapshot results to return.
+         * @minimum 1
+         * @maximum 250
+         */
+        limit?: number;
+        /**
+         * The upstream field used to sort results.
+         * @minLength 1
+         */
+        sort?: string;
+        /**
+         * The pagination cursor from a previous response nextCursor value.
+         * @minLength 1
+         */
+        cursor?: string;
+      };
+      output: {
+        /** Common response metadata returned by Massive. */
+        meta: {
+          /** The response status returned by Massive. */
+          status: string | null;
+          /** The request identifier assigned by Massive. */
+          requestId: string | null;
+          /** The response count when Massive reports one. */
+          count: number | null;
+        };
+        /** The result records returned by Massive. */
+        results: Array<Record<string, unknown>>;
+        /** Cursor pagination information returned by Massive. */
+        page: {
+          /** The next page URL when present. */
+          nextUrl: string | null;
+          /** The cursor extracted from nextUrl when present. */
+          nextCursor: string | null;
+        };
+      };
+    };
+    /** List company balance sheets from Massive. */
+    "polygon_io.list_balance_sheets": {
+      input: {
+        /**
+         * Filter by one or more stock tickers.
+         * @minItems 1
+         * @maxItems 250
+         */
+        tickers?: Array<string>;
+        /**
+         * Filter by Central Index Key.
+         * @minLength 1
+         */
+        cik?: string;
+        /** Filter by reporting timeframe. */
+        timeframe?: "quarterly" | "annual" | "trailing_twelve_months";
+        /** Filter by fiscal year. */
+        fiscalYear?: number;
+        /**
+         * Filter by fiscal quarter.
+         * @minimum 1
+         * @maximum 4
+         */
+        fiscalQuarter?: number;
+        /**
+         * Filter by an exact reporting period end date.
+         * @format date
+         */
+        periodEnd?: string;
+        /**
+         * Return periods ending on or after this date.
+         * @format date
+         */
+        periodEndGte?: string;
+        /**
+         * Return periods ending on or before this date.
+         * @format date
+         */
+        periodEndLte?: string;
+        /**
+         * Return statements filed on or after this date.
+         * @format date
+         */
+        filingDateGte?: string;
+        /**
+         * Return statements filed on or before this date.
+         * @format date
+         */
+        filingDateLte?: string;
+        /** The order used when sorting returned results. */
+        order?: "asc" | "desc";
+        /**
+         * The maximum number of results to return.
+         * @minimum 1
+         * @maximum 50000
+         */
+        limit?: number;
+        /**
+         * The upstream field used to sort results.
+         * @minLength 1
+         */
+        sort?: string;
+        /**
+         * The pagination cursor from a previous response nextCursor value.
+         * @minLength 1
+         */
+        cursor?: string;
+      };
+      output: {
+        /** Common response metadata returned by Massive. */
+        meta: {
+          /** The response status returned by Massive. */
+          status: string | null;
+          /** The request identifier assigned by Massive. */
+          requestId: string | null;
+          /** The response count when Massive reports one. */
+          count: number | null;
+        };
+        /** The result records returned by Massive. */
+        results: Array<Record<string, unknown>>;
+        /** Cursor pagination information returned by Massive. */
+        page: {
+          /** The next page URL when present. */
+          nextUrl: string | null;
+          /** The cursor extracted from nextUrl when present. */
+          nextCursor: string | null;
+        };
+      };
+    };
+    /** List company cash flow statements from Massive. */
+    "polygon_io.list_cash_flow_statements": {
+      input: {
+        /**
+         * Filter by one or more stock tickers.
+         * @minItems 1
+         * @maxItems 250
+         */
+        tickers?: Array<string>;
+        /**
+         * Filter by Central Index Key.
+         * @minLength 1
+         */
+        cik?: string;
+        /** Filter by reporting timeframe. */
+        timeframe?: "quarterly" | "annual" | "trailing_twelve_months";
+        /** Filter by fiscal year. */
+        fiscalYear?: number;
+        /**
+         * Filter by fiscal quarter.
+         * @minimum 1
+         * @maximum 4
+         */
+        fiscalQuarter?: number;
+        /**
+         * Filter by an exact reporting period end date.
+         * @format date
+         */
+        periodEnd?: string;
+        /**
+         * Return periods ending on or after this date.
+         * @format date
+         */
+        periodEndGte?: string;
+        /**
+         * Return periods ending on or before this date.
+         * @format date
+         */
+        periodEndLte?: string;
+        /**
+         * Return statements filed on or after this date.
+         * @format date
+         */
+        filingDateGte?: string;
+        /**
+         * Return statements filed on or before this date.
+         * @format date
+         */
+        filingDateLte?: string;
+        /** The order used when sorting returned results. */
+        order?: "asc" | "desc";
+        /**
+         * The maximum number of results to return.
+         * @minimum 1
+         * @maximum 50000
+         */
+        limit?: number;
+        /**
+         * The upstream field used to sort results.
+         * @minLength 1
+         */
+        sort?: string;
+        /**
+         * The pagination cursor from a previous response nextCursor value.
+         * @minLength 1
+         */
+        cursor?: string;
+      };
+      output: {
+        /** Common response metadata returned by Massive. */
+        meta: {
+          /** The response status returned by Massive. */
+          status: string | null;
+          /** The request identifier assigned by Massive. */
+          requestId: string | null;
+          /** The response count when Massive reports one. */
+          count: number | null;
+        };
+        /** The result records returned by Massive. */
+        results: Array<Record<string, unknown>>;
+        /** Cursor pagination information returned by Massive. */
+        page: {
+          /** The next page URL when present. */
+          nextUrl: string | null;
+          /** The cursor extracted from nextUrl when present. */
+          nextCursor: string | null;
+        };
+      };
+    };
+    /** List trade and quote condition codes known by Massive. */
+    "polygon_io.list_condition_codes": {
+      input: {
+        /**
+         * Filter by asset class, such as stocks or options.
+         * @minLength 1
+         */
+        assetClass?: string;
+        /** Filter conditions by market data type. */
+        dataType?: "trade" | "quote";
+        /** Filter by the Massive condition identifier. */
+        id?: number;
+        /**
+         * Filter by a Securities Information Processor mapping.
+         * @minLength 1
+         */
+        sipMapping?: string;
+      };
+      output: {
+        /** Common response metadata returned by Massive. */
+        meta: {
+          /** The response status returned by Massive. */
+          status: string | null;
+          /** The request identifier assigned by Massive. */
+          requestId: string | null;
+          /** The response count when Massive reports one. */
+          count: number | null;
+        };
+        /** The result records returned by Massive. */
+        results: Array<Record<string, unknown>>;
+        /** Cursor pagination information returned by Massive. */
+        page: {
+          /** The next page URL when present. */
+          nextUrl: string | null;
+          /** The cursor extracted from nextUrl when present. */
+          nextCursor: string | null;
+        };
+      };
+    };
+    /** List current-version stock dividend events and adjustment factors. */
+    "polygon_io.list_dividends": {
+      input: {
+        /**
+         * The case-sensitive Massive ticker symbol, for example AAPL.
+         * @minLength 1
+         */
+        ticker?: string;
+        /**
+         * Filter by an exact ex-dividend date.
+         * @format date
+         */
+        exDividendDate?: string;
+        /**
+         * Return dividends with an ex-dividend date on or after this date.
+         * @format date
+         */
+        exDividendDateGte?: string;
+        /**
+         * Return dividends with an ex-dividend date on or before this date.
+         * @format date
+         */
+        exDividendDateLte?: string;
+        /** The order used when sorting returned results. */
+        order?: "asc" | "desc";
+        /**
+         * The maximum number of results to return.
+         * @minimum 1
+         * @maximum 50000
+         */
+        limit?: number;
+        /**
+         * The upstream field used to sort results.
+         * @minLength 1
+         */
+        sort?: string;
+        /**
+         * The pagination cursor from a previous response nextCursor value.
+         * @minLength 1
+         */
+        cursor?: string;
+      };
+      output: {
+        /** Common response metadata returned by Massive. */
+        meta: {
+          /** The response status returned by Massive. */
+          status: string | null;
+          /** The request identifier assigned by Massive. */
+          requestId: string | null;
+          /** The response count when Massive reports one. */
+          count: number | null;
+        };
+        /** The result records returned by Massive. */
+        results: Array<Record<string, unknown>>;
+        /** Cursor pagination information returned by Massive. */
+        page: {
+          /** The next page URL when present. */
+          nextUrl: string | null;
+          /** The cursor extracted from nextUrl when present. */
+          nextCursor: string | null;
+        };
+      };
+    };
     /** List known exchanges available through Polygon.io. */
     "polygon_io.list_exchanges": {
       input: {
@@ -330,6 +1240,854 @@ declare module "@oomol-lab/connector" {
           /** The raw exchange object returned by Polygon.io. */
           raw: Record<string, unknown>;
         }>;
+      };
+    };
+    /** List company financial ratios from Massive. */
+    "polygon_io.list_financial_ratios": {
+      input: {
+        /**
+         * Filter by one or more stock tickers.
+         * @minItems 1
+         * @maxItems 250
+         */
+        tickers?: Array<string>;
+        /**
+         * Filter by Central Index Key.
+         * @minLength 1
+         */
+        cik?: string;
+        /** Filter by reporting timeframe. */
+        timeframe?: "quarterly" | "annual" | "trailing_twelve_months";
+        /** Filter by fiscal year. */
+        fiscalYear?: number;
+        /**
+         * Filter by fiscal quarter.
+         * @minimum 1
+         * @maximum 4
+         */
+        fiscalQuarter?: number;
+        /**
+         * Filter by an exact reporting period end date.
+         * @format date
+         */
+        periodEnd?: string;
+        /**
+         * Return periods ending on or after this date.
+         * @format date
+         */
+        periodEndGte?: string;
+        /**
+         * Return periods ending on or before this date.
+         * @format date
+         */
+        periodEndLte?: string;
+        /**
+         * Return statements filed on or after this date.
+         * @format date
+         */
+        filingDateGte?: string;
+        /**
+         * Return statements filed on or before this date.
+         * @format date
+         */
+        filingDateLte?: string;
+        /** The order used when sorting returned results. */
+        order?: "asc" | "desc";
+        /**
+         * The maximum number of results to return.
+         * @minimum 1
+         * @maximum 50000
+         */
+        limit?: number;
+        /**
+         * The upstream field used to sort results.
+         * @minLength 1
+         */
+        sort?: string;
+        /**
+         * The pagination cursor from a previous response nextCursor value.
+         * @minLength 1
+         */
+        cursor?: string;
+      };
+      output: {
+        /** Common response metadata returned by Massive. */
+        meta: {
+          /** The response status returned by Massive. */
+          status: string | null;
+          /** The request identifier assigned by Massive. */
+          requestId: string | null;
+          /** The response count when Massive reports one. */
+          count: number | null;
+        };
+        /** The result records returned by Massive. */
+        results: Array<Record<string, unknown>>;
+        /** Cursor pagination information returned by Massive. */
+        page: {
+          /** The next page URL when present. */
+          nextUrl: string | null;
+          /** The cursor extracted from nextUrl when present. */
+          nextCursor: string | null;
+        };
+      };
+    };
+    /** List U.S. funding conditions observations from Massive. */
+    "polygon_io.list_funding_conditions": {
+      input: {
+        /**
+         * Filter results to this date.
+         * @format date
+         */
+        date?: string;
+        /**
+         * Return results on or after this date.
+         * @format date
+         */
+        dateGte?: string;
+        /**
+         * Return results on or before this date.
+         * @format date
+         */
+        dateLte?: string;
+        /** The order used when sorting returned results. */
+        order?: "asc" | "desc";
+        /**
+         * The maximum number of results to return.
+         * @minimum 1
+         * @maximum 50000
+         */
+        limit?: number;
+        /**
+         * The upstream field used to sort results.
+         * @minLength 1
+         */
+        sort?: string;
+        /**
+         * The pagination cursor from a previous response nextCursor value.
+         * @minLength 1
+         */
+        cursor?: string;
+      };
+      output: {
+        /** Common response metadata returned by Massive. */
+        meta: {
+          /** The response status returned by Massive. */
+          status: string | null;
+          /** The request identifier assigned by Massive. */
+          requestId: string | null;
+          /** The response count when Massive reports one. */
+          count: number | null;
+        };
+        /** The result records returned by Massive. */
+        results: Array<Record<string, unknown>>;
+        /** Cursor pagination information returned by Massive. */
+        page: {
+          /** The next page URL when present. */
+          nextUrl: string | null;
+          /** The cursor extracted from nextUrl when present. */
+          nextCursor: string | null;
+        };
+      };
+    };
+    /** List company income statements from Massive. */
+    "polygon_io.list_income_statements": {
+      input: {
+        /**
+         * Filter by one or more stock tickers.
+         * @minItems 1
+         * @maxItems 250
+         */
+        tickers?: Array<string>;
+        /**
+         * Filter by Central Index Key.
+         * @minLength 1
+         */
+        cik?: string;
+        /** Filter by reporting timeframe. */
+        timeframe?: "quarterly" | "annual" | "trailing_twelve_months";
+        /** Filter by fiscal year. */
+        fiscalYear?: number;
+        /**
+         * Filter by fiscal quarter.
+         * @minimum 1
+         * @maximum 4
+         */
+        fiscalQuarter?: number;
+        /**
+         * Filter by an exact reporting period end date.
+         * @format date
+         */
+        periodEnd?: string;
+        /**
+         * Return periods ending on or after this date.
+         * @format date
+         */
+        periodEndGte?: string;
+        /**
+         * Return periods ending on or before this date.
+         * @format date
+         */
+        periodEndLte?: string;
+        /**
+         * Return statements filed on or after this date.
+         * @format date
+         */
+        filingDateGte?: string;
+        /**
+         * Return statements filed on or before this date.
+         * @format date
+         */
+        filingDateLte?: string;
+        /** The order used when sorting returned results. */
+        order?: "asc" | "desc";
+        /**
+         * The maximum number of results to return.
+         * @minimum 1
+         * @maximum 50000
+         */
+        limit?: number;
+        /**
+         * The upstream field used to sort results.
+         * @minLength 1
+         */
+        sort?: string;
+        /**
+         * The pagination cursor from a previous response nextCursor value.
+         * @minLength 1
+         */
+        cursor?: string;
+      };
+      output: {
+        /** Common response metadata returned by Massive. */
+        meta: {
+          /** The response status returned by Massive. */
+          status: string | null;
+          /** The request identifier assigned by Massive. */
+          requestId: string | null;
+          /** The response count when Massive reports one. */
+          count: number | null;
+        };
+        /** The result records returned by Massive. */
+        results: Array<Record<string, unknown>>;
+        /** Cursor pagination information returned by Massive. */
+        page: {
+          /** The next page URL when present. */
+          nextUrl: string | null;
+          /** The cursor extracted from nextUrl when present. */
+          nextCursor: string | null;
+        };
+      };
+    };
+    /** List U.S. inflation observations from Massive. */
+    "polygon_io.list_inflation": {
+      input: {
+        /**
+         * Filter results to this date.
+         * @format date
+         */
+        date?: string;
+        /**
+         * Return results on or after this date.
+         * @format date
+         */
+        dateGte?: string;
+        /**
+         * Return results on or before this date.
+         * @format date
+         */
+        dateLte?: string;
+        /** The order used when sorting returned results. */
+        order?: "asc" | "desc";
+        /**
+         * The maximum number of results to return.
+         * @minimum 1
+         * @maximum 50000
+         */
+        limit?: number;
+        /**
+         * The upstream field used to sort results.
+         * @minLength 1
+         */
+        sort?: string;
+        /**
+         * The pagination cursor from a previous response nextCursor value.
+         * @minLength 1
+         */
+        cursor?: string;
+      };
+      output: {
+        /** Common response metadata returned by Massive. */
+        meta: {
+          /** The response status returned by Massive. */
+          status: string | null;
+          /** The request identifier assigned by Massive. */
+          requestId: string | null;
+          /** The response count when Massive reports one. */
+          count: number | null;
+        };
+        /** The result records returned by Massive. */
+        results: Array<Record<string, unknown>>;
+        /** Cursor pagination information returned by Massive. */
+        page: {
+          /** The next page URL when present. */
+          nextUrl: string | null;
+          /** The cursor extracted from nextUrl when present. */
+          nextCursor: string | null;
+        };
+      };
+    };
+    /** List U.S. inflation expectations observations from Massive. */
+    "polygon_io.list_inflation_expectations": {
+      input: {
+        /**
+         * Filter results to this date.
+         * @format date
+         */
+        date?: string;
+        /**
+         * Return results on or after this date.
+         * @format date
+         */
+        dateGte?: string;
+        /**
+         * Return results on or before this date.
+         * @format date
+         */
+        dateLte?: string;
+        /** The order used when sorting returned results. */
+        order?: "asc" | "desc";
+        /**
+         * The maximum number of results to return.
+         * @minimum 1
+         * @maximum 50000
+         */
+        limit?: number;
+        /**
+         * The upstream field used to sort results.
+         * @minLength 1
+         */
+        sort?: string;
+        /**
+         * The pagination cursor from a previous response nextCursor value.
+         * @minLength 1
+         */
+        cursor?: string;
+      };
+      output: {
+        /** Common response metadata returned by Massive. */
+        meta: {
+          /** The response status returned by Massive. */
+          status: string | null;
+          /** The request identifier assigned by Massive. */
+          requestId: string | null;
+          /** The response count when Massive reports one. */
+          count: number | null;
+        };
+        /** The result records returned by Massive. */
+        results: Array<Record<string, unknown>>;
+        /** Cursor pagination information returned by Massive. */
+        page: {
+          /** The next page URL when present. */
+          nextUrl: string | null;
+          /** The cursor extracted from nextUrl when present. */
+          nextCursor: string | null;
+        };
+      };
+    };
+    /** List U.S. labor market observations from Massive. */
+    "polygon_io.list_labor_market": {
+      input: {
+        /**
+         * Filter results to this date.
+         * @format date
+         */
+        date?: string;
+        /**
+         * Return results on or after this date.
+         * @format date
+         */
+        dateGte?: string;
+        /**
+         * Return results on or before this date.
+         * @format date
+         */
+        dateLte?: string;
+        /** The order used when sorting returned results. */
+        order?: "asc" | "desc";
+        /**
+         * The maximum number of results to return.
+         * @minimum 1
+         * @maximum 50000
+         */
+        limit?: number;
+        /**
+         * The upstream field used to sort results.
+         * @minLength 1
+         */
+        sort?: string;
+        /**
+         * The pagination cursor from a previous response nextCursor value.
+         * @minLength 1
+         */
+        cursor?: string;
+      };
+      output: {
+        /** Common response metadata returned by Massive. */
+        meta: {
+          /** The response status returned by Massive. */
+          status: string | null;
+          /** The request identifier assigned by Massive. */
+          requestId: string | null;
+          /** The response count when Massive reports one. */
+          count: number | null;
+        };
+        /** The result records returned by Massive. */
+        results: Array<Record<string, unknown>>;
+        /** Cursor pagination information returned by Massive. */
+        page: {
+          /** The next page URL when present. */
+          nextUrl: string | null;
+          /** The cursor extracted from nextUrl when present. */
+          nextCursor: string | null;
+        };
+      };
+    };
+    /** List upcoming market holidays and their trading hours. */
+    "polygon_io.list_market_holidays": {
+      input: Record<string, never>;
+      output: {
+        /** Common response metadata returned by Massive. */
+        meta: {
+          /** The response status returned by Massive. */
+          status: string | null;
+          /** The request identifier assigned by Massive. */
+          requestId: string | null;
+          /** The response count when Massive reports one. */
+          count: number | null;
+        };
+        /** The result records returned by Massive. */
+        results: Array<Record<string, unknown>>;
+        /** Cursor pagination information returned by Massive. */
+        page: {
+          /** The next page URL when present. */
+          nextUrl: string | null;
+          /** The cursor extracted from nextUrl when present. */
+          nextCursor: string | null;
+        };
+      };
+    };
+    /** List Massive options contracts with contract-specific filters. */
+    "polygon_io.list_option_contracts": {
+      input: {
+        /**
+         * The case-sensitive Massive ticker symbol, for example AAPL.
+         * @minLength 1
+         */
+        underlyingTicker?: string;
+        /** Filter by options contract type. */
+        contractType?: "call" | "put";
+        /**
+         * Filter by an exact expiration date.
+         * @format date
+         */
+        expirationDate?: string;
+        /**
+         * Return contracts expiring on or after this date.
+         * @format date
+         */
+        expirationDateGte?: string;
+        /**
+         * Return contracts expiring on or before this date.
+         * @format date
+         */
+        expirationDateLte?: string;
+        /** Filter by an exact strike price. */
+        strikePrice?: number;
+        /** Whether to include expired contracts. */
+        expired?: boolean;
+        /**
+         * Return contracts valid as of this date.
+         * @format date
+         */
+        asOf?: string;
+        /** The order used when sorting returned results. */
+        order?: "asc" | "desc";
+        /**
+         * The maximum number of results to return.
+         * @minimum 1
+         * @maximum 50000
+         */
+        limit?: number;
+        /**
+         * The upstream field used to sort results.
+         * @minLength 1
+         */
+        sort?: string;
+        /**
+         * The pagination cursor from a previous response nextCursor value.
+         * @minLength 1
+         */
+        cursor?: string;
+      };
+      output: {
+        /** Common response metadata returned by Massive. */
+        meta: {
+          /** The response status returned by Massive. */
+          status: string | null;
+          /** The request identifier assigned by Massive. */
+          requestId: string | null;
+          /** The response count when Massive reports one. */
+          count: number | null;
+        };
+        /** The result records returned by Massive. */
+        results: Array<Record<string, unknown>>;
+        /** Cursor pagination information returned by Massive. */
+        page: {
+          /** The next page URL when present. */
+          nextUrl: string | null;
+          /** The cursor extracted from nextUrl when present. */
+          nextCursor: string | null;
+        };
+      };
+    };
+    /** List historical quotes for a stock or options ticker. */
+    "polygon_io.list_quotes": {
+      input: {
+        /**
+         * The case-sensitive Massive ticker symbol, for example AAPL.
+         * @minLength 1
+         */
+        ticker: string;
+        /**
+         * Filter by an exact date, nanosecond timestamp, or RFC 3339 timestamp.
+         * @minLength 1
+         */
+        timestamp?: string;
+        /**
+         * Return quotes at or after this date or timestamp.
+         * @minLength 1
+         */
+        timestampGte?: string;
+        /**
+         * Return quotes at or before this date or timestamp.
+         * @minLength 1
+         */
+        timestampLte?: string;
+        /** The order used when sorting returned results. */
+        order?: "asc" | "desc";
+        /**
+         * The maximum number of results to return.
+         * @minimum 1
+         * @maximum 50000
+         */
+        limit?: number;
+        /**
+         * The upstream field used to sort results.
+         * @minLength 1
+         */
+        sort?: string;
+        /**
+         * The pagination cursor from a previous response nextCursor value.
+         * @minLength 1
+         */
+        cursor?: string;
+      };
+      output: {
+        /** Common response metadata returned by Massive. */
+        meta: {
+          /** The response status returned by Massive. */
+          status: string | null;
+          /** The request identifier assigned by Massive. */
+          requestId: string | null;
+          /** The response count when Massive reports one. */
+          count: number | null;
+        };
+        /** The result records returned by Massive. */
+        results: Array<Record<string, unknown>>;
+        /** Cursor pagination information returned by Massive. */
+        page: {
+          /** The next page URL when present. */
+          nextUrl: string | null;
+          /** The cursor extracted from nextUrl when present. */
+          nextCursor: string | null;
+        };
+      };
+    };
+    /** List companies related to a Massive stock ticker. */
+    "polygon_io.list_related_tickers": {
+      input: {
+        /**
+         * The case-sensitive Massive ticker symbol, for example AAPL.
+         * @minLength 1
+         */
+        ticker: string;
+      };
+      output: {
+        /** Common response metadata returned by Massive. */
+        meta: {
+          /** The response status returned by Massive. */
+          status: string | null;
+          /** The request identifier assigned by Massive. */
+          requestId: string | null;
+          /** The response count when Massive reports one. */
+          count: number | null;
+        };
+        /** The result records returned by Massive. */
+        results: Array<Record<string, unknown>>;
+        /** Cursor pagination information returned by Massive. */
+        page: {
+          /** The next page URL when present. */
+          nextUrl: string | null;
+          /** The cursor extracted from nextUrl when present. */
+          nextCursor: string | null;
+        };
+      };
+    };
+    /** List reported short interest for U.S. stocks. */
+    "polygon_io.list_short_interest": {
+      input: {
+        /**
+         * The case-sensitive Massive ticker symbol, for example AAPL.
+         * @minLength 1
+         */
+        ticker?: string;
+        /**
+         * Filter by settlement date.
+         * @format date
+         */
+        settlementDate?: string;
+        /**
+         * Return records settled on or after this date.
+         * @format date
+         */
+        settlementDateGte?: string;
+        /**
+         * Return records settled on or before this date.
+         * @format date
+         */
+        settlementDateLte?: string;
+        /** The order used when sorting returned results. */
+        order?: "asc" | "desc";
+        /**
+         * The maximum number of results to return.
+         * @minimum 1
+         * @maximum 50000
+         */
+        limit?: number;
+        /**
+         * The upstream field used to sort results.
+         * @minLength 1
+         */
+        sort?: string;
+        /**
+         * The pagination cursor from a previous response nextCursor value.
+         * @minLength 1
+         */
+        cursor?: string;
+      };
+      output: {
+        /** Common response metadata returned by Massive. */
+        meta: {
+          /** The response status returned by Massive. */
+          status: string | null;
+          /** The request identifier assigned by Massive. */
+          requestId: string | null;
+          /** The response count when Massive reports one. */
+          count: number | null;
+        };
+        /** The result records returned by Massive. */
+        results: Array<Record<string, unknown>>;
+        /** Cursor pagination information returned by Massive. */
+        page: {
+          /** The next page URL when present. */
+          nextUrl: string | null;
+          /** The cursor extracted from nextUrl when present. */
+          nextCursor: string | null;
+        };
+      };
+    };
+    /** List daily short-sale volume for U.S. stocks. */
+    "polygon_io.list_short_volume": {
+      input: {
+        /**
+         * The case-sensitive Massive ticker symbol, for example AAPL.
+         * @minLength 1
+         */
+        ticker?: string;
+        /**
+         * Filter results to this date.
+         * @format date
+         */
+        date?: string;
+        /**
+         * Return results on or after this date.
+         * @format date
+         */
+        dateGte?: string;
+        /**
+         * Return results on or before this date.
+         * @format date
+         */
+        dateLte?: string;
+        /** The order used when sorting returned results. */
+        order?: "asc" | "desc";
+        /**
+         * The maximum number of results to return.
+         * @minimum 1
+         * @maximum 50000
+         */
+        limit?: number;
+        /**
+         * The upstream field used to sort results.
+         * @minLength 1
+         */
+        sort?: string;
+        /**
+         * The pagination cursor from a previous response nextCursor value.
+         * @minLength 1
+         */
+        cursor?: string;
+      };
+      output: {
+        /** Common response metadata returned by Massive. */
+        meta: {
+          /** The response status returned by Massive. */
+          status: string | null;
+          /** The request identifier assigned by Massive. */
+          requestId: string | null;
+          /** The response count when Massive reports one. */
+          count: number | null;
+        };
+        /** The result records returned by Massive. */
+        results: Array<Record<string, unknown>>;
+        /** Cursor pagination information returned by Massive. */
+        page: {
+          /** The next page URL when present. */
+          nextUrl: string | null;
+          /** The cursor extracted from nextUrl when present. */
+          nextCursor: string | null;
+        };
+      };
+    };
+    /** List current-version stock split events and adjustment factors. */
+    "polygon_io.list_splits": {
+      input: {
+        /**
+         * The case-sensitive Massive ticker symbol, for example AAPL.
+         * @minLength 1
+         */
+        ticker?: string;
+        /**
+         * Filter by an exact split execution date.
+         * @format date
+         */
+        executionDate?: string;
+        /**
+         * Return splits executed on or after this date.
+         * @format date
+         */
+        executionDateGte?: string;
+        /**
+         * Return splits executed on or before this date.
+         * @format date
+         */
+        executionDateLte?: string;
+        /** The order used when sorting returned results. */
+        order?: "asc" | "desc";
+        /**
+         * The maximum number of results to return.
+         * @minimum 1
+         * @maximum 50000
+         */
+        limit?: number;
+        /**
+         * The upstream field used to sort results.
+         * @minLength 1
+         */
+        sort?: string;
+        /**
+         * The pagination cursor from a previous response nextCursor value.
+         * @minLength 1
+         */
+        cursor?: string;
+      };
+      output: {
+        /** Common response metadata returned by Massive. */
+        meta: {
+          /** The response status returned by Massive. */
+          status: string | null;
+          /** The request identifier assigned by Massive. */
+          requestId: string | null;
+          /** The response count when Massive reports one. */
+          count: number | null;
+        };
+        /** The result records returned by Massive. */
+        results: Array<Record<string, unknown>>;
+        /** Cursor pagination information returned by Massive. */
+        page: {
+          /** The next page URL when present. */
+          nextUrl: string | null;
+          /** The cursor extracted from nextUrl when present. */
+          nextCursor: string | null;
+        };
+      };
+    };
+    /** List recent financial news and sentiment associated with tickers. */
+    "polygon_io.list_ticker_news": {
+      input: {
+        /**
+         * The case-sensitive Massive ticker symbol, for example AAPL.
+         * @minLength 1
+         */
+        ticker?: string;
+        /**
+         * Return articles published at or after this RFC 3339 timestamp.
+         * @minLength 1
+         */
+        publishedUtcGte?: string;
+        /**
+         * Return articles published at or before this RFC 3339 timestamp.
+         * @minLength 1
+         */
+        publishedUtcLte?: string;
+        /** The order used when sorting returned results. */
+        order?: "asc" | "desc";
+        /**
+         * The maximum number of results to return.
+         * @minimum 1
+         * @maximum 50000
+         */
+        limit?: number;
+        /**
+         * The upstream field used to sort results.
+         * @minLength 1
+         */
+        sort?: string;
+        /**
+         * The pagination cursor from a previous response nextCursor value.
+         * @minLength 1
+         */
+        cursor?: string;
+      };
+      output: {
+        /** Common response metadata returned by Massive. */
+        meta: {
+          /** The response status returned by Massive. */
+          status: string | null;
+          /** The request identifier assigned by Massive. */
+          requestId: string | null;
+          /** The response count when Massive reports one. */
+          count: number | null;
+        };
+        /** The result records returned by Massive. */
+        results: Array<Record<string, unknown>>;
+        /** Cursor pagination information returned by Massive. */
+        page: {
+          /** The next page URL when present. */
+          nextUrl: string | null;
+          /** The cursor extracted from nextUrl when present. */
+          nextCursor: string | null;
+        };
       };
     };
     /** List ticker type codes supported by Polygon.io. */
@@ -505,6 +2263,127 @@ declare module "@oomol-lab/connector" {
         /** Cursor pagination information returned by Polygon.io. */
         page: {
           /** The next page URL returned by Polygon.io when present. */
+          nextUrl: string | null;
+          /** The cursor extracted from nextUrl when present. */
+          nextCursor: string | null;
+        };
+      };
+    };
+    /** List historical trades for a stock or options ticker. */
+    "polygon_io.list_trades": {
+      input: {
+        /**
+         * The case-sensitive Massive ticker symbol, for example AAPL.
+         * @minLength 1
+         */
+        ticker: string;
+        /**
+         * Filter by an exact date, nanosecond timestamp, or RFC 3339 timestamp.
+         * @minLength 1
+         */
+        timestamp?: string;
+        /**
+         * Return trades at or after this date or timestamp.
+         * @minLength 1
+         */
+        timestampGte?: string;
+        /**
+         * Return trades at or before this date or timestamp.
+         * @minLength 1
+         */
+        timestampLte?: string;
+        /** The order used when sorting returned results. */
+        order?: "asc" | "desc";
+        /**
+         * The maximum number of results to return.
+         * @minimum 1
+         * @maximum 50000
+         */
+        limit?: number;
+        /**
+         * The upstream field used to sort results.
+         * @minLength 1
+         */
+        sort?: string;
+        /**
+         * The pagination cursor from a previous response nextCursor value.
+         * @minLength 1
+         */
+        cursor?: string;
+      };
+      output: {
+        /** Common response metadata returned by Massive. */
+        meta: {
+          /** The response status returned by Massive. */
+          status: string | null;
+          /** The request identifier assigned by Massive. */
+          requestId: string | null;
+          /** The response count when Massive reports one. */
+          count: number | null;
+        };
+        /** The result records returned by Massive. */
+        results: Array<Record<string, unknown>>;
+        /** Cursor pagination information returned by Massive. */
+        page: {
+          /** The next page URL when present. */
+          nextUrl: string | null;
+          /** The cursor extracted from nextUrl when present. */
+          nextCursor: string | null;
+        };
+      };
+    };
+    /** List U.S. treasury yields observations from Massive. */
+    "polygon_io.list_treasury_yields": {
+      input: {
+        /**
+         * Filter results to this date.
+         * @format date
+         */
+        date?: string;
+        /**
+         * Return results on or after this date.
+         * @format date
+         */
+        dateGte?: string;
+        /**
+         * Return results on or before this date.
+         * @format date
+         */
+        dateLte?: string;
+        /** The order used when sorting returned results. */
+        order?: "asc" | "desc";
+        /**
+         * The maximum number of results to return.
+         * @minimum 1
+         * @maximum 50000
+         */
+        limit?: number;
+        /**
+         * The upstream field used to sort results.
+         * @minLength 1
+         */
+        sort?: string;
+        /**
+         * The pagination cursor from a previous response nextCursor value.
+         * @minLength 1
+         */
+        cursor?: string;
+      };
+      output: {
+        /** Common response metadata returned by Massive. */
+        meta: {
+          /** The response status returned by Massive. */
+          status: string | null;
+          /** The request identifier assigned by Massive. */
+          requestId: string | null;
+          /** The response count when Massive reports one. */
+          count: number | null;
+        };
+        /** The result records returned by Massive. */
+        results: Array<Record<string, unknown>>;
+        /** Cursor pagination information returned by Massive. */
+        page: {
+          /** The next page URL when present. */
           nextUrl: string | null;
           /** The cursor extracted from nextUrl when present. */
           nextCursor: string | null;

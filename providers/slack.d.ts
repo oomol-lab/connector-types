@@ -26,6 +26,30 @@ declare module "@oomol-lab/connector" {
         success: boolean;
       };
     };
+    /** List one page of member user IDs for a Slack conversation. */
+    "slack.conversations_members": {
+      input: {
+        /**
+         * The Slack conversation or channel ID.
+         * @minLength 1
+         */
+        channelId: string;
+        /** The pagination cursor returned by the previous page. */
+        cursor?: string;
+        /**
+         * The maximum number of members to return.
+         * @minimum 1
+         * @maximum 1000
+         */
+        limit?: number;
+      };
+      output: {
+        /** The member user IDs. */
+        memberIds: Array<string>;
+        /** The cursor for the next page. */
+        nextCursor: string | null;
+      };
+    };
     /** Delete a Slack file. */
     "slack.delete_file": {
       input: {
@@ -63,6 +87,43 @@ declare module "@oomol-lab/connector" {
         messageTs: string;
       };
     };
+    /** Download a Slack-hosted file into Connector file transit storage using the connected identity's access. */
+    "slack.download_file": {
+      input: {
+        /**
+         * The Slack file ID.
+         * @minLength 1
+         */
+        fileId: string;
+      };
+      output: {
+        /**
+         * The Slack file ID.
+         * @minLength 1
+         */
+        fileId: string;
+        /**
+         * The stored file name.
+         * @minLength 1
+         */
+        name: string;
+        /**
+         * The stored file MIME type.
+         * @minLength 1
+         */
+        mimeType: string;
+        /**
+         * The Slack-reported file size in bytes.
+         * @minimum 0
+         */
+        sizeBytes: number;
+        /**
+         * The temporary Connector URL for downloading the stored file.
+         * @format uri
+         */
+        transitUrl: string;
+      };
+    };
     /** Get recent messages from a Slack conversation. */
     "slack.get_channel_messages": {
       input: {
@@ -74,9 +135,17 @@ declare module "@oomol-lab/connector" {
         /**
          * The maximum number of messages to return.
          * @minimum 1
-         * @maximum 100
+         * @maximum 999
          */
         limit?: number;
+        /** The pagination cursor returned by the previous page. */
+        cursor?: string;
+        /** Only return messages after this Slack timestamp. */
+        oldest?: string;
+        /** Only return messages before this Slack timestamp. */
+        latest?: string;
+        /** Include messages exactly at oldest or latest when a bound is set. */
+        inclusive?: boolean;
       };
       output: {
         /** The list of messages in the conversation. */
@@ -91,6 +160,8 @@ declare module "@oomol-lab/connector" {
         }>;
         /** Whether more messages are available beyond this page. */
         hasMore: boolean;
+        /** The cursor for the next page. */
+        nextCursor: string | null;
       };
     };
     /** Get metadata for a Slack conversation. */
@@ -132,6 +203,24 @@ declare module "@oomol-lab/connector" {
           /** The locale returned by Slack when requested. */
           locale?: string;
         };
+      };
+    };
+    /** Get the workspace and user identity of the connected Slack credential. */
+    "slack.get_current_user": {
+      input: Record<string, never>;
+      output: {
+        /**
+         * The Slack workspace ID.
+         * @minLength 1
+         */
+        teamId: string;
+        /**
+         * The Slack user ID.
+         * @minLength 1
+         */
+        userId: string;
+        /** Whether the credential belongs to a bot. */
+        isBot: boolean;
       };
     };
     /** Get metadata for a Slack file. */
@@ -217,6 +306,20 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         threadTs: string;
+        /**
+         * The maximum number of messages to return.
+         * @minimum 1
+         * @maximum 999
+         */
+        limit?: number;
+        /** The pagination cursor returned by the previous page. */
+        cursor?: string;
+        /** Only return messages after this Slack timestamp. */
+        oldest?: string;
+        /** Only return messages before this Slack timestamp. */
+        latest?: string;
+        /** Include messages exactly at oldest or latest when a bound is set. */
+        inclusive?: boolean;
       };
       output: {
         /** The list of messages in the thread. */
@@ -231,6 +334,8 @@ declare module "@oomol-lab/connector" {
         }>;
         /** Whether more messages are available beyond this page. */
         hasMore: boolean;
+        /** The cursor for the next page. */
+        nextCursor: string | null;
       };
     };
     /** Get metadata for a Slack user. */
