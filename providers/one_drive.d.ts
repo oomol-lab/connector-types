@@ -1074,6 +1074,282 @@ declare module "@oomol-lab/connector" {
         nextLink: string | null;
       };
     };
+    /** List the permissions on a OneDrive item, including who may read or write it. */
+    "one_drive.list_item_permissions": {
+      input: {
+        /**
+         * Optional drive ID. Leave empty to use the authenticated user's default OneDrive.
+         * @minLength 1
+         */
+        driveId?: string;
+        /**
+         * OneDrive drive item ID.
+         * @minLength 1
+         */
+        itemId?: string;
+        /**
+         * Path from the drive root, starting with /.
+         * @minLength 1
+         */
+        itemPath?: string;
+        /**
+         * Optional Microsoft Graph fields to include in the response.
+         * @minItems 1
+         */
+        select?: Array<string>;
+        /**
+         * Opaque Microsoft Graph nextLink returned by a previous OneDrive response.
+         * @format uri
+         */
+        nextLink?: string;
+      };
+      output: {
+        /** Permissions returned by Microsoft Graph. */
+        items: Array<{
+          /** Permission ID. */
+          id: string;
+          /** Roles granted by this permission, such as read, write, or owner. */
+          roles?: Array<string>;
+          /** Deprecated identity granted access. */
+          grantedTo?: {
+            /** User identity granted access. */
+            user?: {
+              /** Unique identifier for the identity. */
+              id?: string;
+              /** Display name for the identity. */
+              displayName?: string;
+              [key: string]: unknown;
+            };
+            /** Application identity granted access. */
+            application?: {
+              /** Unique identifier for the identity. */
+              id?: string;
+              /** Display name for the identity. */
+              displayName?: string;
+              [key: string]: unknown;
+            };
+            /** Device identity granted access. */
+            device?: {
+              /** Unique identifier for the identity. */
+              id?: string;
+              /** Display name for the identity. */
+              displayName?: string;
+              [key: string]: unknown;
+            };
+            /** Group identity granted access. */
+            group?: {
+              /** Unique identifier for the identity. */
+              id?: string;
+              /** Display name for the identity. */
+              displayName?: string;
+              [key: string]: unknown;
+            };
+            /** SharePoint site user granted access. */
+            siteUser?: {
+              /** Unique identifier for the identity. */
+              id?: string;
+              /** Display name for the identity. */
+              displayName?: string;
+              [key: string]: unknown;
+            };
+            /** SharePoint site group granted access. */
+            siteGroup?: {
+              /** Unique identifier for the identity. */
+              id?: string;
+              /** Display name for the identity. */
+              displayName?: string;
+              [key: string]: unknown;
+            };
+            [key: string]: unknown;
+          };
+          /** Identity granted access. */
+          grantedToV2?: {
+            /** User identity granted access. */
+            user?: {
+              /** Unique identifier for the identity. */
+              id?: string;
+              /** Display name for the identity. */
+              displayName?: string;
+              [key: string]: unknown;
+            };
+            /** Application identity granted access. */
+            application?: {
+              /** Unique identifier for the identity. */
+              id?: string;
+              /** Display name for the identity. */
+              displayName?: string;
+              [key: string]: unknown;
+            };
+            /** Device identity granted access. */
+            device?: {
+              /** Unique identifier for the identity. */
+              id?: string;
+              /** Display name for the identity. */
+              displayName?: string;
+              [key: string]: unknown;
+            };
+            /** Group identity granted access. */
+            group?: {
+              /** Unique identifier for the identity. */
+              id?: string;
+              /** Display name for the identity. */
+              displayName?: string;
+              [key: string]: unknown;
+            };
+            /** SharePoint site user granted access. */
+            siteUser?: {
+              /** Unique identifier for the identity. */
+              id?: string;
+              /** Display name for the identity. */
+              displayName?: string;
+              [key: string]: unknown;
+            };
+            /** SharePoint site group granted access. */
+            siteGroup?: {
+              /** Unique identifier for the identity. */
+              id?: string;
+              /** Display name for the identity. */
+              displayName?: string;
+              [key: string]: unknown;
+            };
+            [key: string]: unknown;
+          };
+          /** Deprecated identities granted access through a specific-people link. */
+          grantedToIdentities?: Array<{
+            /** User identity granted access. */
+            user?: {
+              /** Unique identifier for the identity. */
+              id?: string;
+              /** Display name for the identity. */
+              displayName?: string;
+              [key: string]: unknown;
+            };
+            /** Application identity granted access. */
+            application?: {
+              /** Unique identifier for the identity. */
+              id?: string;
+              /** Display name for the identity. */
+              displayName?: string;
+              [key: string]: unknown;
+            };
+            /** Device identity granted access. */
+            device?: {
+              /** Unique identifier for the identity. */
+              id?: string;
+              /** Display name for the identity. */
+              displayName?: string;
+              [key: string]: unknown;
+            };
+            /** Group identity granted access. */
+            group?: {
+              /** Unique identifier for the identity. */
+              id?: string;
+              /** Display name for the identity. */
+              displayName?: string;
+              [key: string]: unknown;
+            };
+            /** SharePoint site user granted access. */
+            siteUser?: {
+              /** Unique identifier for the identity. */
+              id?: string;
+              /** Display name for the identity. */
+              displayName?: string;
+              [key: string]: unknown;
+            };
+            /** SharePoint site group granted access. */
+            siteGroup?: {
+              /** Unique identifier for the identity. */
+              id?: string;
+              /** Display name for the identity. */
+              displayName?: string;
+              [key: string]: unknown;
+            };
+            [key: string]: unknown;
+          }>;
+          /** Identities granted access through a specific-people link. */
+          grantedToIdentitiesV2?: Array<{
+            /** User identity granted access. */
+            user?: {
+              /** Unique identifier for the identity. */
+              id?: string;
+              /** Display name for the identity. */
+              displayName?: string;
+              [key: string]: unknown;
+            };
+            /** Application identity granted access. */
+            application?: {
+              /** Unique identifier for the identity. */
+              id?: string;
+              /** Display name for the identity. */
+              displayName?: string;
+              [key: string]: unknown;
+            };
+            /** Device identity granted access. */
+            device?: {
+              /** Unique identifier for the identity. */
+              id?: string;
+              /** Display name for the identity. */
+              displayName?: string;
+              [key: string]: unknown;
+            };
+            /** Group identity granted access. */
+            group?: {
+              /** Unique identifier for the identity. */
+              id?: string;
+              /** Display name for the identity. */
+              displayName?: string;
+              [key: string]: unknown;
+            };
+            /** SharePoint site user granted access. */
+            siteUser?: {
+              /** Unique identifier for the identity. */
+              id?: string;
+              /** Display name for the identity. */
+              displayName?: string;
+              [key: string]: unknown;
+            };
+            /** SharePoint site group granted access. */
+            siteGroup?: {
+              /** Unique identifier for the identity. */
+              id?: string;
+              /** Display name for the identity. */
+              displayName?: string;
+              [key: string]: unknown;
+            };
+            [key: string]: unknown;
+          }>;
+          /** Sharing link details. */
+          link?: Record<string, unknown>;
+          /** Sharing invitation details. */
+          invitation?: Record<string, unknown>;
+          /** Ancestor item from which access is inherited. */
+          inheritedFrom?: {
+            /** Drive ID of the referenced item. */
+            driveId?: string;
+            /** Drive item ID of the referenced item. */
+            id?: string;
+            /** Name of the referenced item. */
+            name?: string;
+            /** Percent-encoded path of the referenced item. */
+            path?: string;
+            /** Drive type of the referenced item. */
+            driveType?: string;
+            /** Site ID of the referenced item. */
+            siteId?: string;
+            [key: string]: unknown;
+          };
+          /** Opaque sharing ID for this permission. */
+          shareId?: string;
+          /** Whether a link permission is password protected. */
+          hasPassword?: boolean;
+          /** Permission expiration time, if any. */
+          expirationDateTime?: string;
+          [key: string]: unknown;
+        }>;
+        /** Opaque nextLink for fetching the next page, if any. */
+        nextLink: string | null;
+      };
+    };
     /** Search OneDrive for files and folders by keyword. */
     "one_drive.search_items": {
       input: {

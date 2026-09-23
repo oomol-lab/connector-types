@@ -43,30 +43,12 @@ declare module "@oomol-lab/connector" {
          */
         title?: string;
       };
-      output: {
-        /** Whether the underlying F10 request reported success. */
-        ok: boolean | null;
-        /** The structured result summary, or null when unavailable. */
-        summary: string | null;
-        /** The formatted F10 result tables. */
-        tables: Array<Record<string, unknown>>;
-        /** The complete structured MCP tool result, preserved for fields not covered by the stable convenience fields. */
-        result: unknown;
-      };
+      output: unknown;
     };
     /** Get Tongdaxin capital flow, northbound holdings, block trades, margin data, refinancing, limit analysis, or shareholder-change events. */
     "tongdaxin.get_capital_and_trading_data": {
       input: (unknown) & (unknown) & (unknown) & (unknown);
-      output: {
-        /** Whether the underlying F10 request reported success. */
-        ok: boolean | null;
-        /** The structured result summary, or null when unavailable. */
-        summary: string | null;
-        /** The formatted F10 result tables. */
-        tables: Array<Record<string, unknown>>;
-        /** The complete structured MCP tool result, preserved for fields not covered by the stable convenience fields. */
-        result: unknown;
-      };
+      output: unknown;
     };
     /** Get a Tongdaxin company overview, basic profile, issuance history, executives, or affiliates. */
     "tongdaxin.get_company_profile": {
@@ -80,16 +62,7 @@ declare module "@oomol-lab/connector" {
         /** The company-profile section to return. */
         section: "OVERVIEW" | "BASIC_INFORMATION" | "ISSUANCE_AND_TRADING" | "EXECUTIVES" | "AFFILIATES" | "EMPLOYEE_STRUCTURE" | "EMPLOYEE_EFFICIENCY";
       };
-      output: {
-        /** Whether the underlying F10 request reported success. */
-        ok: boolean | null;
-        /** The structured result summary, or null when unavailable. */
-        summary: string | null;
-        /** The formatted F10 result tables. */
-        tables: Array<Record<string, unknown>>;
-        /** The complete structured MCP tool result, preserved for fields not covered by the stable convenience fields. */
-        result: unknown;
-      };
+      output: unknown;
     };
     /** Get Tongdaxin dividend, payout, yield, rights-issue, placement, or refinancing data. */
     "tongdaxin.get_dividends_and_financing": {
@@ -103,16 +76,7 @@ declare module "@oomol-lab/connector" {
         /** The dividend or financing dataset to return. */
         section: "OVERVIEW" | "DIVIDEND_CHART" | "RIGHTS_ISSUE_PLAN" | "PLACEMENT_DETAIL" | "REFINANCING_PLAN" | "PAYOUT_HISTORY" | "YIELD_HISTORY" | "PAYOUT_RANK" | "YIELD_RANK" | "CASH_FINANCING_RATIO_RANK";
       };
-      output: {
-        /** Whether the underlying F10 request reported success. */
-        ok: boolean | null;
-        /** The structured result summary, or null when unavailable. */
-        summary: string | null;
-        /** The formatted F10 result tables. */
-        tables: Array<Record<string, unknown>>;
-        /** The complete structured MCP tool result, preserved for fields not covered by the stable convenience fields. */
-        result: unknown;
-      };
+      output: unknown;
     };
     /** Get structured A-share income statements, balance sheets, or cash-flow statements from Tongdaxin F10. */
     "tongdaxin.get_financial_statements": {
@@ -128,16 +92,7 @@ declare module "@oomol-lab/connector" {
         /** Whether to use reporting-period or single-quarter figures. */
         reportView?: "REPORTING_PERIOD" | "SINGLE_QUARTER";
       };
-      output: {
-        /** Whether the underlying F10 request reported success. */
-        ok: boolean | null;
-        /** The structured result summary, or null when unavailable. */
-        summary: string | null;
-        /** The formatted F10 result tables. */
-        tables: Array<Record<string, unknown>>;
-        /** The complete structured MCP tool result, preserved for fields not covered by the stable convenience fields. */
-        result: unknown;
-      };
+      output: unknown;
     };
     /** Get Tongdaxin Hong Kong income statements, balance sheets, or cash-flow statements. */
     "tongdaxin.get_hk_financials": {
@@ -151,16 +106,7 @@ declare module "@oomol-lab/connector" {
         /** The Hong Kong financial statement to return. */
         statement: "INCOME_STATEMENT" | "BALANCE_SHEET" | "CASH_FLOW_STATEMENT";
       };
-      output: {
-        /** Whether the underlying F10 request reported success. */
-        ok: boolean | null;
-        /** The structured result summary, or null when unavailable. */
-        summary: string | null;
-        /** The formatted F10 result tables. */
-        tables: Array<Record<string, unknown>>;
-        /** The complete structured MCP tool result, preserved for fields not covered by the stable convenience fields. */
-        result: unknown;
-      };
+      output: unknown;
     };
     /** Get Tongdaxin board-family, theme-library, event-driven, or information-overview data for a stock. */
     "tongdaxin.get_hot_topics": {
@@ -174,30 +120,12 @@ declare module "@oomol-lab/connector" {
         /** The hot-topic dataset to return. */
         section: "BOARD_FAMILY" | "THEME_LIBRARY" | "EVENT_DRIVEN" | "INFORMATION_OVERVIEW";
       };
-      output: {
-        /** Whether the underlying F10 request reported success. */
-        ok: boolean | null;
-        /** The structured result summary, or null when unavailable. */
-        summary: string | null;
-        /** The formatted F10 result tables. */
-        tables: Array<Record<string, unknown>>;
-        /** The complete structured MCP tool result, preserved for fields not covered by the stable convenience fields. */
-        result: unknown;
-      };
+      output: unknown;
     };
     /** Get Tongdaxin institutional-holding periods, summaries, distributions, details, northbound holdings, or price comparisons. */
     "tongdaxin.get_institutional_holdings": {
       input: (unknown) & (unknown) & (unknown) & (unknown);
-      output: {
-        /** Whether the underlying F10 request reported success. */
-        ok: boolean | null;
-        /** The structured result summary, or null when unavailable. */
-        summary: string | null;
-        /** The formatted F10 result tables. */
-        tables: Array<Record<string, unknown>>;
-        /** The complete structured MCP tool result, preserved for fields not covered by the stable convenience fields. */
-        result: unknown;
-      };
+      output: unknown;
     };
     /** Get Tongdaxin historical OHLCV data for a security, index, board, or futures contract. */
     "tongdaxin.get_kline": {
@@ -279,16 +207,7 @@ declare module "@oomol-lab/connector" {
         /** The share-capital dataset to return. */
         section: "STRUCTURE" | "CHANGES" | "RESTRICTED_UNLOCKS" | "STOCK_BUYBACK";
       };
-      output: {
-        /** Whether the underlying F10 request reported success. */
-        ok: boolean | null;
-        /** The structured result summary, or null when unavailable. */
-        summary: string | null;
-        /** The formatted F10 result tables. */
-        tables: Array<Record<string, unknown>>;
-        /** The complete structured MCP tool result, preserved for fields not covered by the stable convenience fields. */
-        result: unknown;
-      };
+      output: unknown;
     };
     /** Get Tongdaxin controlling-shareholder, shareholder-count, ranking, or top-shareholder data. */
     "tongdaxin.get_shareholder_research": {
@@ -313,30 +232,12 @@ declare module "@oomol-lab/connector" {
          */
         pageSize?: number;
       };
-      output: {
-        /** Whether the underlying F10 request reported success. */
-        ok: boolean | null;
-        /** The structured result summary, or null when unavailable. */
-        summary: string | null;
-        /** The formatted F10 result tables. */
-        tables: Array<Record<string, unknown>>;
-        /** The complete structured MCP tool result, preserved for fields not covered by the stable convenience fields. */
-        result: unknown;
-      };
+      output: unknown;
     };
     /** Get Tongdaxin valuation history, industry rankings, financial-sector indicators, or board valuation comparisons. */
     "tongdaxin.get_valuation_and_ranking": {
       input: (unknown) & (unknown) & (unknown) & (unknown) & (unknown) & (unknown);
-      output: {
-        /** Whether the underlying F10 request reported success. */
-        ok: boolean | null;
-        /** The structured result summary, or null when unavailable. */
-        summary: string | null;
-        /** The formatted F10 result tables. */
-        tables: Array<Record<string, unknown>>;
-        /** The complete structured MCP tool result, preserved for fields not covered by the stable convenience fields. */
-        result: unknown;
-      };
+      output: unknown;
     };
     /** Discover the Tongdaxin MCP tools available to this connection with their live input schemas. */
     "tongdaxin.list_tools": {
@@ -415,8 +316,8 @@ declare module "@oomol-lab/connector" {
         market: "A_SHARE" | "INDEX" | "FUND";
       };
       output: {
-        /** The structured rows returned by Tongdaxin. */
-        data: Array<Record<string, unknown>>;
+        /** The provider-defined values returned by Tongdaxin. */
+        data: Array<unknown>;
         /** The complete structured MCP tool result, preserved for fields not covered by the stable convenience fields. */
         result: unknown;
       };
