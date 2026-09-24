@@ -1179,79 +1179,9 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
-    /** Scrape a single URL with Firecrawl and return the extracted page content in the requested formats. */
+    /** Scrape a URL with Firecrawl or execute an enabled Alexandria provider tool and return the requested output formats. */
     "firecrawl.scrape": {
-      input: {
-        /** The URL to scrape. */
-        url: string;
-        /** The browser actions to run before scraping. */
-        actions?: Array<{
-          /** The browser action type, such as click, write, wait, or press. */
-          type: string;
-          /** The CSS selector targeted by the action. */
-          selector?: string;
-          /** The text to type for write actions. */
-          text?: string;
-          /** The key to press for press actions. */
-          key?: string;
-          /** The duration in milliseconds used by wait-style actions. */
-          milliseconds?: number;
-          [key: string]: unknown;
-        }>;
-        /** The output formats to return. */
-        formats?: Array<"markdown" | "html" | "rawHtml" | "links" | "screenshot" | "screenshot@fullPage" | "json" | "changeTracking" | "summary" | {
-          /** The structured format type, such as json or screenshot. */
-          type: string;
-          [key: string]: unknown;
-        }>;
-        /** Custom HTTP headers to send with the request. */
-        headers?: Record<string, string>;
-        /** Location settings for the request. */
-        location?: {
-          /** The ISO 3166-1 alpha-2 country code to request from. */
-          country?: string;
-          /** The preferred locales for the request. */
-          languages?: Array<string>;
-          [key: string]: unknown;
-        };
-        /** Options for structured JSON output. */
-        jsonOptions?: {
-          /** An extraction prompt that explains the desired JSON structure. */
-          prompt?: string;
-          /** A JSON Schema object for structured output. */
-          schema?: Record<string, unknown>;
-          [key: string]: unknown;
-        };
-        /** The request timeout in milliseconds. */
-        timeout?: number;
-        /** The delay before scraping starts. */
-        waitFor?: number;
-        /** The cache max age in milliseconds. */
-        maxAge?: number;
-        /** Whether to keep only the main content of the page. */
-        onlyMainContent?: boolean;
-        /** The HTML tags that should be prioritized in the extracted content. */
-        includeTags?: Array<string>;
-        /** The HTML tags that should be removed from the extracted content. */
-        excludeTags?: Array<string>;
-        /** Whether to emulate a mobile device. */
-        mobile?: boolean;
-        /** The proxy mode to use for the request. */
-        proxy?: "basic" | "stealth" | "auto";
-        /** The parser plugins to enable for the request. */
-        parsers?: Array<string>;
-        /** Whether ad resources should be blocked. */
-        blockAds?: boolean;
-        /** Whether Firecrawl should store the result in cache. */
-        storeInCache?: boolean;
-        /** Whether base64-encoded images should be removed from the output. */
-        removeBase64Images?: boolean;
-        /** Whether TLS verification should be skipped. */
-        skipTlsVerification?: boolean;
-        /** Whether the request should opt into zero data retention. */
-        zeroDataRetention?: boolean;
-        [key: string]: unknown;
-      };
+      input: Record<string, unknown>;
       output: {
         /** Whether the scrape request succeeded. */
         success: boolean;

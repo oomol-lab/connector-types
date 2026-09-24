@@ -2033,7 +2033,10 @@ declare module "@oomol-lab/connector" {
          * @maxItems 20
          */
         asinList: Array<string>;
-        /** Variation query mode: 0 for all variations, 1 for the best-selling variation, or 2 for the current variation. */
+        /**
+         * Variation query mode: 0 for all variations, 1 for the best-selling variation, or 2 for the current variation; defaults to 2.
+         * @default 2
+         */
         queryType?: 0 | 1 | 2;
         /** The min searches value documented by SellerSprite for this MCP tool. */
         minSearches?: number;
