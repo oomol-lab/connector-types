@@ -481,6 +481,13 @@ declare module "@oomol-lab/connector" {
     /** List Outlook messages from the mailbox or from a specific mail folder, with support for OData filters, sorting, field selection, and pagination. */
     "outlook.list_messages": {
       input: {
+        /** Track changes for one mail folder. Requires mailFolderId; delta queries only support receivedDateTime ge/gt filters and receivedDateTime desc ordering. */
+        delta?: boolean;
+        /**
+         * Opaque delta URL from the previous round. nextLink takes precedence.
+         * @format uri
+         */
+        deltaLink?: string;
         /**
          * Outlook mail folder ID.
          * @minLength 1
@@ -507,6 +514,8 @@ declare module "@oomol-lab/connector" {
         bodyContentType?: "text" | "html";
       };
       output: {
+        /** URL for the next round of message changes, or null before a delta round completes. */
+        deltaLink: string | null;
         /** Messages returned by Outlook. */
         messages: Array<{
           /** Entity tag for the message. */

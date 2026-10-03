@@ -238,6 +238,49 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
+    /** Create a comment on a page or block through parent, or reply through discussion_id. Requires insert comments; without read comments, only object and id are returned. */
+    "notion.create_comment": {
+      input: Record<string, unknown>;
+      output: {
+        /** The Notion object type. */
+        object?: "comment";
+        /** The comment ID. */
+        id?: string;
+        /** The parent object that contains this Notion object. */
+        parent?: {
+          /** The parent type, such as workspace, page_id, data_source_id, database_id, or block_id. */
+          type?: string;
+          [key: string]: unknown;
+        };
+        /** The discussion thread the comment belongs to. */
+        discussion_id?: string;
+        /**
+         * The time when the comment was created.
+         * @format date-time
+         */
+        created_time?: string;
+        /**
+         * The time when the comment was last edited.
+         * @format date-time
+         */
+        last_edited_time?: string;
+        /** A Notion object. */
+        created_by?: Record<string, unknown>;
+        /** Comment rich text. */
+        rich_text?: Array<Record<string, unknown>>;
+        /** The author name shown on the comment. */
+        display_name?: {
+          /** How the author name was chosen. */
+          type?: "integration" | "user" | "custom";
+          /** The author name Notion shows on the comment. */
+          resolved_name?: string | null;
+          [key: string]: unknown;
+        };
+        /** Files attached to the comment. */
+        attachments?: Array<Record<string, unknown>>;
+        [key: string]: unknown;
+      };
+    };
     /** Create a Notion data source under a parent database with a properties schema. */
     "notion.create_data_source": {
       input: {
@@ -971,6 +1014,88 @@ declare module "@oomol-lab/connector" {
         type: "block";
         /** Pagination metadata for block results. */
         block: Record<string, never>;
+        /** The pagination request status returned by Notion. */
+        request_status?: {
+          /** The request status type returned by Notion. */
+          type?: string;
+          /** The reason the response is incomplete. */
+          incomplete_reason?: string;
+          [key: string]: unknown;
+        };
+        [key: string]: unknown;
+      };
+    };
+    /** List unresolved comments on a Notion page or block. Requires the read comments capability. */
+    "notion.list_comments": {
+      input: {
+        /**
+         * The page or block ID whose comments should be listed.
+         * @minLength 1
+         */
+        blockId: string;
+        /**
+         * The number of comments per page.
+         * @minimum 1
+         * @maximum 100
+         */
+        pageSize?: number;
+        /**
+         * The cursor for pagination.
+         * @minLength 1
+         */
+        startCursor?: string;
+      };
+      output: {
+        /** The Notion object type for a paginated response. */
+        object: "list";
+        /** The list of result objects. */
+        results: Array<{
+          /** The Notion object type. */
+          object?: "comment";
+          /** The comment ID. */
+          id?: string;
+          /** The parent object that contains this Notion object. */
+          parent?: {
+            /** The parent type, such as workspace, page_id, data_source_id, database_id, or block_id. */
+            type?: string;
+            [key: string]: unknown;
+          };
+          /** The discussion thread the comment belongs to. */
+          discussion_id?: string;
+          /**
+           * The time when the comment was created.
+           * @format date-time
+           */
+          created_time?: string;
+          /**
+           * The time when the comment was last edited.
+           * @format date-time
+           */
+          last_edited_time?: string;
+          /** A Notion object. */
+          created_by?: Record<string, unknown>;
+          /** Comment rich text. */
+          rich_text?: Array<Record<string, unknown>>;
+          /** The author name shown on the comment. */
+          display_name?: {
+            /** How the author name was chosen. */
+            type?: "integration" | "user" | "custom";
+            /** The author name Notion shows on the comment. */
+            resolved_name?: string | null;
+            [key: string]: unknown;
+          };
+          /** Files attached to the comment. */
+          attachments?: Array<Record<string, unknown>>;
+          [key: string]: unknown;
+        }>;
+        /** The cursor for the next page of results. */
+        next_cursor: string | null;
+        /** Whether more results are available. */
+        has_more: boolean;
+        /** The type-specific pagination metadata field name. */
+        type: "comment";
+        /** Comment pagination metadata. */
+        comment: Record<string, never>;
         /** The pagination request status returned by Notion. */
         request_status?: {
           /** The request status type returned by Notion. */

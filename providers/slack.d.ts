@@ -127,6 +127,8 @@ declare module "@oomol-lab/connector" {
     /** Get recent messages from a Slack conversation. */
     "slack.get_channel_messages": {
       input: {
+        /** Include the complete unmodified Slack message. History and thread requests also request message metadata. */
+        includeRaw?: boolean;
         /**
          * The Slack conversation or channel ID.
          * @minLength 1
@@ -152,10 +154,54 @@ declare module "@oomol-lab/connector" {
         messages: Array<{
           /** The message timestamp identifier. */
           ts?: string;
+          /** The Slack message type, normally 'message'. */
+          type?: string;
+          /** The Slack message subtype ('channel_join', 'bot_message', …) when the message has one. */
+          subtype?: string;
           /** The user ID of the message author. */
           userId?: string;
+          /** The bot ID of the message author when a bot posted it. */
+          botId?: string;
+          /** The Slack app ID that posted the message when an app posted it. */
+          appId?: string;
+          /** The display username Slack attached to a bot or app message. */
+          username?: string;
+          /** The Slack team ID the message belongs to. */
+          teamId?: string;
+          /** The client-generated message identifier when Slack returns one. */
+          clientMsgId?: string;
           /** The text content of the message. */
           text?: string;
+          /** The timestamp of the most recent edit, when the message was edited. */
+          editedTs?: string;
+          /** The user ID of the most recent editor, when the message was edited. */
+          editedUserId?: string;
+          /** The timestamp of the thread parent. Equal to ts on a thread parent, and absent on a message that is not in a thread. */
+          threadTs?: string;
+          /** The author of the thread parent, on a threaded reply. */
+          parentUserId?: string;
+          /** The number of replies to this thread parent. */
+          replyCount?: number;
+          /** The number of distinct users who replied to this thread parent. */
+          replyUsersCount?: number;
+          /** Up to five user IDs of people who replied to this thread parent. Slack caps this list; use replyUsersCount for the total. */
+          replyUserIds?: Array<string>;
+          /** The timestamp of the most recent reply to this thread parent. */
+          latestReply?: string;
+          /** Whether the thread is locked. */
+          isLocked?: boolean;
+          /** Reaction summaries attached to the message. */
+          reactions?: Array<{
+            /** The emoji name of the reaction. */
+            name?: string;
+            /** How many users added this reaction. */
+            count?: number;
+            /** The users who added this reaction, as far as Slack reports them. */
+            userIds?: Array<string>;
+            [key: string]: unknown;
+          }>;
+          /** The untouched Slack record, exactly as the Slack API returned it. Present only when includeRaw is true. */
+          raw?: Record<string, unknown>;
           [key: string]: unknown;
         }>;
         /** Whether more messages are available beyond this page. */
@@ -202,6 +248,24 @@ declare module "@oomol-lab/connector" {
           userId?: string;
           /** The locale returned by Slack when requested. */
           locale?: string;
+          /** Creation time as a Unix timestamp in seconds when Slack provides it. */
+          created?: number;
+          /** Last settings update time, passed through as Slack returns it. Slack documents epoch milliseconds for channels (unlike created) and a Unix timestamp for legacy IM and MPIM objects. */
+          updated?: number;
+          /** The user who created the conversation when Slack provides it. */
+          creatorId?: string;
+          /** Whether the conversation is shared with another workspace. */
+          isShared?: boolean;
+          /** Whether the conversation is shared with an external organization. */
+          isExtShared?: boolean;
+          /** Whether the conversation is shared between workspaces of the same Enterprise organization. */
+          isOrgShared?: boolean;
+          /** The ID of the workspace the conversation is within when Slack provides it. */
+          contextTeamId?: string;
+          /** The last-read message timestamp when Slack provides it. */
+          lastRead?: string;
+          /** The unread message count when Slack provides it. */
+          unreadCount?: number;
         };
       };
     };
@@ -296,6 +360,8 @@ declare module "@oomol-lab/connector" {
     /** Get messages in a Slack thread. */
     "slack.get_thread": {
       input: {
+        /** Include the complete unmodified Slack message. History and thread requests also request message metadata. */
+        includeRaw?: boolean;
         /**
          * The Slack conversation or channel ID.
          * @minLength 1
@@ -326,10 +392,54 @@ declare module "@oomol-lab/connector" {
         messages: Array<{
           /** The message timestamp identifier. */
           ts?: string;
+          /** The Slack message type, normally 'message'. */
+          type?: string;
+          /** The Slack message subtype ('channel_join', 'bot_message', …) when the message has one. */
+          subtype?: string;
           /** The user ID of the message author. */
           userId?: string;
+          /** The bot ID of the message author when a bot posted it. */
+          botId?: string;
+          /** The Slack app ID that posted the message when an app posted it. */
+          appId?: string;
+          /** The display username Slack attached to a bot or app message. */
+          username?: string;
+          /** The Slack team ID the message belongs to. */
+          teamId?: string;
+          /** The client-generated message identifier when Slack returns one. */
+          clientMsgId?: string;
           /** The text content of the message. */
           text?: string;
+          /** The timestamp of the most recent edit, when the message was edited. */
+          editedTs?: string;
+          /** The user ID of the most recent editor, when the message was edited. */
+          editedUserId?: string;
+          /** The timestamp of the thread parent. Equal to ts on a thread parent, and absent on a message that is not in a thread. */
+          threadTs?: string;
+          /** The author of the thread parent, on a threaded reply. */
+          parentUserId?: string;
+          /** The number of replies to this thread parent. */
+          replyCount?: number;
+          /** The number of distinct users who replied to this thread parent. */
+          replyUsersCount?: number;
+          /** Up to five user IDs of people who replied to this thread parent. Slack caps this list; use replyUsersCount for the total. */
+          replyUserIds?: Array<string>;
+          /** The timestamp of the most recent reply to this thread parent. */
+          latestReply?: string;
+          /** Whether the thread is locked. */
+          isLocked?: boolean;
+          /** Reaction summaries attached to the message. */
+          reactions?: Array<{
+            /** The emoji name of the reaction. */
+            name?: string;
+            /** How many users added this reaction. */
+            count?: number;
+            /** The users who added this reaction, as far as Slack reports them. */
+            userIds?: Array<string>;
+            [key: string]: unknown;
+          }>;
+          /** The untouched Slack record, exactly as the Slack API returned it. Present only when includeRaw is true. */
+          raw?: Record<string, unknown>;
           [key: string]: unknown;
         }>;
         /** Whether more messages are available beyond this page. */
@@ -370,6 +480,22 @@ declare module "@oomol-lab/connector" {
           isOwner: boolean | null;
           /** The locale returned by Slack when requested. */
           locale?: string;
+          /** The profile email. Slack returns it only when the token holds the users:read.email scope. */
+          email?: string;
+          /** The user's time zone identifier when Slack provides it. */
+          tz?: string;
+          /** The user's UTC offset in seconds when Slack provides it. */
+          tzOffset?: number;
+          /** When the user object was last updated, as a Unix timestamp in seconds. */
+          updated?: number;
+          /** The user's team ID when Slack provides it. */
+          teamId?: string;
+          /** Whether the user is a guest. Single-channel guests also set isUltraRestricted. */
+          isRestricted?: boolean;
+          /** Whether the user is a single-channel guest. */
+          isUltraRestricted?: boolean;
+          /** Whether the user is an authorized user of the calling app. */
+          isAppUser?: boolean;
         };
       };
     };
@@ -437,6 +563,24 @@ declare module "@oomol-lab/connector" {
           userId?: string;
           /** The locale returned by Slack when requested. */
           locale?: string;
+          /** Creation time as a Unix timestamp in seconds when Slack provides it. */
+          created?: number;
+          /** Last settings update time, passed through as Slack returns it. Slack documents epoch milliseconds for channels (unlike created) and a Unix timestamp for legacy IM and MPIM objects. */
+          updated?: number;
+          /** The user who created the conversation when Slack provides it. */
+          creatorId?: string;
+          /** Whether the conversation is shared with another workspace. */
+          isShared?: boolean;
+          /** Whether the conversation is shared with an external organization. */
+          isExtShared?: boolean;
+          /** Whether the conversation is shared between workspaces of the same Enterprise organization. */
+          isOrgShared?: boolean;
+          /** The ID of the workspace the conversation is within when Slack provides it. */
+          contextTeamId?: string;
+          /** The last-read message timestamp when Slack provides it. */
+          lastRead?: string;
+          /** The unread message count when Slack provides it. */
+          unreadCount?: number;
         }>;
         /** The cursor for the next page. */
         nextCursor: string | null;
@@ -523,6 +667,22 @@ declare module "@oomol-lab/connector" {
           isOwner: boolean | null;
           /** The locale returned by Slack when requested. */
           locale?: string;
+          /** The profile email. Slack returns it only when the token holds the users:read.email scope. */
+          email?: string;
+          /** The user's time zone identifier when Slack provides it. */
+          tz?: string;
+          /** The user's UTC offset in seconds when Slack provides it. */
+          tzOffset?: number;
+          /** When the user object was last updated, as a Unix timestamp in seconds. */
+          updated?: number;
+          /** The user's team ID when Slack provides it. */
+          teamId?: string;
+          /** Whether the user is a guest. Single-channel guests also set isUltraRestricted. */
+          isRestricted?: boolean;
+          /** Whether the user is a single-channel guest. */
+          isUltraRestricted?: boolean;
+          /** Whether the user is an authorized user of the calling app. */
+          isAppUser?: boolean;
         }>;
         /** The cursor for the next page. */
         nextCursor: string | null;
@@ -567,6 +727,24 @@ declare module "@oomol-lab/connector" {
           userId?: string;
           /** The locale returned by Slack when requested. */
           locale?: string;
+          /** Creation time as a Unix timestamp in seconds when Slack provides it. */
+          created?: number;
+          /** Last settings update time, passed through as Slack returns it. Slack documents epoch milliseconds for channels (unlike created) and a Unix timestamp for legacy IM and MPIM objects. */
+          updated?: number;
+          /** The user who created the conversation when Slack provides it. */
+          creatorId?: string;
+          /** Whether the conversation is shared with another workspace. */
+          isShared?: boolean;
+          /** Whether the conversation is shared with an external organization. */
+          isExtShared?: boolean;
+          /** Whether the conversation is shared between workspaces of the same Enterprise organization. */
+          isOrgShared?: boolean;
+          /** The ID of the workspace the conversation is within when Slack provides it. */
+          contextTeamId?: string;
+          /** The last-read message timestamp when Slack provides it. */
+          lastRead?: string;
+          /** The unread message count when Slack provides it. */
+          unreadCount?: number;
         };
       };
     };
@@ -807,6 +985,8 @@ declare module "@oomol-lab/connector" {
     /** Search messages visible to the Slack user who authorized the connection. Slack search modifiers such as in:channel_name and from:<@UserID> are supported. */
     "slack.search_messages": {
       input: {
+        /** Include the complete unmodified Slack message. History and thread requests also request message metadata. */
+        includeRaw?: boolean;
         /**
          * The Slack search query.
          * @minLength 1
@@ -860,6 +1040,8 @@ declare module "@oomol-lab/connector" {
           teamId?: string;
           /** The Slack result type. */
           type?: string;
+          /** The untouched Slack record, exactly as the Slack API returned it. Present only when includeRaw is true. */
+          raw?: Record<string, unknown>;
           [key: string]: unknown;
         }>;
         /** The total number of matches Slack reports. */

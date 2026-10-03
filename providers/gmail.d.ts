@@ -15,6 +15,14 @@ declare module "@oomol-lab/connector" {
         removeLabelIds?: Array<string>;
       };
       output: {
+        /** The message history ID. */
+        historyId?: string;
+        /** The internal timestamp in milliseconds. */
+        internalDate?: string;
+        /** The estimated message size in bytes. */
+        sizeEstimate?: number;
+        /** The message snippet. */
+        snippet?: string;
         /** Gmail message ID. */
         messageId: string;
         /** Gmail thread ID. */
@@ -313,6 +321,14 @@ declare module "@oomol-lab/connector" {
           /** Gmail thread ID. */
           threadId: string;
         } | {
+          /** The message history ID. */
+          historyId?: string;
+          /** The internal timestamp in milliseconds. */
+          internalDate?: string;
+          /** The estimated message size in bytes. */
+          sizeEstimate?: number;
+          /** The message snippet. */
+          snippet?: string;
           /** Gmail message ID. */
           messageId: string;
           /** Gmail thread ID. */
@@ -328,6 +344,14 @@ declare module "@oomol-lab/connector" {
           /** Message timestamp returned by Gmail. */
           messageTimestamp: string;
         } | {
+          /** The message history ID. */
+          historyId?: string;
+          /** The internal timestamp in milliseconds. */
+          internalDate?: string;
+          /** The estimated message size in bytes. */
+          sizeEstimate?: number;
+          /** The message snippet. */
+          snippet?: string;
           /** Gmail message ID. */
           messageId: string;
           /** Gmail thread ID. */
@@ -382,6 +406,14 @@ declare module "@oomol-lab/connector" {
         format?: "minimal" | "full" | "raw" | "metadata";
       };
       output: {
+        /** The message history ID. */
+        historyId?: string;
+        /** The internal timestamp in milliseconds. */
+        internalDate?: string;
+        /** The estimated message size in bytes. */
+        sizeEstimate?: number;
+        /** The message snippet. */
+        snippet?: string;
         /** Gmail message ID. */
         messageId: string;
         /** Gmail thread ID. */
@@ -435,6 +467,14 @@ declare module "@oomol-lab/connector" {
         historyId: string | null;
         /** Messages contained in the thread. */
         messages: Array<{
+          /** The message history ID. */
+          historyId?: string;
+          /** The internal timestamp in milliseconds. */
+          internalDate?: string;
+          /** The estimated message size in bytes. */
+          sizeEstimate?: number;
+          /** The message snippet. */
+          snippet?: string;
           /** Gmail message ID. */
           messageId: string;
           /** Gmail thread ID. */
@@ -504,6 +544,14 @@ declare module "@oomol-lab/connector" {
         id: string;
         /** Normalized Gmail message payload stored in the draft. */
         message: {
+          /** The message history ID. */
+          historyId?: string;
+          /** The internal timestamp in milliseconds. */
+          internalDate?: string;
+          /** The estimated message size in bytes. */
+          sizeEstimate?: number;
+          /** The message snippet. */
+          snippet?: string;
           /** Gmail message ID. */
           messageId: string;
           /** Gmail thread ID. */
@@ -712,6 +760,14 @@ declare module "@oomol-lab/connector" {
           id: string;
           /** Normalized Gmail message payload stored in the draft. */
           message: {
+            /** The message history ID. */
+            historyId?: string;
+            /** The internal timestamp in milliseconds. */
+            internalDate?: string;
+            /** The estimated message size in bytes. */
+            sizeEstimate?: number;
+            /** The message snippet. */
+            snippet?: string;
             /** Gmail message ID. */
             messageId: string;
             /** Gmail thread ID. */
@@ -890,6 +946,14 @@ declare module "@oomol-lab/connector" {
           historyId: string | null;
           /** Expanded messages in the thread when verbose output is requested. */
           messages?: Array<{
+            /** The message history ID. */
+            historyId?: string;
+            /** The internal timestamp in milliseconds. */
+            internalDate?: string;
+            /** The estimated message size in bytes. */
+            sizeEstimate?: number;
+            /** The message snippet. */
+            snippet?: string;
             /** Gmail message ID. */
             messageId: string;
             /** Gmail thread ID. */
@@ -955,6 +1019,14 @@ declare module "@oomol-lab/connector" {
         historyId: string | null;
         /** Messages in the updated thread. */
         messages: Array<{
+          /** The message history ID. */
+          historyId?: string;
+          /** The internal timestamp in milliseconds. */
+          internalDate?: string;
+          /** The estimated message size in bytes. */
+          sizeEstimate?: number;
+          /** The message snippet. */
+          snippet?: string;
           /** Gmail message ID. */
           messageId: string;
           /** Gmail thread ID. */
@@ -1011,6 +1083,14 @@ declare module "@oomol-lab/connector" {
         historyId: string | null;
         /** Messages in the trashed thread. */
         messages: Array<{
+          /** The message history ID. */
+          historyId?: string;
+          /** The internal timestamp in milliseconds. */
+          internalDate?: string;
+          /** The estimated message size in bytes. */
+          sizeEstimate?: number;
+          /** The message snippet. */
+          snippet?: string;
           /** Gmail message ID. */
           messageId: string;
           /** Gmail thread ID. */
@@ -1061,6 +1141,14 @@ declare module "@oomol-lab/connector" {
         userId?: string;
       };
       output: {
+        /** The message history ID. */
+        historyId?: string;
+        /** The internal timestamp in milliseconds. */
+        internalDate?: string;
+        /** The estimated message size in bytes. */
+        sizeEstimate?: number;
+        /** The message snippet. */
+        snippet?: string;
         /** Gmail message ID. */
         messageId: string;
         /** Gmail thread ID. */
@@ -1303,6 +1391,14 @@ declare module "@oomol-lab/connector" {
         userId?: string;
       };
       output: {
+        /** The message history ID. */
+        historyId?: string;
+        /** The internal timestamp in milliseconds. */
+        internalDate?: string;
+        /** The estimated message size in bytes. */
+        sizeEstimate?: number;
+        /** The message snippet. */
+        snippet?: string;
         /** Gmail message ID. */
         messageId: string;
         /** Gmail thread ID. */
@@ -1358,6 +1454,14 @@ declare module "@oomol-lab/connector" {
         historyId: string | null;
         /** Messages restored with the thread. */
         messages: Array<{
+          /** The message history ID. */
+          historyId?: string;
+          /** The internal timestamp in milliseconds. */
+          internalDate?: string;
+          /** The estimated message size in bytes. */
+          sizeEstimate?: number;
+          /** The message snippet. */
+          snippet?: string;
           /** Gmail message ID. */
           messageId: string;
           /** Gmail thread ID. */

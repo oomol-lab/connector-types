@@ -99,6 +99,64 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
+    /** Apply for permission to sell in a leaf category using the new category tree and certificate groups. Returns an audit id; check the audit and effective permission before publishing products. */
+    "weixin_store.apply_category": {
+      input: {
+        /** The new category application, using WeChat field names. */
+        categoryInfo: {
+          /**
+           * The category path from root to leaf, using cat_id values from list_categories.
+           * @minItems 1
+           */
+          cats_v2: Array<{
+            /** One category id in the path. */
+            cat_id: number | string;
+          }>;
+          /** One selected license for each required certificate group from list_categories; empty when no licenses are required. */
+          license_group_list: Array<{
+            /** The required certificate group id. */
+            license_group_id: number | string;
+            /** The selected license. */
+            license: {
+              /** One permitted license id in the group. */
+              license_id: number | string;
+              /** Qualification image file ids from upload_qualification_image. */
+              file_id_list: Array<string>;
+              /** The required license fields for this certificate. */
+              license_field_list: Array<{
+                /**
+                 * The license field key.
+                 * @minLength 1
+                 */
+                key: string;
+                /**
+                 * The license field value.
+                 * @minLength 1
+                 */
+                value: string;
+              }>;
+            };
+          }>;
+          /**
+           * Approved brand ids, required when get_category reports attr.is_limit_brand=true.
+           * @minItems 1
+           */
+          brand_list?: Array<{
+            /** An approved brand id from list_valid_brands. */
+            brand_id: number | string;
+          }>;
+          [key: string]: unknown;
+        };
+      };
+      output: {
+        /**
+         * The audit id to pass to get_category_application.
+         * @exclusiveMinimum 0
+         */
+        audit_id?: number;
+        [key: string]: unknown;
+      };
+    };
     /** Permanently delete a product by product_id. A product under review cannot be deleted. This cannot be undone. */
     "weixin_store.delete_product": {
       input: {
@@ -148,11 +206,8 @@ declare module "@oomol-lab/connector" {
     /** Get the publishing rules of one leaf category: required product and sale attributes, brand restrictions, deposit, and qualifications. */
     "weixin_store.get_category": {
       input: {
-        /**
-         * The id of a leaf category from list_categories.
-         * @exclusiveMinimum 0
-         */
-        catId: number;
+        /** The id of a leaf category from list_categories. */
+        catId: number | string;
       };
       output: {
         /** The category identity, with cat_id and name. */
@@ -161,6 +216,59 @@ declare module "@oomol-lab/connector" {
         attr?: Record<string, unknown>;
         /** The qualifications required to publish in this category. */
         product_qua_list?: Array<Record<string, unknown>>;
+        [key: string]: unknown;
+      };
+    };
+    /** Get the status and any rejection reason of a category application by audit id. */
+    "weixin_store.get_category_application": {
+      input: {
+        /**
+         * The audit_id returned by apply_category.
+         * @exclusiveMinimum 0
+         */
+        auditId: number;
+      };
+      output: {
+        /** The audit status and submitted materials. */
+        info?: {
+          /**
+           * The audit id.
+           * @exclusiveMinimum 0
+           */
+          audit_id?: number;
+          /**
+           * The leaf category id.
+           * @exclusiveMinimum 0
+           */
+          cat_id?: number;
+          /** 1 = in review, 2 = rejected, 3 = approved, 4 = canceled. */
+          status?: number;
+          /** The rejection reason, when rejected. */
+          audit_reason?: string;
+          [key: string]: unknown;
+        };
+        [key: string]: unknown;
+      };
+    };
+    /** Get the category's product attribute, sale attribute, qualification, price, and other publishing rules for the chosen release mode. */
+    "weixin_store.get_category_product_rule": {
+      input: {
+        /** The leaf category id. */
+        catId: number | string;
+        /** 0 = normal, 1 = simplified. */
+        releaseMode: 0 | 1;
+        /** An approved brand id when publishing a branded product. */
+        brandId?: number | string;
+      };
+      output: {
+        /** Product attribute requirements. */
+        product_attr_list?: Array<Record<string, unknown>>;
+        /** SKU attribute requirements. */
+        sale_attr_list?: Array<Record<string, unknown>>;
+        /** Product qualification requirements. */
+        product_qua_list?: Array<Record<string, unknown>>;
+        /** The lowest allowed sale price, in cents. */
+        floor_price?: number;
         [key: string]: unknown;
       };
     };
@@ -301,6 +409,29 @@ declare module "@oomol-lab/connector" {
         cats?: Array<Record<string, unknown>>;
         /** The multi-level category tree whose nodes carry a leaf flag; use the leaf cat_id values for add_product and get_category. */
         cats_v2?: Array<Record<string, unknown>>;
+        [key: string]: unknown;
+      };
+    };
+    /** List the store's category permissions. Filter to status 1 to find categories currently allowed for sale. */
+    "weixin_store.list_category_permissions": {
+      input: {
+        /** 1 = effective, 2 = expired; omit for both. */
+        status?: 1 | 2;
+      };
+      output: {
+        /** The category permissions. */
+        list?: Array<{
+          /**
+           * The leaf category id.
+           * @exclusiveMinimum 0
+           */
+          id?: number;
+          /** 1 = effective, 2 = expired. */
+          status?: number;
+          /** Why an expired permission is no longer effective. */
+          uneffective_reason?: string;
+          [key: string]: unknown;
+        }>;
         [key: string]: unknown;
       };
     };
@@ -460,6 +591,20 @@ declare module "@oomol-lab/connector" {
         productId: string | number;
       };
       output: Record<string, unknown>;
+    };
+    /** Check whether the store may publish in a leaf category, including category permission, deposit, freight insurance, and store restrictions. Omit catId for store-wide checks only. */
+    "weixin_store.precheck_product_category": {
+      input: {
+        /** The leaf category id to check; omit for a store-wide check. */
+        catId?: number | string;
+      };
+      output: {
+        /** Whether the store may publish in the category. */
+        all_pass?: boolean;
+        /** Reasons publishing is blocked. */
+        fail_reasons?: Array<unknown>;
+        [key: string]: unknown;
+      };
     };
     /** Reject a buyer's after-sale request with a reason. */
     "weixin_store.reject_aftersale": {
@@ -662,6 +807,28 @@ declare module "@oomol-lab/connector" {
           media_id?: string;
           /** The pay_media_id of the uploaded image. */
           pay_media_id?: string;
+          [key: string]: unknown;
+        };
+        [key: string]: unknown;
+      };
+    };
+    /** Upload a qualification image (up to 2 MB) and return the file_id required for category and brand applications. Product images from upload_image cannot be used here. */
+    "weixin_store.upload_qualification_image": {
+      input: {
+        /**
+         * A public URL of the qualification image, at most 2 MB.
+         * @format uri
+         */
+        fileUrl: string;
+      };
+      output: {
+        /** The uploaded file reference. */
+        data?: {
+          /**
+           * The file id to use in a category or brand qualification application.
+           * @minLength 1
+           */
+          file_id?: string;
           [key: string]: unknown;
         };
         [key: string]: unknown;

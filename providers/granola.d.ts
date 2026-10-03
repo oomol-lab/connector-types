@@ -67,6 +67,10 @@ declare module "@oomol-lab/connector" {
       output: {
         /** A Granola note object. */
         note: {
+          /** MCP only: the meeting date when available. */
+          date?: string;
+          /** MCP only: participant names and email addresses as listed by Granola. */
+          participants?: string;
           /** The ID of the note. */
           id?: string;
           /** The object type returned by Granola. */

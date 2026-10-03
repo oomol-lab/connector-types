@@ -164,8 +164,11 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         thscode: string;
-        /** Financial statement reporting cadence. */
-        period?: "annual" | "quarterly";
+        /**
+         * Financial statement reporting cadence.
+         * @default "annual"
+         */
+        period: "annual" | "quarterly";
         /**
          * Number of recent reporting periods to return.
          * @minimum 1
@@ -210,8 +213,11 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         thscode: string;
-        /** Financial statement reporting cadence. */
-        period?: "annual" | "quarterly";
+        /**
+         * Financial statement reporting cadence.
+         * @default "annual"
+         */
+        period: "annual" | "quarterly";
         /**
          * Number of recent reporting periods to return.
          * @minimum 1
@@ -860,8 +866,11 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         thscode: string;
-        /** Financial statement reporting cadence. */
-        period?: "annual" | "quarterly";
+        /**
+         * Financial statement reporting cadence.
+         * @default "annual"
+         */
+        period: "annual" | "quarterly";
         /**
          * Number of recent reporting periods to return.
          * @minimum 1
