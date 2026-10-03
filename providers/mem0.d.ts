@@ -4,97 +4,7 @@ declare module "@oomol-lab/connector" {
   interface ActionRegistry {
     /** Add new memories to Mem0 from messages or direct memory text. */
     "mem0.add_memories": {
-      input: {
-        /**
-         * A single memory string to write directly.
-         * @minLength 1
-         */
-        memory?: string;
-        /**
-         * The list of messages used to generate memory.
-         * @minItems 1
-         */
-        messages?: Array<{
-          /**
-           * The message role, such as user or assistant.
-           * @minLength 1
-           */
-          role: string;
-          /**
-           * The text content of the message.
-           * @minLength 1
-           */
-          content: string;
-        }>;
-        /**
-         * The associated user identifier.
-         * @minLength 1
-         */
-        user_id?: string;
-        /**
-         * The associated agent identifier.
-         * @minLength 1
-         */
-        agent_id?: string;
-        /**
-         * The associated application identifier.
-         * @minLength 1
-         */
-        app_id?: string;
-        /**
-         * The associated run identifier.
-         * @minLength 1
-         */
-        run_id?: string;
-        /**
-         * An optional organization identifier.
-         * @minLength 1
-         */
-        org_id?: string;
-        /**
-         * An optional project identifier.
-         * @minLength 1
-         */
-        project_id?: string;
-        /** Metadata to attach to the new memory. */
-        metadata?: Record<string, unknown>;
-        /** The custom category definitions used during memory extraction. */
-        custom_categories?: Record<string, string>;
-        /** Whether graph memory extraction should be enabled for this request. */
-        enable_graph?: boolean;
-        /** Whether Mem0 should infer structured memory from the messages. */
-        infer?: boolean;
-        /** Whether the write should be processed asynchronously. */
-        async_mode?: boolean;
-        /** The response wrapper format version. */
-        output_format?: "v1.0" | "v1.1";
-        /** The memory extraction engine version. */
-        version?: "v1" | "v2";
-        /**
-         * Additional instructions used to guide memory extraction.
-         * @minLength 1
-         */
-        custom_instructions?: string;
-        /** Whether the created memory should be treated as immutable. */
-        immutable?: boolean;
-        /** The Unix timestamp associated with the memory input. */
-        timestamp?: number;
-        /**
-         * The expiration date to attach to the created memory.
-         * @minLength 1
-         */
-        expiration_date?: string;
-        /**
-         * A string list of keywords that should be prioritized.
-         * @minLength 1
-         */
-        includes?: string;
-        /**
-         * A string list of keywords that should be excluded.
-         * @minLength 1
-         */
-        excludes?: string;
-      };
+      input: Record<string, unknown>;
       output: Array<{
         /** The asynchronous event identifier. */
         event_id: string;
@@ -501,7 +411,7 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** Search memories in Mem0 with semantic query and optional filters. */
+    /** Search memories in Mem0 with a semantic query and required non-empty filters. */
     "mem0.search_memories": {
       input: {
         /**
@@ -509,8 +419,8 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         query: string;
-        /** An optional advanced filter object. */
-        filters?: Record<string, unknown>;
+        /** Required non-empty advanced filters, such as a user_id filter. */
+        filters: Record<string, unknown>;
         /**
          * The maximum number of results to return.
          * @minimum 1

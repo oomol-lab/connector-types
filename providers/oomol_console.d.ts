@@ -70,6 +70,22 @@ declare module "@oomol-lab/connector" {
            */
           actionNames: Array<string>;
         };
+        /** The independent Trigger permission for this group. */
+        triggerPermission?: {
+          /** Allow every Trigger. */
+          mode: "all";
+        } | {
+          /** Deny every Trigger. */
+          mode: "none";
+        } | {
+          /** Allow selected Triggers. */
+          mode: "selected";
+          /**
+           * The full Trigger IDs allowed by this group.
+           * @minItems 1
+           */
+          triggerIds: Array<string>;
+        };
       };
       output: {
         /** A manageable Connection in the current OOMOL team. */
@@ -129,6 +145,22 @@ declare module "@oomol-lab/connector" {
              */
             actionNames: Array<string>;
           };
+          /** The independent Trigger permission for this group. */
+          triggerPermission?: {
+            /** Allow every Trigger. */
+            mode: "all";
+          } | {
+            /** Deny every Trigger. */
+            mode: "none";
+          } | {
+            /** Allow selected Triggers. */
+            mode: "selected";
+            /**
+             * The full Trigger IDs allowed by this group.
+             * @minItems 1
+             */
+            triggerIds: Array<string>;
+          };
         };
         /** The custom permission groups for the Connection. */
         groups: Array<{
@@ -163,6 +195,22 @@ declare module "@oomol-lab/connector" {
              * @minItems 1
              */
             actionNames: Array<string>;
+          };
+          /** The independent Trigger permission for this group. */
+          triggerPermission?: {
+            /** Allow every Trigger. */
+            mode: "all";
+          } | {
+            /** Deny every Trigger. */
+            mode: "none";
+          } | {
+            /** Allow selected Triggers. */
+            mode: "selected";
+            /**
+             * The full Trigger IDs allowed by this group.
+             * @minItems 1
+             */
+            triggerIds: Array<string>;
           };
         }>;
         /** The members of the current OOMOL team. */
@@ -285,6 +333,22 @@ declare module "@oomol-lab/connector" {
              */
             actionNames: Array<string>;
           };
+          /** The independent Trigger permission for this group. */
+          triggerPermission?: {
+            /** Allow every Trigger. */
+            mode: "all";
+          } | {
+            /** Deny every Trigger. */
+            mode: "none";
+          } | {
+            /** Allow selected Triggers. */
+            mode: "selected";
+            /**
+             * The full Trigger IDs allowed by this group.
+             * @minItems 1
+             */
+            triggerIds: Array<string>;
+          };
         };
         /** The custom permission groups for the Connection. */
         groups: Array<{
@@ -319,6 +383,22 @@ declare module "@oomol-lab/connector" {
              * @minItems 1
              */
             actionNames: Array<string>;
+          };
+          /** The independent Trigger permission for this group. */
+          triggerPermission?: {
+            /** Allow every Trigger. */
+            mode: "all";
+          } | {
+            /** Deny every Trigger. */
+            mode: "none";
+          } | {
+            /** Allow selected Triggers. */
+            mode: "selected";
+            /**
+             * The full Trigger IDs allowed by this group.
+             * @minItems 1
+             */
+            triggerIds: Array<string>;
           };
         }>;
         /** The members of the current OOMOL team. */
@@ -777,6 +857,22 @@ declare module "@oomol-lab/connector" {
              */
             actionNames: Array<string>;
           };
+          /** The independent Trigger permission for this group. */
+          triggerPermission?: {
+            /** Allow every Trigger. */
+            mode: "all";
+          } | {
+            /** Deny every Trigger. */
+            mode: "none";
+          } | {
+            /** Allow selected Triggers. */
+            mode: "selected";
+            /**
+             * The full Trigger IDs allowed by this group.
+             * @minItems 1
+             */
+            triggerIds: Array<string>;
+          };
         };
         /** The custom permission groups for the Connection. */
         groups: Array<{
@@ -811,6 +907,22 @@ declare module "@oomol-lab/connector" {
              * @minItems 1
              */
             actionNames: Array<string>;
+          };
+          /** The independent Trigger permission for this group. */
+          triggerPermission?: {
+            /** Allow every Trigger. */
+            mode: "all";
+          } | {
+            /** Deny every Trigger. */
+            mode: "none";
+          } | {
+            /** Allow selected Triggers. */
+            mode: "selected";
+            /**
+             * The full Trigger IDs allowed by this group.
+             * @minItems 1
+             */
+            triggerIds: Array<string>;
           };
         }>;
         /** The members of the current OOMOL team. */
@@ -870,11 +982,11 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** List the Connections manageable by an administrator of the current OOMOL team. */
+    /** List the current-team Connections visible to the authenticated user or service account. */
     "oomol_console.list_team_connections": {
       input: Record<string, never>;
       output: {
-        /** The manageable current-team Connections. */
+        /** The current-team Connections visible to the caller. */
         connections: Array<{
           /**
            * The Connector App ID.
@@ -961,6 +1073,22 @@ declare module "@oomol-lab/connector" {
            */
           actionNames: Array<string>;
         };
+        /** The independent Trigger permission for this group. */
+        triggerPermission?: {
+          /** Allow every Trigger. */
+          mode: "all";
+        } | {
+          /** Deny every Trigger. */
+          mode: "none";
+        } | {
+          /** Allow selected Triggers. */
+          mode: "selected";
+          /**
+           * The full Trigger IDs allowed by this group.
+           * @minItems 1
+           */
+          triggerIds: Array<string>;
+        };
       };
       output: {
         /** A manageable Connection in the current OOMOL team. */
@@ -1020,6 +1148,22 @@ declare module "@oomol-lab/connector" {
              */
             actionNames: Array<string>;
           };
+          /** The independent Trigger permission for this group. */
+          triggerPermission?: {
+            /** Allow every Trigger. */
+            mode: "all";
+          } | {
+            /** Deny every Trigger. */
+            mode: "none";
+          } | {
+            /** Allow selected Triggers. */
+            mode: "selected";
+            /**
+             * The full Trigger IDs allowed by this group.
+             * @minItems 1
+             */
+            triggerIds: Array<string>;
+          };
         };
         /** The custom permission groups for the Connection. */
         groups: Array<{
@@ -1054,6 +1198,22 @@ declare module "@oomol-lab/connector" {
              * @minItems 1
              */
             actionNames: Array<string>;
+          };
+          /** The independent Trigger permission for this group. */
+          triggerPermission?: {
+            /** Allow every Trigger. */
+            mode: "all";
+          } | {
+            /** Deny every Trigger. */
+            mode: "none";
+          } | {
+            /** Allow selected Triggers. */
+            mode: "selected";
+            /**
+             * The full Trigger IDs allowed by this group.
+             * @minItems 1
+             */
+            triggerIds: Array<string>;
           };
         }>;
         /** The members of the current OOMOL team. */
@@ -1135,6 +1295,22 @@ declare module "@oomol-lab/connector" {
            */
           actionNames: Array<string>;
         };
+        /** The independent Trigger permission for this group. */
+        triggerPermission?: {
+          /** Allow every Trigger. */
+          mode: "all";
+        } | {
+          /** Deny every Trigger. */
+          mode: "none";
+        } | {
+          /** Allow selected Triggers. */
+          mode: "selected";
+          /**
+           * The full Trigger IDs allowed by this group.
+           * @minItems 1
+           */
+          triggerIds: Array<string>;
+        };
       };
       output: {
         /** A manageable Connection in the current OOMOL team. */
@@ -1194,6 +1370,22 @@ declare module "@oomol-lab/connector" {
              */
             actionNames: Array<string>;
           };
+          /** The independent Trigger permission for this group. */
+          triggerPermission?: {
+            /** Allow every Trigger. */
+            mode: "all";
+          } | {
+            /** Deny every Trigger. */
+            mode: "none";
+          } | {
+            /** Allow selected Triggers. */
+            mode: "selected";
+            /**
+             * The full Trigger IDs allowed by this group.
+             * @minItems 1
+             */
+            triggerIds: Array<string>;
+          };
         };
         /** The custom permission groups for the Connection. */
         groups: Array<{
@@ -1228,6 +1420,22 @@ declare module "@oomol-lab/connector" {
              * @minItems 1
              */
             actionNames: Array<string>;
+          };
+          /** The independent Trigger permission for this group. */
+          triggerPermission?: {
+            /** Allow every Trigger. */
+            mode: "all";
+          } | {
+            /** Deny every Trigger. */
+            mode: "none";
+          } | {
+            /** Allow selected Triggers. */
+            mode: "selected";
+            /**
+             * The full Trigger IDs allowed by this group.
+             * @minItems 1
+             */
+            triggerIds: Array<string>;
           };
         }>;
         /** The members of the current OOMOL team. */

@@ -262,7 +262,7 @@ declare module "@oomol-lab/connector" {
         raw: Record<string, unknown>;
       };
     };
-    /** List Retell AI voice agents with optional pagination filters. */
+    /** List unique Retell AI voice agents with cursor pagination. Use get_voice_agent for version details. */
     "retell_ai.list_voice_agents": {
       input: {
         /**
@@ -276,34 +276,31 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         paginationKey?: string;
-        /**
-         * Version of the agent associated with paginationKey for consistent pagination.
-         * @minimum 0
-         */
-        paginationKeyVersion?: number;
-        /** Whether to return only the latest version of each agent. */
-        isLatest?: boolean;
+        /** Sort order for agent results. */
+        sortOrder?: "ascending" | "descending";
       };
       output: {
-        /** Voice agents returned by Retell AI. */
+        /** Cursor to pass as paginationKey for the next page. */
+        paginationKey: string | null;
+        /** Whether more agents are available. */
+        hasMore: boolean;
+        /** Voice agent summaries returned by Retell AI. */
         agents: Array<{
           /** Unique id of the agent. */
           agentId: string;
-          /** Version of the agent. */
-          version: number | null;
-          /** Name of the agent when provided. */
+          /** Agent name when provided. */
           agentName: string | null;
-          /** Voice id used for the agent when provided. */
-          voiceId: string | null;
-          /** Whether the agent version is published when provided. */
-          isPublished: boolean | null;
-          /** Last modification timestamp in milliseconds since epoch when provided. */
-          lastModificationTimestamp: number | null;
+          /** Agent channel. */
+          channel: "voice";
+          /** Last user modification time in milliseconds since epoch. */
+          userModifiedTimestamp: number;
+          /** Agent tags keyed by name, with assigned versions and dynamic variables. */
+          tags: Record<string, unknown>;
           /** The raw object returned by Retell AI. */
           raw: Record<string, unknown>;
         }>;
-        /** The raw voice agent list returned by Retell AI. */
-        raw: Array<Record<string, unknown>>;
+        /** The raw object returned by Retell AI. */
+        raw: Record<string, unknown>;
       };
     };
     /** List all Retell AI voices available to the authenticated workspace. */

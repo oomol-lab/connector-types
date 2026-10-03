@@ -47,63 +47,13 @@ declare module "@oomol-lab/connector" {
          * @minItems 1
          * @maxItems 10
          */
-        people: Array<{
-          /** The person's first name, used with lastName. */
-          firstName?: string;
-          /** The person's last name, used with firstName. */
-          lastName?: string;
-          /** The person's full name. */
-          name?: string;
-          /**
-           * The person's known email address.
-           * @format email
-           */
-          email?: string;
-          /** An MD5 or SHA-256 hash of the person's email address. */
-          hashedEmail?: string;
-          /** The name of the person's employer. */
-          organizationName?: string;
-          /** The employer's domain without www. */
-          domain?: string;
-          /** A known Apollo person ID. */
-          personId?: string;
-          /**
-           * The person's LinkedIn profile URL.
-           * @format uri
-           */
-          linkedinUrl?: string;
-        }>;
+        people: Array<Record<string, unknown>>;
       };
       output: Record<string, unknown>;
     };
     /** Enrich one person from known identifiers using Apollo's global database. */
     "aisa.enrich_apollo_person": {
-      input: {
-        /** The person's first name, used with lastName. */
-        firstName?: string;
-        /** The person's last name, used with firstName. */
-        lastName?: string;
-        /** The person's full name. */
-        name?: string;
-        /**
-         * The person's known email address.
-         * @format email
-         */
-        email?: string;
-        /** An MD5 or SHA-256 hash of the person's email address. */
-        hashedEmail?: string;
-        /** The name of the person's employer. */
-        organizationName?: string;
-        /** The employer's domain without www. */
-        domain?: string;
-        /** A known Apollo person ID. */
-        personId?: string;
-        /**
-         * The person's LinkedIn profile URL.
-         * @format uri
-         */
-        linkedinUrl?: string;
-      };
+      input: Record<string, unknown>;
       output: Record<string, unknown>;
     };
     /** Find candidate advertising brands associated with a domain. */
@@ -231,46 +181,17 @@ declare module "@oomol-lab/connector" {
     };
     /** Get standardized balance sheets for a company. */
     "aisa.get_balance_sheets": {
-      input: {
-        /** The public-market ticker symbol to query. */
-        ticker?: string;
-        /** The SEC Central Index Key used to identify the company. */
-        cik?: string;
-        /** The reporting period to return. */
-        period: "annual" | "quarterly" | "ttm";
-        /**
-         * The maximum number of records to return.
-         * @minimum 1
-         */
-        limit?: number;
-      };
+      input: Record<string, unknown>;
       output: Record<string, unknown>;
     };
     /** Get standardized cash-flow statements for a company. */
     "aisa.get_cash_flow_statements": {
-      input: {
-        /** The public-market ticker symbol to query. */
-        ticker?: string;
-        /** The SEC Central Index Key used to identify the company. */
-        cik?: string;
-        /** The reporting period to return. */
-        period: "annual" | "quarterly" | "ttm";
-        /**
-         * The maximum number of records to return.
-         * @minimum 1
-         */
-        limit?: number;
-      };
+      input: Record<string, unknown>;
       output: Record<string, unknown>;
     };
     /** Get standardized SEC company facts by ticker or CIK. */
     "aisa.get_company_facts": {
-      input: {
-        /** The public-market ticker symbol to query. */
-        ticker?: string;
-        /** The SEC Central Index Key used to identify the company. */
-        cik?: string;
-      };
+      input: Record<string, unknown>;
       output: Record<string, unknown>;
     };
     /** Get recent financial news, optionally filtered by ticker. */
@@ -391,27 +312,7 @@ declare module "@oomol-lab/connector" {
     };
     /** Get AI-search volume estimates for up to 1,000 keywords. */
     "aisa.get_dataforseo_ai_keyword_volume": {
-      input: {
-        /**
-         * The keywords to measure.
-         * @minItems 1
-         * @maxItems 1000
-         */
-        keywords: Array<string>;
-        /** The full location name; omit when using locationCode. */
-        locationName?: string;
-        /** The DataForSEO location code; omit when using locationName. */
-        locationCode?: number;
-        /** The full language name; omit when using languageCode. */
-        languageName?: string;
-        /** The language code; omit when using languageName. */
-        languageCode?: string;
-        /**
-         * A caller-defined identifier returned with the result.
-         * @maxLength 255
-         */
-        tag?: string;
-      };
+      input: (Record<string, unknown>) & (Record<string, unknown>);
       output: Record<string, unknown>;
     };
     /** Aggregate LLM mention metrics for domains and keyword entities. */
@@ -422,20 +323,7 @@ declare module "@oomol-lab/connector" {
          * @minItems 1
          * @maxItems 10
          */
-        targets: Array<{
-          /** The target domain without a scheme or www prefix. */
-          domain?: string;
-          /** The target keyword or brand phrase. */
-          keyword?: string;
-          /** Whether to include or exclude this entity. */
-          searchFilter?: "include" | "exclude";
-          /** The LLM response sections in which to search for the entity. */
-          searchScope?: Array<string>;
-          /** Whether a domain target includes its subdomains. */
-          includeSubdomains?: boolean;
-          /** How a keyword target is matched. */
-          matchType?: "word_match" | "partial_match";
-        }>;
+        targets: Array<Record<string, unknown>>;
         /** The search location name. */
         locationName?: string;
         /** The DataForSEO search location code. */
@@ -470,20 +358,7 @@ declare module "@oomol-lab/connector" {
          * @minItems 1
          * @maxItems 10
          */
-        targets: Array<{
-          /** The target domain without a scheme or www prefix. */
-          domain?: string;
-          /** The target keyword or brand phrase. */
-          keyword?: string;
-          /** Whether to include or exclude this entity. */
-          searchFilter?: "include" | "exclude";
-          /** The LLM response sections in which to search for the entity. */
-          searchScope?: Array<string>;
-          /** Whether a domain target includes its subdomains. */
-          includeSubdomains?: boolean;
-          /** How a keyword target is matched. */
-          matchType?: "word_match" | "partial_match";
-        }>;
+        targets: Array<Record<string, unknown>>;
         /** The search location name. */
         locationName?: string;
         /** The DataForSEO search location code. */
@@ -536,29 +411,12 @@ declare module "@oomol-lab/connector" {
     };
     /** Get historical valuation, profitability, growth, and leverage metrics. */
     "aisa.get_financial_metrics": {
-      input: {
-        /** The public-market ticker symbol to query. */
-        ticker?: string;
-        /** The SEC Central Index Key used to identify the company. */
-        cik?: string;
-        /** The reporting period to return. */
-        period: "annual" | "quarterly" | "ttm";
-        /**
-         * The maximum number of records to return.
-         * @minimum 1
-         */
-        limit?: number;
-      };
+      input: Record<string, unknown>;
       output: Record<string, unknown>;
     };
     /** Get the latest available financial metrics for a company. */
     "aisa.get_financial_metrics_snapshot": {
-      input: {
-        /** The public-market ticker symbol to query. */
-        ticker?: string;
-        /** The SEC Central Index Key used to identify the company. */
-        cik?: string;
-      };
+      input: Record<string, unknown>;
       output: Record<string, unknown>;
     };
     /** List ads for one or more known Foreplay brand IDs. */
@@ -660,19 +518,7 @@ declare module "@oomol-lab/connector" {
     };
     /** Get standardized income statements for a company. */
     "aisa.get_income_statements": {
-      input: {
-        /** The public-market ticker symbol to query. */
-        ticker?: string;
-        /** The SEC Central Index Key used to identify the company. */
-        cik?: string;
-        /** The reporting period to return. */
-        period: "annual" | "quarterly" | "ttm";
-        /**
-         * The maximum number of records to return.
-         * @minimum 1
-         */
-        limit?: number;
-      };
+      input: Record<string, unknown>;
       output: Record<string, unknown>;
     };
     /** List reported insider transactions for a ticker. */
@@ -933,6 +779,23 @@ declare module "@oomol-lab/connector" {
       };
       output: Array<Record<string, unknown>>;
     };
+    /** Get backlink anchor text and backlink counts for a domain or URL. */
+    "aisa.get_semrush_backlink_anchors": {
+      input: {
+        /** The domain or URL whose backlink anchors should be returned. */
+        target: string;
+        /** How Semrush should interpret the backlink target. */
+        targetType: "root_domain" | "domain" | "url";
+      };
+      output: {
+        /** The original semicolon-delimited response returned by AIsa. */
+        rawText: string;
+        /** The report columns in response order. */
+        columns: Array<string>;
+        /** The report rows in response order. */
+        rows: Array<Array<string>>;
+      };
+    };
     /** Find domains competing with a target for backlinks. */
     "aisa.get_semrush_backlink_competitors": {
       input: {
@@ -999,6 +862,40 @@ declare module "@oomol-lab/connector" {
         rows: Array<Array<string>>;
       };
     };
+    /** List a domain's Google organic keywords with positions, search volume, CPC, and ranking URLs. */
+    "aisa.get_semrush_domain_organic_keywords": {
+      input: {
+        /** The domain to analyze without a path. */
+        domain: string;
+        /** The Semrush regional database code, such as us. */
+        database: string;
+      };
+      output: {
+        /** The original semicolon-delimited response returned by AIsa. */
+        rawText: string;
+        /** The report columns in response order. */
+        columns: Array<string>;
+        /** The report rows in response order. */
+        rows: Array<Array<string>>;
+      };
+    };
+    /** Get current Semrush rank, organic keyword, traffic, cost, and paid keyword totals for a domain. */
+    "aisa.get_semrush_domain_overview": {
+      input: {
+        /** The domain to analyze without a path. */
+        domain: string;
+        /** The Semrush regional database code, such as us. Defaults to us when omitted. */
+        database?: string;
+      };
+      output: {
+        /** The original semicolon-delimited response returned by AIsa. */
+        rawText: string;
+        /** The report columns in response order. */
+        columns: Array<string>;
+        /** The report rows in response order. */
+        rows: Array<Array<string>>;
+      };
+    };
     /** Get historical Semrush rank and search-visibility metrics for a domain. */
     "aisa.get_semrush_domain_rank_history": {
       input: {
@@ -1006,6 +903,23 @@ declare module "@oomol-lab/connector" {
         domain: string;
         /** The Semrush regional database code, such as us. */
         database: string;
+      };
+      output: {
+        /** The original semicolon-delimited response returned by AIsa. */
+        rawText: string;
+        /** The report columns in response order. */
+        columns: Array<string>;
+        /** The report rows in response order. */
+        rows: Array<Array<string>>;
+      };
+    };
+    /** List pages with backlinks and their backlink counts; this report does not verify Google indexation or live HTTP status. */
+    "aisa.get_semrush_indexed_pages": {
+      input: {
+        /** The domain or URL whose linked pages should be returned. */
+        target: string;
+        /** How Semrush should interpret the backlink target. */
+        targetType: "root_domain" | "domain" | "url";
       };
       output: {
         /** The original semicolon-delimited response returned by AIsa. */
@@ -1054,6 +968,40 @@ declare module "@oomol-lab/connector" {
         rows: Array<Array<string>>;
       };
     };
+    /** Find Google organic search competitors with relevance and shared keyword counts. */
+    "aisa.get_semrush_organic_competitors": {
+      input: {
+        /** The domain to analyze without a path. */
+        domain: string;
+        /** The Semrush regional database code, such as us. */
+        database: string;
+      };
+      output: {
+        /** The original semicolon-delimited response returned by AIsa. */
+        rawText: string;
+        /** The report columns in response order. */
+        columns: Array<string>;
+        /** The report rows in response order. */
+        rows: Array<Array<string>>;
+      };
+    };
+    /** List domains, URLs, and raw SERP feature codes for a keyword in Google organic search. */
+    "aisa.get_semrush_organic_results": {
+      input: {
+        /** The keyword phrase to analyze. */
+        phrase: string;
+        /** The Semrush regional database code, such as us. Defaults to us when omitted. */
+        database?: string;
+      };
+      output: {
+        /** The original semicolon-delimited response returned by AIsa. */
+        rawText: string;
+        /** The report columns in response order. */
+        columns: Array<string>;
+        /** The report rows in response order. */
+        rows: Array<Array<string>>;
+      };
+    };
     /** Find question-form keyword ideas for a seed phrase. */
     "aisa.get_semrush_question_keywords": {
       input: {
@@ -1078,6 +1026,23 @@ declare module "@oomol-lab/connector" {
         target: string;
         /** How Semrush should interpret the backlink target. */
         targetType: "root_domain" | "domain" | "url";
+      };
+      output: {
+        /** The original semicolon-delimited response returned by AIsa. */
+        rawText: string;
+        /** The report columns in response order. */
+        columns: Array<string>;
+        /** The report rows in response order. */
+        rows: Array<Array<string>>;
+      };
+    };
+    /** List a landing page's Google organic keywords with positions, search volume, and CPC. */
+    "aisa.get_semrush_url_organic_keywords": {
+      input: {
+        /** The complete landing page URL to analyze. */
+        url: string;
+        /** The Semrush regional database code, such as us. */
+        database: string;
       };
       output: {
         /** The original semicolon-delimited response returned by AIsa. */
@@ -1984,16 +1949,7 @@ declare module "@oomol-lab/connector" {
     };
     /** Get a public Twitter user's most recent posts by ID or username. */
     "aisa.get_twitter_user_recent_posts": {
-      input: {
-        /** The Twitter user ID; omit when using username. */
-        userId?: string;
-        /** The Twitter username; omit when using userId. */
-        username?: string;
-        /** Whether to include replies. */
-        includeReplies?: boolean;
-        /** The cursor returned by the previous page. */
-        cursor?: string;
-      };
+      input: Record<string, unknown>;
       output: Record<string, unknown>;
     };
     /** Get a public Twitter user's post timeline. */
@@ -2528,20 +2484,7 @@ declare module "@oomol-lab/connector" {
          * @minItems 1
          * @maxItems 10
          */
-        targets: Array<{
-          /** The target domain without a scheme or www prefix. */
-          domain?: string;
-          /** The target keyword or brand phrase. */
-          keyword?: string;
-          /** Whether to include or exclude this entity. */
-          searchFilter?: "include" | "exclude";
-          /** The LLM response sections in which to search for the entity. */
-          searchScope?: Array<string>;
-          /** Whether a domain target includes its subdomains. */
-          includeSubdomains?: boolean;
-          /** How a keyword target is matched. */
-          matchType?: "word_match" | "partial_match";
-        }>;
+        targets: Array<Record<string, unknown>>;
         /** The search location name. */
         locationName?: string;
         /** The DataForSEO search location code. */

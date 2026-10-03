@@ -51,6 +51,281 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
+    /** Assign an alias to a Vercel deployment, moving it from any deployment that currently owns it. */
+    "vercel.assign_deployment_alias": {
+      input: {
+        /**
+         * Stable Vercel deployment ID that should receive the alias.
+         * @minLength 1
+         */
+        deploymentId: string;
+        /**
+         * Alias hostname to assign to the deployment.
+         * @minLength 1
+         */
+        alias: string;
+        /**
+         * Hostname that the alias should redirect to with status code 307.
+         * @minLength 1
+         */
+        redirect?: string | null;
+      };
+      output: {
+        /** A Vercel deployment alias. */
+        alias: {
+          /** Unique Vercel alias ID. */
+          uid: string;
+          /** Assigned alias hostname. */
+          alias: string;
+          /** Alias creation timestamp. */
+          created: string;
+          /** Redirect destination, or null when this alias serves the deployment. */
+          redirect?: string | null;
+          /** Previous deployment ID that owned the alias, when reassigned. */
+          oldDeploymentId?: string | null;
+          /** Protection bypass configuration attached to the alias. */
+          protectionBypass?: Record<string, unknown>;
+          [key: string]: unknown;
+        };
+      };
+    };
+    /** Cancel a Vercel deployment that is still in progress. */
+    "vercel.cancel_deployment": {
+      input: {
+        /**
+         * Vercel deployment ID to cancel.
+         * @minLength 1
+         */
+        deploymentId: string;
+      };
+      output: {
+        /** Vercel deployment summary. */
+        deployment: {
+          /** Vercel deployment ID. */
+          id: string;
+          /** Deployment name. */
+          name?: string;
+          /** Deployment URL. */
+          url?: string;
+          /** Deployment state reported by Vercel. */
+          state?: string;
+          /** Deployment readiness state reported by Vercel. */
+          readyState?: string;
+          /** Deployment target such as production or preview. */
+          target?: string;
+          /** Deployment creation timestamp in milliseconds. */
+          createdAt?: number;
+          /** Deployment ready timestamp in milliseconds. */
+          ready?: number;
+          /** Vercel project ID for the deployment. */
+          projectId?: string;
+          /** Raw creator payload returned by Vercel for the deployment. */
+          creator?: Record<string, unknown>;
+          /** Raw metadata payload returned by Vercel for the deployment. */
+          meta?: Record<string, unknown>;
+          /** Aliases currently assigned to the deployment. */
+          alias?: Array<string>;
+          [key: string]: unknown;
+        };
+      };
+    };
+    /** Create an asynchronous Vercel deployment from file references returned by upload_deployment_file_from_url. */
+    "vercel.create_file_deployment": {
+      input: {
+        /**
+         * Project name used in the deployment URL.
+         * @minLength 1
+         */
+        name: string;
+        /**
+         * Existing Vercel project ID or name that should receive the deployment.
+         * @minLength 1
+         */
+        project?: string;
+        /** Deployment target. Omit for a preview deployment. */
+        target?: "production" | "staging";
+        /**
+         * Custom environment slug or ID that should receive the deployment.
+         * @minLength 1
+         */
+        customEnvironmentSlugOrId?: string;
+        /** Whether to force a fresh build instead of reusing a similar deployment. */
+        forceNew?: boolean;
+        /** Whether to continue without confirming a framework auto-detection change. */
+        skipAutoDetectionConfirmation?: boolean;
+        /** Custom build machine to use for this deployment. */
+        buildMachine?: "turbo";
+        /**
+         * Monorepo manager to use for this deployment.
+         * @minLength 1
+         */
+        monorepoManager?: string;
+        /** String metadata to attach to the deployment. */
+        meta?: Record<string, string>;
+        /** Project settings to apply to this deployment. */
+        projectSettings?: Record<string, unknown>;
+        /**
+         * Uploaded files to include in the deployment.
+         * @minItems 1
+         * @maxItems 15000
+         */
+        files: Array<{
+          /**
+           * File path relative to the deployment root.
+           * @minLength 1
+           */
+          path: string;
+          /**
+           * SHA-1 digest returned by upload_deployment_file_from_url.
+           * @minLength 40
+           * @maxLength 40
+           */
+          sha: string;
+          /**
+           * File size in bytes.
+           * @minimum 0
+           */
+          size: number;
+        }>;
+      };
+      output: {
+        /** Vercel deployment summary. */
+        deployment: {
+          /** Vercel deployment ID. */
+          id: string;
+          /** Deployment name. */
+          name?: string;
+          /** Deployment URL. */
+          url?: string;
+          /** Deployment state reported by Vercel. */
+          state?: string;
+          /** Deployment readiness state reported by Vercel. */
+          readyState?: string;
+          /** Deployment target such as production or preview. */
+          target?: string;
+          /** Deployment creation timestamp in milliseconds. */
+          createdAt?: number;
+          /** Deployment ready timestamp in milliseconds. */
+          ready?: number;
+          /** Vercel project ID for the deployment. */
+          projectId?: string;
+          /** Raw creator payload returned by Vercel for the deployment. */
+          creator?: Record<string, unknown>;
+          /** Raw metadata payload returned by Vercel for the deployment. */
+          meta?: Record<string, unknown>;
+          /** Aliases currently assigned to the deployment. */
+          alias?: Array<string>;
+          [key: string]: unknown;
+        };
+      };
+    };
+    /** Create an asynchronous Vercel deployment from a Git repository connected to the account. */
+    "vercel.create_git_deployment": {
+      input: {
+        /**
+         * Project name used in the deployment URL.
+         * @minLength 1
+         */
+        name: string;
+        /**
+         * Existing Vercel project ID or name that should receive the deployment.
+         * @minLength 1
+         */
+        project?: string;
+        /** Deployment target. Omit for a preview deployment. */
+        target?: "production" | "staging";
+        /**
+         * Custom environment slug or ID that should receive the deployment.
+         * @minLength 1
+         */
+        customEnvironmentSlugOrId?: string;
+        /** Whether to force a fresh build instead of reusing a similar deployment. */
+        forceNew?: boolean;
+        /** Whether to continue without confirming a framework auto-detection change. */
+        skipAutoDetectionConfirmation?: boolean;
+        /** Custom build machine to use for this deployment. */
+        buildMachine?: "turbo";
+        /**
+         * Monorepo manager to use for this deployment.
+         * @minLength 1
+         */
+        monorepoManager?: string;
+        /** String metadata to attach to the deployment. */
+        meta?: Record<string, string>;
+        /** Project settings to apply to this deployment. */
+        projectSettings?: Record<string, unknown>;
+        /** Git provider source type documented by Vercel. */
+        gitProvider: "vercel" | "github" | "github-limited" | "gitlab" | "bitbucket" | "cursor-origin";
+        /**
+         * Stable repository ID from the linked Vercel project's metadata.
+         * @minLength 1
+         */
+        repositoryId?: string;
+        /**
+         * GitHub organization or Bitbucket repository owner.
+         * @minLength 1
+         */
+        repositoryOwner?: string;
+        /**
+         * GitHub repository name or Bitbucket repository slug.
+         * @minLength 1
+         */
+        repositoryName?: string;
+        /**
+         * Git branch, tag, or reference to deploy.
+         * @minLength 1
+         */
+        ref?: string;
+        /**
+         * Specific Git commit SHA to deploy.
+         * @minLength 1
+         */
+        sha?: string;
+        /**
+         * Bitbucket workspace UUID associated with repositoryId.
+         * @minLength 1
+         */
+        workspaceUuid?: string;
+        /**
+         * Short-lived read-only GitHub token for Vercel platform accounts.
+         * @minLength 1
+         * @maxLength 1024
+         */
+        gitAccessToken?: string;
+        /** Git commit and CI metadata to attach to the deployment. */
+        gitMetadata?: Record<string, unknown>;
+      };
+      output: {
+        /** Vercel deployment summary. */
+        deployment: {
+          /** Vercel deployment ID. */
+          id: string;
+          /** Deployment name. */
+          name?: string;
+          /** Deployment URL. */
+          url?: string;
+          /** Deployment state reported by Vercel. */
+          state?: string;
+          /** Deployment readiness state reported by Vercel. */
+          readyState?: string;
+          /** Deployment target such as production or preview. */
+          target?: string;
+          /** Deployment creation timestamp in milliseconds. */
+          createdAt?: number;
+          /** Deployment ready timestamp in milliseconds. */
+          ready?: number;
+          /** Vercel project ID for the deployment. */
+          projectId?: string;
+          /** Raw creator payload returned by Vercel for the deployment. */
+          creator?: Record<string, unknown>;
+          /** Raw metadata payload returned by Vercel for the deployment. */
+          meta?: Record<string, unknown>;
+          /** Aliases currently assigned to the deployment. */
+          alias?: Array<string>;
+          [key: string]: unknown;
+        };
+      };
+    };
     /** Create a Vercel project. */
     "vercel.create_project": {
       input: {
@@ -247,6 +522,16 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
+    /** Permanently delete a Vercel deployment. */
+    "vercel.delete_deployment": {
+      input: Record<string, unknown>;
+      output: {
+        /** Deleted Vercel deployment ID. */
+        deploymentId: string;
+        /** Final deletion state reported by Vercel. */
+        state: "DELETED";
+      };
+    };
     /** Delete a Vercel project environment variable. */
     "vercel.delete_project_env": {
       input: {
@@ -365,9 +650,8 @@ declare module "@oomol-lab/connector" {
          */
         idOrUrl: string;
         /**
-         * Maximum number of results to return.
-         * @maximum 100
-         * @exclusiveMinimum 0
+         * Maximum number of events to return, or -1 for all available events.
+         * @minimum -1
          */
         limit?: number;
         /** Pagination cursor for results created after this timestamp. */
@@ -378,6 +662,18 @@ declare module "@oomol-lab/connector" {
         direction?: "forward" | "backward";
         /** When true, include build events in the response. */
         builds?: boolean;
+        /** When true, include delimiter events between logical log sections. */
+        delimiter?: boolean;
+        /**
+         * Deployment build ID to filter events by.
+         * @minLength 1
+         */
+        buildId?: string;
+        /**
+         * HTTP status code or status class such as 5xx to filter events by.
+         * @minLength 1
+         */
+        statusCode?: string;
       };
       output: {
         /** Deployment events returned by Vercel. */
@@ -389,6 +685,30 @@ declare module "@oomol-lab/connector" {
           /** Raw deployment event payload returned by Vercel. */
           payload: Record<string, unknown>;
         }>;
+      };
+    };
+    /** Get one Vercel deployment file as base64-encoded content. */
+    "vercel.get_deployment_file_contents": {
+      input: {
+        /**
+         * Vercel deployment ID.
+         * @minLength 1
+         */
+        deploymentId: string;
+        /**
+         * Unique Vercel deployment file ID.
+         * @minLength 1
+         */
+        fileId: string;
+        /**
+         * File path required by Vercel for some Git deployments.
+         * @minLength 1
+         */
+        path?: string;
+      };
+      output: {
+        /** Base64-encoded deployment file content when the upstream response is at most 16 MiB. */
+        contentBase64: string;
       };
     };
     /** Get domain configuration guidance from Vercel. */
@@ -409,6 +729,49 @@ declare module "@oomol-lab/connector" {
         misconfigured?: boolean;
         /** Name servers recommended by Vercel for the domain. */
         recommendedNameServers?: Array<string>;
+      };
+    };
+    /** Get alias mapping statuses for the latest production promotion of a project; results are project-global and are not correlated to a specific promote_deployment call. */
+    "vercel.get_latest_deployment_promotion_aliases": {
+      input: {
+        /**
+         * Vercel project ID.
+         * @minLength 1
+         */
+        projectId: string;
+        /**
+         * Maximum number of results to return.
+         * @maximum 100
+         * @exclusiveMinimum 0
+         */
+        limit?: number;
+        /** Pagination cursor for results created after this timestamp. */
+        since?: number;
+        /** Pagination cursor for results created before this timestamp. */
+        until?: number;
+        /** Whether to return only aliases that failed to map. */
+        failedOnly?: boolean;
+      };
+      output: {
+        /** Promotion alias mapping statuses. */
+        aliases: Array<{
+          /** Vercel alias ID. */
+          id: string;
+          /** Alias hostname being mapped. */
+          alias: string;
+          /** Current alias mapping status. */
+          status: string;
+        }>;
+        /** Pagination cursors returned by Vercel. */
+        pagination?: {
+          /** Number of items returned in this page. */
+          count?: number;
+          /** Pagination cursor for the next page, or null when there is no next page. */
+          next?: number | null;
+          /** Pagination cursor for the previous page, or null when there is no previous page. */
+          prev?: number | null;
+          [key: string]: unknown;
+        };
       };
     };
     /** Get a Vercel project. */
@@ -593,14 +956,81 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
+    /** List aliases currently assigned to a Vercel deployment. */
+    "vercel.list_deployment_aliases": {
+      input: {
+        /**
+         * Vercel deployment ID.
+         * @minLength 1
+         */
+        deploymentId: string;
+      };
+      output: {
+        /** Vercel deployment aliases. */
+        aliases: Array<{
+          /** Unique Vercel alias ID. */
+          uid: string;
+          /** Assigned alias hostname. */
+          alias: string;
+          /** Alias creation timestamp. */
+          created: string;
+          /** Redirect destination, or null when this alias serves the deployment. */
+          redirect?: string | null;
+          /** Previous deployment ID that owned the alias, when reassigned. */
+          oldDeploymentId?: string | null;
+          /** Protection bypass configuration attached to the alias. */
+          protectionBypass?: Record<string, unknown>;
+          [key: string]: unknown;
+        }>;
+      };
+    };
+    /** List the source file tree stored for a Vercel deployment. */
+    "vercel.list_deployment_files": {
+      input: {
+        /**
+         * Vercel deployment ID.
+         * @minLength 1
+         */
+        deploymentId: string;
+      };
+      output: {
+        /** Top-level deployment file tree entries. */
+        files: Array<{
+          /** File or directory name. */
+          name: string;
+          /** Deployment file tree entry type. */
+          type: "directory" | "file" | "invalid" | "lambda" | "middleware" | "symlink";
+          /** File mode indicating the entry type and permissions. */
+          mode: number;
+          /** Unique Vercel file identifier for file entries. */
+          uid?: string;
+          /** Content type reported for file entries. */
+          contentType?: string;
+          /** Nested file tree entries for a directory. */
+          children?: Array<Record<string, unknown>>;
+          [key: string]: unknown;
+        }>;
+      };
+    };
     /** List Vercel deployments. */
     "vercel.list_deployments": {
       input: {
         /**
-         * Vercel project ID.
+         * Deployment name to filter by.
+         * @minLength 1
+         */
+        app?: string;
+        /**
+         * Vercel project ID or name to filter by.
          * @minLength 1
          */
         projectId?: string;
+        /**
+         * Vercel project IDs to filter by when projectId is omitted.
+         * @minItems 1
+         * @maxItems 20
+         */
+        projectIds?: Array<string>;
         /**
          * Maximum number of results to return.
          * @maximum 100
@@ -612,15 +1042,32 @@ declare module "@oomol-lab/connector" {
         /** Pagination cursor for results created before this timestamp. */
         until?: number;
         /**
-         * Deployment target such as production or preview.
+         * Deployment environment to filter by.
          * @minLength 1
          */
         target?: string;
         /**
-         * Deployment state to filter by.
+         * Deployment states to filter by.
+         * @minItems 1
+         */
+        states?: Array<"BUILDING" | "ERROR" | "INITIALIZING" | "QUEUED" | "READY" | "CANCELED" | "BLOCKED">;
+        /**
+         * Vercel user IDs whose deployments should be returned.
+         * @minItems 1
+         */
+        userIds?: Array<string>;
+        /** Whether to return only deployments matching rollback candidacy. */
+        rollbackCandidate?: boolean;
+        /**
+         * Git branch name to filter by.
          * @minLength 1
          */
-        state?: string;
+        branch?: string;
+        /**
+         * Git commit SHA to filter by.
+         * @minLength 1
+         */
+        sha?: string;
       };
       output: {
         /** Vercel deployments. */
@@ -904,6 +1351,170 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
+    /** Request Vercel to point a project's production traffic to an existing deployment. */
+    "vercel.promote_deployment": {
+      input: {
+        /**
+         * Vercel project ID whose production traffic should change.
+         * @minLength 1
+         */
+        projectId: string;
+        /**
+         * Vercel deployment ID to promote to production.
+         * @minLength 1
+         */
+        deploymentId: string;
+      };
+      output: {
+        /** Whether Vercel accepted the production promotion request. */
+        accepted: boolean;
+        /** HTTP status code returned for the promotion request. */
+        statusCode: number;
+        /** Vercel project ID from the accepted promotion request. */
+        projectId: string;
+        /** Vercel deployment ID from the accepted promotion request. */
+        deploymentId: string;
+      };
+    };
+    /** Create an asynchronous Vercel deployment from an existing deployment's source and settings. */
+    "vercel.redeploy_deployment": {
+      input: {
+        /**
+         * Project name used in the deployment URL.
+         * @minLength 1
+         */
+        name: string;
+        /**
+         * Existing Vercel project ID or name that should receive the deployment.
+         * @minLength 1
+         */
+        project?: string;
+        /** Deployment target. Omit for a preview deployment. */
+        target?: "production" | "staging";
+        /**
+         * Custom environment slug or ID that should receive the deployment.
+         * @minLength 1
+         */
+        customEnvironmentSlugOrId?: string;
+        /** Whether to force a fresh build instead of reusing a similar deployment. */
+        forceNew?: boolean;
+        /** Whether to continue without confirming a framework auto-detection change. */
+        skipAutoDetectionConfirmation?: boolean;
+        /** Custom build machine to use for this deployment. */
+        buildMachine?: "turbo";
+        /**
+         * Monorepo manager to use for this deployment.
+         * @minLength 1
+         */
+        monorepoManager?: string;
+        /** String metadata to attach to the deployment. */
+        meta?: Record<string, string>;
+        /** Project settings to apply to this deployment. */
+        projectSettings?: Record<string, unknown>;
+        /**
+         * Existing Vercel deployment ID to rebuild.
+         * @minLength 1
+         */
+        deploymentId: string;
+        /** Whether to rebuild from the latest commit instead of the original commit. */
+        withLatestCommit?: boolean;
+      };
+      output: {
+        /** Vercel deployment summary. */
+        deployment: {
+          /** Vercel deployment ID. */
+          id: string;
+          /** Deployment name. */
+          name?: string;
+          /** Deployment URL. */
+          url?: string;
+          /** Deployment state reported by Vercel. */
+          state?: string;
+          /** Deployment readiness state reported by Vercel. */
+          readyState?: string;
+          /** Deployment target such as production or preview. */
+          target?: string;
+          /** Deployment creation timestamp in milliseconds. */
+          createdAt?: number;
+          /** Deployment ready timestamp in milliseconds. */
+          ready?: number;
+          /** Vercel project ID for the deployment. */
+          projectId?: string;
+          /** Raw creator payload returned by Vercel for the deployment. */
+          creator?: Record<string, unknown>;
+          /** Raw metadata payload returned by Vercel for the deployment. */
+          meta?: Record<string, unknown>;
+          /** Aliases currently assigned to the deployment. */
+          alias?: Array<string>;
+          [key: string]: unknown;
+        };
+      };
+    };
+    /** Roll back a Vercel project's production traffic to a previous deployment. */
+    "vercel.rollback_deployment": {
+      input: {
+        /**
+         * Vercel project ID whose production traffic should change.
+         * @minLength 1
+         */
+        projectId: string;
+        /**
+         * Previous Vercel deployment ID to restore.
+         * @minLength 1
+         */
+        deploymentId: string;
+        /**
+         * Reason recorded for the rollback.
+         * @minLength 1
+         */
+        description?: string;
+      };
+      output: {
+        /** Whether Vercel accepted the production rollback. */
+        success: boolean;
+        /** Vercel project ID whose production traffic changed. */
+        projectId: string;
+        /** Previous Vercel deployment ID restored to production. */
+        deploymentId: string;
+      };
+    };
+    /** Update the status and optional outcomes of a Vercel Marketplace integration action attached to a deployment. */
+    "vercel.update_deployment_integration_action": {
+      input: Record<string, unknown>;
+      output: {
+        /** Whether Vercel accepted the integration action update. */
+        success: boolean;
+        /** Vercel deployment ID. */
+        deploymentId: string;
+        /** Updated integration deployment action identifier. */
+        action: string;
+      };
+    };
+    /** Update the recorded reason for a Vercel production rollback. */
+    "vercel.update_deployment_rollback_description": {
+      input: {
+        /**
+         * Vercel project ID.
+         * @minLength 1
+         */
+        projectId: string;
+        /**
+         * Deployment ID used as the rollback target.
+         * @minLength 1
+         */
+        deploymentId: string;
+        /** Updated reason for the rollback. */
+        description: string;
+      };
+      output: {
+        /** Whether Vercel accepted the rollback description update. */
+        success: boolean;
+        /** Vercel project ID. */
+        projectId: string;
+        /** Deployment ID used as the rollback target. */
+        deploymentId: string;
+      };
+    };
     /** Update a Vercel project. */
     "vercel.update_project": {
       input: {
@@ -1072,6 +1683,36 @@ declare module "@oomol-lab/connector" {
           /** Comment attached to the environment variable, when present. */
           comment?: string;
         };
+      };
+    };
+    /** Download one public file through the Connector SSRF guard, calculate its SHA-1 digest when needed, and upload up to 1 GiB through the Connector to Vercel for a file-based deployment. */
+    "vercel.upload_deployment_file_from_url": {
+      input: {
+        /**
+         * Public URL of the file to download and upload to Vercel.
+         * @format uri
+         */
+        fileUrl: string;
+        /**
+         * Known SHA-1 digest of the source file, if already available.
+         * @minLength 40
+         * @maxLength 40
+         */
+        sha?: string;
+        /**
+         * Known source file size in bytes.
+         * @minimum 0
+         */
+        size?: number;
+      };
+      output: {
+        /** SHA-1 digest used to identify the uploaded file. */
+        sha: string;
+        /**
+         * Uploaded file size in bytes.
+         * @minimum 0
+         */
+        size: number;
       };
     };
     /** Verify a Vercel project domain. */
