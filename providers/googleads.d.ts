@@ -73,10 +73,10 @@ declare module "@oomol-lab/connector" {
           advertisingChannelType?: string;
           /** The advertising channel subtype. */
           advertisingChannelSubType?: string;
-          /** The campaign start date in YYYY-MM-DD format. */
-          startDate?: string;
-          /** The campaign end date in YYYY-MM-DD format. */
-          endDate?: string;
+          /** The campaign start date-time in YYYY-MM-DD HH:mm:ss format in the customer time zone. Daily-granularity campaigns use 00:00:00. */
+          startDateTime?: string;
+          /** The campaign end date-time in YYYY-MM-DD HH:mm:ss format in the customer time zone. Daily-granularity campaigns use 23:59:59. */
+          endDateTime?: string;
         } | null;
       };
     };
@@ -104,10 +104,10 @@ declare module "@oomol-lab/connector" {
           advertisingChannelType?: string;
           /** The advertising channel subtype. */
           advertisingChannelSubType?: string;
-          /** The campaign start date in YYYY-MM-DD format. */
-          startDate?: string;
-          /** The campaign end date in YYYY-MM-DD format. */
-          endDate?: string;
+          /** The campaign start date-time in YYYY-MM-DD HH:mm:ss format in the customer time zone. Daily-granularity campaigns use 00:00:00. */
+          startDateTime?: string;
+          /** The campaign end date-time in YYYY-MM-DD HH:mm:ss format in the customer time zone. Daily-granularity campaigns use 23:59:59. */
+          endDateTime?: string;
         }>;
       };
     };
@@ -259,15 +259,15 @@ declare module "@oomol-lab/connector" {
              */
             status?: string;
             /**
-             * The campaign start date.
+             * The campaign start date-time in YYYY-MM-DD HH:mm:ss format in the customer time zone. Daily-granularity campaigns use 00:00:00.
              * @minLength 1
              */
-            startDate?: string;
+            startDateTime?: string;
             /**
-             * The campaign end date.
+             * The campaign end date-time in YYYY-MM-DD HH:mm:ss format in the customer time zone. Daily-granularity campaigns use 23:59:59.
              * @minLength 1
              */
-            endDate?: string;
+            endDateTime?: string;
             /** The manual CPC payload. */
             manualCpc?: Record<string, unknown>;
             /**
@@ -356,15 +356,15 @@ declare module "@oomol-lab/connector" {
              */
             status?: string;
             /**
-             * The updated campaign start date.
+             * The updated campaign start date-time in YYYY-MM-DD HH:mm:ss format in the customer time zone. Daily-granularity campaigns use 00:00:00.
              * @minLength 1
              */
-            startDate?: string;
+            startDateTime?: string;
             /**
-             * The updated campaign end date.
+             * The updated campaign end date-time in YYYY-MM-DD HH:mm:ss format in the customer time zone. Daily-granularity campaigns use 23:59:59.
              * @minLength 1
              */
-            endDate?: string;
+            endDateTime?: string;
             /** The updated manual CPC payload. */
             manualCpc?: Record<string, unknown>;
             /**

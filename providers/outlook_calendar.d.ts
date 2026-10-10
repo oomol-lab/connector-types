@@ -687,6 +687,13 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         calendarId?: string;
+        /** Track changes through calendarView/delta. The first round returns all occurrences; later rounds return additions, updates and @removed markers. Does not support select, filter, orderby or expand. */
+        delta?: boolean;
+        /**
+         * Opaque delta URL returned by the previous calendar view delta round. Starts the next round for the same range; ignored when nextLink is set.
+         * @format uri
+         */
+        deltaLink?: string;
         /**
          * Inclusive range start as an ISO 8601 timestamp.
          * @format date-time
@@ -726,7 +733,7 @@ declare module "@oomol-lab/connector" {
         preferTimeZone?: string;
       };
       output: {
-        /** Events returned by Microsoft Graph. */
+        /** Events and removal markers returned by Microsoft Graph. */
         events: Array<{
           /**
            * Event ID.
@@ -819,6 +826,8 @@ declare module "@oomol-lab/connector" {
         }>;
         /** Next-page URL, or null when no page remains. */
         nextLink: string | null;
+        /** URL for the next round once this delta round completes, or null for incomplete rounds and plain listings. */
+        deltaLink: string | null;
       };
     };
     /** List calendars belonging to the connected Microsoft account. */

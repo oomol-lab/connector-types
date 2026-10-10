@@ -1380,6 +1380,15 @@ declare module "@oomol-lab/connector" {
         after?: string;
         /** Return quantity per page. */
         first?: number;
+        /**
+         * Only issues updated at or after this ISO 8601 timestamp.
+         * @format date-time
+         */
+        updated_after?: string;
+        /** Include archived issues. */
+        include_archived?: boolean;
+        /** The field used to order results. */
+        order_by?: "createdAt" | "updatedAt";
         /** The unique identifier of the project used for filtering. */
         project_id?: string;
         /** The unique identifier of the person responsible for filtering. */
