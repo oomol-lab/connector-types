@@ -510,8 +510,8 @@ declare module "@oomol-lab/connector" {
         meetingUrl?: string;
         /** The location payload for the booking. */
         location?: Record<string, unknown>;
-        /** Additional metadata to attach to the booking. */
-        metadata?: Record<string, unknown>;
+        /** Additional booking metadata: at most 50 keys, each up to 40 characters, with string values up to 500 characters. */
+        metadata?: Record<string, string>;
         /**
          * The requested booking duration in minutes.
          * @exclusiveMinimum 0
@@ -2045,8 +2045,8 @@ declare module "@oomol-lab/connector" {
         meetingUrl?: string;
         /** The location payload for the booking. */
         location?: Record<string, unknown>;
-        /** Additional metadata to attach to the booking. */
-        metadata?: Record<string, unknown>;
+        /** Additional booking metadata: at most 50 keys, each up to 40 characters, with string values up to 500 characters. */
+        metadata?: Record<string, string>;
         /**
          * The requested booking duration in minutes.
          * @exclusiveMinimum 0

@@ -45,7 +45,12 @@ declare module "@oomol-lab/connector" {
         /** The member flags. */
         flags?: number;
       };
-      output: Record<string, unknown>;
+      output: {
+        /** Whether the user was already a member. */
+        already_member: boolean;
+        /** A JSON-like object with arbitrary Discord payload fields. */
+        member: Record<string, unknown> | null;
+      };
     };
     /** Add a role to a guild member. */
     "discordbot.add_guild_member_role": {
@@ -56,6 +61,11 @@ declare module "@oomol-lab/connector" {
         user_id: string;
         /** The role id. */
         role_id: string;
+        /**
+         * The audit log reason.
+         * @maxLength 512
+         */
+        audit_log_reason?: string;
       };
       output: {
         /** The success flag. */
@@ -109,6 +119,11 @@ declare module "@oomol-lab/connector" {
          * @maximum 604800
          */
         delete_message_seconds?: number;
+        /**
+         * The audit log reason.
+         * @maxLength 512
+         */
+        audit_log_reason?: string;
       };
       output: {
         /** The success flag. */
@@ -132,6 +147,11 @@ declare module "@oomol-lab/connector" {
          * @maximum 604800
          */
         delete_message_seconds?: number;
+        /**
+         * The audit log reason.
+         * @maxLength 512
+         */
+        audit_log_reason?: string;
       };
       output: Record<string, unknown>;
     };
@@ -322,6 +342,8 @@ declare module "@oomol-lab/connector" {
       input: {
         /** The guild id. Optional when the connection is installed to a Discord guild. */
         guild_id?: string;
+        /** The channel flags bitfield. */
+        flags?: number;
         /**
          * The channel name.
          * @minLength 1
@@ -373,6 +395,11 @@ declare module "@oomol-lab/connector" {
          * @maximum 21600
          */
         default_thread_rate_limit_per_user?: number | null;
+        /**
+         * The audit log reason.
+         * @maxLength 512
+         */
+        audit_log_reason?: string;
       };
       output: {
         /** The channel id. */
@@ -436,6 +463,8 @@ declare module "@oomol-lab/connector" {
         name?: string;
         /** The role permissions. */
         permissions?: string;
+        /** The role colors object with primary_color, secondary_color and tertiary_color. */
+        colors?: Record<string, unknown>;
         /** The role color. */
         color?: number;
         /** Whether the role is hoisted. */
@@ -446,6 +475,11 @@ declare module "@oomol-lab/connector" {
         unicode_emoji?: string | null;
         /** The role icon. */
         icon?: string | null;
+        /**
+         * The audit log reason.
+         * @maxLength 512
+         */
+        audit_log_reason?: string;
       };
       output: Record<string, unknown>;
     };
@@ -858,11 +892,10 @@ declare module "@oomol-lab/connector" {
         /** The integration id. */
         integration_id: string;
         /**
-         * The optional audit log reason.
-         * @minLength 1
+         * The audit log reason.
          * @maxLength 512
          */
-        reason?: string;
+        audit_log_reason?: string;
       };
       output: {
         /** The success flag. */
@@ -876,6 +909,11 @@ declare module "@oomol-lab/connector" {
         guild_id: string;
         /** The user id. */
         user_id: string;
+        /**
+         * The audit log reason.
+         * @maxLength 512
+         */
+        audit_log_reason?: string;
       };
       output: {
         /** The success flag. */
@@ -891,6 +929,11 @@ declare module "@oomol-lab/connector" {
         user_id: string;
         /** The role id. */
         role_id: string;
+        /**
+         * The audit log reason.
+         * @maxLength 512
+         */
+        audit_log_reason?: string;
       };
       output: {
         /** The success flag. */
@@ -904,6 +947,11 @@ declare module "@oomol-lab/connector" {
         guild_id: string;
         /** The role id. */
         role_id: string;
+        /**
+         * The audit log reason.
+         * @maxLength 512
+         */
+        audit_log_reason?: string;
       };
       output: {
         /** The success flag. */
@@ -1186,6 +1234,27 @@ declare module "@oomol-lab/connector" {
         guild_id: string;
       };
       output: Record<string, unknown>;
+    };
+    /** Get a role in a Discord guild by ID. */
+    "discordbot.get_guild_role": {
+      input: {
+        /** The guild ID. */
+        guild_id: string;
+        /** A Discord snowflake identifier. */
+        role_id: string;
+      };
+      output: Record<string, unknown>;
+    };
+    /** Get the number of members holding each role in a Discord guild, excluding @everyone. */
+    "discordbot.get_guild_role_member_counts": {
+      input: {
+        /** The guild ID. */
+        guild_id: string;
+      };
+      output: {
+        /** Member counts keyed by role id. */
+        member_counts: Record<string, number>;
+      };
     };
     /** Get a guild scheduled event. */
     "discordbot.get_guild_scheduled_event": {
@@ -1830,6 +1899,77 @@ declare module "@oomol-lab/connector" {
         regions: Array<Record<string, unknown>>;
       };
     };
+    /** Reorder or re-parent channels in a Discord guild. Requires the MANAGE_CHANNELS permission. Only one entry per request may change parent_id. */
+    "discordbot.modify_guild_channel_positions": {
+      input: {
+        /** The guild ID. */
+        guild_id: string;
+        /**
+         * The channels to move.
+         * @minItems 1
+         */
+        positions: Array<{
+          /** A Discord snowflake identifier. */
+          id: string;
+          /** The new sorting position. */
+          position?: number | null;
+          /** Whether to sync permission overwrites with the new parent category. */
+          lock_permissions?: boolean | null;
+          /** The new parent category id, or null to move the channel out of a category. */
+          parent_id?: string | null;
+          /** The channel flags bitfield. */
+          flags?: number | null;
+        }>;
+      };
+      output: {
+        /** The success flag. */
+        success: true;
+      };
+    };
+    /** Pause invites or direct messages in a Discord guild for up to 24 hours. Requires the MANAGE_GUILD permission. */
+    "discordbot.modify_guild_incident_actions": {
+      input: {
+        /** The guild ID. */
+        guild_id: string;
+        /**
+         * When invites are enabled again, up to 24 hours in the future. Null re-enables them now.
+         * @format date-time
+         */
+        invites_disabled_until?: string | null;
+        /**
+         * When direct messages are enabled again, up to 24 hours in the future. Null re-enables them now.
+         * @format date-time
+         */
+        dms_disabled_until?: string | null;
+      };
+      output: Record<string, unknown>;
+    };
+    /** Reorder roles in a Discord guild. Requires the MANAGE_ROLES permission. */
+    "discordbot.modify_guild_role_positions": {
+      input: {
+        /** The guild ID. */
+        guild_id: string;
+        /**
+         * The roles to move.
+         * @minItems 1
+         */
+        positions: Array<{
+          /** A Discord snowflake identifier. */
+          id: string;
+          /** The new sorting position. */
+          position?: number | null;
+        }>;
+        /**
+         * The audit log reason.
+         * @maxLength 512
+         */
+        audit_log_reason?: string;
+      };
+      output: {
+        /** All roles in the guild. */
+        roles: Array<Record<string, unknown>>;
+      };
+    };
     /** Pin a message in a channel. */
     "discordbot.pin_message": {
       input: {
@@ -1874,6 +2014,11 @@ declare module "@oomol-lab/connector" {
         include_roles?: Array<string>;
         /** Whether to compute the prune count. */
         compute_prune_count?: boolean;
+        /**
+         * The audit log reason.
+         * @maxLength 512
+         */
+        audit_log_reason?: string;
       };
       output: Record<string, unknown>;
     };
@@ -1890,6 +2035,11 @@ declare module "@oomol-lab/connector" {
         prompts?: Array<Record<string, unknown>>;
         /** The default channel ids. */
         default_channel_ids?: Array<string>;
+        /**
+         * The audit log reason.
+         * @maxLength 512
+         */
+        audit_log_reason?: string;
       };
       output: Record<string, unknown>;
     };
@@ -1980,11 +2130,10 @@ declare module "@oomol-lab/connector" {
         /** The user id. */
         user_id: string;
         /**
-         * The optional audit log reason.
-         * @minLength 1
+         * The audit log reason.
          * @maxLength 512
          */
-        reason?: string;
+        audit_log_reason?: string;
       };
       output: {
         /** The success flag. */
@@ -2255,6 +2404,11 @@ declare module "@oomol-lab/connector" {
         premium_progress_bar_enabled?: boolean;
         /** The default message notification level. */
         default_message_notifications?: number;
+        /**
+         * The audit log reason.
+         * @maxLength 512
+         */
+        audit_log_reason?: string;
       };
       output: Record<string, unknown>;
     };
@@ -2332,6 +2486,11 @@ declare module "@oomol-lab/connector" {
         communication_disabled_until?: string | null;
         /** The member flags. */
         flags?: number | null;
+        /**
+         * The audit log reason.
+         * @maxLength 512
+         */
+        audit_log_reason?: string;
       };
       output: Record<string, unknown>;
     };
@@ -2361,6 +2520,11 @@ declare module "@oomol-lab/connector" {
         icon?: string | null;
         /** The role colors payload. */
         colors?: Record<string, unknown>;
+        /**
+         * The audit log reason.
+         * @maxLength 512
+         */
+        audit_log_reason?: string;
       };
       output: Record<string, unknown>;
     };
@@ -2475,6 +2639,11 @@ declare module "@oomol-lab/connector" {
           /** The optional emoji id. */
           emoji_id?: string | null;
         }> | null;
+        /**
+         * The audit log reason.
+         * @maxLength 512
+         */
+        audit_log_reason?: string;
       };
       output: Record<string, unknown>;
     };
@@ -2487,6 +2656,11 @@ declare module "@oomol-lab/connector" {
         enabled?: boolean;
         /** The widget channel id. */
         channel_id?: string;
+        /**
+         * The audit log reason.
+         * @maxLength 512
+         */
+        audit_log_reason?: string;
       };
       output: Record<string, unknown>;
     };
@@ -2563,6 +2737,11 @@ declare module "@oomol-lab/connector" {
         avatar?: string | null;
         /** The guild member bio. */
         bio?: string | null;
+        /**
+         * The audit log reason.
+         * @maxLength 512
+         */
+        audit_log_reason?: string;
       };
       output: Record<string, unknown>;
     };

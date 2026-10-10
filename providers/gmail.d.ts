@@ -15,6 +15,14 @@ declare module "@oomol-lab/connector" {
         removeLabelIds?: Array<string>;
       };
       output: {
+        /** The message history ID. */
+        historyId?: string;
+        /** The internal timestamp in milliseconds. */
+        internalDate?: string;
+        /** The estimated message size in bytes. */
+        sizeEstimate?: number;
+        /** The message snippet. */
+        snippet?: string;
         /** Gmail message ID. */
         messageId: string;
         /** Gmail thread ID. */
@@ -48,6 +56,12 @@ declare module "@oomol-lab/connector" {
           mimeType: string;
           /** Attachment size in bytes. */
           size: number;
+          /** Gmail MIME part ID, when supplied. */
+          partId: string | null;
+          /** Bare Content-ID, when supplied. */
+          contentId: string | null;
+          /** Content-Disposition, when supplied. */
+          disposition: "inline" | "attachment" | null;
         }>;
         /** Message timestamp returned by Gmail. */
         messageTimestamp: string;
@@ -76,7 +90,7 @@ declare module "@oomol-lab/connector" {
         success: boolean;
       };
     };
-    /** Create a Gmail draft with a simplified input and output shape. This compatibility action returns only the created `draftId`. */
+    /** Create a Gmail draft with a simplified input and output shape. Returns the stable draft ID and current message and thread IDs. */
     "gmail.create_draft": {
       input: {
         /** Primary recipient email address. */
@@ -85,17 +99,30 @@ declare module "@oomol-lab/connector" {
         subject: string;
         /** Email body content. */
         body: string;
+        /** Set to true when the body content is already HTML. */
+        isHtml?: boolean;
+        /**
+         * Attachments and CID inline images. Up to 25,000,000 decoded bytes in total and 35,000,000 MIME bytes.
+         * @maxItems 100
+         */
+        attachments?: Array<Record<string, unknown>>;
         /** Cc recipient email address. */
         cc?: string;
       };
       output: {
         /** Gmail draft ID. */
         draftId: string;
+        /** Gmail message ID. */
+        messageId?: string;
+        /** Gmail thread ID. */
+        threadId?: string;
       };
     };
-    /** Create a Gmail draft with recipients, subject, body, and optional threading. Use `threadId` to draft a reply in an existing conversation. */
+    /** Create a Gmail draft with recipients, subject, body, and optional threading. Supply replyToMessageId or threadId to draft a reply; this requires mailbox read access. Omitted subject and recipients are inherited from the reply target. */
     "gmail.create_email_draft": {
       input: {
+        /** Primary recipient email address. */
+        to?: string;
         /** Primary recipient email address. */
         recipientEmail?: string;
         /** Additional To recipients. */
@@ -112,8 +139,18 @@ declare module "@oomol-lab/connector" {
         messageBody?: string;
         /** Set to true when the body content is already HTML. */
         isHtml?: boolean;
+        /**
+         * Attachments and CID inline images. Up to 25,000,000 decoded bytes in total and 35,000,000 MIME bytes.
+         * @maxItems 100
+         */
+        attachments?: Array<Record<string, unknown>>;
         /** Gmail thread ID. */
         threadId?: string;
+        /**
+         * Gmail message ID to reply to. Requires mailbox read access; threadId must match when supplied.
+         * @minLength 1
+         */
+        replyToMessageId?: string;
         /** Verified Gmail send-as alias to use in the From header. */
         fromEmail?: string;
       };
@@ -121,9 +158,9 @@ declare module "@oomol-lab/connector" {
         /** Gmail draft ID. */
         draftId: string;
         /** Gmail message ID. */
-        messageId: string;
+        messageId?: string;
         /** Gmail thread ID. */
-        threadId: string;
+        threadId?: string;
       };
     };
     /** Create a Gmail filter with matching criteria and resulting actions. Use this to automatically organize incoming mail. */
@@ -313,6 +350,14 @@ declare module "@oomol-lab/connector" {
           /** Gmail thread ID. */
           threadId: string;
         } | {
+          /** The message history ID. */
+          historyId?: string;
+          /** The internal timestamp in milliseconds. */
+          internalDate?: string;
+          /** The estimated message size in bytes. */
+          sizeEstimate?: number;
+          /** The message snippet. */
+          snippet?: string;
           /** Gmail message ID. */
           messageId: string;
           /** Gmail thread ID. */
@@ -328,6 +373,14 @@ declare module "@oomol-lab/connector" {
           /** Message timestamp returned by Gmail. */
           messageTimestamp: string;
         } | {
+          /** The message history ID. */
+          historyId?: string;
+          /** The internal timestamp in milliseconds. */
+          internalDate?: string;
+          /** The estimated message size in bytes. */
+          sizeEstimate?: number;
+          /** The message snippet. */
+          snippet?: string;
           /** Gmail message ID. */
           messageId: string;
           /** Gmail thread ID. */
@@ -361,6 +414,12 @@ declare module "@oomol-lab/connector" {
             mimeType: string;
             /** Attachment size in bytes. */
             size: number;
+            /** Gmail MIME part ID, when supplied. */
+            partId: string | null;
+            /** Bare Content-ID, when supplied. */
+            contentId: string | null;
+            /** Content-Disposition, when supplied. */
+            disposition: "inline" | "attachment" | null;
           }>;
           /** Message timestamp returned by Gmail. */
           messageTimestamp: string;
@@ -382,6 +441,14 @@ declare module "@oomol-lab/connector" {
         format?: "minimal" | "full" | "raw" | "metadata";
       };
       output: {
+        /** The message history ID. */
+        historyId?: string;
+        /** The internal timestamp in milliseconds. */
+        internalDate?: string;
+        /** The estimated message size in bytes. */
+        sizeEstimate?: number;
+        /** The message snippet. */
+        snippet?: string;
         /** Gmail message ID. */
         messageId: string;
         /** Gmail thread ID. */
@@ -415,6 +482,12 @@ declare module "@oomol-lab/connector" {
           mimeType: string;
           /** Attachment size in bytes. */
           size: number;
+          /** Gmail MIME part ID, when supplied. */
+          partId: string | null;
+          /** Bare Content-ID, when supplied. */
+          contentId: string | null;
+          /** Content-Disposition, when supplied. */
+          disposition: "inline" | "attachment" | null;
         }>;
         /** Message timestamp returned by Gmail. */
         messageTimestamp: string;
@@ -435,6 +508,14 @@ declare module "@oomol-lab/connector" {
         historyId: string | null;
         /** Messages contained in the thread. */
         messages: Array<{
+          /** The message history ID. */
+          historyId?: string;
+          /** The internal timestamp in milliseconds. */
+          internalDate?: string;
+          /** The estimated message size in bytes. */
+          sizeEstimate?: number;
+          /** The message snippet. */
+          snippet?: string;
           /** Gmail message ID. */
           messageId: string;
           /** Gmail thread ID. */
@@ -468,6 +549,12 @@ declare module "@oomol-lab/connector" {
             mimeType: string;
             /** Attachment size in bytes. */
             size: number;
+            /** Gmail MIME part ID, when supplied. */
+            partId: string | null;
+            /** Bare Content-ID, when supplied. */
+            contentId: string | null;
+            /** Content-Disposition, when supplied. */
+            disposition: "inline" | "attachment" | null;
           }>;
           /** Message timestamp returned by Gmail. */
           messageTimestamp: string;
@@ -504,6 +591,14 @@ declare module "@oomol-lab/connector" {
         id: string;
         /** Normalized Gmail message payload stored in the draft. */
         message: {
+          /** The message history ID. */
+          historyId?: string;
+          /** The internal timestamp in milliseconds. */
+          internalDate?: string;
+          /** The estimated message size in bytes. */
+          sizeEstimate?: number;
+          /** The message snippet. */
+          snippet?: string;
           /** Gmail message ID. */
           messageId: string;
           /** Gmail thread ID. */
@@ -537,6 +632,12 @@ declare module "@oomol-lab/connector" {
             mimeType: string;
             /** Attachment size in bytes. */
             size: number;
+            /** Gmail MIME part ID, when supplied. */
+            partId: string | null;
+            /** Bare Content-ID, when supplied. */
+            contentId: string | null;
+            /** Content-Disposition, when supplied. */
+            disposition: "inline" | "attachment" | null;
           }>;
           /** Message timestamp returned by Gmail. */
           messageTimestamp: string;
@@ -703,15 +804,23 @@ declare module "@oomol-lab/connector" {
           /** Identifiers of the message stored in the draft. */
           message: {
             /** Gmail message ID. */
-            messageId: string;
+            messageId?: string;
             /** Gmail thread ID. */
-            threadId: string;
+            threadId?: string;
           };
         } | {
           /** Gmail draft ID. */
           id: string;
           /** Normalized Gmail message payload stored in the draft. */
           message: {
+            /** The message history ID. */
+            historyId?: string;
+            /** The internal timestamp in milliseconds. */
+            internalDate?: string;
+            /** The estimated message size in bytes. */
+            sizeEstimate?: number;
+            /** The message snippet. */
+            snippet?: string;
             /** Gmail message ID. */
             messageId: string;
             /** Gmail thread ID. */
@@ -745,6 +854,12 @@ declare module "@oomol-lab/connector" {
               mimeType: string;
               /** Attachment size in bytes. */
               size: number;
+              /** Gmail MIME part ID, when supplied. */
+              partId: string | null;
+              /** Bare Content-ID, when supplied. */
+              contentId: string | null;
+              /** Content-Disposition, when supplied. */
+              disposition: "inline" | "attachment" | null;
             }>;
             /** Message timestamp returned by Gmail. */
             messageTimestamp: string;
@@ -890,6 +1005,14 @@ declare module "@oomol-lab/connector" {
           historyId: string | null;
           /** Expanded messages in the thread when verbose output is requested. */
           messages?: Array<{
+            /** The message history ID. */
+            historyId?: string;
+            /** The internal timestamp in milliseconds. */
+            internalDate?: string;
+            /** The estimated message size in bytes. */
+            sizeEstimate?: number;
+            /** The message snippet. */
+            snippet?: string;
             /** Gmail message ID. */
             messageId: string;
             /** Gmail thread ID. */
@@ -923,6 +1046,12 @@ declare module "@oomol-lab/connector" {
               mimeType: string;
               /** Attachment size in bytes. */
               size: number;
+              /** Gmail MIME part ID, when supplied. */
+              partId: string | null;
+              /** Bare Content-ID, when supplied. */
+              contentId: string | null;
+              /** Content-Disposition, when supplied. */
+              disposition: "inline" | "attachment" | null;
             }>;
             /** Message timestamp returned by Gmail. */
             messageTimestamp: string;
@@ -955,6 +1084,14 @@ declare module "@oomol-lab/connector" {
         historyId: string | null;
         /** Messages in the updated thread. */
         messages: Array<{
+          /** The message history ID. */
+          historyId?: string;
+          /** The internal timestamp in milliseconds. */
+          internalDate?: string;
+          /** The estimated message size in bytes. */
+          sizeEstimate?: number;
+          /** The message snippet. */
+          snippet?: string;
           /** Gmail message ID. */
           messageId: string;
           /** Gmail thread ID. */
@@ -988,6 +1125,12 @@ declare module "@oomol-lab/connector" {
             mimeType: string;
             /** Attachment size in bytes. */
             size: number;
+            /** Gmail MIME part ID, when supplied. */
+            partId: string | null;
+            /** Bare Content-ID, when supplied. */
+            contentId: string | null;
+            /** Content-Disposition, when supplied. */
+            disposition: "inline" | "attachment" | null;
           }>;
           /** Message timestamp returned by Gmail. */
           messageTimestamp: string;
@@ -1011,6 +1154,14 @@ declare module "@oomol-lab/connector" {
         historyId: string | null;
         /** Messages in the trashed thread. */
         messages: Array<{
+          /** The message history ID. */
+          historyId?: string;
+          /** The internal timestamp in milliseconds. */
+          internalDate?: string;
+          /** The estimated message size in bytes. */
+          sizeEstimate?: number;
+          /** The message snippet. */
+          snippet?: string;
           /** Gmail message ID. */
           messageId: string;
           /** Gmail thread ID. */
@@ -1044,6 +1195,12 @@ declare module "@oomol-lab/connector" {
             mimeType: string;
             /** Attachment size in bytes. */
             size: number;
+            /** Gmail MIME part ID, when supplied. */
+            partId: string | null;
+            /** Bare Content-ID, when supplied. */
+            contentId: string | null;
+            /** Content-Disposition, when supplied. */
+            disposition: "inline" | "attachment" | null;
           }>;
           /** Message timestamp returned by Gmail. */
           messageTimestamp: string;
@@ -1061,6 +1218,14 @@ declare module "@oomol-lab/connector" {
         userId?: string;
       };
       output: {
+        /** The message history ID. */
+        historyId?: string;
+        /** The internal timestamp in milliseconds. */
+        internalDate?: string;
+        /** The estimated message size in bytes. */
+        sizeEstimate?: number;
+        /** The message snippet. */
+        snippet?: string;
         /** Gmail message ID. */
         messageId: string;
         /** Gmail thread ID. */
@@ -1094,6 +1259,12 @@ declare module "@oomol-lab/connector" {
           mimeType: string;
           /** Attachment size in bytes. */
           size: number;
+          /** Gmail MIME part ID, when supplied. */
+          partId: string | null;
+          /** Bare Content-ID, when supplied. */
+          contentId: string | null;
+          /** Content-Disposition, when supplied. */
+          disposition: "inline" | "attachment" | null;
         }>;
         /** Message timestamp returned by Gmail. */
         messageTimestamp: string;
@@ -1150,19 +1321,33 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** Reply to an existing Gmail thread using the original message's reply headers. This compatibility action returns only the new `messageId`. */
+    /** Reply to an existing Gmail thread using the original message's reply headers. Supply to to override the original Reply-To or From recipient. */
     "gmail.reply_email": {
       input: {
         /** Gmail thread ID. */
         threadId: string;
         /** Gmail message ID. */
         messageId: string;
+        /**
+         * Override the original Reply-To or From recipient.
+         * @format email
+         */
+        to?: string;
         /** Email body content. */
         body: string;
+        /** Set to true when the body content is already HTML. */
+        isHtml?: boolean;
+        /**
+         * Attachments and CID inline images. Up to 25,000,000 decoded bytes in total and 35,000,000 MIME bytes.
+         * @maxItems 100
+         */
+        attachments?: Array<Record<string, unknown>>;
       };
       output: {
         /** Gmail message ID. */
         messageId: string;
+        /** Gmail thread ID. */
+        threadId?: string;
       };
     };
     /** Reply to an existing Gmail thread while preserving Gmail threading. Use this when you want the reply to stay in the same conversation and optionally override recipients. */
@@ -1184,12 +1369,17 @@ declare module "@oomol-lab/connector" {
         body?: string;
         /** Set to true when the body content is already HTML. */
         isHtml?: boolean;
+        /**
+         * Attachments and CID inline images. Up to 25,000,000 decoded bytes in total and 35,000,000 MIME bytes.
+         * @maxItems 100
+         */
+        attachments?: Array<Record<string, unknown>>;
       };
       output: {
         /** Gmail message ID. */
         messageId: string;
         /** Gmail thread ID. */
-        threadId: string;
+        threadId?: string;
       };
     };
     /** Search Gmail threads by query and return lightweight thread summaries. Spam and trash stay excluded unless you explicitly target them in the query. */
@@ -1245,12 +1435,19 @@ declare module "@oomol-lab/connector" {
         body?: string;
         /** Set to true when the body content is already HTML. */
         isHtml?: boolean;
+        /**
+         * Attachments and CID inline images. Up to 25,000,000 decoded bytes in total and 35,000,000 MIME bytes.
+         * @maxItems 100
+         */
+        attachments?: Array<Record<string, unknown>>;
         /** Verified Gmail send-as alias to use in the From header. */
         fromEmail?: string;
       };
       output: {
         /** Gmail message ID. */
         messageId: string;
+        /** Gmail thread ID. */
+        threadId?: string;
       };
     };
     /** Get the Gmail IMAP settings, including whether IMAP is enabled and how expunge or folder size settings are configured. */
@@ -1303,6 +1500,14 @@ declare module "@oomol-lab/connector" {
         userId?: string;
       };
       output: {
+        /** The message history ID. */
+        historyId?: string;
+        /** The internal timestamp in milliseconds. */
+        internalDate?: string;
+        /** The estimated message size in bytes. */
+        sizeEstimate?: number;
+        /** The message snippet. */
+        snippet?: string;
         /** Gmail message ID. */
         messageId: string;
         /** Gmail thread ID. */
@@ -1336,6 +1541,12 @@ declare module "@oomol-lab/connector" {
           mimeType: string;
           /** Attachment size in bytes. */
           size: number;
+          /** Gmail MIME part ID, when supplied. */
+          partId: string | null;
+          /** Bare Content-ID, when supplied. */
+          contentId: string | null;
+          /** Content-Disposition, when supplied. */
+          disposition: "inline" | "attachment" | null;
         }>;
         /** Message timestamp returned by Gmail. */
         messageTimestamp: string;
@@ -1358,6 +1569,14 @@ declare module "@oomol-lab/connector" {
         historyId: string | null;
         /** Messages restored with the thread. */
         messages: Array<{
+          /** The message history ID. */
+          historyId?: string;
+          /** The internal timestamp in milliseconds. */
+          internalDate?: string;
+          /** The estimated message size in bytes. */
+          sizeEstimate?: number;
+          /** The message snippet. */
+          snippet?: string;
           /** Gmail message ID. */
           messageId: string;
           /** Gmail thread ID. */
@@ -1391,6 +1610,12 @@ declare module "@oomol-lab/connector" {
             mimeType: string;
             /** Attachment size in bytes. */
             size: number;
+            /** Gmail MIME part ID, when supplied. */
+            partId: string | null;
+            /** Bare Content-ID, when supplied. */
+            contentId: string | null;
+            /** Content-Disposition, when supplied. */
+            disposition: "inline" | "attachment" | null;
           }>;
           /** Message timestamp returned by Gmail. */
           messageTimestamp: string;
@@ -1399,11 +1624,13 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** Update an existing Gmail draft in place. Omitted fields fall back to the current draft content, so you can replace only the parts you want to change. */
+    /** Update a Gmail draft. Supply replyToMessageId or a different threadId to rebuild its reply association; this requires mailbox read access. The subject must match the reply target. Header-only edits preserve the MIME body. Omit attachments to preserve them, supply a list to replace them, or [] to remove them. Empty strings clear fields. Content edits of unsupported MIME structures are rejected. */
     "gmail.update_draft": {
       input: {
         /** Gmail draft ID. */
         draftId: string;
+        /** Primary recipient email address. */
+        to?: string;
         /** Primary recipient email address. */
         recipientEmail?: string;
         /** Additional To recipients. */
@@ -1420,8 +1647,18 @@ declare module "@oomol-lab/connector" {
         messageBody?: string;
         /** Set to true when the body content is already HTML. */
         isHtml?: boolean;
+        /**
+         * Attachments and CID inline images. Omit to preserve draft attachments; a supplied list replaces all attachments and [] removes them. Up to 25,000,000 decoded bytes in total and 35,000,000 MIME bytes.
+         * @maxItems 100
+         */
+        attachments?: Array<Record<string, unknown>>;
         /** Gmail thread ID. */
         threadId?: string;
+        /**
+         * Gmail message ID to reply to. Requires mailbox read access; threadId must match when supplied.
+         * @minLength 1
+         */
+        replyToMessageId?: string;
         /** Verified Gmail send-as alias to use in the From header. */
         fromEmail?: string;
       };
@@ -1429,9 +1666,9 @@ declare module "@oomol-lab/connector" {
         /** Gmail draft ID. */
         draftId: string;
         /** Gmail message ID. */
-        messageId: string;
+        messageId?: string;
         /** Gmail thread ID. */
-        threadId: string;
+        threadId?: string;
       };
     };
     /** Update the Gmail IMAP settings, including enablement, auto-expunge behavior, expunge behavior, or max folder size. */
