@@ -1324,7 +1324,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
-    /** Submit asynchronous OpenAI image generation requests, including gpt-image-2 image creation. */
+    /** Submit asynchronous OpenAI image generation requests, including gpt-image-2 and gpt-image-2.5 image creation. */
     "fusion-api.openai_image_async_submit": {
       input: {
         /**
@@ -1336,10 +1336,10 @@ declare module "@oomol-lab/connector" {
         prompt: string;
         /**
          * OpenAI image model name
-         * @minLength 1
+         * @default "gpt-image-2"
          * @example "gpt-image-2"
          */
-        model?: string;
+        model?: "gpt-image-2" | "gpt-image-2.5";
         /**
          * Background mode
          * @example "auto"
@@ -1381,7 +1381,7 @@ declare module "@oomol-lab/connector" {
          */
         quality?: "auto" | "high" | "medium" | "low" | "hd" | "standard";
         /**
-         * Output image size. For GPT Image 2, use auto or WIDTHxHEIGHT. Official constraints: largest dimension <= 3840, width and height multiples of 16, longest side at most 3x the shortest side, and total pixels between 655360 and 8294400 inclusive.
+         * Output image size. For GPT Image 2 and 2.5, use auto or WIDTHxHEIGHT. Official constraints: largest dimension <= 3840, width and height multiples of 16, longest side at most 3x the shortest side, and total pixels between 655360 and 8294400 inclusive.
          * @pattern ^(auto|[1-9][0-9]*x[1-9][0-9]*)$
          * @example "1536x1152"
          * @example "1024x1024"
@@ -1431,7 +1431,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
-    /** Submit asynchronous OpenAI image edit requests, including gpt-image-2 image editing. */
+    /** Submit asynchronous OpenAI image edit requests, including gpt-image-2 and gpt-image-2.5 image editing. */
     "fusion-api.openai_image_edit_async_submit": {
       input: {
         /**
@@ -1443,10 +1443,10 @@ declare module "@oomol-lab/connector" {
         prompt: string;
         /**
          * OpenAI image model name
-         * @minLength 1
+         * @default "gpt-image-2"
          * @example "gpt-image-2"
          */
-        model?: string;
+        model?: "gpt-image-2" | "gpt-image-2.5";
         /**
          * Background mode
          * @example "auto"
@@ -1483,7 +1483,7 @@ declare module "@oomol-lab/connector" {
          */
         quality?: "auto" | "high" | "medium" | "low" | "hd" | "standard";
         /**
-         * Output image size. For GPT Image 2, use auto or WIDTHxHEIGHT. Official constraints: largest dimension <= 3840, width and height multiples of 16, longest side at most 3x the shortest side, and total pixels between 655360 and 8294400 inclusive.
+         * Output image size. For GPT Image 2 and 2.5, use auto or WIDTHxHEIGHT. Official constraints: largest dimension <= 3840, width and height multiples of 16, longest side at most 3x the shortest side, and total pixels between 655360 and 8294400 inclusive.
          * @pattern ^(auto|[1-9][0-9]*x[1-9][0-9]*)$
          * @example "1536x1152"
          * @example "1024x1024"
@@ -1497,14 +1497,20 @@ declare module "@oomol-lab/connector" {
          */
         user?: string;
         /**
-         * Reference images to edit or compose from
+         * Reference images to edit or compose from (1 to 16 images, at most 10 MiB per image)
          * @minItems 1
          * @maxItems 16
          * @example [{"image_url":"https://example.com/source.png"}]
          */
-        images: Array<Record<string, unknown>>;
-        /** Mask image reference for partial edits */
-        mask?: Record<string, unknown>;
+        images: Array<{
+          /** Publicly accessible image URL or base64-encoded image data URL */
+          image_url: unknown;
+        }>;
+        /** Mask image reference for partial edits (at most 10 MiB) */
+        mask?: {
+          /** Publicly accessible image URL or base64-encoded image data URL */
+          image_url: unknown;
+        };
       };
       output: {
         /** Task session ID. */
