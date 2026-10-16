@@ -1420,7 +1420,11 @@ declare module "@oomol-lab/connector" {
         referenceMap?: Record<string, unknown>;
       };
       output: {
-        /** The returned document payload. */
+        /** The task ID to poll; null when creation completed synchronously. */
+        taskId: string | null;
+        /** The document creation state. */
+        status: "processing" | "succeeded" | "failed" | "expired";
+        /** The document payload returned by Feishu. */
         document: {
           /** The Feishu document ID. */
           document_id?: string;
@@ -1433,7 +1437,11 @@ declare module "@oomol-lab/connector" {
           /** The Feishu URL for the document. */
           url?: string;
           [key: string]: unknown;
-        };
+        } | null;
+        /** The suggested delay before the next status request. */
+        pollAfterMs: number | null;
+        /** The upstream failure code and message, if creation failed. */
+        failure: Record<string, unknown> | null;
       };
     };
     /** Create a full-resource or anchored rich-text comment on a Feishu Drive document or supported file. */
@@ -4826,6 +4834,40 @@ declare module "@oomol-lab/connector" {
         content: string;
       };
     };
+    /** Get a document creation task status and its completed document. Do not repeat creation while the task is processing. */
+    "feishu.get_document_creation": {
+      input: {
+        /**
+         * The task ID returned by create_document.
+         * @minLength 1
+         */
+        taskId: string;
+      };
+      output: {
+        /** The task ID to poll; null when creation completed synchronously. */
+        taskId: string | null;
+        /** The document creation state. */
+        status: "processing" | "succeeded" | "failed" | "expired";
+        /** The document payload returned by Feishu. */
+        document: {
+          /** The Feishu document ID. */
+          document_id?: string;
+          /** The current document revision ID. */
+          revision_id?: number;
+          /** The document title. */
+          title?: string;
+          /** The document content in the requested format. */
+          content?: string;
+          /** The Feishu URL for the document. */
+          url?: string;
+          [key: string]: unknown;
+        } | null;
+        /** The suggested delay before the next status request. */
+        pollAfterMs: number | null;
+        /** The upstream failure code and message, if creation failed. */
+        failure: Record<string, unknown> | null;
+      };
+    };
     /** Get the status of a Feishu document history revert task. */
     "feishu.get_document_revert_status": {
       input: {
@@ -5737,7 +5779,7 @@ declare module "@oomol-lab/connector" {
         recording: Record<string, unknown>;
       };
     };
-    /** Resolve and get a Feishu Wiki node by token and object type. */
+    /** Resolve a Feishu Wiki node by node token or document token; the server detects the token type. */
     "feishu.get_wiki_node": {
       input: {
         /**
@@ -5745,8 +5787,6 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         token: string;
-        /** The document type represented by the Wiki node. */
-        objectType?: "doc" | "sheet" | "bitable" | "mindnote" | "file" | "slides" | "docx";
       };
       output: {
         /** A Feishu Wiki object. */
@@ -5998,48 +6038,6 @@ declare module "@oomol-lab/connector" {
         wikiNode?: Record<string, unknown>;
         /** The raw metadata returned by the Drive metadata API. */
         raw: Record<string, unknown>;
-      };
-    };
-    /** Join a Feishu video meeting with the app's meeting bot. */
-    "feishu.join_vc_meeting": {
-      input: {
-        /**
-         * The nine-digit Feishu meeting number.
-         * @minLength 9
-         * @maxLength 9
-         */
-        meetingNumber: string;
-        /**
-         * The meeting password, when required.
-         * @minLength 1
-         */
-        password?: string;
-        /**
-         * The correlation ID forwarded by a meeting invite event.
-         * @minLength 1
-         */
-        callId?: string;
-      };
-      output: {
-        /** The raw video-conference object returned by Feishu. */
-        meeting: Record<string, unknown>;
-      };
-    };
-    /** Leave a Feishu video meeting previously joined by the app's meeting bot. */
-    "feishu.leave_vc_meeting": {
-      input: {
-        /**
-         * The Feishu video meeting ID.
-         * @minLength 1
-         */
-        meetingId: string;
-      };
-      output: {
-        /**
-         * The Feishu video meeting ID.
-         * @minLength 1
-         */
-        meetingId: string;
       };
     };
     /** List active Feishu video meetings for the current user or a tenant user. */

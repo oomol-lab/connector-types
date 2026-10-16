@@ -315,6 +315,87 @@ declare module "@oomol-lab/connector" {
       input: (Record<string, unknown>) & (Record<string, unknown>);
       output: Record<string, unknown>;
     };
+    /** Compare popularity over time for up to five keywords using DataForSEO Trends for Google Search, News, or Shopping. These are DataForSEO estimates, not original Google Trends data or absolute search volumes. */
+    "aisa.get_dataforseo_keyword_trends": {
+      input: {
+        /**
+         * One to five keywords to compare.
+         * @minItems 1
+         * @maxItems 5
+         */
+        keywords: Array<string>;
+        /** Full location name, such as United States. Use instead of locationCode; omit both for worldwide results. */
+        locationName?: string;
+        /** DataForSEO location code, such as 2840 for the United States. Results cover the country containing this location. */
+        locationCode?: number;
+        /** Search type: web for Google Search (default), news for Google News, or ecommerce for Google Shopping. */
+        type?: "web" | "news" | "ecommerce";
+        /**
+         * Start date in YYYY-MM-DD format. Earliest is 2004-01-01 for web or 2008-01-01 for other types. Without a time window, upstream defaults to one year ago.
+         * @format date
+         */
+        dateFrom?: string;
+        /**
+         * End date in YYYY-MM-DD format; upstream defaults to today.
+         * @format date
+         */
+        dateTo?: string;
+        /** Preset time window. Upstream ignores this when dateFrom or dateTo is supplied. */
+        timeRange?: "past_4_hours" | "past_day" | "past_7_days" | "past_30_days" | "past_90_days" | "past_12_months" | "past_5_years";
+        /**
+         * A caller-defined identifier returned with the result.
+         * @maxLength 255
+         */
+        tag?: string;
+      };
+      output: {
+        /** Overall upstream status code. */
+        status_code?: number;
+        /** Overall upstream status message. */
+        status_message?: string;
+        /** Upstream reported cost in USD. */
+        cost?: number;
+        /** Number of tasks that failed. */
+        tasks_error?: number;
+        /** Live task responses, including business errors. */
+        tasks?: Array<{
+          /** Upstream task identifier. */
+          id?: string;
+          /** Task status code; 20000 indicates success. */
+          status_code?: number;
+          /** Task status message. */
+          status_message?: string;
+          /** Trend results, or null when unavailable. */
+          result?: Array<{
+            /** Keywords in result order. */
+            keywords?: Array<string>;
+            /** Trend graphs returned by the upstream service. */
+            items?: Array<{
+              /** Keywords corresponding to the values and averages arrays. */
+              keywords?: Array<string>;
+              /** Average relative popularity for each keyword over the time window. */
+              averages?: Array<number>;
+              /** Time buckets; retain both dates because a bucket may span multiple days. */
+              data?: Array<{
+                /** First date in this bucket. */
+                date_from?: string;
+                /** Last date in this bucket. */
+                date_to?: string;
+                /** Bucket Unix timestamp in seconds. */
+                timestamp?: number;
+                /** Relative popularity in keyword order: 100 is the peak, and 0 indicates insufficient data. These are not search volumes. */
+                values?: Array<number>;
+                [key: string]: unknown;
+              }>;
+              [key: string]: unknown;
+            }>;
+            [key: string]: unknown;
+          }> | null;
+          [key: string]: unknown;
+        }>;
+        [key: string]: unknown;
+      };
+    };
     /** Aggregate LLM mention metrics for domains and keyword entities. */
     "aisa.get_dataforseo_llm_mention_metrics": {
       input: {

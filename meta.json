@@ -1,9 +1,9 @@
 {
   "package": "@oomol-lab/connector-types",
   "version": "0.1.0",
-  "generatedFrom": "sha256:8554fba3c40e50095f06d1b1ef9054c613f507df53d15d338752ab394ddce7ba",
-  "providerCount": 1617,
-  "actionCount": 19139,
+  "generatedFrom": "sha256:4c95329b651146744cb012efab22a5734c1914b2c0d9c6e1b27b89650f89211e",
+  "providerCount": 1650,
+  "actionCount": 19747,
   "connectorContractTarget": "RegistryEntry { input: unknown; output: unknown }",
   "connectorPkgVersion": ">=0.1.0"
 }
