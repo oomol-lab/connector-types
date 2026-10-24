@@ -2,6 +2,84 @@ import "@oomol-lab/connector";
 
 declare module "@oomol-lab/connector" {
   interface ActionRegistry {
+    /** Comment on a Notion page through notion-create-comment: at the top level, as a reply to a comment or a discussion, or as a new discussion on selected content. Returns the comment the server named and the raw response. */
+    "notion_mcp.create_comment": {
+      input: {
+        /**
+         * The page to comment on, by ID.
+         * @minLength 1
+         */
+        page_id: string;
+        /**
+         * The comment in inline Notion-flavored Markdown.
+         * @minLength 1
+         */
+        markdown: string;
+        /** A comment ID to reply to. */
+        reply_to_comment_id?: string;
+        /** A discussion ID or URL to reply in. */
+        discussion_id?: string;
+        /** The content to comment on, as the tool takes it: about ten characters from its start, an ellipsis, about ten from its end. */
+        selection_with_ellipsis?: string;
+        [key: string]: unknown;
+      };
+      output: {
+        /** The comment as the server named it. */
+        comment?: {
+          /** The comment ID. */
+          id?: string;
+          /** The discussion the comment belongs to. */
+          discussion_id?: string;
+          [key: string]: unknown;
+        };
+        /** The untouched text Notion's MCP tool returned, kept beside the typed fields so a changed tool shape can still be read. */
+        raw: string;
+      };
+    };
+    /** Create one or more Notion pages through notion-create-pages, under a page, a database, a data source or a teamspace, or as a private draft. Returns the pages the server named, an async task ID when it deferred the work, and the raw response. */
+    "notion_mcp.create_pages": {
+      input: {
+        /**
+         * The pages to create; every page in one call shares the parent.
+         * @minItems 1
+         * @maxItems 100
+         */
+        pages: Array<{
+          /** Property names to values. Outside a database the only property is title; inside one, the data source's own properties in the spellings notion-fetch shows. */
+          properties?: Record<string, unknown>;
+          /** The page body in Notion-flavored Markdown. */
+          content?: string;
+          /** An emoji, a Notion icon identifier, or an external image URL. */
+          icon?: string;
+          /** An external image URL for the cover. */
+          cover?: string;
+          [key: string]: unknown;
+        }>;
+        /** Where the pages go, as the tool takes it: {page_id}, {database_id}, {data_source_id} or {teamspace_id}. Omitted with no creation_mode, the pages are private at the workspace level. */
+        parent?: Record<string, unknown>;
+        /** draft creates a durable private page; it cannot be combined with a parent. */
+        creation_mode?: "draft";
+        /** Let the server accept the creation for background execution and answer an async task instead of the pages. */
+        allow_async?: boolean;
+        [key: string]: unknown;
+      };
+      output: {
+        /** The pages the server named, in its order; empty when the answer named none, such as an async task. */
+        pages: Array<{
+          /** The page ID. */
+          id?: string;
+          /** The page URL. */
+          url?: string;
+          /** The page title, when the server names one. */
+          title?: string;
+          [key: string]: unknown;
+        }>;
+        /** The async task ID when the server accepted the creation for background execution. */
+        async_task_id?: string;
+        /** The untouched text Notion's MCP tool returned, kept beside the typed fields so a changed tool shape can still be read. */
+        raw: string;
+      };
+    };
     /** Read one Notion page through notion-fetch by ID or URL. Returns the title, properties block, Markdown content, a truncated flag, and the raw response. */
     "notion_mcp.fetch_page": {
       input: {
@@ -185,6 +263,69 @@ declare module "@oomol-lab/connector" {
         }>;
         /** The untouched text Notion's MCP tool returned, kept beside the typed fields so a changed tool shape can still be read. */
         raw?: string;
+      };
+    };
+    /** Change one Notion page through notion-update-page: its properties, a targeted search-and-replace in its content, its whole content, or an insertion at the start or the end. Returns the page ID, the URL when the server names one, an async task ID when it deferred the work, and the raw response. */
+    "notion_mcp.update_page": {
+      input: {
+        /**
+         * The page to update, by ID.
+         * @minLength 1
+         */
+        page_id: string;
+        /** What to change: the properties, a targeted search-and-replace in the content, the whole content, or an insertion at the start or the end. */
+        command: "update_properties" | "update_content" | "replace_content" | "insert_content";
+        /** For update_properties: property names to values; null removes a value. */
+        properties?: Record<string, unknown>;
+        /**
+         * For update_content: search-and-replace operations.
+         * @minItems 1
+         * @maxItems 100
+         */
+        content_updates?: Array<{
+          /**
+           * The existing content to find; it must match the page exactly.
+           * @minLength 1
+           */
+          old_str: string;
+          /** The replacement. */
+          new_str: string;
+          /** Replace every match; off, several matches fail the operation. */
+          replace_all_matches?: boolean;
+        }>;
+        /** For replace_content: the whole new content in Notion-flavored Markdown. */
+        new_str?: string;
+        /** For insert_content: the Markdown to insert. */
+        content?: string;
+        /** For insert_content: {type: start} or {type: end}; omitted, the end. */
+        position?: Record<string, unknown>;
+        /** Allow a content change to drop child pages and databases it no longer references; off, the server refuses and lists them. */
+        allow_deleting_content?: boolean;
+        /** Let the server accept the update for background execution and answer an async task instead of the page. */
+        allow_async?: boolean;
+        [key: string]: unknown;
+      };
+      output: {
+        /** The requested page ID, echoed back. */
+        page_id: string;
+        /** The page URL, when the server names one. */
+        url?: string;
+        /** The async task ID when the server accepted the update for background execution. */
+        async_task_id?: string;
+        /** Warnings about changes that were skipped or automatically corrected; omitted for clean updates. */
+        warnings?: Array<{
+          /** Warning code. */
+          code: string;
+          /** Explanation of the skipped or corrected change. */
+          message: string;
+          /** Markdown parser warning category, when available. */
+          category?: string;
+          /** Whether the parser automatically corrected the content. */
+          autofix?: boolean;
+          [key: string]: unknown;
+        }>;
+        /** The untouched text Notion's MCP tool returned, kept beside the typed fields so a changed tool shape can still be read. */
+        raw: string;
       };
     };
   }

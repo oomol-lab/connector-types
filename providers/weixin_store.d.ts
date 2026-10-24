@@ -272,6 +272,56 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
+    /** Read historical Compass product click and transaction data. T+1 only: date must be yesterday or earlier in Asia/Shanghai. Monetary values and counts retain upstream string units. */
+    "weixin_store.get_compass_product_data": {
+      input: {
+        /**
+         * A valid historical date as YYYYMMDD, yesterday or earlier in Asia/Shanghai.
+         * @pattern ^[0-9]{8}$
+         * @example "20240520"
+         */
+        date: string;
+        /** The product id, no greater than JavaScript's maximum safe integer. */
+        productId: number | string;
+      };
+      output: {
+        /** The product and historical metrics. */
+        product_info?: {
+          /** The product id. */
+          product_id?: string;
+          /** The product image URL. */
+          head_img_url?: string;
+          /** The title. */
+          title?: string;
+          /** The price in fen, as an upstream string. */
+          price?: string;
+          /** The first-level category id. */
+          first_category_id?: string;
+          /** The second-level category id. */
+          second_category_id?: string;
+          /** The third-level category id. */
+          third_category_id?: string;
+          /** Raw Compass metrics; monetary values are in fen and ratios can be null. */
+          data?: {
+            /** Unique product click visitors. */
+            product_click_uv?: string;
+            /** Product clicks. */
+            product_click_cnt?: string;
+            /** Paid GMV in fen. */
+            pay_gmv?: string;
+            /** Paid orders. */
+            pay_cnt?: string;
+            /** Paying users. */
+            pay_uv?: string;
+            /** Paid product quantity. */
+            pay_product_cnt?: string;
+            [key: string]: unknown;
+          };
+          [key: string]: unknown;
+        };
+        [key: string]: unknown;
+      };
+    };
     /** Get one freight template by template_id, including its valuation type, shipping method, sender address, and freight rules. Freight templates bind to products through expressInfo on add_product. */
     "weixin_store.get_freight_template": {
       input: {
@@ -284,6 +334,81 @@ declare module "@oomol-lab/connector" {
       output: {
         /** The freight template, with name, valuation_type, shipping_method, delivery_type, send_time, the sender address_info, and its freight rules. */
         freight_template?: Record<string, unknown>;
+        [key: string]: unknown;
+      };
+    };
+    /** Read an existing alliance plan's activation, eligibility and commission. The returned item.type uses legacy values 1/2/3; do not reuse it as request type 100/300. */
+    "weixin_store.get_league_plan": {
+      input: {
+        /** 100 = all talents, 300 = specified talents. These endpoints do not support filtered audience type 200. */
+        type: 100 | 300;
+        /** The existing product id; must be a safe positive integer. */
+        productId: number | string;
+        /** The existing promotion plan id; must be a safe positive integer. */
+        promotionPlanId?: number | string;
+      };
+      output: {
+        /** The existing plan. */
+        item?: {
+          /** A value matching one supported schema. */
+          product_id?: number | string;
+          /** Legacy response type: 1 ordinary, 2 targeted, 3 exclusive; not request audience type. */
+          type?: number;
+          /** 1 active, 2 delisted, 4 deleted, 5 ineligible, 7 product delisted, 8 expired, 9 banned, 10 pending activation. */
+          status?: number;
+          /** Commission percentage, 0–90; not the 0–1000000 talent-data scale. */
+          ratio?: number;
+          /** Upstream plan identity, timing and talent information. */
+          exclusive_info?: Record<string, unknown>;
+          /** Upstream restriction flags. */
+          ext_info?: Record<string, unknown>;
+          [key: string]: unknown;
+        };
+        [key: string]: unknown;
+      };
+    };
+    /** Read a known alliance talent's profile, sales metrics and blacklist status. Supply exactly one talent identifier, not a nickname. */
+    "weixin_store.get_league_promoter": {
+      input: Record<string, unknown>;
+      output: {
+        /** The talent profile and metrics. */
+        talent?: {
+          /** Talent identity. */
+          base_talent_info?: {
+            /** The talent appid. */
+            talent_appid?: string;
+            /** The nickname. */
+            nickname?: string;
+            /** The avatar URL. */
+            head_img?: string;
+            [key: string]: unknown;
+          };
+          /** Upstream sales and window metrics. */
+          data?: {
+            /** Lifetime sales GMV, in upstream units. */
+            total_sale_gmv?: number;
+            /** 30-day sales GMV, in upstream units. */
+            sale_gmv_30d?: number;
+            /** Lifetime orders. */
+            total_order_num?: number;
+            /** 30-day orders. */
+            order_num_30d?: number;
+            /** Products sold in 30 days. */
+            sale_product_num_30d?: number;
+            /** Products in the talent window. */
+            window_product_num?: number;
+            [key: string]: unknown;
+          };
+          /** Talent features. */
+          feature_info?: {
+            /** The upstream level, 0 through 5. */
+            level?: number;
+            /** Whether the talent is blacklisted. */
+            is_blacklisted?: boolean;
+            [key: string]: unknown;
+          };
+          [key: string]: unknown;
+        };
         [key: string]: unknown;
       };
     };
@@ -317,6 +442,55 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
+    /** Read store-wide product listing policy switches. This is not a historical delisting-reason log and does not change any policy. */
+    "weixin_store.get_product_audit_strategy": {
+      input: Record<string, never>;
+      output: {
+        /** Each switch is 1 enabled or 2 disabled. */
+        audit_strategy?: {
+          /** List with erroneous product information hidden. */
+          hide_err_field_flag?: number;
+          /** Allow similar products. */
+          hit_duplicated_flag?: number;
+          /** Allow products matching low-risk rules. */
+          hit_low_risk_rule_flag?: number;
+          [key: string]: unknown;
+        };
+        [key: string]: unknown;
+      };
+    };
+    /** Read restricted sales scenes for 1 to 50 products, including alliance and talent-window restrictions. This does not change product status. Merchant quota: 100 calls per minute. */
+    "weixin_store.get_product_restricted_info": {
+      input: {
+        /**
+         * Product ids, each no greater than JavaScript's maximum safe integer.
+         * @minItems 1
+         * @maxItems 50
+         */
+        productIds: Array<number | string>;
+      };
+      output: {
+        /** The restriction response data. */
+        data?: {
+          /** Restrictions per product. */
+          restricted_info_list?: Array<{
+            /** The product id, returned as a number or numeric string. */
+            product_id?: number | string;
+            /** Restricted scenes and policy sources. */
+            scene_info?: Array<{
+              /** 1 live, 2 short video, 3 store home/talent window, 4 search, 5 ads, 6 orders/cards, 7 alliance, 8 recommendation, 9 selling, 10 invalid-product hiding. */
+              scene?: number;
+              /** 1 low-risk policy, 2 similar-product policy, 3 hidden-image policy, 4 trial category, 5 window hiding, 6 minimal mode, 7 selling restriction, 8 inventory restriction. */
+              source?: number;
+              [key: string]: unknown;
+            }>;
+            [key: string]: unknown;
+          }>;
+          [key: string]: unknown;
+        };
+        [key: string]: unknown;
+      };
+    };
     /** Get the basic information of the connected WeChat Store: name, avatar, subject type, and status. */
     "weixin_store.get_shop_info": {
       input: Record<string, never>;
@@ -339,6 +513,11 @@ declare module "@oomol-lab/connector" {
         };
         [key: string]: unknown;
       };
+    };
+    /** Invite one known talent to cooperate with the shop. This sends an external invitation: obtain approval for the exact recipient first. Supply promoterId or the deprecated finderId, never infer promoterId from talent_appid. Do not retry blindly after a timeout; WeChat rejects duplicate invitations within 24 hours and already-cooperating talents. */
+    "weixin_store.invite_league_promoter": {
+      input: Record<string, unknown>;
+      output: Record<string, unknown>;
     };
     /** List the merchant address ids of the store. After-sale returns need one of these address ids when accepting a return. */
     "weixin_store.list_addresses": {
@@ -478,6 +657,134 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
+    /** List existing alliance products and eligibility status. Pagination is bounded by pageSize multiplied by pageIndex <= 5000; no undocumented cursor is sent. */
+    "weixin_store.list_league_products": {
+      input: {
+        /**
+         * The 1-based page index.
+         * @exclusiveMinimum 0
+         * @default 1
+         */
+        pageIndex?: number;
+        /**
+         * Page size, at most 100.
+         * @maximum 100
+         * @exclusiveMinimum 0
+         * @default 20
+         */
+        pageSize?: number;
+        /** The existing product id; must be a safe positive integer. */
+        productId?: number | string;
+        /** Request the total count. */
+        needTotalNum?: boolean;
+      };
+      output: {
+        /** Products and eligibility. */
+        items?: Array<{
+          /** The product id, returned as a number or numeric string. */
+          product_id?: number | string;
+          /** 1 active, 2 delisted, 4 deleted, 5 ineligible, 7 product delisted, 8 expired, 9 banned, 10 pending activation. */
+          status?: number;
+          [key: string]: unknown;
+        }>;
+        /** Whether more products exist. */
+        has_more?: boolean;
+        /** Total products when requested. */
+        total_num?: number;
+        [key: string]: unknown;
+      };
+    };
+    /** Read a known cooperating talent's current window products or products sold in the last 30 days. This does not discover new talents or add products to a window. */
+    "weixin_store.list_league_promoter_products": {
+      input: {
+        /**
+         * The cooperating talent appid.
+         * @minLength 1
+         */
+        talentAppid: string;
+        /** 1 = products with sales in the last 30 days, 2 = current window products. */
+        dataType: 1 | 2;
+        /**
+         * The 1-based page index.
+         * @exclusiveMinimum 0
+         * @default 1
+         */
+        pageIndex?: number;
+        /**
+         * Page size, at most 20.
+         * @maximum 20
+         * @exclusiveMinimum 0
+         * @default 20
+         */
+        pageSize?: number;
+      };
+      output: {
+        /** Total matching products. */
+        total_num?: number;
+        /** Whether another page exists. */
+        continue_flag?: boolean;
+        /** Product data. */
+        list?: Array<{
+          /** The product id. */
+          spu_id?: number;
+          /** Sales metrics. */
+          product_data?: {
+            /** Lifetime sales GMV, in upstream units. */
+            total_sale_gmv?: number;
+            /** 30-day sales GMV, in upstream units. */
+            sale_gmv_30d?: number;
+            /** Lifetime orders. */
+            total_order_num?: number;
+            /** 30-day orders. */
+            order_num_30d?: number;
+            [key: string]: unknown;
+          };
+          /** Commission information; read only. */
+          talent_commission_info?: {
+            /** 1 ordinary, 2 targeted, 3 exclusive. */
+            commission_type?: number;
+            /** Commission ratio on the upstream 0–1000000 scale; 1000000 means 100%. */
+            ratio?: number;
+            [key: string]: unknown;
+          };
+          [key: string]: unknown;
+        }>;
+        [key: string]: unknown;
+      };
+    };
+    /** List the connected merchant's alliance talents. This is not a platform-wide talent search; follow continue_flag to paginate. */
+    "weixin_store.list_league_promoters": {
+      input: {
+        /**
+         * The 1-based page index.
+         * @exclusiveMinimum 0
+         * @default 1
+         */
+        pageIndex?: number;
+        /**
+         * The number of talents per page, at most 20.
+         * @maximum 20
+         * @exclusiveMinimum 0
+         * @default 20
+         */
+        pageSize?: number;
+      };
+      output: {
+        /** The total number of talents. */
+        total_num?: number;
+        /** Whether another page is available. */
+        continue_flag?: boolean;
+        /** The talents in this page. */
+        list?: Array<{
+          /** The talent appid used by get_league_promoter. */
+          talent_appid?: string;
+          /** The talent nickname; not a lookup identifier. */
+          nickname?: string;
+          [key: string]: unknown;
+        }>;
+        [key: string]: unknown;
+      };
+    };
     /** List the order ids of the store, paginated by cursor. At least one time range is required, as a pair of Unix timestamps in seconds spanning at most 7 days. */
     "weixin_store.list_orders": {
       input: {
@@ -527,6 +834,103 @@ declare module "@oomol-lab/connector" {
         next_key?: string;
         /** Whether more orders follow this page. */
         has_more?: boolean;
+        [key: string]: unknown;
+      };
+    };
+    /** List an existing product's alliance promotion plan identifiers before inspecting or changing a specific plan. Filtered audience type 200 is supported by this list only, not get_league_plan or update_league_plan. */
+    "weixin_store.list_product_promotion_plans": {
+      input: {
+        /** The existing product id; must be a safe positive integer. */
+        productId: number | string;
+        /** 100 all, 200 filtered, 300 specified talents. */
+        promotionPlanType?: 100 | 200 | 300;
+        /**
+         * The 1-based page index.
+         * @exclusiveMinimum 0
+         * @default 1
+         */
+        pageIndex?: number;
+        /**
+         * Page size, at most 20.
+         * @maximum 20
+         * @exclusiveMinimum 0
+         * @default 20
+         */
+        pageSize?: number;
+      };
+      output: {
+        /** Total matching records. */
+        total_num?: number;
+        /** Whether another page exists. */
+        continue_flag?: boolean;
+        /** Existing plan identifiers. */
+        list?: Array<{
+          /** The plan id. */
+          promotion_plan_id?: number | null;
+          /** 100 all, 200 filtered, 300 specified talents. */
+          promotion_plan_type?: number | null;
+          [key: string]: unknown;
+        }>;
+        [key: string]: unknown;
+      };
+    };
+    /** Read talents related to one existing product promotion plan and their promotion relationship status. This is not platform-wide discovery and does not prove that a product is in a talent's window. */
+    "weixin_store.list_product_promotion_talents": {
+      input: {
+        /** The existing product id; must be a safe positive integer. */
+        productId: number | string;
+        /** The existing promotion plan id; must be a safe positive integer. */
+        promotionPlanId: number | string;
+        /**
+         * Optional talent appid filter.
+         * @minLength 1
+         */
+        talentAppid?: string;
+        /**
+         * The 1-based page index.
+         * @exclusiveMinimum 0
+         * @default 1
+         */
+        pageIndex?: number;
+        /**
+         * Page size, at most 10.
+         * @maximum 10
+         * @exclusiveMinimum 0
+         * @default 10
+         */
+        pageSize?: number;
+      };
+      output: {
+        /** Total matching records. */
+        total_num?: number;
+        /** Whether another page exists. */
+        continue_flag?: boolean;
+        /** Related talents. */
+        list?: Array<{
+          /** Talent identity. */
+          base_talent_info?: {
+            /** The nickname. */
+            nickname?: string;
+            /** The avatar URL. */
+            head_img?: string;
+            /** The talent appid. */
+            talent_appid?: string;
+            [key: string]: unknown;
+          };
+          /** Read-only commission terms. */
+          commission_info?: {
+            /** The plan id. */
+            promotion_plan_id?: number;
+            /** The plan type. */
+            promotion_plan_type?: number;
+            /** Upstream scale: 1000000 means 100%; not the 0–90 percentage scale of update_league_plan. */
+            ratio?: number;
+            [key: string]: unknown;
+          };
+          /** 1 promoting, 4 removed, 10 blacklisted. */
+          talent_relation_status?: number;
+          [key: string]: unknown;
+        }>;
         [key: string]: unknown;
       };
     };
@@ -675,6 +1079,41 @@ declare module "@oomol-lab/connector" {
         }>;
       };
       output: Record<string, unknown>;
+    };
+    /** Change one existing alliance promotion plan: edit commission and activate (1), delist (2), or activate (4). Obtain approval for the exact plan and change first; activation or commission changes can incur commission spending. Read the plan before and after; no automatic fallback, audience changes, new plan creation or deletion is provided. */
+    "weixin_store.update_league_plan": {
+      input: {
+        /** 100 = all talents, 300 = specified talents. These endpoints do not support filtered audience type 200. */
+        type: 100 | 300;
+        /** The existing product id; must be a safe positive integer. */
+        productId: number | string;
+        /** The existing promotion plan id; must be a safe positive integer. */
+        promotionPlanId: number | string;
+        /** Edit commission and activate. */
+        operateType: 1;
+        /**
+         * Commission percentage, 0–90 (not the 0–1000000 read scale).
+         * @minimum 0
+         * @maximum 90
+         */
+        ratio: number;
+      } | {
+        /** 100 = all talents, 300 = specified talents. These endpoints do not support filtered audience type 200. */
+        type: 100 | 300;
+        /** The existing product id; must be a safe positive integer. */
+        productId: number | string;
+        /** The existing promotion plan id; must be a safe positive integer. */
+        promotionPlanId: number | string;
+        /** 2 = delist, 4 = activate. No commission fields accepted. */
+        operateType: 2 | 4;
+      };
+      output: {
+        /** The updated plan id. */
+        promotion_plan_id?: number;
+        /** Talents that failed to update; a nonempty list means partial failure. */
+        fail_talent_appids?: Array<string>;
+        [key: string]: unknown;
+      };
     };
     /** Replace the merchant note of one order, optionally with a tag color. */
     "weixin_store.update_order_merchant_notes": {

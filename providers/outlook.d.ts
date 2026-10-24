@@ -2,6 +2,157 @@ import "@oomol-lab/connector";
 
 declare module "@oomol-lab/connector" {
   interface ActionRegistry {
+    /** Move an Outlook message to the mailbox's Archive folder. Use the returned message ID for subsequent operations. This does not move messages to an Exchange Online archive mailbox. */
+    "outlook.archive_message": {
+      input: {
+        /**
+         * Outlook message ID.
+         * @minLength 1
+         */
+        messageId: string;
+      };
+      output: {
+        /** Entity tag for the message. */
+        "@odata.etag"?: string;
+        /** Message ID. */
+        id: string;
+        /** Timestamp when the message was created. */
+        createdDateTime?: string;
+        /** Timestamp when the message was last modified. */
+        lastModifiedDateTime?: string;
+        /** Change key for the message. */
+        changeKey?: string;
+        /** Categories applied to the message. */
+        categories?: Array<string>;
+        /** Timestamp when the message was received. */
+        receivedDateTime?: string;
+        /** Timestamp when the message was sent. */
+        sentDateTime?: string;
+        /** Whether the message has attachments. */
+        hasAttachments?: boolean;
+        /** Internet message identifier for the message. */
+        internetMessageId?: string;
+        /** Message subject. */
+        subject?: string;
+        /** Preview snippet of the message body. */
+        bodyPreview?: string;
+        /** Message importance. */
+        importance?: string;
+        /** Parent folder ID for the message. */
+        parentFolderId?: string;
+        /** Conversation ID for the message. */
+        conversationId?: string;
+        /** Conversation index for the message. */
+        conversationIndex?: string;
+        /** Whether delivery receipts are requested. */
+        isDeliveryReceiptRequested?: boolean;
+        /** Whether read receipts are requested. */
+        isReadReceiptRequested?: boolean;
+        /** Whether the message is marked as read. */
+        isRead?: boolean;
+        /** Whether the message is a draft. */
+        isDraft?: boolean;
+        /** Web URL for the message in Outlook. */
+        webLink?: string;
+        /** Outlook inference classification for the message. */
+        inferenceClassification?: string;
+        /** Message body. */
+        body?: {
+          /** Message body content type. */
+          contentType: string;
+          /** Message body content. */
+          content: string;
+        };
+        /** Sender of the message. */
+        sender?: {
+          /** Recipient email address. */
+          emailAddress: {
+            /** Display name for the email address. */
+            name?: string;
+            /** Email address value. */
+            address: string;
+          };
+        };
+        /** Mailbox owner and sender of the message. */
+        from?: {
+          /** Recipient email address. */
+          emailAddress: {
+            /** Display name for the email address. */
+            name?: string;
+            /** Email address value. */
+            address: string;
+          };
+        };
+        /** Primary recipients. */
+        toRecipients?: Array<{
+          /** Recipient email address. */
+          emailAddress: {
+            /** Display name for the email address. */
+            name?: string;
+            /** Email address value. */
+            address: string;
+          };
+        }>;
+        /** Cc recipients. */
+        ccRecipients?: Array<{
+          /** Recipient email address. */
+          emailAddress: {
+            /** Display name for the email address. */
+            name?: string;
+            /** Email address value. */
+            address: string;
+          };
+        }>;
+        /** Bcc recipients. */
+        bccRecipients?: Array<{
+          /** Recipient email address. */
+          emailAddress: {
+            /** Display name for the email address. */
+            name?: string;
+            /** Email address value. */
+            address: string;
+          };
+        }>;
+        /** Reply-to recipients. */
+        replyTo?: Array<{
+          /** Recipient email address. */
+          emailAddress: {
+            /** Display name for the email address. */
+            name?: string;
+            /** Email address value. */
+            address: string;
+          };
+        }>;
+        /** Follow-up flag details. */
+        flag?: {
+          /** Follow-up flag status. */
+          flagStatus?: string;
+          /** Follow-up start date and time. */
+          startDateTime?: {
+            /** Date and time value. */
+            dateTime: string;
+            /** Time zone identifier for the date and time value. */
+            timeZone: string;
+          };
+          /** Follow-up due date and time. */
+          dueDateTime?: {
+            /** Date and time value. */
+            dateTime: string;
+            /** Time zone identifier for the date and time value. */
+            timeZone: string;
+          };
+          /** Follow-up completion date and time. */
+          completedDateTime?: {
+            /** Date and time value. */
+            dateTime: string;
+            /** Time zone identifier for the date and time value. */
+            timeZone: string;
+          };
+          [key: string]: unknown;
+        };
+        [key: string]: unknown;
+      };
+    };
     /** Create a new Outlook draft message with subject, body, recipients, and other writable message properties. */
     "outlook.create_draft": {
       input: {
@@ -196,6 +347,20 @@ declare module "@oomol-lab/connector" {
           [key: string]: unknown;
         };
         [key: string]: unknown;
+      };
+    };
+    /** Delete an Outlook message using the standard mailbox deletion operation. To explicitly move a message to Deleted Items, use move_message with destinationId deleteditems. */
+    "outlook.delete_message": {
+      input: {
+        /**
+         * Outlook message ID.
+         * @minLength 1
+         */
+        messageId: string;
+      };
+      output: {
+        /** Whether the Outlook operation completed successfully. */
+        success: true;
       };
     };
     /** Get the current Outlook mailbox settings, including automatic replies, locale, time zone, and working hours. */
@@ -662,6 +827,162 @@ declare module "@oomol-lab/connector" {
         nextLink: string | null;
       };
     };
+    /** Move an Outlook message to another folder in the same mailbox, including Archive or Deleted Items. Use the returned message ID for subsequent operations because moving can change it. */
+    "outlook.move_message": {
+      input: {
+        /**
+         * Outlook message ID.
+         * @minLength 1
+         */
+        messageId: string;
+        /**
+         * Destination folder ID or well-known name, such as inbox, archive, or deleteditems.
+         * @minLength 1
+         */
+        destinationId: string;
+      };
+      output: {
+        /** Entity tag for the message. */
+        "@odata.etag"?: string;
+        /** Message ID. */
+        id: string;
+        /** Timestamp when the message was created. */
+        createdDateTime?: string;
+        /** Timestamp when the message was last modified. */
+        lastModifiedDateTime?: string;
+        /** Change key for the message. */
+        changeKey?: string;
+        /** Categories applied to the message. */
+        categories?: Array<string>;
+        /** Timestamp when the message was received. */
+        receivedDateTime?: string;
+        /** Timestamp when the message was sent. */
+        sentDateTime?: string;
+        /** Whether the message has attachments. */
+        hasAttachments?: boolean;
+        /** Internet message identifier for the message. */
+        internetMessageId?: string;
+        /** Message subject. */
+        subject?: string;
+        /** Preview snippet of the message body. */
+        bodyPreview?: string;
+        /** Message importance. */
+        importance?: string;
+        /** Parent folder ID for the message. */
+        parentFolderId?: string;
+        /** Conversation ID for the message. */
+        conversationId?: string;
+        /** Conversation index for the message. */
+        conversationIndex?: string;
+        /** Whether delivery receipts are requested. */
+        isDeliveryReceiptRequested?: boolean;
+        /** Whether read receipts are requested. */
+        isReadReceiptRequested?: boolean;
+        /** Whether the message is marked as read. */
+        isRead?: boolean;
+        /** Whether the message is a draft. */
+        isDraft?: boolean;
+        /** Web URL for the message in Outlook. */
+        webLink?: string;
+        /** Outlook inference classification for the message. */
+        inferenceClassification?: string;
+        /** Message body. */
+        body?: {
+          /** Message body content type. */
+          contentType: string;
+          /** Message body content. */
+          content: string;
+        };
+        /** Sender of the message. */
+        sender?: {
+          /** Recipient email address. */
+          emailAddress: {
+            /** Display name for the email address. */
+            name?: string;
+            /** Email address value. */
+            address: string;
+          };
+        };
+        /** Mailbox owner and sender of the message. */
+        from?: {
+          /** Recipient email address. */
+          emailAddress: {
+            /** Display name for the email address. */
+            name?: string;
+            /** Email address value. */
+            address: string;
+          };
+        };
+        /** Primary recipients. */
+        toRecipients?: Array<{
+          /** Recipient email address. */
+          emailAddress: {
+            /** Display name for the email address. */
+            name?: string;
+            /** Email address value. */
+            address: string;
+          };
+        }>;
+        /** Cc recipients. */
+        ccRecipients?: Array<{
+          /** Recipient email address. */
+          emailAddress: {
+            /** Display name for the email address. */
+            name?: string;
+            /** Email address value. */
+            address: string;
+          };
+        }>;
+        /** Bcc recipients. */
+        bccRecipients?: Array<{
+          /** Recipient email address. */
+          emailAddress: {
+            /** Display name for the email address. */
+            name?: string;
+            /** Email address value. */
+            address: string;
+          };
+        }>;
+        /** Reply-to recipients. */
+        replyTo?: Array<{
+          /** Recipient email address. */
+          emailAddress: {
+            /** Display name for the email address. */
+            name?: string;
+            /** Email address value. */
+            address: string;
+          };
+        }>;
+        /** Follow-up flag details. */
+        flag?: {
+          /** Follow-up flag status. */
+          flagStatus?: string;
+          /** Follow-up start date and time. */
+          startDateTime?: {
+            /** Date and time value. */
+            dateTime: string;
+            /** Time zone identifier for the date and time value. */
+            timeZone: string;
+          };
+          /** Follow-up due date and time. */
+          dueDateTime?: {
+            /** Date and time value. */
+            dateTime: string;
+            /** Time zone identifier for the date and time value. */
+            timeZone: string;
+          };
+          /** Follow-up completion date and time. */
+          completedDateTime?: {
+            /** Date and time value. */
+            dateTime: string;
+            /** Time zone identifier for the date and time value. */
+            timeZone: string;
+          };
+          [key: string]: unknown;
+        };
+        [key: string]: unknown;
+      };
+    };
     /** Reply to an existing Outlook message with either a comment or a replacement body, and optionally add more recipients to the reply. */
     "outlook.reply_email": {
       input: {
@@ -785,6 +1106,159 @@ declare module "@oomol-lab/connector" {
       output: {
         /** Whether the Outlook operation completed successfully. */
         success: true;
+      };
+    };
+    /** Mark an Outlook message as read or unread. */
+    "outlook.set_message_read": {
+      input: {
+        /**
+         * Outlook message ID.
+         * @minLength 1
+         */
+        messageId: string;
+        /** True to mark as read; false to mark as unread. */
+        isRead: boolean;
+      };
+      output: {
+        /** Entity tag for the message. */
+        "@odata.etag"?: string;
+        /** Message ID. */
+        id: string;
+        /** Timestamp when the message was created. */
+        createdDateTime?: string;
+        /** Timestamp when the message was last modified. */
+        lastModifiedDateTime?: string;
+        /** Change key for the message. */
+        changeKey?: string;
+        /** Categories applied to the message. */
+        categories?: Array<string>;
+        /** Timestamp when the message was received. */
+        receivedDateTime?: string;
+        /** Timestamp when the message was sent. */
+        sentDateTime?: string;
+        /** Whether the message has attachments. */
+        hasAttachments?: boolean;
+        /** Internet message identifier for the message. */
+        internetMessageId?: string;
+        /** Message subject. */
+        subject?: string;
+        /** Preview snippet of the message body. */
+        bodyPreview?: string;
+        /** Message importance. */
+        importance?: string;
+        /** Parent folder ID for the message. */
+        parentFolderId?: string;
+        /** Conversation ID for the message. */
+        conversationId?: string;
+        /** Conversation index for the message. */
+        conversationIndex?: string;
+        /** Whether delivery receipts are requested. */
+        isDeliveryReceiptRequested?: boolean;
+        /** Whether read receipts are requested. */
+        isReadReceiptRequested?: boolean;
+        /** Whether the message is marked as read. */
+        isRead?: boolean;
+        /** Whether the message is a draft. */
+        isDraft?: boolean;
+        /** Web URL for the message in Outlook. */
+        webLink?: string;
+        /** Outlook inference classification for the message. */
+        inferenceClassification?: string;
+        /** Message body. */
+        body?: {
+          /** Message body content type. */
+          contentType: string;
+          /** Message body content. */
+          content: string;
+        };
+        /** Sender of the message. */
+        sender?: {
+          /** Recipient email address. */
+          emailAddress: {
+            /** Display name for the email address. */
+            name?: string;
+            /** Email address value. */
+            address: string;
+          };
+        };
+        /** Mailbox owner and sender of the message. */
+        from?: {
+          /** Recipient email address. */
+          emailAddress: {
+            /** Display name for the email address. */
+            name?: string;
+            /** Email address value. */
+            address: string;
+          };
+        };
+        /** Primary recipients. */
+        toRecipients?: Array<{
+          /** Recipient email address. */
+          emailAddress: {
+            /** Display name for the email address. */
+            name?: string;
+            /** Email address value. */
+            address: string;
+          };
+        }>;
+        /** Cc recipients. */
+        ccRecipients?: Array<{
+          /** Recipient email address. */
+          emailAddress: {
+            /** Display name for the email address. */
+            name?: string;
+            /** Email address value. */
+            address: string;
+          };
+        }>;
+        /** Bcc recipients. */
+        bccRecipients?: Array<{
+          /** Recipient email address. */
+          emailAddress: {
+            /** Display name for the email address. */
+            name?: string;
+            /** Email address value. */
+            address: string;
+          };
+        }>;
+        /** Reply-to recipients. */
+        replyTo?: Array<{
+          /** Recipient email address. */
+          emailAddress: {
+            /** Display name for the email address. */
+            name?: string;
+            /** Email address value. */
+            address: string;
+          };
+        }>;
+        /** Follow-up flag details. */
+        flag?: {
+          /** Follow-up flag status. */
+          flagStatus?: string;
+          /** Follow-up start date and time. */
+          startDateTime?: {
+            /** Date and time value. */
+            dateTime: string;
+            /** Time zone identifier for the date and time value. */
+            timeZone: string;
+          };
+          /** Follow-up due date and time. */
+          dueDateTime?: {
+            /** Date and time value. */
+            dateTime: string;
+            /** Time zone identifier for the date and time value. */
+            timeZone: string;
+          };
+          /** Follow-up completion date and time. */
+          completedDateTime?: {
+            /** Date and time value. */
+            dateTime: string;
+            /** Time zone identifier for the date and time value. */
+            timeZone: string;
+          };
+          [key: string]: unknown;
+        };
+        [key: string]: unknown;
       };
     };
     /** Update an existing Outlook draft message. Use this to revise the subject, body, recipients, or other draft-only properties before sending. */

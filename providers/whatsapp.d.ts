@@ -139,6 +139,57 @@ declare module "@oomol-lab/connector" {
         messaging_product?: string;
       };
     };
+    /** Get sent and delivered message counts for a WhatsApp Business Account over a time window. */
+    "whatsapp.get_message_analytics": {
+      input: {
+        /**
+         * WhatsApp Business Account ID. Omit to use the default credential WABA ID.
+         * @minLength 1
+         */
+        waba_id?: string;
+        /**
+         * Start of the reporting window as a UNIX timestamp in seconds. Defaults to 30 days before end.
+         * @minimum 0
+         */
+        start?: number;
+        /**
+         * End of the reporting window as a UNIX timestamp in seconds. Defaults to now.
+         * @minimum 0
+         */
+        end?: number;
+        /**
+         * Width of each data point.
+         * @default "DAY"
+         */
+        granularity?: "HALF_HOUR" | "DAY" | "MONTH";
+        /** Business phone numbers to include, in international format without the plus sign. Omit to include every number in the WABA. */
+        phone_numbers?: Array<string>;
+        /** Message types to include: 0 for template messages sent to users, 2 for non-template messages sent to users, 100 for messages received from users. Omit to include all. */
+        product_types?: Array<number>;
+        /** Two-letter country codes to include. Omit to include every country. */
+        country_codes?: Array<string>;
+      };
+      output: {
+        /** Width of each data point as returned by Meta. */
+        granularity: string;
+        /** Business phone numbers the data covers. */
+        phone_numbers?: Array<string>;
+        /** Two-letter country codes the data covers. */
+        country_codes?: Array<string>;
+        /** One entry per window. */
+        data_points: Array<{
+          /** Start of the data point window as a UNIX timestamp in seconds. */
+          start?: number;
+          /** End of the data point window as a UNIX timestamp in seconds. */
+          end?: number;
+          /** Messages sent in the window. */
+          sent?: number;
+          /** Messages delivered in the window. */
+          delivered?: number;
+          [key: string]: unknown;
+        }>;
+      };
+    };
     /** List message templates for a WhatsApp Business Account. */
     "whatsapp.get_message_templates": {
       input: {
@@ -235,6 +286,8 @@ declare module "@oomol-lab/connector" {
           previous?: string;
           /** URL for the next page, when provided. */
           next?: string;
+          /** Whether Meta returned a next-page URL; false on the final page even if an after cursor remains. */
+          hasMore: boolean;
         };
       };
     };
@@ -288,6 +341,8 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         waba_id?: string;
+        /** Pagination cursor returned by a previous response. */
+        after?: string;
         /**
          * Maximum number of phone numbers to return.
          * @minimum 1
@@ -337,6 +392,154 @@ declare module "@oomol-lab/connector" {
           previous?: string;
           /** URL for the next page, when provided. */
           next?: string;
+          /** Whether Meta returned a next-page URL; false on the final page even if an after cursor remains. */
+          hasMore: boolean;
+        };
+      };
+    };
+    /** Get per-message volume and cost for a WhatsApp Business Account over a time window, optionally broken down by phone number, country, pricing category, pricing type, or tier. */
+    "whatsapp.get_pricing_analytics": {
+      input: {
+        /**
+         * WhatsApp Business Account ID. Omit to use the default credential WABA ID.
+         * @minLength 1
+         */
+        waba_id?: string;
+        /**
+         * Start of the reporting window as a UNIX timestamp in seconds. Defaults to 30 days before end.
+         * @minimum 0
+         */
+        start?: number;
+        /**
+         * End of the reporting window as a UNIX timestamp in seconds. Defaults to now.
+         * @minimum 0
+         */
+        end?: number;
+        /**
+         * Width of each data point.
+         * @default "DAILY"
+         */
+        granularity?: "HALF_HOUR" | "DAILY" | "MONTHLY";
+        /** Business phone numbers to include, in international format without the plus sign. Omit to include every number in the WABA. */
+        phone_numbers?: Array<string>;
+        /** Two-letter country codes to include. Omit to include every country. */
+        country_codes?: Array<string>;
+        /** Metrics to return. Omit for both. COST is withheld for WABAs billed through a Solution Partner's credit line. */
+        metric_types?: Array<"COST" | "VOLUME">;
+        /** Pricing types to include. Omit for all. */
+        pricing_types?: Array<"FREE_CUSTOMER_SERVICE" | "FREE_ENTRY_POINT" | "REGULAR">;
+        /** Pricing categories to include. Omit for all. */
+        pricing_categories?: Array<"AUTHENTICATION" | "AUTHENTICATION_INTERNATIONAL" | "MARKETING" | "MARKETING_LITE" | "SERVICE" | "UTILITY" | "REFERRAL_CONVERSION">;
+        /** Dimensions to break each data point down by. Omit for totals per window. */
+        dimensions?: Array<"COUNTRY" | "PHONE" | "PRICING_CATEGORY" | "PRICING_TYPE" | "TIER">;
+      };
+      output: {
+        /** One entry per window and dimension combination. */
+        data_points: Array<{
+          /** Start of the data point window as a UNIX timestamp in seconds. */
+          start?: number;
+          /** End of the data point window as a UNIX timestamp in seconds. */
+          end?: number;
+          /** Number of delivered messages the row covers. */
+          volume?: number;
+          /** Cost of the row in the WABA's billing currency. Omitted when COST is not requested or not available. */
+          cost?: number;
+          /** Business phone number, present when PHONE is a requested dimension. */
+          phone_number?: string;
+          /** Two-letter country code, present when COUNTRY is a requested dimension. */
+          country?: string;
+          /** Pricing category, present when PRICING_CATEGORY is a requested dimension. */
+          pricing_category?: string;
+          /** Pricing type, present when PRICING_TYPE is a requested dimension. */
+          pricing_type?: string;
+          /** Volume tier, present when TIER is a requested dimension. */
+          tier?: string;
+          [key: string]: unknown;
+        }>;
+      };
+    };
+    /** Get daily sent, delivered, read, click, and cost metrics for up to ten message templates. Template analytics must be enabled on the WABA first, and Meta keeps 90 days of history. */
+    "whatsapp.get_template_analytics": {
+      input: {
+        /**
+         * WhatsApp Business Account ID. Omit to use the default credential WABA ID.
+         * @minLength 1
+         */
+        waba_id?: string;
+        /**
+         * Meta template IDs to report on.
+         * @minItems 1
+         * @maxItems 10
+         */
+        template_ids: Array<string>;
+        /** Start of the reporting window. Defaults to 30 days before end. Meta keeps 90 days of history. */
+        start?: number | string;
+        /** End of the reporting window. Defaults to today. */
+        end?: number | string;
+        /** Metrics to return. Omit for all. Conversion metrics such as APP_PURCHASES exist for Marketing Messages API businesses only. */
+        metric_types?: Array<string>;
+        /** Which product's template sends to report on. Omit for Cloud API. */
+        product_type?: "CLOUD_API" | "MARKETING_MESSAGES_API_FOR_WHATSAPP";
+        /**
+         * Whether daily windows follow the WABA's configured timezone instead of UTC. Timestamps passed as start or end are converted to YYYY-MM-DD, which Meta requires in this mode.
+         * @default false
+         */
+        use_waba_timezone?: boolean;
+        /** Pagination cursor returned by a previous response. */
+        after?: string;
+      };
+      output: {
+        /** Timezone the windows are expressed in, present when use_waba_timezone is true. */
+        waba_timezone?: string;
+        /** One entry per template and day. */
+        data_points: Array<{
+          /** Meta template ID. */
+          template_id?: string;
+          /** Start of the data point window as a UNIX timestamp in seconds. */
+          start?: number;
+          /** End of the data point window as a UNIX timestamp in seconds. */
+          end?: number;
+          /** Template messages sent on the day. */
+          sent?: number;
+          /** Template messages delivered on the day. */
+          delivered?: number;
+          /** Template messages read on the day. */
+          read?: number;
+          /** Button clicks on the day, one entry per button. Only reported for MARKETING and UTILITY templates. */
+          clicked?: Array<{
+            /** Button type, such as quick_reply_button or unique_url_button. */
+            type?: string;
+            /** Button label as shown to the user. */
+            button_content?: string;
+            /** Number of clicks. */
+            count?: number;
+            [key: string]: unknown;
+          }>;
+          /** Cost metrics on the day, present when COST is requested. */
+          cost?: Array<{
+            /** Cost metric type, such as amount_spent or cost_per_delivered. */
+            type?: string;
+            /** Metric value in the WABA's billing currency. */
+            value?: number;
+            [key: string]: unknown;
+          }>;
+          [key: string]: unknown;
+        }>;
+        /** Schema for pagingInfoSchema. */
+        paging?: {
+          /** Cursor values returned by Meta. */
+          cursors?: {
+            /** Cursor for the previous page. */
+            before?: string;
+            /** Cursor for the next page. */
+            after?: string;
+          };
+          /** URL for the previous page, when provided. */
+          previous?: string;
+          /** URL for the next page, when provided. */
+          next?: string;
+          /** Whether Meta returned a next-page URL; false on the final page even if an after cursor remains. */
+          hasMore: boolean;
         };
       };
     };
