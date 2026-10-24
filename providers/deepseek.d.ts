@@ -316,6 +316,25 @@ declare module "@oomol-lab/connector" {
         system_fingerprint?: string;
       };
     };
+    /** Fetch a webpage with DeepSeek and return its title and Markdown content. */
+    "deepseek.fetch": {
+      input: {
+        /**
+         * HTTP or HTTPS webpage URL with a host and no username or password, up to 8192 characters.
+         * @minLength 1
+         * @maxLength 8192
+         * @format uri
+         */
+        url: string;
+      };
+      output: {
+        /** Page title, or an empty string when unavailable. */
+        title?: string;
+        /** Extracted webpage body in Markdown format. */
+        content?: string;
+        [key: string]: unknown;
+      };
+    };
     /** Get the current DeepSeek account balance. */
     "deepseek.get_user_balance": {
       input: Record<string, never>;
@@ -350,6 +369,61 @@ declare module "@oomol-lab/connector" {
           /** The owner of the model. */
           owned_by: string;
         }>;
+      };
+    };
+    /** Search webpages with DeepSeek and return ranked results, summaries and optional body text. */
+    "deepseek.search": {
+      input: {
+        /**
+         * Search query, 1–128 Unicode characters, not blank. Supports site:, -site:, quoted phrases, exclusions, lang:, after: and before: operators.
+         * @minLength 1
+         * @maxLength 128
+         * @pattern \S
+         */
+        query: string;
+        /**
+         * Maximum number of results. Defaults to 10.
+         * @minimum 1
+         * @maximum 50
+         */
+        count?: number;
+        /**
+         * Original user question to clarify search intent. Null means omitted.
+         * @minLength 1
+         * @maxLength 128
+         */
+        ori_question?: string | null;
+        /** IP address used to prioritize local results. Defaults to an empty string. */
+        localization?: string;
+        /** Include webpage body text in results. Defaults to false. */
+        need_content?: boolean;
+      };
+      output: {
+        /** Matching webpages, or an empty array when no results match. */
+        results?: Array<{
+          /** Ranking score from 0 to 3; scores of at least 1.5 indicate high-quality results. */
+          rerank_score?: number;
+          /** Webpage title. */
+          title?: string;
+          /** Webpage URL. */
+          url?: string;
+          /** Short query-relevant excerpt for display. */
+          snippet?: string;
+          /** Long query-relevant summary for model context. */
+          summary?: string;
+          /** Webpage body text; empty when not requested or unavailable. */
+          content?: string;
+          /** Site name, or null when unavailable. */
+          site_name?: string | null;
+          /** Site icon URL, or null when unavailable. */
+          site_icon?: string | null;
+          /** Publication time in UTC RFC 3339 format, or null when unknown. */
+          date?: string | null;
+          /** Authority score from 0 to 4; -1 means unknown and at least 3 means highly authoritative. */
+          authority?: number;
+          [key: string]: unknown;
+        }>;
+        [key: string]: unknown;
       };
     };
   }

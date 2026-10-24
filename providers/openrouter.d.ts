@@ -498,6 +498,11 @@ declare module "@oomol-lab/connector" {
     /** List the available OpenRouter models, or return the RSS feed when requested. */
     "openrouter.list_available_models": {
       input: {
+        /**
+         * Include legacy MiniMax text models in discovery; current and unknown models remain visible by default.
+         * @default false
+         */
+        includeLegacyMinimax?: boolean;
         /** Filter the model list by use case classification. */
         category?: string;
         /** Filter the model list by supported parameter names. Multiple parameters can be separated by commas. */
@@ -824,6 +829,11 @@ declare module "@oomol-lab/connector" {
     /** List models filtered by the current user's OpenRouter routing preferences, privacy settings, and guardrails. */
     "openrouter.list_user_models": {
       input: {
+        /**
+         * Include legacy MiniMax text models in discovery; current and unknown models remain visible by default.
+         * @default false
+         */
+        includeLegacyMinimax?: boolean;
         /** The application URL sent in the HTTP-Referer header for OpenRouter attribution and analytics. */
         httpReferer?: string;
         /** The application display name sent in the X-Title header for OpenRouter console display. */

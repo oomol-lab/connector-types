@@ -1330,8 +1330,8 @@ declare module "@oomol-lab/connector" {
         startCursor?: string;
         /** The property names to include in results. */
         filterProperties?: Array<string>;
-        /** Whether only trashed pages or data sources should be included. */
-        in_trash?: boolean;
+        /** Set to true to query archived pages; false or omitted queries non-archived pages. */
+        is_archived?: boolean;
         /** The result object type to return. */
         result_type?: "page" | "data_source";
       };

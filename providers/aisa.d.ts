@@ -2,6 +2,129 @@ import "@oomol-lab/connector";
 
 declare module "@oomol-lab/connector" {
   interface ActionRegistry {
+    /** Answer a question using Exa web retrieval with source citations and optional structured output. */
+    "aisa.answer_exa": {
+      input: {
+        /**
+         * The question to answer.
+         * @minLength 1
+         */
+        query: string;
+        /** Retrieval mode; deep modes may take longer to complete. */
+        type?: "auto" | "fast" | "instant" | "deep-lite" | "deep" | "deep-reasoning";
+        /** Streaming is not supported by this JSON action; must be false. */
+        stream?: false;
+        /** Return the full page text; defaults to true for get_exa_contents. */
+        text?: boolean;
+        /** JSON Schema for a structured output. */
+        outputSchema?: Record<string, unknown>;
+      };
+      output: {
+        /** The Exa request identifier. */
+        requestId?: string;
+        /** Informational Exa cost; not the AIsa customer charge. */
+        costDollars?: unknown;
+        /** The answer as text or structured output. */
+        answer?: unknown;
+        /** Sources supporting the answer. */
+        citations?: Array<{
+          /** The Exa result identifier, normally the page URL. */
+          id?: string;
+          /** The page URL. */
+          url?: string;
+          /** The page title. */
+          title?: string;
+          /** The page author. */
+          author?: string;
+          /** The publication date reported by the source. */
+          publishedDate?: string;
+          /** The retrieved page text. */
+          text?: string;
+          /** Relevant snippets from the page. */
+          highlights?: Array<string>;
+          /** The generated page summary. */
+          summary?: string;
+          [key: string]: unknown;
+        }>;
+        [key: string]: unknown;
+      };
+    };
+    /** Request cancellation of a Firecrawl task. Work already performed may still be charged; poll the task for final state and pricing. */
+    "aisa.cancel_firecrawl_batch_scrape": {
+      input: {
+        /**
+         * Task ID returned by submission; use it with the same connection or Marketplace account.
+         * @minLength 1
+         */
+        taskId: string;
+      };
+      output: {
+        /**
+         * Task ID returned by submission; use it with the same connection or Marketplace account.
+         * @minLength 1
+         */
+        taskId?: string;
+        /** Job state: queued, running, completed, failed or cancelled. */
+        status?: string;
+        /** Upstream crawl or batch scrape output; may be unavailable before completion or after expiry. */
+        output?: unknown;
+        /** Whether the upstream output has expired. */
+        outputExpired?: boolean | null;
+        /** Upstream job error details. */
+        error?: Record<string, unknown> | null;
+        /** AIsa pricing information, in micro-USD. */
+        pricing?: {
+          /** Initially authorized amount; not the final charge. */
+          authorizedMicrosUSD?: number | null;
+          /** Final customer charge; null means unknown, zero means no charge. */
+          finalMicrosUSD?: number | null;
+          /** Pricing currency. */
+          currency?: string | null;
+          /** AIsa billing mode. */
+          billingMode?: string | null;
+          [key: string]: unknown;
+        } | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Request cancellation of a Firecrawl task. Work already performed may still be charged; poll the task for final state and pricing. */
+    "aisa.cancel_firecrawl_crawl": {
+      input: {
+        /**
+         * Task ID returned by submission; use it with the same connection or Marketplace account.
+         * @minLength 1
+         */
+        taskId: string;
+      };
+      output: {
+        /**
+         * Task ID returned by submission; use it with the same connection or Marketplace account.
+         * @minLength 1
+         */
+        taskId?: string;
+        /** Job state: queued, running, completed, failed or cancelled. */
+        status?: string;
+        /** Upstream crawl or batch scrape output; may be unavailable before completion or after expiry. */
+        output?: unknown;
+        /** Whether the upstream output has expired. */
+        outputExpired?: boolean | null;
+        /** Upstream job error details. */
+        error?: Record<string, unknown> | null;
+        /** AIsa pricing information, in micro-USD. */
+        pricing?: {
+          /** Initially authorized amount; not the final charge. */
+          authorizedMicrosUSD?: number | null;
+          /** Final customer charge; null means unknown, zero means no charge. */
+          finalMicrosUSD?: number | null;
+          /** Pricing currency. */
+          currency?: string | null;
+          /** AIsa billing mode. */
+          billingMode?: string | null;
+          [key: string]: unknown;
+        } | null;
+        [key: string]: unknown;
+      };
+    };
     /** Compare organic or paid keyword portfolios across domains. */
     "aisa.compare_semrush_domains": {
       input: {
@@ -17,6 +140,116 @@ declare module "@oomol-lab/connector" {
         columns: Array<string>;
         /** The report rows in response order. */
         rows: Array<Array<string>>;
+      };
+    };
+    /** Synchronously crawl a website through Tavily and return page content. Set limit, depth and breadth to bound the crawl; this does not create a background job. */
+    "aisa.crawl_tavily": {
+      input: {
+        /**
+         * The root website URL or domain.
+         * @minLength 1
+         */
+        url: string;
+        /**
+         * Maximum pages to retrieve.
+         * @minimum 1
+         */
+        limit: number;
+        /**
+         * Maximum crawl depth.
+         * @minimum 1
+         * @maximum 5
+         */
+        maxDepth?: number;
+        /**
+         * Maximum links to follow at each level.
+         * @minimum 1
+         * @maximum 500
+         */
+        maxBreadth?: number;
+        /** Natural-language instructions guiding the crawl. */
+        instructions?: string;
+        /** Path patterns to include. */
+        selectPaths?: Array<string>;
+        /** Path patterns to exclude. */
+        excludePaths?: Array<string>;
+        /** Domain patterns to include. */
+        selectDomains?: Array<string>;
+        /** Domain patterns to exclude. */
+        excludeDomains?: Array<string>;
+        /** Include external-domain links in the results. */
+        allowExternal?: boolean;
+        /**
+         * Maximum relevant chunks per source when an intent is provided.
+         * @minimum 1
+         * @maximum 5
+         */
+        chunksPerSource?: number;
+        /** Extraction depth; advanced may take longer and cost more. */
+        extractDepth?: "basic" | "advanced";
+        /** The extracted content format. */
+        format?: "markdown" | "text";
+        /** Include the page favicon URL. */
+        includeFavicon?: boolean;
+        /** Include extracted image URLs. */
+        includeImages?: boolean;
+        /** Include upstream credit usage; this is not the AIsa customer charge. */
+        includeUsage?: boolean;
+        /**
+         * Maximum upstream wait in seconds; defaults to 150.
+         * @minimum 10
+         * @maximum 150
+         */
+        timeout?: number;
+      };
+      output: {
+        /** The Tavily request identifier. */
+        request_id?: string;
+        /** The upstream execution time in seconds. */
+        response_time?: number;
+        /** Successfully retrieved pages. */
+        results?: Array<{
+          /** The page URL. */
+          url?: string;
+          /** The page title. */
+          title?: string;
+          /** The extracted page content. */
+          raw_content?: string;
+          /** Extracted image URLs. */
+          images?: Array<string>;
+          /** The page favicon URL. */
+          favicon?: string | null;
+          [key: string]: unknown;
+        }>;
+        /** Upstream credit usage; not the AIsa customer charge. */
+        usage?: {
+          /** Upstream credits consumed. */
+          credits?: number;
+          [key: string]: unknown;
+        };
+        /** The crawled website base URL. */
+        base_url?: string;
+        [key: string]: unknown;
+      };
+    };
+    /** Retrieve Akta company profile sections, including firmographics, management, products, and financial estimates. */
+    "aisa.enrich_akta_company": {
+      input: {
+        /** The company identifier accepted by Akta. */
+        company?: string;
+        /** The Akta enrichment section selection, passed unchanged to the upstream query parameter. */
+        sections?: string;
+      };
+      output: {
+        /** The upstream result status. */
+        status?: string;
+        /** The number of returned sections. */
+        count?: number;
+        /** The Akta credits consumed. */
+        credits_consumed?: number;
+        /** Company data keyed by enrichment section. */
+        data?: Record<string, unknown>;
+        [key: string]: unknown;
       };
     };
     /** Enrich one organization from its domain using Apollo's global database. */
@@ -55,6 +288,70 @@ declare module "@oomol-lab/connector" {
     "aisa.enrich_apollo_person": {
       input: Record<string, unknown>;
       output: Record<string, unknown>;
+    };
+    /** Extract content from known URLs through Tavily. Inspect failed_results for per-URL failures; use crawl_tavily to discover and retrieve pages from a website. */
+    "aisa.extract_tavily": {
+      input: {
+        /**
+         * The URLs to retrieve.
+         * @minItems 1
+         * @maxItems 20
+         */
+        urls: Array<string>;
+        /** User intent used to rank extracted content chunks. */
+        query?: string;
+        /**
+         * Maximum relevant chunks per source when an intent is provided.
+         * @minimum 1
+         * @maximum 5
+         */
+        chunksPerSource?: number;
+        /** Extraction depth; advanced may take longer and cost more. */
+        extractDepth?: "basic" | "advanced";
+        /** The extracted content format. */
+        format?: "markdown" | "text";
+        /** Include the page favicon URL. */
+        includeFavicon?: boolean;
+        /** Include extracted image URLs. */
+        includeImages?: boolean;
+        /** Include upstream credit usage; this is not the AIsa customer charge. */
+        includeUsage?: boolean;
+        /**
+         * Maximum upstream wait in seconds; default depends on extraction depth.
+         * @minimum 1
+         * @maximum 60
+         */
+        timeout?: number;
+      };
+      output: {
+        /** The Tavily request identifier. */
+        request_id?: string;
+        /** The upstream execution time in seconds. */
+        response_time?: number;
+        /** Successfully retrieved pages. */
+        results?: Array<{
+          /** The page URL. */
+          url?: string;
+          /** The page title. */
+          title?: string;
+          /** The extracted page content. */
+          raw_content?: string;
+          /** Extracted image URLs. */
+          images?: Array<string>;
+          /** The page favicon URL. */
+          favicon?: string | null;
+          [key: string]: unknown;
+        }>;
+        /** Upstream credit usage; not the AIsa customer charge. */
+        usage?: {
+          /** Upstream credits consumed. */
+          credits?: number;
+          [key: string]: unknown;
+        };
+        /** URLs that could not be processed, with upstream error details when available. */
+        failed_results?: Array<unknown>;
+        [key: string]: unknown;
+      };
     };
     /** Find candidate advertising brands associated with a domain. */
     "aisa.find_foreplay_brands": {
@@ -134,6 +431,64 @@ declare module "@oomol-lab/connector" {
       output: {
         /** The creator matches or contact result returned by WaveInflu. */
         data?: unknown;
+        [key: string]: unknown;
+      };
+    };
+    /** Get Ahrefs Domain Rating and Ahrefs Rank for a domain on a specified date. */
+    "aisa.get_ahrefs_domain_rating": {
+      input: {
+        /**
+         * The target domain, for example ahrefs.com.
+         * @minLength 1
+         */
+        target: string;
+        /**
+         * The snapshot date in YYYY-MM-DD format.
+         * @format date
+         */
+        date: string;
+      };
+      output: {
+        /** The domain authority measurements. */
+        domain_rating?: {
+          /** The global Ahrefs Rank. */
+          ahrefs_rank?: number;
+          /** The Ahrefs Domain Rating from 0 to 100. */
+          domain_rating?: number;
+          [key: string]: unknown;
+        };
+        [key: string]: unknown;
+      };
+    };
+    /** Get Ahrefs organic and paid keyword counts, traffic, and traffic value for a domain. */
+    "aisa.get_ahrefs_site_metrics": {
+      input: {
+        /**
+         * The target domain, for example ahrefs.com.
+         * @minLength 1
+         */
+        target: string;
+        /**
+         * The snapshot date in YYYY-MM-DD format.
+         * @format date
+         */
+        date: string;
+      };
+      output: {
+        /** The site's keyword and traffic metrics. */
+        metrics?: {
+          /** The estimated organic traffic value. */
+          org_cost?: number;
+          /** The organic keyword count. */
+          org_keywords?: number;
+          /** The number of organic keywords ranking in the top three. */
+          org_keywords_1_3?: number;
+          /** The estimated monthly organic traffic. */
+          org_traffic?: number;
+          /** The paid keyword count. */
+          paid_keywords?: number;
+          [key: string]: unknown;
+        };
         [key: string]: unknown;
       };
     };
@@ -310,10 +665,2059 @@ declare module "@oomol-lab/connector" {
       };
       output: Record<string, unknown>;
     };
+    /** Get Gemini search answers through DataForSEO. */
+    "aisa.get_dataforseo_ai_gemini_search": {
+      input: ({
+        locationCode: unknown;
+        [key: string]: unknown;
+      } | {
+        locationName: unknown;
+        [key: string]: unknown;
+      } | {
+        locationCoordinate: unknown;
+        [key: string]: unknown;
+      }) & ({
+        languageCode: unknown;
+        [key: string]: unknown;
+      } | {
+        languageName: unknown;
+        [key: string]: unknown;
+      });
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
     /** Get AI-search volume estimates for up to 1,000 keywords. */
     "aisa.get_dataforseo_ai_keyword_volume": {
       input: (Record<string, unknown>) & (Record<string, unknown>);
       output: Record<string, unknown>;
+    };
+    /** Get AI mentioned brands through DataForSEO. */
+    "aisa.get_dataforseo_ai_mentions_top_brands": {
+      input: {
+        /**
+         * array of brands to exclude from the response
+         * optional field
+         * if specified, the listed brands will be omitted from the items array
+         * example:
+         * "exclude_brands": ["Audi"]
+         */
+        excludeBrands?: Array<string> | null;
+        /**
+         * array of results filtering parameters
+         * optional field
+         * you can add several filters at once (8 filters maximum)
+         * you should set a logical operator and, or between the conditions
+         * the following operators are supported:
+         * =, <>, in, not_in, like, not_like, ilike, not_ilike, match, not_match
+         * you can use the % operator with like and not_like to match any string of zero or more characters
+         * example:
+         * ["ai_search_volume",">",1000]
+         * The full list of possible filters is available here.
+         */
+        filters?: Array<string | number | boolean | Record<string, unknown> | null | Array<unknown>> | null;
+        /**
+         * array of brands to include in the response
+         * optional field
+         * if specified, only the listed brands will be returned in the items array
+         * example:
+         * "include_brands": ["Audi"]
+         */
+        includeBrands?: Array<string> | null;
+        /**
+         * array of filter expressions applied before aggregation
+         * optional field
+         * you can use this array to filter expressions applied to the raw mentions database before aggregation to limit the rows contributing to the result;
+         * you can add several filters at once (8 filters maximum)
+         * you should set a logical operator and, or between the conditions
+         * the following operators are supported:
+         * =, <>, in, not_in, like, not_like, ilike, not_ilike, match, not_match
+         * you can use the % operator with like and not_like to match any string of zero or more characters
+         * example:
+         * ["ai_search_volume",">",1000]
+         * the full list of possible filters is available here.
+         * learn more about the initial dataset filters in this help center article.
+         */
+        initialDatasetFilters?: Array<string | number | boolean | Record<string, unknown> | null | Array<unknown>> | null;
+        /**
+         * maximum number of elements within internal arrays
+         * optional field
+         * you can use this field to limit the number of elements within the following arrays:
+         * sources_domain, search_results_domain, brand_entities_title, brand_entities_category
+         * minimum value: 1
+         * maximum value: 10
+         * default value: 5
+         */
+        internalListLimit?: number | null;
+        /**
+         * search language code
+         * optional field
+         * if you use this field, you don't need to specify language_name;
+         * you can receive the list of available languages of the search engine with their language_code by making a separate request to the https://api.dataforseo.com/v3/ai_optimization/llm_mentions/locations_and_languages
+         * default value: en
+         * Note: chat_gpt data is available for en only
+         */
+        languageCode?: string | null;
+        /**
+         * full name of search language
+         * optional field
+         * if you use this field, you don't need to specify language_code;
+         * if you don't specify this field, the language_code with en value will be used by default;
+         * you can receive the list of available languages of the search engine with their language_name by making a separate request to the https://api.dataforseo.com/v3/ai_optimization/llm_mentions/locations_and_languages
+         * Note: chat_gpt data is available for English only
+         */
+        languageName?: string | null;
+        /**
+         * maximum number of results in the items array
+         * optional field
+         * you can use this parameter to limit the number of data objects you receive in the items array
+         * minimum value: 1
+         * maximum value: 1000
+         * default value: 100
+         */
+        limit?: number | null;
+        /**
+         * search location code
+         * optional field
+         * if you use this field, you don't need to specify location_name
+         * you can receive the list of available locations of the search engine with their location_code by making a separate request to the https://api.dataforseo.com/v3/ai_optimization/llm_mentions/locations_and_languages
+         * default value: 2840
+         * Note: chat_gpt data is available for 2840 only
+         */
+        locationCode?: number | null;
+        /**
+         * full name of search location
+         * optional field
+         * if you use this field, you don't need to specify location_code
+         * if you don't specify this field, the location_code with 2840 value will be used by default;
+         * you can receive the list of available locations of the search engine with their location_name by making a separate request to the https://api.dataforseo.com/v3/ai_optimization/llm_mentions/locations_and_languages
+         * Note: chat_gpt data is available for United States only
+         */
+        locationName?: string | null;
+        /**
+         * offset in the results array of the returned mentions data
+         * optional field
+         * default value: 0
+         * example: if you specify the 10 value, the first ten mentions objects in the results array will be omitted and the data will be provided for the successive objects;
+         * Note: the maximum value is 1000000
+         */
+        offset?: number | null;
+        /**
+         * results sorting rules
+         * optional field
+         * you can use the same values as in the filters array to sort the results
+         * possible sorting types:
+         * asc - results will be sorted in the ascending order
+         * desc - results will be sorted in the descending order
+         * you should use a comma to set up a sorting type
+         * example:
+         * ["ai_search_volume,desc"]
+         * Note: you can set no more than three sorting rules in a single request
+         * you should use a comma to separate several sorting rules
+         */
+        orderBy?: Array<string> | null;
+        /**
+         * target platform
+         * optional field
+         * possible values:
+         * chat_gpt, google
+         * Note: data specific to brand entities is available for chat_gpt only;
+         * Note #2:chat_gpt data is available for the United States and English only
+         */
+        platform?: string | null;
+        /**
+         * user-defined task identifier
+         * optional field
+         * the character limit is 255
+         * you can use this parameter to identify the task and match it with the result
+         * you will find the specified tag value in the data object of the response
+         * @maxLength 255
+         */
+        tag?: string | null;
+        /**
+         * array of objects containing target entities
+         * required field
+         * you can specify up to 10 entities (objects) in the target field
+         * one target entity can contain either one domain or one keyword and related parameters
+         * examples:
+         * target array with a domain entity
+         * @minItems 1
+         * @maxItems 10
+         */
+        target: Array<{
+          /**
+           * target domain search filter
+           * optional field
+           * possible values:
+           * include, exclude
+           * default value: include
+           */
+          search_filter?: string | null;
+          /**
+           * target domain search scope
+           * optional field
+           * possible values:
+           * any, sources, search_results
+           * default value: any
+           */
+          search_scope?: Array<string | null> | null;
+          [key: string]: unknown;
+        }>;
+      };
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get AI cited pages through DataForSEO. */
+    "aisa.get_dataforseo_ai_mentions_top_pages": {
+      input: {
+        /** array of filter expressions applied before aggregation optional field you can use this array to filter expressions applied to the raw mentions database before aggregation to limit the rows contributing to the result;you can add several filters at once (8 filters maximum) you should set a logical operator and, or between the conditions the following operators are supported: =, , in, not_in, like, not_like, ilike, not_ilike, match, not_match you can use the % operator with like and not_like to match any string of zero or more characters example: ["ai_search_volume",">","1000"]the full list of possible filters is available here. learn more about the initial dataset filters in this help center article. */
+        initialDatasetFilters?: Array<unknown>;
+        /** maximum number of elements within internal arrays optional field you can use this field to limit the number of elements within the following arrays: sources_domain search_results_domain minimum value: 1 maximum value: 10 default value: 5 */
+        internalListLimit?: number;
+        /** maximum number of results in the items array optional field you can use this parameter to limit the number of data objects you receive in the items array minimum value: 1 maximum value: 10 default value: 5 */
+        itemsListLimit?: number;
+        /** search language code optional field if you use this field, you don't need to specify language_name; you can receive the list of available languages of the search engine with their language_code_by making a separate request to the https://api.dataforseo.com/v3/ai_optimization/llm_mentions/locations_and_languages default value: en Note: chat_gpt data is available for en onlyn */
+        languageCode?: string;
+        /** full name of search language optional field if you use this field, you don't need to specify language_code; if you don't specify this field, the language_code with en value will be used by default; you can receive the list of available languages of the search engine with their language_name by making a separate request to the https://api.dataforseo.com/v3/ai_optimization/llm_mentions/locations_and_languages Note: chat_gpt data is available for English only */
+        languageName?: string;
+        /** links source scope optional field this parameter specifies which links will be used to extract pages and aggregation data possible values: sources, search_results default value: sources */
+        linksScope?: string;
+        /** search location code optional field if you use this field, you don't need to specify location_name you can receive the list of available locations of the search engine with their location_code by making a separate request to the https://api.dataforseo.com/v3/ai_optimization/llm_mentions/locations_and_languages default value: 2840 Note: chat_gpt data is available for 2840 only */
+        locationCode?: number;
+        /** full name of search location optional field if you use this field, you don't need to specify location_code if you don't specify this field, the location_code with 2840 value will be used by default; you can receive the list of available locations of the search engine with their location_name by making a separate request to the https://api.dataforseo.com/v3/ai_optimization/llm_mentions/locations_and_languages Note: chat_gpt data is available for United States only */
+        locationName?: string;
+        /** target platform optional field possible values: chat_gpt, google default value: google Note: the data returned depends on the selected platform Note #2:chat_gpt data is available for the United States and English only */
+        platform?: string;
+        /**
+         * user-defined task identifier optional field the character limit is 255 you can use this parameter to identify the task and match it with the result you will find the specified tag value in the data object of the response
+         * @maxLength 255
+         */
+        tag?: string;
+        /**
+         * array of objects containing target entities required field you can specify up to 10 entities (objects) in the target field one target entity can contain either one domain or one keyword and related parametersexamples: target array with a domain entity [{"domain": "en.wikipedia.org", "search_filter": "exclude"}] target array with a keyword entity [{"keyword": "bmw", "search_scope": ["question"], "match_type ": "partial_match"}] target array with multiple entities [{"domain": "en.wikipedia.org", "search_filter": "exclude"}, {"keyword": "bmw", "match_type ": "partial_match", "search_scope": ["answer"]}]
+         * @minItems 1
+         * @maxItems 10
+         */
+        target: Array<Record<string, unknown>>;
+      };
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get Amazon product details through DataForSEO. */
+    "aisa.get_dataforseo_amazon_asin": {
+      input: ({
+        locationCode: unknown;
+        [key: string]: unknown;
+      } | {
+        locationName: unknown;
+        [key: string]: unknown;
+      } | {
+        locationCoordinate: unknown;
+        [key: string]: unknown;
+      }) & ({
+        languageCode: unknown;
+        [key: string]: unknown;
+      } | {
+        languageName: unknown;
+        [key: string]: unknown;
+      });
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get Amazon product search results through DataForSEO. */
+    "aisa.get_dataforseo_amazon_products": {
+      input: ({
+        locationCode: unknown;
+        [key: string]: unknown;
+      } | {
+        locationName: unknown;
+        [key: string]: unknown;
+      } | {
+        locationCoordinate: unknown;
+        [key: string]: unknown;
+      } | {
+        /** @minLength 1 */
+        url: string;
+        [key: string]: unknown;
+      }) & ({
+        languageCode: unknown;
+        [key: string]: unknown;
+      } | {
+        languageName: unknown;
+        [key: string]: unknown;
+      } | {
+        /** @minLength 1 */
+        url: string;
+        [key: string]: unknown;
+      }) & (Record<string, unknown> | {
+        /** @minLength 1 */
+        url: string;
+        [key: string]: unknown;
+      });
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get Amazon product sellers through DataForSEO. */
+    "aisa.get_dataforseo_amazon_sellers": {
+      input: ({
+        locationCode: unknown;
+        [key: string]: unknown;
+      } | {
+        locationName: unknown;
+        [key: string]: unknown;
+      } | {
+        locationCoordinate: unknown;
+        [key: string]: unknown;
+      }) & ({
+        languageCode: unknown;
+        [key: string]: unknown;
+      } | {
+        languageName: unknown;
+        [key: string]: unknown;
+      });
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get App Store listings through DataForSEO. */
+    "aisa.get_dataforseo_app_store_listings": {
+      input: {
+        /**
+         * app categories
+         * optional field
+         * the categories you specify are used to search for app listings;
+         * you can get the full list of available app listing categories by this link
+         * you can specify up to 10 categories
+         */
+        categories?: Array<string> | null;
+        /**
+         * keyword in the app's description
+         * optional field
+         * keywords that occur in the description of the app;
+         * can contain up to 200 characters
+         */
+        description?: string | null;
+        /**
+         * array of results filtering parameters
+         * optional field
+         * you can add several filters at once (8 filters maximum)
+         * you should set a logical operator and, or between the conditions
+         * the following operators are supported:
+         * regex, not_regex, <, <=, >, >=, =, <>, in, not_in, like, not_like
+         * you can use the % operator with like and not_like to match any string of zero or more characters
+         * example:
+         * ["rating.value",">",3]
+         * you can receive the list of available filters_by making a separate request to https://api.dataforseo.com/v3/app_data/apple/app_listings/available_filtersn
+         */
+        filters?: Array<string | number | boolean | Record<string, unknown> | null | Array<unknown>> | null;
+        /**
+         * the maximum number of returned apps
+         * optional field
+         * default value: 100
+         * maximum value: 1000
+         */
+        limit?: number | null;
+        /**
+         * offset in the results array of returned apps
+         * optional field
+         * default value: 0
+         * if you specify the 10 value, the first ten entities in the results array will be omitted and the data will be provided for the successive entities
+         * Note: we recommend using this parameter only when retrieving up to 10,000 results
+         * for retrieving over 10,000 results, use the offset_token instead.
+         */
+        offset?: number | null;
+        /**
+         * token for subsequent requests
+         * optional field
+         * provided in the identical filed of the response to each request;
+         * use this parameter to avoid timeouts while trying to obtain over 100,000 results in a single request;
+         * by specifying the unique offset_token value from the response array, you will get the subsequent results of the initial task;
+         * offset_token values are unique for each subsequent task
+         * Note: if the offset_token is specified in the request, all other parameters should be identical to the previous request
+         * learn more about this parameter on our Help Center
+         */
+        offsetToken?: string | null;
+        /**
+         * results sorting rules
+         * optional field
+         * you can use the same values as in the filters array to sort the results
+         * possible sorting types:
+         * asc - results will be sorted in the ascending order
+         * desc - results will be sorted in the descending order
+         * you should use a comma to set up a sorting parameter
+         * example:
+         * ["item.rating.value,desc"]
+         * note that you can set no more than three sorting rules in a single request
+         * you should use a comma to separate several sorting rules
+         * example:
+         * ["item.rating.value,desc","item.rating.value,desc"]
+         */
+        orderBy?: Array<string> | null;
+        /**
+         * user-defined task identifier
+         * optional field
+         * the character limit is 255
+         * you can use this parameter to identify the task and match it with the result
+         * you will find the specified tag value in the data object of the response
+         * @maxLength 255
+         */
+        tag?: string | null;
+        /**
+         * keyword in the app's title
+         * optional field
+         * keywords that occur in the title of the app;
+         * can contain up to 200 characters
+         */
+        title?: string | null;
+      };
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get bulk backlink spam scores through DataForSEO. */
+    "aisa.get_dataforseo_backlinks_bulk_spam_score": {
+      input: {
+        /**
+         * user-defined task identifier
+         * optional field
+         * the character limit is 255
+         * you can use this parameter to identify the task and match it with the result
+         * you will find the specified tag value in the data object of the response
+         * @maxLength 255
+         */
+        tag?: string | null;
+        /**
+         * domains, subdomains or webpages to get rank for
+         * required field
+         * you can set up to 1000 domains, subdomains or webpages
+         * the domain or subdomain should be specified without https:// and www.
+         * the page should be specified with absolute URL (including http:// or https://)
+         * example:
+         * `"targets": [
+         *   "forbes.com",
+         *   "cnn.com",
+         *   "bbc.com",
+         *   "yelp.com",
+         *   "https://www.apple.com/iphone/",
+         *   "https://ahrefs.com/blog/",
+         *   "ibm.com",
+         *   "https://variety.com/",
+         *   "https://stackoverflow.com/",
+         *   "www.trustpilot.com"
+         * ]`
+         * @minItems 1
+         * @maxItems 1000
+         */
+        targets: Array<string>;
+      };
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get page backlink summaries through DataForSEO. */
+    "aisa.get_dataforseo_backlinks_domain_pages_summary": {
+      input: {
+        /**
+         * filter the backlinks of your target
+         * optional field
+         * you can use this field to filter the initial backlinks that will be included in the dataset for aggregated metrics for your target
+         * you can filter the backlinks by all fields available in the response of this endpoint
+         * using this parameter, you can include only dofollow backlinks in the response and create a flexible backlinks dataset to calculate the metrics for
+         * example:
+         * "backlinks_filters": [["dofollow", "=", true]]
+         */
+        backlinksFilters?: Array<string | number | boolean | Record<string, unknown> | null | Array<unknown>> | null;
+        /**
+         * set what backlinks to return and count
+         * optional field
+         * you can use this field to choose what backlinks will be returned and used for aggregated metrics for your target;
+         * possible values:
+         * all - all backlinks will be returned and counted;
+         * live - backlinks found during the last check will be returned and counted;
+         * lost - lost backlinks will be returned and counted;
+         * default value: live
+         */
+        backlinksStatusType?: string | null;
+        /**
+         * indicates whether the backlinks from subdomains of the target are excluded
+         * optional field
+         * if set to false, backlinks from the subdomains of the target domain will be ommited and you won't receive the same domain in the response;
+         * default value: true
+         */
+        excludeInternalBacklinks?: boolean | null;
+        /**
+         * array of results filtering parameters
+         * optional field
+         * you can add several filters at once (8 filters maximum)
+         * you should set a logical operator and, or between the conditions
+         * the following operators are supported:
+         * regex, not_regex, =, <>, in, not_in, like, not_like, ilike, not_ilike, match, not_match
+         * you can use the % operator with like and not_like to match any string of zero or more characters
+         * example:
+         * ["referring_links_types.anchors",">","1"]
+         * [["broken_pages",">","2"],
+         * "and",
+         * ["backlinks",">","10"]]
+         * [["first_seen",">","2017-10-23 11:31:45 +00:00"],
+         * "and",
+         * [["anchor","like","%seo%"],"or",["referring_domains",">","10"]]]
+         * The full list of possible filters is available here.
+         */
+        filters?: Array<string | number | boolean | Record<string, unknown> | null | Array<unknown>> | null;
+        /**
+         * indicates if indirect links to the target will be included in the results
+         * optional field
+         * if set to true, the results will include data on indirect links pointing to a page that either redirects to the target, or points to a canonical page
+         * if set to false, indirect links will be ignored
+         * default value: true
+         */
+        includeIndirectLinks?: boolean | null;
+        /**
+         * indicates if the subdomains of the target domain will be included in the search
+         * optional field
+         * if set to false, the subdomains will be ignored
+         * default value: true
+         */
+        includeSubdomains?: boolean | null;
+        /**
+         * maximum number of elements within internal arrays
+         * optional field
+         * you can use this field to limit the number of elements within the following arrays:
+         * referring_links_tld
+         * referring_links_types
+         * referring_links_attributes
+         * referring_links_platform_types
+         * referring_links_semantic_locations
+         * default value: 10
+         * maximum value: 1000
+         */
+        internalListLimit?: number | null;
+        /**
+         * the maximum number of returned anchors
+         * optional field
+         * default value: 100
+         * maximum value: 1000
+         */
+        limit?: number | null;
+        /**
+         * offset in the results array of returned anchors
+         * optional field
+         * default value: 0
+         * if you specify the 10 value, the first ten anchors in the results array will be omitted and the data will be provided for the successive anchors
+         */
+        offset?: number | null;
+        /**
+         * results sorting rules
+         * optional field
+         * you can use the same values as in the filters array to sort the results
+         * possible sorting types:
+         * asc - results will be sorted in the ascending order
+         * desc - results will be sorted in the descending order
+         * you should use a comma to set up a sorting type
+         * example:
+         * ["backlinks,desc"]
+         * note that you can set no more than three sorting rules in a single request
+         * you should use a comma to separate several sorting rules
+         * example:
+         * ["backlinks,desc","rank,asc"]
+         */
+        orderBy?: Array<string> | null;
+        /**
+         * defines the scale used for calculating and displaying the rank, domain_from_rank, and page_from_rank values
+         * optional field
+         * you can use this parameter to choose whether rank values are presented on a 0–100 or 0–1000 scale
+         * possible values:
+         * one_hundred — rank values are displayed on a 0–100 scale
+         * one_thousand — rank values are displayed on a 0–1000 scale
+         * default value: one_thousand
+         * learn more about how this parameter works and how ranking metrics are calculated in this Help Center article
+         */
+        rankScale?: string | null;
+        /**
+         * user-defined task identifier
+         * optional field
+         * the character limit is 255
+         * you can use this parameter to identify the task and match it with the result
+         * you will find the specified tag value in the data object of the response
+         * @maxLength 255
+         */
+        tag?: string | null;
+        /**
+         * domain, subdomain or webpage to get summary data for
+         * required field
+         * a domain or a subdomain should be specified without https:// and www.
+         * a page should be specified with absolute URL (including http:// or https://)
+         * @minLength 1
+         */
+        target: string;
+      };
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get referring page intersections through DataForSEO. */
+    "aisa.get_dataforseo_backlinks_page_intersection": {
+      input: {
+        /**
+         * set what backlinks to return and count
+         * optional field
+         * you can use this field to choose what backlinks will be returned and used for aggregated metrics for your targets;
+         * possible values:
+         * all - all backlinks will be returned and counted;
+         * live - backlinks found during the last check will be returned and counted;
+         * lost - lost backlinks will be returned and counted;
+         * default value: live
+         */
+        backlinksStatusType?: string | null;
+        /**
+         * indicates if internal backlinks from subdomains to the target will be excluded from the results
+         * optional field
+         * if set to true, the results will not include data on internal backlinks from subdomains of the same domain as target
+         * if set to false, internal links will be included in the result
+         * default value: true
+         */
+        excludeInternalBacklinks?: boolean | null;
+        /**
+         * domains, subdomains or webpages you want to exclude
+         * optional field
+         * you can set up to 10 domains, subdomains or webpages
+         * if you use this array, results will contain the referring pages that link to targets but don't link to exclude_targets
+         * example:
+         * `"exclude_targets": [
+         * "bbc.com",
+         * "https://www.apple.com/iphone/*",
+         * "https://dataforseo.com/apis/*"]`
+         */
+        excludeTargets?: Array<string> | null;
+        /**
+         * array of results filtering parameters
+         * optional field
+         * you can add several filters at once (8 filters maximum)
+         * you should set a logical operator and, or between the conditions
+         * the following operators are supported:
+         * regex, not_regex, =, <>, in, not_in, like, not_like, ilike, not_ilike, match, not_match
+         * you can use the % operator with like and not_like to match any string of zero or more characters
+         * example:
+         * ["1.rank",">","80"]
+         * [["2.page_from_rank",">","55"],
+         * "and",
+         * ["1.original","=","true"]]
+         * [["1.first_seen",">","2017-10-23 11:31:45 +00:00"],
+         * "and",
+         * [["1.acnhor","like","%seo%"],"or",["1.text_pre","not_like","%seo%"]]]
+         * The full list of possible filters is available here.
+         */
+        filters?: Array<string | number | boolean | Record<string, unknown> | null | Array<unknown>> | null;
+        /**
+         * indicates if indirect links to the targets will be included in the results
+         * optional field
+         * if set to true, the results will include data on indirect links pointing to a page that either redirects to a target, or points to a canonical page
+         * if set to false, indirect links will be ignored
+         * default value: true
+         */
+        includeIndirectLinks?: boolean | null;
+        /**
+         * indicates if the subdomains of the targets will be included in the search
+         * optional field
+         * if set to false, the subdomains will be ignored
+         * default value: true
+         */
+        includeSubdomains?: boolean | null;
+        /**
+         * maximum number of elements within internal arrays
+         * optional field
+         * you can use this field to limit the number of elements within the following arrays:
+         * attributes
+         * domain_from_platform_type
+         * default value: 10
+         * maximum value: 1000
+         */
+        internalListLimit?: number | null;
+        /**
+         * indicates whether to intersect backlinks
+         * optional field
+         * use this field to intersect or merge results for the specified URLs
+         * possible values: all, partial
+         * all - results are based on all backlinks;
+         * partial - results are based on the intersecting backlinks only;
+         * default value: all
+         */
+        intersectionMode?: string | null;
+        /**
+         * the maximum number of returned backlinks
+         * optional field
+         * default value: 100
+         * maximum value: 1000
+         */
+        limit?: number | null;
+        /**
+         * offset in the results array of the returned backlinks
+         * optional field
+         * default value: 0
+         * if you specify the 10 value, the first ten backlinks in the results array will be omitted and the data will be provided for the successive backlinks
+         */
+        offset?: number | null;
+        /**
+         * results sorting rules
+         * optional field
+         * you can use the same values as in the filters array to sort the results
+         * possible sorting types:
+         * asc - results will be sorted in the ascending order
+         * desc - results will be sorted in the descending order
+         * you should use a comma to set up a sorting type
+         * example:
+         * ["rank,desc"]
+         * note that you can set no more than three sorting rules in a single request
+         * you should use a comma to separate several sorting rules
+         * example:
+         * ["domain_from_rank,desc","page_from_rank,asc"]
+         */
+        orderBy?: Array<string> | null;
+        /**
+         * defines the scale used for calculating and displaying the rank, domain_from_rank, and page_from_rank values
+         * optional field
+         * you can use this parameter to choose whether rank values are presented on a 0–100 or 0–1000 scale
+         * possible values:
+         * one_hundred — rank values are displayed on a 0–100 scale
+         * one_thousand — rank values are displayed on a 0–1000 scale
+         * default value: one_thousand
+         * learn more about how this parameter works and how ranking metrics are calculated in this Help Center article
+         */
+        rankScale?: string | null;
+        /**
+         * user-defined task identifier
+         * optional field
+         * the character limit is 255
+         * you can use this parameter to identify the task and match it with the result
+         * you will find the specified tag value in the data object of the response
+         * @maxLength 255
+         */
+        tag?: string | null;
+        /**
+         * domains, subdomains or webpages to get links for
+         * required field
+         * you can set up to 20 domains, subdomains or webpages
+         * a domain or a subdomain should be specified without https:// and www.
+         * a page should be specified with absolute URL (including http:// or https://)
+         * example:
+         * `"targets": {
+         * "1": "http://planet.postgresql.org/",
+         * "2": "http://gborg.postgresql.org/"
+         * }`
+         */
+        targets: Record<string, string | null>;
+      };
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get referring domains through DataForSEO. */
+    "aisa.get_dataforseo_backlinks_referring_domains": {
+      input: {
+        /**
+         * filter the backlinks of your target
+         * optional field
+         * you can use this field to filter the initial backlinks that will be included in the dataset for aggregated metrics for your target
+         * you can filter the backlinks by all fields available in the response of this endpoint
+         * using this parameter, you can include only dofollow backlinks in the response and create a flexible backlinks dataset to calculate the metrics for
+         * example:
+         * "backlinks_filters": ["dofollow", "=", true]
+         */
+        backlinksFilters?: Array<string | number | boolean | Record<string, unknown> | null | Array<unknown>> | null;
+        /**
+         * set what backlinks to return and count
+         * optional field
+         * you can use this field to choose what backlinks will be returned and used for aggregated metrics for your target;
+         * possible values:
+         * all - all backlinks will be returned and counted;
+         * live - backlinks found during the last check will be returned and counted;
+         * lost - lost backlinks will be returned and counted;
+         * default value: live
+         */
+        backlinksStatusType?: string | null;
+        /**
+         * indicates whether the backlinks from subdomains of the target are excluded
+         * optional field
+         * if set to false, the backlinks from subdomains of the target will be ommited and you won't receive the same domain in the response;
+         * default value: true
+         */
+        excludeInternalBacklinks?: boolean | null;
+        /**
+         * array of results filtering parameters
+         * optional field
+         * you can add several filters at once (8 filters maximum)
+         * you should set a logical operator and, or between the conditions
+         * the following operators are supported:
+         * regex, not_regex, =, <>, in, not_in, like, not_like, match, not_match
+         * you can use the % operator with like and not_like to match any string of zero or more characters
+         * example:
+         * ["referring_pages",">","1"]
+         * [["referring_pages",">","2"],
+         * "and",
+         * ["backlinks",">","10"]]
+         * [["first_seen",">","2017-10-23 11:31:45 +00:00"],
+         * "and",
+         * [["domain","like","%dataforseo.com%"],"or",["referring_domains",">","10"]]]
+         * The full list of possible filters is available here.
+         */
+        filters?: Array<string | number | boolean | Record<string, unknown> | null | Array<unknown>> | null;
+        /**
+         * indicates if indirect links to the target will be included in the results
+         * optional field
+         * if set to true, the results will include data on indirect links pointing to a page that either redirects to the target, or points to a canonical page
+         * if set to false, indirect links will be ignored
+         * default value: true
+         */
+        includeIndirectLinks?: boolean | null;
+        /**
+         * indicates if the subdomains of the target will be included in the search
+         * optional field
+         * if set to false, the subdomains will be ignored
+         * default value: true
+         */
+        includeSubdomains?: boolean | null;
+        /**
+         * maximum number of elements within internal arrays
+         * optional field
+         * you can use this field to limit the number of elements within the following arrays:
+         * referring_links_tld
+         * referring_links_types
+         * referring_links_attributes
+         * referring_links_platform_types
+         * referring_links_semantic_locations
+         * default value: 10
+         * maximum value: 1000
+         */
+        internalListLimit?: number | null;
+        /**
+         * the maximum number of returned domains
+         * optional field
+         * default value: 100
+         * maximum value: 1000
+         */
+        limit?: number | null;
+        /**
+         * offset in the results array of returned domains
+         * optional field
+         * default value: 0
+         * if you specify the 10 value, the first ten domains in the results array will be omitted and the data will be provided for the successive pages
+         */
+        offset?: number | null;
+        /**
+         * results sorting rules
+         * optional field
+         * you can use the same values as in the filters array to sort the results
+         * possible sorting types:
+         * asc - results will be sorted in the ascending order
+         * desc - results will be sorted in the descending order
+         * you should use a comma to set up a sorting type
+         * example:
+         * ["backlinks,desc"]
+         * note that you can set no more than three sorting rules in a single request
+         * you should use a comma to separate several sorting rules
+         * example:
+         * ["backlinks,desc","rank,asc"]
+         */
+        orderBy?: Array<string> | null;
+        /**
+         * defines the scale used for calculating and displaying the rank, domain_from_rank, and page_from_rank values
+         * optional field
+         * you can use this parameter to choose whether rank values are presented on a 0–100 or 0–1000 scale
+         * possible values:
+         * one_hundred — rank values are displayed on a 0–100 scale
+         * one_thousand — rank values are displayed on a 0–1000 scale
+         * default value: one_thousand
+         * learn more about how this parameter works and how ranking metrics are calculated in this Help Center article
+         */
+        rankScale?: string | null;
+        /**
+         * user-defined task identifier
+         * optional field
+         * the character limit is 255
+         * you can use this parameter to identify the task and match it with the result
+         * you will find the specified tag value in the data object of the response
+         * @maxLength 255
+         */
+        tag?: string | null;
+        /**
+         * domain, subdomain or webpage to get referring domains for
+         * required field
+         * a domain or a subdomain should be specified without https:// and www.
+         * a page should be specified with absolute URL (including http:// or https://)
+         * @minLength 1
+         */
+        target: string;
+      };
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get content category trends through DataForSEO. */
+    "aisa.get_dataforseo_content_category_trends": {
+      input: {
+        /**
+         * target category code
+         * required field
+         * to obtain a full list of available categories, refer to the Categories endpoint
+         */
+        categoryCode: number;
+        /**
+         * starting date of the time range
+         * required field
+         * minimum value: 2022-10-31
+         * date format: "yyyy-mm-dd"
+         * example:
+         * "2019-01-15"
+         * @minLength 1
+         * @format date
+         */
+        dateFrom: string;
+        /**
+         * time range which will be used to group the results
+         * optional field
+         * default value: month
+         * possible values: day, week, month
+         */
+        dateGroup?: string | null;
+        /**
+         * ending date of the time range
+         * optional field
+         * if you don't specify this field, today's date will be used by default
+         * date format: "yyyy-mm-dd"
+         * example:
+         * "2019-01-15"
+         * @format date
+         */
+        dateTo?: string | null;
+        /**
+         * initial dataset filtering parameters
+         * optional field
+         * initial filtering parameters that apply to fields in the Search endpoint;
+         * you can add several filters at once (8 filters maximum)
+         * you should set a logical operator and, or between the conditions
+         * the following operators are supported:
+         * regex, not_regex, <, <=, >, >=, =, <>, in, not_in, like,not_like, has, has_not, match, not_match
+         * you can use the % operator with like and not_like to match any string of zero or more characters
+         * example:
+         * ["domain","<>", "logitech.com"]
+         * [["domain","<>","logitech.com"],"and",["content_info.connotation_types.negative",">",1000]]
+         * [["domain","<&gt","logitech.com"]],
+         * "and",
+         * [["content_info.connotation_types.negative",">",1000],
+         * "or",
+         * ["content_info.text_category","has",10994]]]
+         * for more information about filters, please refer to Content Analysis API - Filters
+         * learn more about the initial dataset filters in this help center article.
+         */
+        initialDatasetFilters?: Array<string | number | boolean | Record<string, unknown> | null | Array<unknown>> | null;
+        /**
+         * maximum number of elements within internal arrays
+         * optional field
+         * you can use this field to limit the number of elements within the following arrays:
+         * top_domains
+         * text_categories
+         * page_categories
+         * countries
+         * languages
+         * default value: 1
+         * maximum value: 20
+         */
+        internalListLimit?: number | null;
+        /**
+         * target page types
+         * optional field
+         * use this parameter to filter the dataset by page types
+         * possible values:
+         * "ecommerce", "news", "blogs", "message-boards", "organization"
+         */
+        pageType?: Array<string> | null;
+        /**
+         * defines the scale used for calculating and displaying the rank values
+         * optional field
+         * you can use this parameter to choose whether rank values are presented on a 0–100 or 0–1000 scale
+         * possible values:
+         * one_hundred — rank values are displayed on a 0–100 scale
+         * one_thousand — rank values are displayed on a 0–1000 scale
+         * default value: one_thousand
+         * learn more about how this parameter works in this Help Center article
+         */
+        rankScale?: string | null;
+        /**
+         * results grouping type
+         * optional field
+         * possible grouping types:
+         * as_is - returns data on all citations for the target category_code
+         * one_per_domain - returns data on one citation of the category_code per domain
+         * default value: as_is
+         */
+        searchMode?: string | null;
+        /**
+         * user-defined task identifier
+         * optional field
+         * the character limit is 255
+         * you can use this parameter to identify the task and match it with the result
+         * you will find the specified tag value in the data object of the response
+         * @maxLength 255
+         */
+        tag?: string | null;
+      };
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get content mention trends through DataForSEO. */
+    "aisa.get_dataforseo_content_phrase_trends": {
+      input: {
+        /**
+         * starting date of the time range
+         * required field
+         * date format: "yyyy-mm-dd"
+         * example:
+         * "2019-01-15"
+         * @minLength 1
+         * @format date
+         */
+        dateFrom: string;
+        /**
+         * time range which will be used to group the results
+         * optional field
+         * default value: month
+         * possible values: day, week, month
+         */
+        dateGroup?: string | null;
+        /**
+         * ending date of the time range
+         * optional field
+         * if you don't specify this field, today's date will be used by default
+         * date format: "yyyy-mm-dd"
+         * example:
+         * "2019-01-15"
+         * @format date
+         */
+        dateTo?: string | null;
+        /**
+         * initial dataset filtering parameters
+         * optional field
+         * initial filtering parameters that apply to fields in the Search endpoint;
+         * you can add several filters at once (8 filters maximum);
+         * you should set a logical operator and, or between the conditions;
+         * the following operators are supported:
+         * regex, not_regex, <, <=, >, >=, =, <>, in, not_in, like,not_like, has, has_not, match, not_match
+         * you can use the % operator with like and not_like to match any string of zero or more characters;
+         * example:
+         * ["domain","<>", "logitech.com"]
+         * [["domain","<>","logitech.com"],"and",["content_info.connotation_types.negative",">",1000]]
+         * [["domain","<&gt","logitech.com"]],
+         * "and",
+         * [["content_info.connotation_types.negative",">",1000],
+         * "or",
+         * ["content_info.text_category","has",10994]]]
+         * for more information about filters, please refer to Content Analysis API - Filters
+         * learn more about the initial dataset filters in this help center article.
+         */
+        initialDatasetFilters?: Array<string | number | boolean | Record<string, unknown> | null | Array<unknown>> | null;
+        /**
+         * maximum number of elements within internal arrays
+         * optional field
+         * you can use this field to limit the number of elements within the following arrays:
+         * top_domains
+         * text_categories
+         * page_categories
+         * countries
+         * languages
+         * default value: 1
+         * maximum value: 20
+         */
+        internalListLimit?: number | null;
+        /**
+         * target keyword
+         * required field
+         * UTF-8 encoding
+         * the keywords will be converted to a lowercase format;
+         * Note: to match an exact phrase instead of a stand-alone keyword, use double quotes and backslashes;
+         * example:
+         * "keyword": "\"tesla palo alto\""
+         * learn more about rules and limitations of keyword and keywords fields in DataForSEO APIs in this Help Center article
+         * @minLength 1
+         */
+        keyword: string;
+        /**
+         * target keyword fields and target keywords
+         * optional field
+         * use this parameter to filter the dataset by keywords that certain fields should contain;
+         * fields you can specify: title, main_title, previous_title, snippet
+         * you can indicate several fields;
+         * Note: to match an exact phrase instead of a stand-alone keyword, use double quotes and backslashes;
+         * example:
+         * `"keyword_fields": {
+         * "snippet": "\"logitech mouse\"",
+         * "main_title": "sale"
+         * }`
+         */
+        keywordFields?: Record<string, string | null> | null;
+        /**
+         * target page types
+         * optional field
+         * use this parameter to filter the dataset by page types
+         * possible values:
+         * "ecommerce", "news", "blogs", "message-boards", "organization"
+         */
+        pageType?: Array<string> | null;
+        /**
+         * defines the scale used for calculating and displaying the rank values
+         * optional field
+         * you can use this parameter to choose whether rank values are presented on a 0–100 or 0–1000 scale
+         * possible values:
+         * one_hundred — rank values are displayed on a 0–100 scale
+         * one_thousand — rank values are displayed on a 0–1000 scale
+         * default value: one_thousand
+         * learn more about how this parameter works in this Help Center article
+         */
+        rankScale?: string | null;
+        /**
+         * results grouping type
+         * optional field
+         * possible grouping types:
+         * as_is - returns data on all citations for the target keyword
+         * one_per_domain - returns data on one citation of the keyword per domain
+         * default value: as_is
+         */
+        searchMode?: string | null;
+        /**
+         * user-defined task identifier
+         * optional field
+         * the character limit is 255
+         * you can use this parameter to identify the task and match it with the result
+         * you will find the specified tag value in the data object of the response
+         * @maxLength 255
+         */
+        tag?: string | null;
+      };
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get content sentiment through DataForSEO. */
+    "aisa.get_dataforseo_content_sentiment": {
+      input: {
+        /**
+         * initial dataset filtering parameters
+         * optional field
+         * initial filtering parameters that apply to fields in the Search endpoint
+         * you can add several filters at once (8 filters maximum)
+         * you should set a logical operator and, or between the conditions
+         * the following operators are supported:
+         * regex, not_regex, , >=, =, , in, not_in, like,not_like, has, has_not, match, not_match
+         * you can use the % operator with like and not_like to match any string of zero or more characters
+         * example:
+         * ["domain","", "logitech.com"]
+         * [["domain","","logitech.com"],"and",["content_info.connotation_types.negative",">",1000]]
+         * [["domain","","logitech.com"]],
+         * "and",
+         * [["content_info.connotation_types.negative",">",1000],
+         * "or",
+         * ["content_info.text_category","has",10994]]]
+         * for more information about filters, please refer to Content Analysis API – Filters
+         * learn more about the initial dataset filters in this help center article.
+         */
+        initialDatasetFilters?: Array<string | number | boolean | Record<string, unknown> | null | Array<unknown>> | null;
+        /**
+         * maximum number of elements within internal arrays
+         * optional field
+         * you can use this field to limit the number of elements within the following arrays:
+         * top_domains
+         * text_categories
+         * page_categories
+         * countries
+         * languages
+         * default value: 1
+         * maximum value: 20
+         */
+        internalListLimit?: number | null;
+        /**
+         * target keyword
+         * required field
+         * UTF-8 encoding
+         * the keywords will be converted to a lowercase format;
+         * Note: to match an exact phrase instead of a stand-alone keyword, use double quotes and backslashes;
+         * example:
+         * "keyword": "\"tesla palo alto\""
+         * learn more about rules and limitations of keyword and keywords fields in DataForSEO APIs in this Help Center article
+         * @minLength 1
+         */
+        keyword: string;
+        /**
+         * target keyword fields and target keywords
+         * optional field
+         * use this parameter to filter the dataset by keywords that certain fields should contain;
+         * fields you can specify: title, main_title, previous_title, snippet
+         * you can indicate several fields;
+         * Note: to match an exact phrase instead of a stand-alone keyword, use double quotes and backslashes;
+         * example:
+         * "keyword_fields": {
+         *     "snippet": "\"logitech mouse\"",
+         *     "main_title": "sale"
+         * }
+         */
+        keywordFields?: Record<string, string | null> | null;
+        /**
+         * target page types
+         * optional field
+         * use this parameter to filter the dataset by page types
+         * possible values:
+         * "ecommerce", "news", "blogs", "message-boards", "organization"
+         */
+        pageType?: Array<string> | null;
+        /**
+         * positive connotation threshold
+         * optional field
+         * specified as the probability index threshold for positive sentiment related to the citation content
+         * if you specify this field, connotation_types object in the response will only contain data on citations with positive sentiment probability more than or equal to the specified value
+         * possible values: from 0 to 1
+         * default value: 0.4
+         */
+        positiveConnotationThreshold?: number | null;
+        /**
+         * defines the scale used for calculating and displaying the rank values
+         * optional field
+         * you can use this parameter to choose whether rank values are presented on a 0–100 or 0–1000 scale
+         * possible values:
+         * one_hundred — rank values are displayed on a 0–100 scale
+         * one_thousand — rank values are displayed on a 0–1000 scale
+         * default value: one_thousand
+         * learn more about how this parameter works in this Help Center article
+         */
+        rankScale?: string | null;
+        /**
+         * sentiment connotation threshold
+         * optional field
+         * specified as the probability index threshold for sentiment connotations related to the citation content
+         * if you specify this field, sentiment_connotations object in the response will only contain data on citations where the probability per each sentiment is more than or equal to the specified value
+         * possible values: from 0 to 1
+         * default value: 0.4
+         */
+        sentimentsConnotationThreshold?: number | null;
+        /**
+         * user-defined task identifier
+         * optional field
+         * the character limit is 255
+         * you can use this parameter to identify the task and match it with the result
+         * you will find the specified tag value in the data object of the response
+         * @maxLength 255
+         */
+        tag?: string | null;
+      };
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get Google Business profiles through DataForSEO. */
+    "aisa.get_dataforseo_google_business_info": {
+      input: ({
+        locationCode: unknown;
+        [key: string]: unknown;
+      } | {
+        locationName: unknown;
+        [key: string]: unknown;
+      } | {
+        locationCoordinate: unknown;
+        [key: string]: unknown;
+      }) & ({
+        languageCode: unknown;
+        [key: string]: unknown;
+      } | {
+        languageName: unknown;
+        [key: string]: unknown;
+      });
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get Google Business questions and answers through DataForSEO. */
+    "aisa.get_dataforseo_google_business_questions": {
+      input: ({
+        locationCode: unknown;
+        [key: string]: unknown;
+      } | {
+        locationName: unknown;
+        [key: string]: unknown;
+      } | {
+        locationCoordinate: unknown;
+        [key: string]: unknown;
+      }) & ({
+        languageCode: unknown;
+        [key: string]: unknown;
+      } | {
+        languageName: unknown;
+        [key: string]: unknown;
+      });
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Compare popularity over time for up to five keywords using DataForSEO Trends for Google Search, News, or Shopping. These are DataForSEO estimates, not original Google Trends data or absolute search volumes. */
+    "aisa.get_dataforseo_keyword_trends": {
+      input: {
+        /**
+         * One to five keywords to compare.
+         * @minItems 1
+         * @maxItems 5
+         */
+        keywords: Array<string>;
+        /** Full location name, such as United States. Use instead of locationCode; omit both for worldwide results. */
+        locationName?: string;
+        /** DataForSEO location code, such as 2840 for the United States. Results cover the country containing this location. */
+        locationCode?: number;
+        /** Search type: web for Google Search (default), news for Google News, or ecommerce for Google Shopping. */
+        type?: "web" | "news" | "ecommerce";
+        /**
+         * Start date in YYYY-MM-DD format. Earliest is 2004-01-01 for web or 2008-01-01 for other types. Without a time window, upstream defaults to one year ago.
+         * @format date
+         */
+        dateFrom?: string;
+        /**
+         * End date in YYYY-MM-DD format; upstream defaults to today.
+         * @format date
+         */
+        dateTo?: string;
+        /** Preset time window. Upstream ignores this when dateFrom or dateTo is supplied. */
+        timeRange?: "past_4_hours" | "past_day" | "past_7_days" | "past_30_days" | "past_90_days" | "past_12_months" | "past_5_years";
+        /**
+         * A caller-defined identifier returned with the result.
+         * @maxLength 255
+         */
+        tag?: string;
+      };
+      output: {
+        /** Overall upstream status code. */
+        status_code?: number;
+        /** Overall upstream status message. */
+        status_message?: string;
+        /** Upstream reported cost in USD. */
+        cost?: number;
+        /** Number of tasks that failed. */
+        tasks_error?: number;
+        /** Live task responses, including business errors. */
+        tasks?: Array<{
+          /** Upstream task identifier. */
+          id?: string;
+          /** Task status code; 20000 indicates success. */
+          status_code?: number;
+          /** Task status message. */
+          status_message?: string;
+          /** Trend results, or null when unavailable. */
+          result?: Array<{
+            /** Keywords in result order. */
+            keywords?: Array<string>;
+            /** Trend graphs returned by the upstream service. */
+            items?: Array<{
+              /** Keywords corresponding to the values and averages arrays. */
+              keywords?: Array<string>;
+              /** Average relative popularity for each keyword over the time window. */
+              averages?: Array<number>;
+              /** Time buckets; retain both dates because a bucket may span multiple days. */
+              data?: Array<{
+                /** First date in this bucket. */
+                date_from?: string;
+                /** Last date in this bucket. */
+                date_to?: string;
+                /** Bucket Unix timestamp in seconds. */
+                timestamp?: number;
+                /** Relative popularity in keyword order: 100 is the peak, and 0 indicates insufficient data. These are not search volumes. */
+                values?: Array<number>;
+                [key: string]: unknown;
+              }>;
+              [key: string]: unknown;
+            }>;
+            [key: string]: unknown;
+          }> | null;
+          [key: string]: unknown;
+        }>;
+        [key: string]: unknown;
+      };
+    };
+    /** Get Bing keywords for a website through DataForSEO. */
+    "aisa.get_dataforseo_keywords_bing_keywords_for_site": {
+      input: ({
+        locationCode: unknown;
+        [key: string]: unknown;
+      } | {
+        locationName: unknown;
+        [key: string]: unknown;
+      } | {
+        locationCoordinate: unknown;
+        [key: string]: unknown;
+      }) & ({
+        languageCode: unknown;
+        [key: string]: unknown;
+      } | {
+        languageName: unknown;
+        [key: string]: unknown;
+      });
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get Amazon search volumes through DataForSEO. */
+    "aisa.get_dataforseo_labs_amazon_bulk_search_volume": {
+      input: ({
+        locationCode: unknown;
+        [key: string]: unknown;
+      } | {
+        locationName: unknown;
+        [key: string]: unknown;
+      }) & ({
+        languageCode: unknown;
+        [key: string]: unknown;
+      } | {
+        languageName: unknown;
+        [key: string]: unknown;
+      });
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get Amazon product competitors through DataForSEO. */
+    "aisa.get_dataforseo_labs_amazon_product_competitors": {
+      input: ({
+        locationCode: unknown;
+        [key: string]: unknown;
+      } | {
+        locationName: unknown;
+        [key: string]: unknown;
+      }) & ({
+        languageCode: unknown;
+        [key: string]: unknown;
+      } | {
+        languageName: unknown;
+        [key: string]: unknown;
+      });
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get Amazon keyword intersections through DataForSEO. */
+    "aisa.get_dataforseo_labs_amazon_product_keyword_intersections": {
+      input: ({
+        locationCode: unknown;
+        [key: string]: unknown;
+      } | {
+        locationName: unknown;
+        [key: string]: unknown;
+      }) & ({
+        languageCode: unknown;
+        [key: string]: unknown;
+      } | {
+        languageName: unknown;
+        [key: string]: unknown;
+      });
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get Amazon product rank overview through DataForSEO. */
+    "aisa.get_dataforseo_labs_amazon_product_rank_overview": {
+      input: ({
+        locationCode: unknown;
+        [key: string]: unknown;
+      } | {
+        locationName: unknown;
+        [key: string]: unknown;
+      }) & ({
+        languageCode: unknown;
+        [key: string]: unknown;
+      } | {
+        languageName: unknown;
+        [key: string]: unknown;
+      });
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get Amazon ranked keywords through DataForSEO. */
+    "aisa.get_dataforseo_labs_amazon_ranked_keywords": {
+      input: ({
+        locationCode: unknown;
+        [key: string]: unknown;
+      } | {
+        locationName: unknown;
+        [key: string]: unknown;
+      }) & ({
+        languageCode: unknown;
+        [key: string]: unknown;
+      } | {
+        languageName: unknown;
+        [key: string]: unknown;
+      });
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get Amazon related keywords through DataForSEO. */
+    "aisa.get_dataforseo_labs_amazon_related_keywords": {
+      input: ({
+        locationCode: unknown;
+        [key: string]: unknown;
+      } | {
+        locationName: unknown;
+        [key: string]: unknown;
+      }) & ({
+        languageCode: unknown;
+        [key: string]: unknown;
+      } | {
+        languageName: unknown;
+        [key: string]: unknown;
+      });
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get App Store competitors through DataForSEO. */
+    "aisa.get_dataforseo_labs_app_store_app_competitors": {
+      input: ({
+        locationCode: unknown;
+        [key: string]: unknown;
+      } | {
+        locationName: unknown;
+        [key: string]: unknown;
+      }) & ({
+        languageCode: unknown;
+        [key: string]: unknown;
+      } | {
+        languageName: unknown;
+        [key: string]: unknown;
+      });
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get App Store app metrics through DataForSEO. */
+    "aisa.get_dataforseo_labs_app_store_bulk_app_metrics": {
+      input: ({
+        locationCode: unknown;
+        [key: string]: unknown;
+      } | {
+        locationName: unknown;
+        [key: string]: unknown;
+      }) & ({
+        languageCode: unknown;
+        [key: string]: unknown;
+      } | {
+        languageName: unknown;
+        [key: string]: unknown;
+      });
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get App Store app keywords through DataForSEO. */
+    "aisa.get_dataforseo_labs_app_store_keywords_for_app": {
+      input: ({
+        locationCode: unknown;
+        [key: string]: unknown;
+      } | {
+        locationName: unknown;
+        [key: string]: unknown;
+      }) & ({
+        languageCode: unknown;
+        [key: string]: unknown;
+      } | {
+        languageName: unknown;
+        [key: string]: unknown;
+      });
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get Google keyword difficulty through DataForSEO. */
+    "aisa.get_dataforseo_labs_bulk_keyword_difficulty": {
+      input: ({
+        locationCode: unknown;
+        [key: string]: unknown;
+      } | {
+        locationName: unknown;
+        [key: string]: unknown;
+      }) & ({
+        languageCode: unknown;
+        [key: string]: unknown;
+      } | {
+        languageName: unknown;
+        [key: string]: unknown;
+      });
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get Google domain competitors through DataForSEO. */
+    "aisa.get_dataforseo_labs_competitors_domain": {
+      input: ({
+        locationCode: unknown;
+        [key: string]: unknown;
+      } | {
+        locationName: unknown;
+        [key: string]: unknown;
+      }) & ({
+        languageCode: unknown;
+        [key: string]: unknown;
+      } | {
+        languageName: unknown;
+        [key: string]: unknown;
+      });
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get Google domain metrics by category through DataForSEO. */
+    "aisa.get_dataforseo_labs_domain_metrics_by_categories": {
+      input: ({
+        locationCode: unknown;
+        [key: string]: unknown;
+      } | {
+        locationName: unknown;
+        [key: string]: unknown;
+      }) & ({
+        languageCode: unknown;
+        [key: string]: unknown;
+      } | {
+        languageName: unknown;
+        [key: string]: unknown;
+      });
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get Google Play competitors through DataForSEO. */
+    "aisa.get_dataforseo_labs_google_play_app_competitors": {
+      input: ({
+        locationCode: unknown;
+        [key: string]: unknown;
+      } | {
+        locationName: unknown;
+        [key: string]: unknown;
+      }) & ({
+        languageCode: unknown;
+        [key: string]: unknown;
+      } | {
+        languageName: unknown;
+        [key: string]: unknown;
+      });
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get Google Play keyword intersections through DataForSEO. */
+    "aisa.get_dataforseo_labs_google_play_app_intersection": {
+      input: ({
+        locationCode: unknown;
+        [key: string]: unknown;
+      } | {
+        locationName: unknown;
+        [key: string]: unknown;
+      }) & ({
+        languageCode: unknown;
+        [key: string]: unknown;
+      } | {
+        languageName: unknown;
+        [key: string]: unknown;
+      });
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get Google keyword ideas through DataForSEO. */
+    "aisa.get_dataforseo_labs_keyword_ideas": {
+      input: ({
+        locationCode: unknown;
+        [key: string]: unknown;
+      } | {
+        locationName: unknown;
+        [key: string]: unknown;
+      });
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get Google keyword overview through DataForSEO. */
+    "aisa.get_dataforseo_labs_keyword_overview": {
+      input: ({
+        locationCode: unknown;
+        [key: string]: unknown;
+      } | {
+        locationName: unknown;
+        [key: string]: unknown;
+      }) & ({
+        languageCode: unknown;
+        [key: string]: unknown;
+      } | {
+        languageName: unknown;
+        [key: string]: unknown;
+      });
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get Google category keywords through DataForSEO. */
+    "aisa.get_dataforseo_labs_keywords_for_categories": {
+      input: ({
+        locationCode: unknown;
+        [key: string]: unknown;
+      } | {
+        locationName: unknown;
+        [key: string]: unknown;
+      }) & ({
+        languageCode: unknown;
+        [key: string]: unknown;
+      } | {
+        languageName: unknown;
+        [key: string]: unknown;
+      });
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
     };
     /** Aggregate LLM mention metrics for domains and keyword entities. */
     "aisa.get_dataforseo_llm_mention_metrics": {
@@ -385,6 +2789,567 @@ declare module "@oomol-lab/connector" {
       };
       output: Record<string, unknown>;
     };
+    /** Get parsed page content through DataForSEO. */
+    "aisa.get_dataforseo_onpage_content_parsing": {
+      input: {
+        /**
+         * language header for accessing the website
+         * optional field
+         * all locale formats are supported (xx, xx-XX, xxx-XX, etc.)
+         * Note: if you do not specify this parameter, some websites may deny access; in this case, pages will be returned with the "type":"broken in the response array
+         */
+        acceptLanguage?: string | null;
+        /**
+         * preset for browser screen parameters
+         * optional field
+         * if you use this field, you don't need to indicate browser_screen_width, browser_screen_height, browser_screen_scale_factor
+         *             possible values:
+         * desktop, mobile, tablet
+         *             desktop preset will apply the following values:
+         *             browser_screen_width: 1920
+         * browser_screen_height: 1080
+         * browser_screen_scale_factor: 1
+         *             mobile preset will apply the following values:
+         *             browser_screen_width: 390
+         * browser_screen_height: 844
+         * browser_screen_scale_factor: 3
+         *             tablet preset will apply the following values:
+         *             browser_screen_width: 1024
+         * browser_screen_height: 1366
+         * browser_screen_scale_factor: 2
+         *             Note: to use this parameter, set enable_javascript or enable_browser_rendering to true
+         */
+        browserPreset?: string | null;
+        /**
+         * browser screen height
+         * optional field
+         * you can set a custom browser screen height to perform audit for a particular device;
+         * if you use this field, you don't need to indicate browser_preset as it will be ignored;
+         *             Note: to use this parameter, set enable_javascript or enable_browser_rendering to true
+         *             minimum value, in pixels: 240
+         * maximum value, in pixels: 9999
+         */
+        browserScreenHeight?: number | null;
+        /**
+         * browser screen scale factor
+         * optional field
+         * you can set a custom browser screen resolution ratio to perform audit for a particular device;
+         * if you use this field, you don't need to indicate browser_preset as it will be ignored;
+         *             Note: to use this parameter, set enable_javascript or enable_browser_rendering to true
+         *             minimum value: 0.5
+         * maximum value: 3
+         */
+        browserScreenScaleFactor?: number | null;
+        /**
+         * browser screen width
+         * optional field
+         * you can set a custom browser screen width to perform audit for a particular device;
+         * if you use this field, you don't need to indicate browser_preset as it will be ignored;
+         *             Note: to use this parameter, set enable_javascript or enable_browser_rendering to true
+         *             minimum value, in pixels: 240
+         * maximum value, in pixels: 9999
+         * @format int64
+         */
+        browserScreenWidth?: number | null;
+        /**
+         * custom user agent
+         * optional field
+         * custom user agent for crawling a website
+         * example: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36
+         * default value: Mozilla/5.0 (compatible; RSiteAuditor)
+         */
+        customUserAgent?: string | null;
+        /**
+         * disable the cookie popup
+         * optional field
+         * set to true if you want to disable the popup requesting cookie consent from the user;
+         * default value:
+         * false
+         */
+        disableCookiePopup?: boolean | null;
+        /**
+         * emulate browser rendering to measure Core Web Vitals
+         * optional field
+         * by using this parameter you will be able to emulate a browser when loading a web page;
+         * enable_browser_rendering loads styles, images, fonts, animations, videos, and other resources on a page;
+         * default value: false
+         * set to true to obtain Core Web Vitals (FID, CLS, LCP) metrics in the response;
+         * if you use this field, enable_javascript, and load_resources parameters must be set to true
+         * Note: if you use this parameter, additional charges will apply; learn more about the cost of tasks with this parameter in our help article; the cost can be calculated on the Pricing Page
+         */
+        enableBrowserRendering?: boolean | null;
+        /**
+         * load javascript on a page
+         * optional field
+         * set to true if you want to load the scripts available on a page
+         * default value: false
+         * Note: if you use this parameter, additional charges will apply; learn more about the cost of tasks with this parameter in our help article; the cost can be calculated on the Pricing Page
+         */
+        enableJavascript?: boolean | null;
+        /**
+         * enable XMLHttpRequest on a page
+         * optional field
+         * set to true if you want our crawler to request data from a web server using the XMLHttpRequest object
+         * default value:
+         * false
+         *             if you use this field, enable_javascript must be set to true;
+         */
+        enableXhr?: boolean | null;
+        /**
+         * proxy pool
+         * optional field
+         * you can choose a location of the proxy pool that will be used to obtain the requested data;
+         * the parameter can be used if page content is inaccessible in one of the locations, resulting in occasional site_unreachable errors
+         * possible values: us, de
+         */
+        ipPoolForScan?: string | null;
+        /**
+         * return page content as markdown
+         * optional field
+         * if set to true, the markdown-formatted content of the page will be returned in the page_as_markdown field of the response;
+         * default value: false
+         */
+        markdownView?: boolean | null;
+        /**
+         * store HTML of a crawled page
+         * optional field
+         * set to true if you want to get the HTML of the page using the OnPage Raw HTML endpoint
+         * default value: false
+         */
+        storeRawHtml?: boolean | null;
+        /**
+         * switch proxy pool
+         * optional field
+         * if true, additional proxy pools will be used to obtain the requested data;
+         * the parameter can be used if a multitude of tasks is set simultaneously, resulting in occasional rate-limit and/or site_unreachable errors
+         */
+        switchPool?: boolean | null;
+        /**
+         * URL of the content to parse
+         * required field
+         * URL of the page to parse
+         * example:
+         * `https://www.fujielectric.com/`
+         * @minLength 1
+         */
+        url: string;
+      };
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get Lighthouse audits through DataForSEO. */
+    "aisa.get_dataforseo_onpage_lighthouse": {
+      input: (unknown);
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Look up DataForSEO model names, location codes, categories, or supported filter fields before a research query. */
+    "aisa.get_dataforseo_reference_data": {
+      input: {
+        /** The model, location, category, or filter catalog to retrieve. */
+        resource: "chatgptModels" | "geminiModels" | "perplexityModels" | "mentionFilters" | "mentionLocationsAndLanguages" | "aiKeywordLocationsAndLanguages" | "amazonLocations" | "googlePlayCategories" | "googlePlayListingCategories" | "appStoreListingCategories" | "googleShoppingLocations" | "clickstreamLocationsAndLanguages" | "whoisFilters" | "labsFilters" | "contentCategories" | "contentFilters" | "baiduLocations" | "bingLocations" | "googleLocations" | "seznamLocations" | "youtubeLocations";
+      };
+      output: Record<string, unknown>;
+    };
+    /** Get Google AI Mode answers through DataForSEO. */
+    "aisa.get_dataforseo_serp_google_ai_mode": {
+      input: ({
+        locationCode: unknown;
+        [key: string]: unknown;
+      } | {
+        locationName: unknown;
+        [key: string]: unknown;
+      } | {
+        locationCoordinate: unknown;
+        [key: string]: unknown;
+      }) & ({
+        languageCode: unknown;
+        [key: string]: unknown;
+      } | {
+        languageName: unknown;
+        [key: string]: unknown;
+      });
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get Google Finance markets through DataForSEO. */
+    "aisa.get_dataforseo_serp_google_finance_markets": {
+      input: ({
+        locationCode: unknown;
+        [key: string]: unknown;
+      } | {
+        locationName: unknown;
+        [key: string]: unknown;
+      }) & ({
+        languageCode: unknown;
+        [key: string]: unknown;
+      } | {
+        languageName: unknown;
+        [key: string]: unknown;
+      });
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get Google Finance quotes through DataForSEO. */
+    "aisa.get_dataforseo_serp_google_finance_quote": {
+      input: ({
+        locationCode: unknown;
+        [key: string]: unknown;
+      } | {
+        locationName: unknown;
+        [key: string]: unknown;
+      }) & ({
+        languageCode: unknown;
+        [key: string]: unknown;
+      } | {
+        languageName: unknown;
+        [key: string]: unknown;
+      });
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get Google image search results through DataForSEO. */
+    "aisa.get_dataforseo_serp_google_images": {
+      input: ({
+        locationCode: unknown;
+        [key: string]: unknown;
+      } | {
+        locationName: unknown;
+        [key: string]: unknown;
+      } | {
+        locationCoordinate: unknown;
+        [key: string]: unknown;
+      } | {
+        /** @minLength 1 */
+        url: string;
+        [key: string]: unknown;
+      }) & ({
+        languageCode: unknown;
+        [key: string]: unknown;
+      } | {
+        languageName: unknown;
+        [key: string]: unknown;
+      } | {
+        /** @minLength 1 */
+        url: string;
+        [key: string]: unknown;
+      }) & (Record<string, unknown> | {
+        /** @minLength 1 */
+        url: string;
+        [key: string]: unknown;
+      });
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get Google local search results through DataForSEO. */
+    "aisa.get_dataforseo_serp_google_local_finder": {
+      input: ({
+        locationCode: unknown;
+        [key: string]: unknown;
+      } | {
+        locationName: unknown;
+        [key: string]: unknown;
+      } | {
+        locationCoordinate: unknown;
+        [key: string]: unknown;
+      }) & ({
+        languageCode: unknown;
+        [key: string]: unknown;
+      } | {
+        languageName: unknown;
+        [key: string]: unknown;
+      });
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get Google news results through DataForSEO. */
+    "aisa.get_dataforseo_serp_google_news": {
+      input: ({
+        locationCode: unknown;
+        [key: string]: unknown;
+      } | {
+        locationName: unknown;
+        [key: string]: unknown;
+      } | {
+        locationCoordinate: unknown;
+        [key: string]: unknown;
+      } | {
+        /** @minLength 1 */
+        url: string;
+        [key: string]: unknown;
+      }) & ({
+        languageCode: unknown;
+        [key: string]: unknown;
+      } | {
+        languageName: unknown;
+        [key: string]: unknown;
+      } | {
+        /** @minLength 1 */
+        url: string;
+        [key: string]: unknown;
+      }) & (Record<string, unknown> | {
+        /** @minLength 1 */
+        url: string;
+        [key: string]: unknown;
+      });
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get YouTube comments through DataForSEO. */
+    "aisa.get_dataforseo_serp_youtube_comments": {
+      input: ({
+        locationCode: unknown;
+        [key: string]: unknown;
+      } | {
+        locationName: unknown;
+        [key: string]: unknown;
+      }) & ({
+        languageCode: unknown;
+        [key: string]: unknown;
+      } | {
+        languageName: unknown;
+        [key: string]: unknown;
+      });
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get YouTube search results through DataForSEO. */
+    "aisa.get_dataforseo_serp_youtube_organic": {
+      input: ({
+        locationCode: unknown;
+        [key: string]: unknown;
+      } | {
+        locationName: unknown;
+        [key: string]: unknown;
+      }) & ({
+        languageCode: unknown;
+        [key: string]: unknown;
+      } | {
+        languageName: unknown;
+        [key: string]: unknown;
+      });
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get YouTube subtitles through DataForSEO. */
+    "aisa.get_dataforseo_serp_youtube_subtitles": {
+      input: ({
+        locationCode: unknown;
+        [key: string]: unknown;
+      } | {
+        locationName: unknown;
+        [key: string]: unknown;
+      }) & ({
+        languageCode: unknown;
+        [key: string]: unknown;
+      } | {
+        languageName: unknown;
+        [key: string]: unknown;
+      });
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get YouTube video details through DataForSEO. */
+    "aisa.get_dataforseo_serp_youtube_video_info": {
+      input: ({
+        locationCode: unknown;
+        [key: string]: unknown;
+      } | {
+        locationName: unknown;
+        [key: string]: unknown;
+      }) & ({
+        languageCode: unknown;
+        [key: string]: unknown;
+      } | {
+        languageName: unknown;
+        [key: string]: unknown;
+      });
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Retrieve text and metadata for known URLs through Exa. Inspect statuses for per-URL failures, including when other URLs succeed. */
+    "aisa.get_exa_contents": {
+      input: {
+        /**
+         * The URLs to retrieve.
+         * @minItems 1
+         */
+        urls: Array<string>;
+        /** Streaming is not supported by this JSON action; must be false. */
+        stream?: false;
+        /** Return the full page text; defaults to true for get_exa_contents. */
+        text?: boolean;
+        /** Return highlighted relevant snippets. */
+        highlights?: boolean;
+        /** Return an AI-generated summary of the page. */
+        summary?: boolean;
+        /** Freshness policy for fetching page content. */
+        livecrawl?: "always" | "fallback" | "never";
+        /** Number of linked subpages to also retrieve. */
+        subpages?: number;
+      };
+      output: {
+        /** The Exa request identifier. */
+        requestId?: string;
+        /** Informational Exa cost; not the AIsa customer charge. */
+        costDollars?: unknown;
+        /** Retrieved page contents. */
+        results?: Array<{
+          /** The Exa result identifier, normally the page URL. */
+          id?: string;
+          /** The page URL. */
+          url?: string;
+          /** The page title. */
+          title?: string;
+          /** The page author. */
+          author?: string;
+          /** The publication date reported by the source. */
+          publishedDate?: string;
+          /** The retrieved page text. */
+          text?: string;
+          /** Relevant snippets from the page. */
+          highlights?: Array<string>;
+          /** The generated page summary. */
+          summary?: string;
+          [key: string]: unknown;
+        }>;
+        /** Per-URL retrieval statuses, including failures. */
+        statuses?: Array<Record<string, unknown>>;
+        [key: string]: unknown;
+      };
+    };
     /** Get selected sections and exhibits from a company filing. */
     "aisa.get_filing_items": {
       input: {
@@ -418,6 +3383,82 @@ declare module "@oomol-lab/connector" {
     "aisa.get_financial_metrics_snapshot": {
       input: Record<string, unknown>;
       output: Record<string, unknown>;
+    };
+    /** Get a Firecrawl task state and results. Check outputExpired and job errors even when the task has finished. */
+    "aisa.get_firecrawl_batch_scrape": {
+      input: {
+        /**
+         * Task ID returned by submission; use it with the same connection or Marketplace account.
+         * @minLength 1
+         */
+        taskId: string;
+      };
+      output: {
+        /**
+         * Task ID returned by submission; use it with the same connection or Marketplace account.
+         * @minLength 1
+         */
+        taskId?: string;
+        /** Job state: queued, running, completed, failed or cancelled. */
+        status?: string;
+        /** Upstream crawl or batch scrape output; may be unavailable before completion or after expiry. */
+        output?: unknown;
+        /** Whether the upstream output has expired. */
+        outputExpired?: boolean | null;
+        /** Upstream job error details. */
+        error?: Record<string, unknown> | null;
+        /** AIsa pricing information, in micro-USD. */
+        pricing?: {
+          /** Initially authorized amount; not the final charge. */
+          authorizedMicrosUSD?: number | null;
+          /** Final customer charge; null means unknown, zero means no charge. */
+          finalMicrosUSD?: number | null;
+          /** Pricing currency. */
+          currency?: string | null;
+          /** AIsa billing mode. */
+          billingMode?: string | null;
+          [key: string]: unknown;
+        } | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get a Firecrawl task state and results. Check outputExpired and job errors even when the task has finished. */
+    "aisa.get_firecrawl_crawl": {
+      input: {
+        /**
+         * Task ID returned by submission; use it with the same connection or Marketplace account.
+         * @minLength 1
+         */
+        taskId: string;
+      };
+      output: {
+        /**
+         * Task ID returned by submission; use it with the same connection or Marketplace account.
+         * @minLength 1
+         */
+        taskId?: string;
+        /** Job state: queued, running, completed, failed or cancelled. */
+        status?: string;
+        /** Upstream crawl or batch scrape output; may be unavailable before completion or after expiry. */
+        output?: unknown;
+        /** Whether the upstream output has expired. */
+        outputExpired?: boolean | null;
+        /** Upstream job error details. */
+        error?: Record<string, unknown> | null;
+        /** AIsa pricing information, in micro-USD. */
+        pricing?: {
+          /** Initially authorized amount; not the final charge. */
+          authorizedMicrosUSD?: number | null;
+          /** Final customer charge; null means unknown, zero means no charge. */
+          finalMicrosUSD?: number | null;
+          /** Pricing currency. */
+          currency?: string | null;
+          /** AIsa billing mode. */
+          billingMode?: string | null;
+          [key: string]: unknown;
+        } | null;
+        [key: string]: unknown;
+      };
     };
     /** List ads for one or more known Foreplay brand IDs. */
     "aisa.get_foreplay_brand_ads": {
@@ -2079,6 +5120,37 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
+    /** Discover website links through Firecrawl. Set limit to bound discovery and usage before retrieving individual pages. */
+    "aisa.map_firecrawl": {
+      input: {
+        /**
+         * The HTTPS website URL.
+         * @format uri
+         */
+        url: string;
+        /**
+         * Maximum links to discover.
+         * @minimum 1
+         * @maximum 100000
+         */
+        limit: number;
+      };
+      output: {
+        /** Whether upstream link discovery succeeded. */
+        success?: boolean;
+        /** Upstream credits consumed. */
+        creditsUsed?: number;
+        /** Discovered website links. */
+        links?: Array<{
+          /** The page URL. */
+          url?: string;
+          /** The page title. */
+          title?: string;
+          [key: string]: unknown;
+        }>;
+        [key: string]: unknown;
+      };
+    };
     /** Run a live ChatGPT response query for GEO research through DataForSEO. */
     "aisa.query_dataforseo_chatgpt": {
       input: {
@@ -2319,6 +5391,100 @@ declare module "@oomol-lab/connector" {
       };
       output: Record<string, unknown>;
     };
+    /** Retrieve one HTTPS web page as Markdown through Firecrawl. The AIsa route supports basic proxy mode and excludes PDF URLs. */
+    "aisa.scrape_firecrawl": {
+      input: {
+        /**
+         * The HTTPS page URL; PDF URLs are not supported.
+         * @format uri
+         */
+        url: string;
+      };
+      output: {
+        /** Whether the upstream scrape succeeded. */
+        success?: boolean;
+        /** Upstream credits consumed. */
+        creditsUsed?: number;
+        /** The scraped page and its metadata. */
+        data?: {
+          /** The page content in Markdown. */
+          markdown?: string;
+          /** Page metadata, including title, source URL and HTTP status. */
+          metadata?: Record<string, unknown>;
+          [key: string]: unknown;
+        };
+        [key: string]: unknown;
+      };
+    };
+    /** Find Akta companies by name, website, or UUID. */
+    "aisa.search_akta_companies": {
+      input: {
+        /** A company name, website, or UUID. */
+        query?: string;
+      };
+      output: {
+        /** The matching company records. */
+        data?: Array<Record<string, unknown>>;
+        /** The number of returned companies. */
+        count?: number;
+        /** The total matching companies, capped at 500 by Akta. */
+        total_count?: number;
+        /** The Akta credits consumed; Marketplace billing uses AIsa customer-cost headers. */
+        credits_consumed?: number;
+        [key: string]: unknown;
+      };
+    };
+    /** Search an Akta company list using natural language or structured filters, with optional enrichment and pagination. */
+    "aisa.search_akta_company_list": {
+      input: {
+        /** A natural-language company search; cannot be combined with filters. */
+        query?: string;
+        /** Akta structured filters; cannot be combined with query. Use upstream filter field names. */
+        filters?: Record<string, unknown>;
+        /** Enrichment sections: firmographic, business_model, company_assessment, trust_signal, company_hierarchy, digital_presence, financial_estimate, location, management_profile, product_offering, strategic_signal, customer_profile, industry, technology, funding_detail, mna_and_investment. Funding and M&A may require a supplier subscription. */
+        sections?: Array<string>;
+        /**
+         * The maximum number of companies; upstream default 50, maximum 500.
+         * @maximum 500
+         */
+        limit?: number;
+        /** The number of results to skip; upstream default zero. */
+        offset?: number;
+        /** The result ordering field; upstream default relevance. */
+        sortBy?: "relevance" | "revenue_estimate" | "valuation_estimate" | "employee_range" | "total_funding" | "founded_year";
+        /** The sort direction; upstream default desc. */
+        sortOrder?: "asc" | "desc";
+      };
+      output: {
+        /** The matching company records. */
+        data?: Array<Record<string, unknown>>;
+        /** The number of returned companies. */
+        count?: number;
+        /** The total matching companies, capped at 500 by Akta. */
+        total_count?: number;
+        /** The Akta credits consumed; Marketplace billing uses AIsa customer-cost headers. */
+        credits_consumed?: number;
+        [key: string]: unknown;
+      };
+    };
+    /** Resolve industry terms to ranked Akta industry codes. */
+    "aisa.search_akta_industries": {
+      input: {
+        /** The industry search text. */
+        query?: string;
+        /** The taxonomy level accepted by Akta. */
+        level?: string;
+      };
+      output: {
+        /** The ranked industry records. */
+        data?: Array<Record<string, unknown>>;
+        /** The number of returned industries. */
+        count?: number;
+        /** The Akta credits consumed. */
+        credits_consumed?: number;
+        [key: string]: unknown;
+      };
+    };
     /** Search Apollo news articles for known organizations and event categories. */
     "aisa.search_apollo_company_news": {
       input: {
@@ -2511,6 +5677,122 @@ declare module "@oomol-lab/connector" {
       };
       output: Record<string, unknown>;
     };
+    /** Search the web semantically through Exa. Request contents to include page text, or retrieve selected URLs with get_exa_contents. */
+    "aisa.search_exa": {
+      input: {
+        /**
+         * The natural-language search query.
+         * @minLength 1
+         */
+        query: string;
+        /** Retrieval mode; deep modes may take longer to complete. */
+        type?: "auto" | "fast" | "instant" | "deep-lite" | "deep" | "deep-reasoning";
+        /** Streaming is not supported by this JSON action; must be false. */
+        stream?: false;
+        /**
+         * Maximum search results to return.
+         * @minimum 1
+         * @maximum 100
+         */
+        numResults?: number;
+        /** The kind of pages to prioritize. */
+        category?: "company" | "research paper" | "news" | "personal site" | "financial report" | "people";
+        /** Only return results from these domains. */
+        includeDomains?: Array<string>;
+        /** Exclude results from these domains. */
+        excludeDomains?: Array<string>;
+        /**
+         * Return pages published on or after this ISO 8601 timestamp.
+         * @format date-time
+         */
+        startPublishedDate?: string;
+        /**
+         * Return pages published on or before this ISO 8601 timestamp.
+         * @format date-time
+         */
+        endPublishedDate?: string;
+        /** Content to include alongside each search result. */
+        contents?: {
+          /** Return the full page text; defaults to true for get_exa_contents. */
+          text?: boolean;
+          /** Return highlighted relevant snippets. */
+          highlights?: boolean;
+          /** Return an AI-generated summary of the page. */
+          summary?: boolean;
+        };
+        /** JSON Schema for a structured output. */
+        outputSchema?: Record<string, unknown>;
+        /** Instructions for generating the structured output. */
+        systemPrompt?: string;
+      };
+      output: {
+        /** The Exa request identifier. */
+        requestId?: string;
+        /** Informational Exa cost; not the AIsa customer charge. */
+        costDollars?: unknown;
+        /** Ranked search results. */
+        results?: Array<{
+          /** The Exa result identifier, normally the page URL. */
+          id?: string;
+          /** The page URL. */
+          url?: string;
+          /** The page title. */
+          title?: string;
+          /** The page author. */
+          author?: string;
+          /** The publication date reported by the source. */
+          publishedDate?: string;
+          /** The retrieved page text. */
+          text?: string;
+          /** Relevant snippets from the page. */
+          highlights?: Array<string>;
+          /** The generated page summary. */
+          summary?: string;
+          [key: string]: unknown;
+        }>;
+        /** Structured output generated when outputSchema is supplied. */
+        output?: unknown;
+        [key: string]: unknown;
+      };
+    };
+    /** Search the web through Firecrawl and return ranked URLs, titles, and snippets. */
+    "aisa.search_firecrawl": {
+      input: {
+        /**
+         * The web search query.
+         * @minLength 1
+         * @maxLength 2000
+         */
+        query: string;
+        /**
+         * The maximum number of results; upstream default 10.
+         * @minimum 1
+         * @maximum 100
+         */
+        limit?: number;
+      };
+      output: {
+        /** Whether the search succeeded. */
+        success?: boolean;
+        /** Supplier credits consumed; customer billing uses AIsa cost headers. */
+        creditsUsed?: number;
+        /** The search result groups. */
+        data?: {
+          /** Ranked web search results. */
+          web?: Array<{
+            /** The result title. */
+            title?: string;
+            /** The result URL. */
+            url?: string;
+            /** The result snippet. */
+            description?: string;
+            [key: string]: unknown;
+          }>;
+          [key: string]: unknown;
+        };
+        [key: string]: unknown;
+      };
+    };
     /** Search the Foreplay ad index by text, platform, format, niche, and activity. */
     "aisa.search_foreplay_ads": {
       input: {
@@ -2588,6 +5870,164 @@ declare module "@oomol-lab/connector" {
         cursor?: string;
       };
       output: Record<string, unknown>;
+    };
+    /** Start a background batch scrape of known URLs through AIsa Firecrawl. Poll the returned task ID for results. */
+    "aisa.submit_firecrawl_batch_scrape": {
+      input: {
+        /**
+         * Optional AIsa admission authorization in USD; not a guarantee of the final charge.
+         * @minLength 1
+         */
+        maxPriceUsd?: string;
+        /**
+         * Only include matching HTML tags.
+         * @maxItems 50
+         */
+        includeTags?: Array<string> | null;
+        /**
+         * Exclude matching HTML tags.
+         * @maxItems 50
+         */
+        excludeTags?: Array<string> | null;
+        /** Extract only the main page content. */
+        onlyMainContent?: boolean | null;
+        /**
+         * Maximum cached content age in milliseconds.
+         * @minimum 0
+         * @maximum 31536000000
+         */
+        maxAge?: number | null;
+        /**
+         * Minimum cached content age in milliseconds.
+         * @minimum 0
+         * @maximum 31536000000
+         */
+        minAge?: number | null;
+        /**
+         * Per-page scrape timeout in milliseconds.
+         * @minimum 1000
+         * @maximum 300000
+         */
+        timeout?: number | null;
+        /**
+         * Maximum concurrent page requests.
+         * @minimum 1
+         * @maximum 20
+         */
+        maxConcurrency?: number | null;
+        /**
+         * Distinct page URLs; duplicates after trimming trailing slashes are not allowed.
+         * @minItems 1
+         * @maxItems 1000
+         */
+        urls: Array<string>;
+      };
+      output: {
+        /**
+         * Task ID returned by submission; use it with the same connection or Marketplace account.
+         * @minLength 1
+         */
+        taskId: string;
+      };
+    };
+    /** Start a background website crawl through AIsa Firecrawl. Poll the returned task ID for results. */
+    "aisa.submit_firecrawl_crawl": {
+      input: {
+        /**
+         * Optional AIsa admission authorization in USD; not a guarantee of the final charge.
+         * @minLength 1
+         */
+        maxPriceUsd?: string;
+        /**
+         * HTTPS URL without credentials, fragment or PDF suffix.
+         * @format uri
+         */
+        url: string;
+        /**
+         * Maximum pages to crawl.
+         * @minimum 1
+         * @maximum 1000
+         */
+        limit: number;
+        /** Allow links to external websites. */
+        allowExternalLinks?: boolean | null;
+        /** Allow crawling subdomains. */
+        allowSubdomains?: boolean | null;
+        /** Crawl across the entire domain. */
+        crawlEntireDomain?: boolean | null;
+        /**
+         * Delay between requests in seconds.
+         * @minimum 0
+         * @maximum 30
+         */
+        delay?: number | null;
+        /**
+         * Path patterns to exclude from crawling.
+         * @maxItems 20
+         */
+        excludePaths?: Array<string> | null;
+        /**
+         * Path patterns to include in crawling.
+         * @maxItems 20
+         */
+        includePaths?: Array<string> | null;
+        /** Ignore query parameters when identifying pages. */
+        ignoreQueryParameters?: boolean | null;
+        /**
+         * Maximum concurrent page requests.
+         * @minimum 1
+         * @maximum 20
+         */
+        maxConcurrency?: number | null;
+        /**
+         * Maximum link discovery depth.
+         * @minimum 0
+         * @maximum 10
+         */
+        maxDiscoveryDepth?: number | null;
+        /** Options applied to each crawled page. */
+        scrapeOptions?: {
+          /**
+           * Only include matching HTML tags.
+           * @maxItems 50
+           */
+          includeTags?: Array<string> | null;
+          /**
+           * Exclude matching HTML tags.
+           * @maxItems 50
+           */
+          excludeTags?: Array<string> | null;
+          /** Extract only the main page content. */
+          onlyMainContent?: boolean | null;
+          /**
+           * Maximum cached content age in milliseconds.
+           * @minimum 0
+           * @maximum 31536000000
+           */
+          maxAge?: number | null;
+          /**
+           * Minimum cached content age in milliseconds.
+           * @minimum 0
+           * @maximum 31536000000
+           */
+          minAge?: number | null;
+          /**
+           * Per-page scrape timeout in milliseconds.
+           * @minimum 1000
+           * @maximum 300000
+           */
+          timeout?: number | null;
+        } | null;
+        /** How to use the website sitemap. */
+        sitemap?: "skip" | "include" | "only" | null;
+      };
+      output: {
+        /**
+         * Task ID returned by submission; use it with the same connection or Marketplace account.
+         * @minLength 1
+         */
+        taskId: string;
+      };
     };
   }
 }
