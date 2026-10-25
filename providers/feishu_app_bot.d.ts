@@ -1203,7 +1203,11 @@ declare module "@oomol-lab/connector" {
         referenceMap?: Record<string, unknown>;
       };
       output: {
-        /** The returned document payload. */
+        /** The task ID to poll; null when creation completed synchronously. */
+        taskId: string | null;
+        /** The document creation state. */
+        status: "processing" | "succeeded" | "failed" | "expired";
+        /** The document payload returned by Feishu. */
         document: {
           /** The Feishu document ID. */
           document_id?: string;
@@ -1216,7 +1220,11 @@ declare module "@oomol-lab/connector" {
           /** The Feishu URL for the document. */
           url?: string;
           [key: string]: unknown;
-        };
+        } | null;
+        /** The suggested delay before the next status request. */
+        pollAfterMs: number | null;
+        /** The upstream failure code and message, if creation failed. */
+        failure: Record<string, unknown> | null;
       };
     };
     /** Create a full-resource or anchored rich-text comment on a Feishu Drive document or supported file. */
@@ -4420,6 +4428,40 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
+    /** Get a document creation task status and its completed document. Do not repeat creation while the task is processing. */
+    "feishu_app_bot.get_document_creation": {
+      input: {
+        /**
+         * The task ID returned by create_document.
+         * @minLength 1
+         */
+        taskId: string;
+      };
+      output: {
+        /** The task ID to poll; null when creation completed synchronously. */
+        taskId: string | null;
+        /** The document creation state. */
+        status: "processing" | "succeeded" | "failed" | "expired";
+        /** The document payload returned by Feishu. */
+        document: {
+          /** The Feishu document ID. */
+          document_id?: string;
+          /** The current document revision ID. */
+          revision_id?: number;
+          /** The document title. */
+          title?: string;
+          /** The document content in the requested format. */
+          content?: string;
+          /** The Feishu URL for the document. */
+          url?: string;
+          [key: string]: unknown;
+        } | null;
+        /** The suggested delay before the next status request. */
+        pollAfterMs: number | null;
+        /** The upstream failure code and message, if creation failed. */
+        failure: Record<string, unknown> | null;
+      };
+    };
     /** Get the status of a Feishu document history revert task. */
     "feishu_app_bot.get_document_revert_status": {
       input: {
@@ -5185,7 +5227,7 @@ declare module "@oomol-lab/connector" {
         user: Record<string, unknown>;
       };
     };
-    /** Resolve and get a Feishu Wiki node by token and object type. */
+    /** Resolve a Feishu Wiki node by node token or document token; the server detects the token type. */
     "feishu_app_bot.get_wiki_node": {
       input: {
         /**
@@ -5193,8 +5235,6 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         token: string;
-        /** The document type represented by the Wiki node. */
-        objectType?: "doc" | "sheet" | "bitable" | "mindnote" | "file" | "slides" | "docx";
       };
       output: {
         /** A Feishu Wiki object. */
@@ -5457,6 +5497,8 @@ declare module "@oomol-lab/connector" {
          * @maxLength 9
          */
         meetingNumber: string;
+        /** Join an active meeting or start a Calendar meeting; defaults to join. */
+        action?: "join" | "start";
         /**
          * The meeting password, when required.
          * @minLength 1

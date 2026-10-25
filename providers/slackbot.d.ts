@@ -313,6 +313,22 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
+    /** Get the workspace and authorizing user from stored OAuth installation metadata. Returns null for incomplete metadata. OAuth credentials may be refreshed before execution. */
+    "slackbot.get_installation": {
+      input: Record<string, never>;
+      output: {
+        /** The Slack workspace ID. */
+        teamId: string;
+        /** The workspace display name, when available. */
+        teamName: string | null;
+        /** The Slack user ID of the person who approved the install. */
+        authedUserId: string;
+        /** The Slack bot user ID. */
+        botUserId: string;
+        /** The Slack app ID, when available. */
+        appId: string | null;
+      } | null;
+    };
     /** Get a permalink for a Slack message. */
     "slackbot.get_message_permalink": {
       input: {

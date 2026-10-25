@@ -6,10 +6,12 @@ declare module "@oomol-lab/connector" {
     "minimax.create_response": {
       input: {
         /**
-         * MiniMax model name to invoke, for example MiniMax-M3.
+         * MiniMax text model; defaults to MiniMax-M3.1-Flash. Explicit model IDs are preserved.
          * @minLength 1
+         * @pattern \S
+         * @default "MiniMax-M3.1-Flash"
          */
-        model: string;
+        model?: string;
         /** MiniMax Responses API text or conversation input. */
         input: string | Array<{
           /** Message item type. Omit it or set it to message. */
@@ -123,10 +125,10 @@ declare module "@oomol-lab/connector" {
             type?: "text";
           };
         };
-        /** MiniMax reasoning control. MiniMax-M3 defaults to none when omitted. */
+        /** MiniMax reasoning control. Flash defaults to max; MiniMax-M3 defaults to none when omitted. */
         reasoning?: {
           /** Reasoning effort value. */
-          effort?: "minimal" | "low" | "medium" | "high" | "none";
+          effort?: "minimal" | "low" | "medium" | "high" | "none" | "xhigh" | "max";
         };
       };
       output: {
@@ -306,10 +308,12 @@ declare module "@oomol-lab/connector" {
     "minimax.estimate_input_tokens": {
       input: {
         /**
-         * MiniMax model name to estimate against, for example MiniMax-M3.
+         * MiniMax text model; defaults to MiniMax-M3.1-Flash. Explicit model IDs are preserved.
          * @minLength 1
+         * @pattern \S
+         * @default "MiniMax-M3.1-Flash"
          */
-        model: string;
+        model?: string;
         /** MiniMax Responses API text or conversation input. */
         input: string | Array<{
           /** Message item type. Omit it or set it to message. */
@@ -398,10 +402,10 @@ declare module "@oomol-lab/connector" {
             type?: "text";
           };
         };
-        /** MiniMax reasoning control. MiniMax-M3 defaults to none when omitted. */
+        /** MiniMax reasoning control. Flash defaults to max; MiniMax-M3 defaults to none when omitted. */
         reasoning?: {
           /** Reasoning effort value. */
-          effort?: "minimal" | "low" | "medium" | "high" | "none";
+          effort?: "minimal" | "low" | "medium" | "high" | "none" | "xhigh" | "max";
         };
       };
       output: {
@@ -454,7 +458,13 @@ declare module "@oomol-lab/connector" {
     };
     /** List OpenAI-compatible MiniMax models available to the API key. */
     "minimax.list_models": {
-      input: Record<string, never>;
+      input: {
+        /**
+         * Include legacy MiniMax text models alongside current models.
+         * @default false
+         */
+        include_legacy?: boolean;
+      };
       output: {
         /** Object type returned by MiniMax, usually list. */
         object: string;
