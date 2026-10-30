@@ -443,12 +443,24 @@ declare module "@oomol-lab/connector" {
         affectedMemberIds: Array<string>;
       };
     };
-    /** Return every available balance lot for the authenticated OOMOL account. */
+    /** Return every available balance lot owned by the current OOMOL team creator. This account balance may be shared by multiple teams. */
     "oomol_console.get_balance": {
       input: Record<string, never>;
       output: {
         /** The billing scope represented by this result. */
         scope: "account";
+        /**
+         * The current OOMOL team identifier.
+         * @minLength 1
+         * @pattern \S
+         */
+        teamId: string;
+        /**
+         * The current team creator whose account holds the balance.
+         * @minLength 1
+         * @pattern \S
+         */
+        balanceOwnerUserId: string;
         /** All available balance lots across every upstream page. */
         items: Array<{
           /**
@@ -493,7 +505,7 @@ declare module "@oomol-lab/connector" {
         deficit: string | null;
       };
     };
-    /** Return the compact OOMOL account billing metrics shown by Console. */
+    /** Return current-team billing and usage metrics together with the team creator account balance. */
     "oomol_console.get_billing_summary": {
       input: {
         /**
@@ -513,7 +525,19 @@ declare module "@oomol-lab/connector" {
       };
       output: {
         /** The billing scope represented by this result. */
-        scope: "account";
+        scope: "team";
+        /**
+         * The current OOMOL team identifier.
+         * @minLength 1
+         * @pattern \S
+         */
+        teamId: string;
+        /**
+         * The current team creator whose account holds the balance.
+         * @minLength 1
+         * @pattern \S
+         */
+        balanceOwnerUserId: string;
         /** The requested billing summary period. */
         period: {
           /** The number of trailing days included in the summary. */
@@ -638,7 +662,7 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** Return the daily OOMOL account usage breakdown by source and subject. */
+    /** Return the current OOMOL team daily usage breakdown by source and subject. */
     "oomol_console.get_usage_breakdown": {
       input: {
         /**
@@ -658,7 +682,13 @@ declare module "@oomol-lab/connector" {
       };
       output: {
         /** The usage scope represented by this result. */
-        scope: "account";
+        scope: "team";
+        /**
+         * The current OOMOL team identifier.
+         * @minLength 1
+         * @pattern \S
+         */
+        teamId: string;
         /** The effective time range used by OOMOL Insight. */
         effectiveRange: {
           /** The inclusive range start timestamp in milliseconds. */
@@ -714,7 +744,7 @@ declare module "@oomol-lab/connector" {
             }>>;
       };
     };
-    /** List the execution records shown on an OOMOL Console Connection details page. */
+    /** List current-team Connection execution records visible to the authenticated user or service account. */
     "oomol_console.list_connection_executions": {
       input: {
         /**
@@ -1013,7 +1043,7 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** List the OOMOL teams visible to the authenticated account. */
+    /** List the OOMOL teams the authenticated user or service account belongs to. */
     "oomol_console.list_teams": {
       input: Record<string, never>;
       output: {

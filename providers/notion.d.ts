@@ -1197,6 +1197,58 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
+    /** List saved Notion view references with pagination. Supply databaseId for views in one database, or dataSourceId to include accessible linked views across the workspace. Retrieve each view to inspect its filters, sorts, and layout settings. */
+    "notion.list_views": {
+      input: Record<string, unknown>;
+      output: {
+        /** The Notion object type. */
+        object: "list";
+        /** Returned Notion objects. */
+        results: Array<{
+          /** The Notion object type. */
+          object: "view";
+          /** The saved view ID. */
+          id: string;
+          /** The official Notion parent object. */
+          parent?: Record<string, unknown>;
+          /** The data source shown by the view. */
+          data_source_id?: string | null;
+          /** The saved view name. */
+          name?: string;
+          /** The layout type, such as table, board, calendar, or dashboard. */
+          type?: string;
+          /** A Notion API object. */
+          filter?: Record<string, unknown> | null;
+          /** sorts value. */
+          sorts?: Array<Record<string, unknown>> | null;
+          /** A Notion API object. */
+          quick_filters?: Record<string, unknown> | null;
+          /** A Notion API object. */
+          configuration?: Record<string, unknown> | null;
+          /**
+           * The time when the view was created.
+           * @format date-time
+           */
+          created_time?: string;
+          /**
+           * The time when the view was last edited.
+           * @format date-time
+           */
+          last_edited_time?: string;
+          /**
+           * The Notion URL for the view.
+           * @format uri
+           */
+          url?: string;
+          [key: string]: unknown;
+        }>;
+        /** Cursor for the next page. */
+        next_cursor?: string | null;
+        /** Whether more results are available. */
+        has_more: boolean;
+        [key: string]: unknown;
+      };
+    };
     /** Move a Notion page under another page or under a data source through the official page move API. */
     "notion.move_page": {
       input: {
@@ -2251,6 +2303,54 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
+    /** Retrieve a saved Notion view's name, layout configuration, filters, sorts, and displayed properties. */
+    "notion.retrieve_view": {
+      input: {
+        /**
+         * The saved view ID to retrieve.
+         * @minLength 1
+         */
+        viewId: string;
+      };
+      output: {
+        /** The Notion object type. */
+        object: "view";
+        /** The saved view ID. */
+        id: string;
+        /** The official Notion parent object. */
+        parent?: Record<string, unknown>;
+        /** The data source shown by the view. */
+        data_source_id?: string | null;
+        /** The saved view name. */
+        name?: string;
+        /** The layout type, such as table, board, calendar, or dashboard. */
+        type?: string;
+        /** A Notion API object. */
+        filter?: Record<string, unknown> | null;
+        /** sorts value. */
+        sorts?: Array<Record<string, unknown>> | null;
+        /** A Notion API object. */
+        quick_filters?: Record<string, unknown> | null;
+        /** A Notion API object. */
+        configuration?: Record<string, unknown> | null;
+        /**
+         * The time when the view was created.
+         * @format date-time
+         */
+        created_time?: string;
+        /**
+         * The time when the view was last edited.
+         * @format date-time
+         */
+        last_edited_time?: string;
+        /**
+         * The Notion URL for the view.
+         * @format uri
+         */
+        url?: string;
+        [key: string]: unknown;
+      };
+    };
     /** Search Notion pages and data sources with optional filter, sort, and pagination controls. */
     "notion.search": {
       input: {
@@ -2988,6 +3088,97 @@ declare module "@oomol-lab/connector" {
         truncated?: boolean;
         /** Block IDs that could not be loaded and can be passed back as the pageId input. */
         unknown_block_ids?: Array<string>;
+        [key: string]: unknown;
+      };
+    };
+    /** Update a saved Notion view's name, filters, sorts, quick filters, or presentation settings. Omitted fields stay unchanged. Pass null to clear filters or sorts. Configuration type must match the existing view; this action does not change the layout type. */
+    "notion.update_view": {
+      input: {
+        /**
+         * The saved view ID to update.
+         * @minLength 1
+         */
+        viewId: string;
+        /** The new saved view name. */
+        name?: string;
+        /** The saved filter. Pass null to clear it. */
+        filter?: Record<string, unknown> | null;
+        /**
+         * Property-based sorts. Pass null to clear sorting.
+         * @maxItems 100
+         */
+        sorts?: Array<{
+          /**
+           * The property name or ID to sort by.
+           * @minLength 1
+           */
+          property: string;
+          /** The sort direction. */
+          direction: "ascending" | "descending";
+        }> | null;
+        /** Filter-bar conditions keyed by property name or ID. Null removes a key or clears all quick filters. */
+        quick_filters?: Record<string, Record<string, unknown> | null> | null;
+        /** Notion's view-specific presentation settings, such as properties, group_by, and wrap_cells. Include only settings to change; nullable nested fields accept null to clear them. The type must match the existing layout. */
+        configuration?: {
+          /** Must match the existing view type. Dashboard layout is read-only. */
+          type: "table" | "board" | "list" | "calendar" | "timeline" | "gallery" | "form" | "chart" | "map";
+          /** Displayed properties in order, with visibility and optional table column settings. */
+          properties?: Array<{
+            /**
+             * The data source property ID.
+             * @minLength 1
+             */
+            property_id: string;
+            /** Whether the property is displayed. */
+            visible?: boolean;
+            /**
+             * The column width for table views.
+             * @minimum 1
+             */
+            width?: number;
+            /** Whether text wraps in the column. */
+            wrap?: boolean;
+            [key: string]: unknown;
+          }> | null;
+          [key: string]: unknown;
+        };
+      };
+      output: {
+        /** The Notion object type. */
+        object: "view";
+        /** The saved view ID. */
+        id: string;
+        /** The official Notion parent object. */
+        parent?: Record<string, unknown>;
+        /** The data source shown by the view. */
+        data_source_id?: string | null;
+        /** The saved view name. */
+        name?: string;
+        /** The layout type, such as table, board, calendar, or dashboard. */
+        type?: string;
+        /** A Notion API object. */
+        filter?: Record<string, unknown> | null;
+        /** sorts value. */
+        sorts?: Array<Record<string, unknown>> | null;
+        /** A Notion API object. */
+        quick_filters?: Record<string, unknown> | null;
+        /** A Notion API object. */
+        configuration?: Record<string, unknown> | null;
+        /**
+         * The time when the view was created.
+         * @format date-time
+         */
+        created_time?: string;
+        /**
+         * The time when the view was last edited.
+         * @format date-time
+         */
+        last_edited_time?: string;
+        /**
+         * The Notion URL for the view.
+         * @format uri
+         */
+        url?: string;
         [key: string]: unknown;
       };
     };
