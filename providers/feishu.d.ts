@@ -21,7 +21,7 @@ declare module "@oomol-lab/connector" {
          */
         comment?: string;
         /** The type used by all user IDs in this request. */
-        userIdType?: "open_id" | "union_id" | "user_id";
+        userIdType?: "open_id" | "union_id" | "user_id" | "user_key";
       };
       output: {
         /** Whether Feishu accepted the operation. */
@@ -110,7 +110,7 @@ declare module "@oomol-lab/connector" {
          */
         comment?: string;
         /** The type used by all user IDs in this request. */
-        userIdType?: "open_id" | "union_id" | "user_id";
+        userIdType?: "open_id" | "union_id" | "user_id" | "user_key";
       };
       output: {
         /** Whether Feishu accepted the operation. */
@@ -708,10 +708,7 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         targetParentToken?: string;
-        /**
-         * An optional title for the copied node.
-         * @minLength 1
-         */
+        /** The copied node title. Omit to retain the original; an empty string clears it. */
         title?: string;
       };
       output: {
@@ -1324,7 +1321,7 @@ declare module "@oomol-lab/connector" {
         endTime: string;
         /** The IANA timezone used by the start and end times. */
         timezone?: string;
-        /** Whether the event is an all-day event. */
+        /** Whether the event is all-day; use YYYY-MM-DD startTime and an exclusive YYYY-MM-DD endTime. */
         isAllDay?: boolean;
         /** The event visibility. */
         visibility?: "default" | "public" | "private";
@@ -1632,7 +1629,7 @@ declare module "@oomol-lab/connector" {
         html?: string;
         /**
          * Public files to fetch and attach to the MIME message.
-         * @maxItems 20
+         * @maxItems 250
          */
         attachments?: Array<{
           /**
@@ -2288,7 +2285,7 @@ declare module "@oomol-lab/connector" {
            */
           id: string;
           /** The member type. */
-          type: "user" | "app";
+          type: "user" | "app" | "chat";
           /** The tasklist permission granted to the member. */
           role: "editor" | "viewer";
         }>;
@@ -2614,7 +2611,7 @@ declare module "@oomol-lab/connector" {
         id: string;
       };
     };
-    /** Delete up to ten questions from a Base form. */
+    /** Delete up to ten questions from a Base form. By default this also deletes the underlying fields and record data; set keepFields to preserve them. */
     "feishu.delete_base_form_questions": {
       input: {
         /**
@@ -2632,6 +2629,8 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         formId: string;
+        /** Keep the underlying fields and existing record data; defaults to false. */
+        keepFields?: boolean;
         /**
          * The question IDs to delete.
          * @minItems 1
@@ -3292,12 +3291,12 @@ declare module "@oomol-lab/connector" {
          */
         spaceId: string;
         /**
-         * The Wiki node_token.
+         * The Wiki node_token, or the obj_token matching objectType.
          * @minLength 1
          */
         nodeToken: string;
-        /** The document type represented by the Wiki node. */
-        objectType?: "doc" | "sheet" | "bitable" | "mindnote" | "file" | "slides" | "docx";
+        /** The token type. Defaults to wiki for a Wiki node_token. */
+        objectType?: "wiki" | "doc" | "docx" | "sheet" | "bitable" | "mindnote" | "slides" | "file";
         /** Whether to delete descendant nodes. */
         includeChildren?: boolean;
       };
@@ -4171,7 +4170,7 @@ declare module "@oomol-lab/connector" {
         html?: string;
         /**
          * Public files to fetch and attach to the MIME message.
-         * @maxItems 20
+         * @maxItems 250
          */
         attachments?: Array<{
           /**
@@ -4260,7 +4259,7 @@ declare module "@oomol-lab/connector" {
         /** The response locale, for example `zh-CN` or `en-US`. */
         locale?: string;
         /** The type used by all user IDs in this request. */
-        userIdType?: "open_id" | "union_id" | "user_id";
+        userIdType?: "open_id" | "union_id" | "user_id" | "user_key";
       };
       output: {
         /** The raw Approval object returned by Feishu. */
@@ -4710,6 +4709,8 @@ declare module "@oomol-lab/connector" {
         hasMore: boolean;
         /** The token for the next page. */
         pageToken: string | null;
+        /** Event instances whose meeting relation lookup failed, including instance_id and fail_msg. */
+        failedInstances?: Array<Record<string, unknown>>;
       };
     };
     /** Read one or more A1 ranges with values, formulas, and optional styles. */
@@ -4978,6 +4979,22 @@ declare module "@oomol-lab/connector" {
         extra?: unknown;
         /** The raw Feishu import result. */
         raw: Record<string, unknown>;
+      };
+    };
+    /** Get public access, sharing, collaborator management, security, and comment permission settings for a Feishu Drive resource. Download restrictions can only be determined when the corresponding fields are returned; this does not test a user's effective download permission. */
+    "feishu.get_drive_permission_settings": {
+      input: {
+        /**
+         * The Feishu Drive resource token.
+         * @minLength 1
+         */
+        token: string;
+        /** The resource type used by the Drive v2 permission settings API. */
+        resourceType: "doc" | "sheet" | "file" | "wiki" | "bitable" | "docx" | "mindnote" | "minutes" | "slides" | "folder" | "apps";
+      };
+      output: {
+        /** The complete permission_public object returned by Feishu. Missing fields are unknown, not evidence that an operation is allowed. */
+        permissionPublic: Record<string, unknown>;
       };
     };
     /** Get the current state of an asynchronous Drive move, copy, or delete task. */
@@ -5816,7 +5833,7 @@ declare module "@oomol-lab/connector" {
          */
         taskId: string;
         /** The Wiki asynchronous operation type. */
-        taskType?: "move_wiki_to_docs" | "delete_space";
+        taskType?: "move_wiki_to_docs" | "delete_space" | "delete_node";
       };
       output: {
         /** The Wiki asynchronous task ID. */
@@ -6083,16 +6100,18 @@ declare module "@oomol-lab/connector" {
         count: number;
       };
     };
-    /** List approval tasks grouped by pending, completed, initiated, or CC status. */
+    /** List approval tasks grouped by pending, completed, or CC status. */
     "feishu.list_approval_tasks": {
       input: {
         /** The approval task group to query. */
-        topic: "pending" | "completed" | "initiated" | "cc_unread" | "cc_read";
+        topic: "pending" | "completed" | "cc_unread" | "cc_read";
         /**
          * The approval definition code.
          * @minLength 1
          */
         definitionCode?: string;
+        /** Text used to search approval instances or tasks. */
+        keyword?: string;
         /**
          * The inclusive start time as a Unix timestamp in seconds.
          * @minLength 1
@@ -6106,7 +6125,7 @@ declare module "@oomol-lab/connector" {
         /** The response locale, for example `zh-CN` or `en-US`. */
         locale?: string;
         /** The type used by all user IDs in this request. */
-        userIdType?: "open_id" | "union_id" | "user_id";
+        userIdType?: "open_id" | "union_id" | "user_id" | "user_key";
         /**
          * The number of results per page.
          * @maximum 100
@@ -6124,10 +6143,10 @@ declare module "@oomol-lab/connector" {
         /** Whether another page is available. */
         hasMore: boolean;
         /**
-         * The total count reported by Feishu.
+         * The count reported by Feishu when available; it may be capped and is not an exact total.
          * @minimum 0
          */
-        total: number;
+        total?: number;
       };
     };
     /** List folders, tables, documents, dashboards, and workflows in a Base. */
@@ -6385,6 +6404,11 @@ declare module "@oomol-lab/connector" {
         pageToken: string;
         /** Whether another page is available. */
         hasMore: boolean;
+        /**
+         * The version cursor to pass as maxVersion for the next history page.
+         * @exclusiveMinimum 0
+         */
+        nextMaxVersion?: number | null;
       };
     };
     /** List records in a Feishu Base table with optional projection, filter, and sort. */
@@ -7243,6 +7267,8 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         definitionCode?: string;
+        /** Text used to search approval instances or tasks. */
+        keyword?: string;
         /**
          * The inclusive start time as a Unix timestamp in seconds.
          * @minLength 1
@@ -7256,7 +7282,7 @@ declare module "@oomol-lab/connector" {
         /** The response locale, for example `zh-CN` or `en-US`. */
         locale?: string;
         /** The type used by all user IDs in this request. */
-        userIdType?: "open_id" | "union_id" | "user_id";
+        userIdType?: "open_id" | "union_id" | "user_id" | "user_key";
         /**
          * The number of results per page.
          * @maximum 100
@@ -7274,10 +7300,10 @@ declare module "@oomol-lab/connector" {
         /** Whether another page is available. */
         hasMore: boolean;
         /**
-         * The total count reported by Feishu.
+         * The count reported by Feishu when available; it may be capped and is not an exact total.
          * @minimum 0
          */
-        total: number;
+        total?: number;
       };
     };
     /** List message IDs in a Feishu mailbox folder or label. */
@@ -7521,12 +7547,12 @@ declare module "@oomol-lab/connector" {
          * The user whose cycles should be listed.
          * @minLength 1
          */
-        userId?: string;
+        userId: string;
         /** The identifier type used for user fields. */
         userIdType?: "open_id" | "union_id" | "user_id";
         /**
          * The maximum number of results on this page.
-         * @maximum 50
+         * @maximum 100
          * @exclusiveMinimum 0
          */
         pageSize?: number;
@@ -7834,7 +7860,7 @@ declare module "@oomol-lab/connector" {
         /** Whether to return completed tasks. */
         completed?: boolean;
         /** The caller's relationship to returned tasks. */
-        type?: "my_tasks" | "assigned" | "created" | "followed";
+        type?: "my_tasks";
         /**
          * The maximum number of results on this page.
          * @maximum 100
@@ -8178,7 +8204,7 @@ declare module "@oomol-lab/connector" {
            */
           id: string;
           /** The member type. */
-          type: "user" | "app";
+          type: "user" | "app" | "chat";
           /** The tasklist permission granted to the member. */
           role: "editor" | "viewer";
         }>;
@@ -8404,7 +8430,7 @@ declare module "@oomol-lab/connector" {
          * The destination Wiki space ID.
          * @minLength 1
          */
-        targetSpaceId: string;
+        targetSpaceId?: string;
         /**
          * The destination parent node_token.
          * @minLength 1
@@ -8537,7 +8563,11 @@ declare module "@oomol-lab/connector" {
         mentions?: Array<string>;
         /** Replacement notes. */
         notes?: string;
-        /** The new OKR score. */
+        /**
+         * The new OKR score.
+         * @minimum 0
+         * @maximum 1
+         */
         score?: number;
         /**
          * The new deadline accepted by Feishu.
@@ -8903,6 +8933,8 @@ declare module "@oomol-lab/connector" {
         memberId: string;
         /** How Feishu should interpret the member ID. */
         memberType: "email" | "openid" | "unionid" | "openchat" | "opendepartmentid" | "groupid" | "appid" | "wikispaceid";
+        /** The Wiki-space member role. */
+        memberKind?: "wiki_space_member" | "wiki_space_viewer" | "wiki_space_editor";
         /** The Wiki permission scope. */
         permType?: "container" | "single_page";
       };
@@ -9410,7 +9442,7 @@ declare module "@oomol-lab/connector" {
         html?: string;
         /**
          * Public files to fetch and attach to the MIME message.
-         * @maxItems 20
+         * @maxItems 250
          */
         attachments?: Array<{
           /**
@@ -9496,7 +9528,7 @@ declare module "@oomol-lab/connector" {
         html?: string;
         /**
          * Public files to fetch and attach to the MIME message.
-         * @maxItems 20
+         * @maxItems 250
          */
         attachments?: Array<{
           /**
@@ -9757,10 +9789,10 @@ declare module "@oomol-lab/connector" {
         /** Whether another page is available. */
         hasMore: boolean;
         /**
-         * The total count reported by Feishu.
+         * The count reported by Feishu when available; it may be capped and is not an exact total.
          * @minimum 0
          */
-        total: number;
+        total?: number;
       };
     };
     /** Search the options of a single-select or multi-select field in a Feishu Base. */
@@ -9979,8 +10011,8 @@ declare module "@oomol-lab/connector" {
         /** User open_ids, chat_ids, or meeting room IDs used to filter events. */
         attendeeIds?: Array<string>;
         /**
-         * The maximum number of items to return on this page.
-         * @maximum 500
+         * The maximum number of search results, from 1 to 30.
+         * @maximum 30
          * @exclusiveMinimum 0
          */
         pageSize?: number;
@@ -10167,7 +10199,10 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         mailboxId?: string;
-        /** Full-text search terms. */
+        /**
+         * Full-text search terms.
+         * @maxLength 50
+         */
         query?: string;
         /** Sender addresses to match. */
         from?: Array<string>;
@@ -10199,7 +10234,7 @@ declare module "@oomol-lab/connector" {
         endTime?: string;
         /**
          * The maximum number of results on this page.
-         * @maximum 50
+         * @maximum 15
          * @exclusiveMinimum 0
          */
         pageSize?: number;
@@ -10264,7 +10299,10 @@ declare module "@oomol-lab/connector" {
     /** Search Feishu Minutes by text, owners, participants, and creation time. */
     "feishu.search_minutes": {
       input: {
-        /** Full-text search terms for Minutes. */
+        /**
+         * Full-text search terms for Minutes.
+         * @maxLength 50
+         */
         query?: string;
         /** Owner open_ids to match. */
         ownerIds?: Array<string>;
@@ -10282,7 +10320,7 @@ declare module "@oomol-lab/connector" {
         endTime?: string;
         /**
          * The maximum number of results on this page.
-         * @maximum 50
+         * @maximum 30
          * @exclusiveMinimum 0
          */
         pageSize?: number;
@@ -10405,7 +10443,10 @@ declare module "@oomol-lab/connector" {
     /** Search Feishu video meetings by text, people, rooms, and time range. */
     "feishu.search_vc_meetings": {
       input: {
-        /** Full-text search terms for video meetings. */
+        /**
+         * Full-text search terms for video meetings.
+         * @maxLength 50
+         */
         query?: string;
         /** Participant user IDs to match. */
         participantIds?: Array<string>;
@@ -10425,7 +10466,7 @@ declare module "@oomol-lab/connector" {
         endTime?: string;
         /**
          * The maximum number of results on this page.
-         * @maximum 50
+         * @maximum 30
          * @exclusiveMinimum 0
          */
         pageSize?: number;
@@ -10471,7 +10512,7 @@ declare module "@oomol-lab/connector" {
         html?: string;
         /**
          * Public files to fetch and attach to the MIME message.
-         * @maxItems 20
+         * @maxItems 250
          */
         attachments?: Array<{
           /**
@@ -11332,7 +11373,7 @@ declare module "@oomol-lab/connector" {
          */
         comment?: string;
         /** The type used by all user IDs in this request. */
-        userIdType?: "open_id" | "union_id" | "user_id";
+        userIdType?: "open_id" | "union_id" | "user_id" | "user_key";
       };
       output: {
         /** Whether Feishu accepted the operation. */
@@ -11956,7 +11997,7 @@ declare module "@oomol-lab/connector" {
         endTime?: string;
         /** The IANA timezone used by the start and end times. */
         timezone?: string;
-        /** Whether the event is an all-day event. */
+        /** Whether the event is all-day; use YYYY-MM-DD startTime and an exclusive YYYY-MM-DD endTime. */
         isAllDay?: boolean;
         /** The event visibility. */
         visibility?: "default" | "public" | "private";
@@ -12045,10 +12086,20 @@ declare module "@oomol-lab/connector" {
         /** The text matched by `replace_text`. */
         pattern?: string;
         /**
-         * The target block ID, or comma-separated block IDs for `delete_blocks`.
+         * The target block ID, or comma-separated block IDs for `replace_block` and `delete_blocks`; cannot be combined with a block range.
          * @minLength 1
          */
         blockId?: string;
+        /**
+         * The inclusive start of a sibling block range for `replace_block` or `delete_blocks`; requires endBlockId. `0` means document start.
+         * @minLength 1
+         */
+        startBlockId?: string;
+        /**
+         * The inclusive end of a sibling block range for `replace_block` or `delete_blocks`; requires startBlockId. `-1` means document end.
+         * @minLength 1
+         */
+        endBlockId?: string;
         /**
          * The source block IDs used by copy or move operations.
          * @minItems 1
@@ -12161,6 +12212,10 @@ declare module "@oomol-lab/connector" {
         memberType: "email" | "openid" | "unionid" | "openchat" | "opendepartmentid" | "groupid" | "appid" | "wikispaceid";
         /** The permission role granted to the member. */
         permission: "view" | "edit" | "full_access";
+        /** The Wiki permission scope. */
+        permType?: "container" | "single_page";
+        /** The Wiki-space member role. */
+        memberKind?: "wiki_space_member" | "wiki_space_viewer" | "wiki_space_editor";
         /** Whether Feishu should notify the collaborator. */
         needNotification?: boolean;
       };
@@ -12233,7 +12288,7 @@ declare module "@oomol-lab/connector" {
         html?: string;
         /**
          * Public files to fetch and attach to the MIME message.
-         * @maxItems 20
+         * @maxItems 250
          */
         attachments?: Array<{
           /**
@@ -12778,6 +12833,27 @@ declare module "@oomol-lab/connector" {
       output: {
         /** A Feishu task object. */
         task: Record<string, unknown>;
+      };
+    };
+    /** Update a Feishu Wiki node title. Supports doc, docx, and shortcut nodes. */
+    "feishu.update_wiki_node_title": {
+      input: {
+        /**
+         * The Feishu Wiki space ID.
+         * @minLength 1
+         */
+        spaceId: string;
+        /**
+         * The Wiki node_token.
+         * @minLength 1
+         */
+        nodeToken: string;
+        /** The new node title. */
+        title: string;
+      };
+      output: {
+        /** Whether Feishu accepted the title update. */
+        updated: boolean;
       };
     };
     /** Validate a Base attachment field, upload one or more files from public URLs, and append them to one record cell. */
