@@ -545,10 +545,7 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         targetParentToken?: string;
-        /**
-         * An optional title for the copied node.
-         * @minLength 1
-         */
+        /** The copied node title. Omit to retain the original; an empty string clears it. */
         title?: string;
       };
       output: {
@@ -1107,7 +1104,7 @@ declare module "@oomol-lab/connector" {
         endTime: string;
         /** The IANA timezone used by the start and end times. */
         timezone?: string;
-        /** Whether the event is an all-day event. */
+        /** Whether the event is all-day; use YYYY-MM-DD startTime and an exclusive YYYY-MM-DD endTime. */
         isAllDay?: boolean;
         /** The event visibility. */
         visibility?: "default" | "public" | "private";
@@ -1951,7 +1948,7 @@ declare module "@oomol-lab/connector" {
            */
           id: string;
           /** The member type. */
-          type: "user" | "app";
+          type: "user" | "app" | "chat";
           /** The tasklist permission granted to the member. */
           role: "editor" | "viewer";
         }>;
@@ -2235,7 +2232,7 @@ declare module "@oomol-lab/connector" {
         id: string;
       };
     };
-    /** Delete up to ten questions from a Base form. */
+    /** Delete up to ten questions from a Base form. By default this also deletes the underlying fields and record data; set keepFields to preserve them. */
     "feishu_app_bot.delete_base_form_questions": {
       input: {
         /**
@@ -2253,6 +2250,8 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         formId: string;
+        /** Keep the underlying fields and existing record data; defaults to false. */
+        keepFields?: boolean;
         /**
          * The question IDs to delete.
          * @minItems 1
@@ -2876,12 +2875,12 @@ declare module "@oomol-lab/connector" {
          */
         spaceId: string;
         /**
-         * The Wiki node_token.
+         * The Wiki node_token, or the obj_token matching objectType.
          * @minLength 1
          */
         nodeToken: string;
-        /** The document type represented by the Wiki node. */
-        objectType?: "doc" | "sheet" | "bitable" | "mindnote" | "file" | "slides" | "docx";
+        /** The token type. Defaults to wiki for a Wiki node_token. */
+        objectType?: "wiki" | "doc" | "docx" | "sheet" | "bitable" | "mindnote" | "slides" | "file";
         /** Whether to delete descendant nodes. */
         includeChildren?: boolean;
       };
@@ -4574,6 +4573,22 @@ declare module "@oomol-lab/connector" {
         raw: Record<string, unknown>;
       };
     };
+    /** Get public access, sharing, collaborator management, security, and comment permission settings for a Feishu Drive resource. Download restrictions can only be determined when the corresponding fields are returned; this does not test a user's effective download permission. */
+    "feishu_app_bot.get_drive_permission_settings": {
+      input: {
+        /**
+         * The Feishu Drive resource token.
+         * @minLength 1
+         */
+        token: string;
+        /** The resource type used by the Drive v2 permission settings API. */
+        resourceType: "doc" | "sheet" | "file" | "wiki" | "bitable" | "docx" | "mindnote" | "minutes" | "slides" | "folder" | "apps";
+      };
+      output: {
+        /** The complete permission_public object returned by Feishu. Missing fields are unknown, not evidence that an operation is allowed. */
+        permissionPublic: Record<string, unknown>;
+      };
+    };
     /** Get the current state of an asynchronous Drive move, copy, or delete task. */
     "feishu_app_bot.get_drive_task_status": {
       input: {
@@ -5218,7 +5233,7 @@ declare module "@oomol-lab/connector" {
          * The Feishu user identifier. Omit only when using user identity to get the authenticated user.
          * @minLength 1
          */
-        userId?: string;
+        userId: string;
         /** The identifier type used by userId. */
         userIdType?: "open_id" | "union_id" | "user_id";
       };
@@ -5264,7 +5279,7 @@ declare module "@oomol-lab/connector" {
          */
         taskId: string;
         /** The Wiki asynchronous operation type. */
-        taskType?: "move_wiki_to_docs" | "delete_space";
+        taskType?: "move_wiki_to_docs" | "delete_space" | "delete_node";
       };
       output: {
         /** The Wiki asynchronous task ID. */
@@ -5539,7 +5554,7 @@ declare module "@oomol-lab/connector" {
          * The target user ID required for tenant identity.
          * @minLength 1
          */
-        userId?: string;
+        userId: string;
       };
       output: {
         /** The active meetings. */
@@ -5830,6 +5845,11 @@ declare module "@oomol-lab/connector" {
         pageToken: string;
         /** Whether another page is available. */
         hasMore: boolean;
+        /**
+         * The version cursor to pass as maxVersion for the next history page.
+         * @exclusiveMinimum 0
+         */
+        nextMaxVersion?: number | null;
       };
     };
     /** List records in a Feishu Base table with optional projection, filter, and sort. */
@@ -6795,12 +6815,12 @@ declare module "@oomol-lab/connector" {
          * The user whose cycles should be listed.
          * @minLength 1
          */
-        userId?: string;
+        userId: string;
         /** The identifier type used for user fields. */
         userIdType?: "open_id" | "union_id" | "user_id";
         /**
          * The maximum number of results on this page.
-         * @maximum 50
+         * @maximum 100
          * @exclusiveMinimum 0
          */
         pageSize?: number;
@@ -7437,7 +7457,7 @@ declare module "@oomol-lab/connector" {
            */
           id: string;
           /** The member type. */
-          type: "user" | "app";
+          type: "user" | "app" | "chat";
           /** The tasklist permission granted to the member. */
           role: "editor" | "viewer";
         }>;
@@ -7633,7 +7653,7 @@ declare module "@oomol-lab/connector" {
          * The destination Wiki space ID.
          * @minLength 1
          */
-        targetSpaceId: string;
+        targetSpaceId?: string;
         /**
          * The destination parent node_token.
          * @minLength 1
@@ -7766,7 +7786,11 @@ declare module "@oomol-lab/connector" {
         mentions?: Array<string>;
         /** Replacement notes. */
         notes?: string;
-        /** The new OKR score. */
+        /**
+         * The new OKR score.
+         * @minimum 0
+         * @maximum 1
+         */
         score?: number;
         /**
          * The new deadline accepted by Feishu.
@@ -8074,6 +8098,8 @@ declare module "@oomol-lab/connector" {
         memberId: string;
         /** How Feishu should interpret the member ID. */
         memberType: "email" | "openid" | "unionid" | "openchat" | "opendepartmentid" | "groupid" | "appid" | "wikispaceid";
+        /** The Wiki-space member role. */
+        memberKind?: "wiki_space_member" | "wiki_space_viewer" | "wiki_space_editor";
         /** The Wiki permission scope. */
         permType?: "container" | "single_page";
       };
@@ -10338,7 +10364,7 @@ declare module "@oomol-lab/connector" {
         endTime?: string;
         /** The IANA timezone used by the start and end times. */
         timezone?: string;
-        /** Whether the event is an all-day event. */
+        /** Whether the event is all-day; use YYYY-MM-DD startTime and an exclusive YYYY-MM-DD endTime. */
         isAllDay?: boolean;
         /** The event visibility. */
         visibility?: "default" | "public" | "private";
@@ -10427,10 +10453,20 @@ declare module "@oomol-lab/connector" {
         /** The text matched by `replace_text`. */
         pattern?: string;
         /**
-         * The target block ID, or comma-separated block IDs for `delete_blocks`.
+         * The target block ID, or comma-separated block IDs for `replace_block` and `delete_blocks`; cannot be combined with a block range.
          * @minLength 1
          */
         blockId?: string;
+        /**
+         * The inclusive start of a sibling block range for `replace_block` or `delete_blocks`; requires endBlockId. `0` means document start.
+         * @minLength 1
+         */
+        startBlockId?: string;
+        /**
+         * The inclusive end of a sibling block range for `replace_block` or `delete_blocks`; requires startBlockId. `-1` means document end.
+         * @minLength 1
+         */
+        endBlockId?: string;
         /**
          * The source block IDs used by copy or move operations.
          * @minItems 1
@@ -10543,6 +10579,10 @@ declare module "@oomol-lab/connector" {
         memberType: "email" | "openid" | "unionid" | "openchat" | "opendepartmentid" | "groupid" | "appid" | "wikispaceid";
         /** The permission role granted to the member. */
         permission: "view" | "edit" | "full_access";
+        /** The Wiki permission scope. */
+        permType?: "container" | "single_page";
+        /** The Wiki-space member role. */
+        memberKind?: "wiki_space_member" | "wiki_space_viewer" | "wiki_space_editor";
         /** Whether Feishu should notify the collaborator. */
         needNotification?: boolean;
       };
@@ -11027,6 +11067,27 @@ declare module "@oomol-lab/connector" {
       output: {
         /** A Feishu task object. */
         task: Record<string, unknown>;
+      };
+    };
+    /** Update a Feishu Wiki node title. Supports doc, docx, and shortcut nodes. */
+    "feishu_app_bot.update_wiki_node_title": {
+      input: {
+        /**
+         * The Feishu Wiki space ID.
+         * @minLength 1
+         */
+        spaceId: string;
+        /**
+         * The Wiki node_token.
+         * @minLength 1
+         */
+        nodeToken: string;
+        /** The new node title. */
+        title: string;
+      };
+      output: {
+        /** Whether Feishu accepted the title update. */
+        updated: boolean;
       };
     };
     /** Validate a Base attachment field, upload one or more files from public URLs, and append them to one record cell. */

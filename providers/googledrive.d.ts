@@ -1319,7 +1319,7 @@ declare module "@oomol-lab/connector" {
         transitUrl: string;
       };
     };
-    /** List Google Drive files using the official Drive query and pagination parameters. */
+    /** List Google Drive files using the official Drive query and pagination parameters. With drive.file, only files authorized for this app are returned; use Google Picker in the host application to select additional files. */
     "googledrive.files.list": {
       input: {
         /** Bodies of items to which the query applies. */

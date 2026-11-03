@@ -31,6 +31,33 @@ declare module "@oomol-lab/connector" {
         role: "member";
       };
     };
+    /** Grant the current team access to an entire registry package, including its private skills. Requires package access and team write permission. Does not make the package public or install it locally. */
+    "oomol_console.add_skill_package_to_team": {
+      input: {
+        /**
+         * The exact registry package name, such as @scope/name, without a version or share ID.
+         * @minLength 1
+         * @pattern \S
+         */
+        packageName: string;
+      };
+      output: {
+        /** Whether the upstream operation succeeded. */
+        success: true;
+        /**
+         * The registry package whose team access changed.
+         * @minLength 1
+         * @pattern \S
+         */
+        packageName: string;
+        /**
+         * The current OOMOL team identifier.
+         * @minLength 1
+         * @pattern \S
+         */
+        teamId: string;
+      };
+    };
     /** Create a custom Connection permission group and replace the assignments of its members. */
     "oomol_console.create_connection_permission_group": {
       input: {
@@ -443,12 +470,24 @@ declare module "@oomol-lab/connector" {
         affectedMemberIds: Array<string>;
       };
     };
-    /** Return every available balance lot for the authenticated OOMOL account. */
+    /** Return every available balance lot owned by the current OOMOL team creator. This account balance may be shared by multiple teams. */
     "oomol_console.get_balance": {
       input: Record<string, never>;
       output: {
         /** The billing scope represented by this result. */
         scope: "account";
+        /**
+         * The current OOMOL team identifier.
+         * @minLength 1
+         * @pattern \S
+         */
+        teamId: string;
+        /**
+         * The current team creator whose account holds the balance.
+         * @minLength 1
+         * @pattern \S
+         */
+        balanceOwnerUserId: string;
         /** All available balance lots across every upstream page. */
         items: Array<{
           /**
@@ -493,7 +532,7 @@ declare module "@oomol-lab/connector" {
         deficit: string | null;
       };
     };
-    /** Return the compact OOMOL account billing metrics shown by Console. */
+    /** Return current-team billing and usage metrics together with the team creator account balance. */
     "oomol_console.get_billing_summary": {
       input: {
         /**
@@ -513,7 +552,19 @@ declare module "@oomol-lab/connector" {
       };
       output: {
         /** The billing scope represented by this result. */
-        scope: "account";
+        scope: "team";
+        /**
+         * The current OOMOL team identifier.
+         * @minLength 1
+         * @pattern \S
+         */
+        teamId: string;
+        /**
+         * The current team creator whose account holds the balance.
+         * @minLength 1
+         * @pattern \S
+         */
+        balanceOwnerUserId: string;
         /** The requested billing summary period. */
         period: {
           /** The number of trailing days included in the summary. */
@@ -638,7 +689,7 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** Return the daily OOMOL account usage breakdown by source and subject. */
+    /** Return the current OOMOL team daily usage breakdown by source and subject. */
     "oomol_console.get_usage_breakdown": {
       input: {
         /**
@@ -658,7 +709,13 @@ declare module "@oomol-lab/connector" {
       };
       output: {
         /** The usage scope represented by this result. */
-        scope: "account";
+        scope: "team";
+        /**
+         * The current OOMOL team identifier.
+         * @minLength 1
+         * @pattern \S
+         */
+        teamId: string;
         /** The effective time range used by OOMOL Insight. */
         effectiveRange: {
           /** The inclusive range start timestamp in milliseconds. */
@@ -714,7 +771,7 @@ declare module "@oomol-lab/connector" {
             }>>;
       };
     };
-    /** List the execution records shown on an OOMOL Console Connection details page. */
+    /** List current-team Connection execution records visible to the authenticated user or service account. */
     "oomol_console.list_connection_executions": {
       input: {
         /**
@@ -982,6 +1039,72 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
+    /** List skill packages maintained by the authenticated identity, including its private packages. A bot's results do not list its owner's packages. Supports keyword search and pagination. */
+    "oomol_console.list_my_skill_packages": {
+      input: {
+        /**
+         * Optional keywords to search the identity's maintained skill packages.
+         * @minLength 1
+         * @pattern \S
+         */
+        query?: string;
+        /**
+         * The preferred metadata language, such as en or zh-CN.
+         * @minLength 1
+         * @pattern \S
+         */
+        lang?: string;
+        /**
+         * The nextCursor returned by the previous page.
+         * @minLength 1
+         * @pattern \S
+         */
+        cursor?: string;
+        /**
+         * The maximum number of packages to return per page.
+         * @minimum 1
+         * @maximum 100
+         * @default 30
+         */
+        limit: number;
+      };
+      output: {
+        /** The identity's maintained skill packages. */
+        packages: Array<{
+          /**
+           * The exact registry package name, including its scope when present.
+           * @minLength 1
+           * @pattern \S
+           */
+          packageName: string;
+          /** The latest published package version when available. */
+          version?: string;
+          /** The package display name when available. */
+          title?: string;
+          /** The package description. */
+          description: string;
+          /** The package visibility when reported by the upstream service. */
+          visibility?: "public" | "private";
+          /** The skills contained in this package. */
+          skills: Array<{
+            /**
+             * The skill name or path used for installation.
+             * @minLength 1
+             * @pattern \S
+             */
+            name: string;
+            /** The skill display name when available. */
+            title?: string;
+            /** The skill description. */
+            description: string;
+            [key: string]: unknown;
+          }>;
+          [key: string]: unknown;
+        }>;
+        /** The cursor for the next page, or null when there are no more pages. */
+        nextCursor: string | null;
+      };
+    };
     /** List the current-team Connections visible to the authenticated user or service account. */
     "oomol_console.list_team_connections": {
       input: Record<string, never>;
@@ -1013,7 +1136,58 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** List the OOMOL teams visible to the authenticated account. */
+    /** List skill packages configured for the current team. Team membership alone does not grant access to an unconfigured private package. This lists team configuration, not local installations. */
+    "oomol_console.list_team_skill_packages": {
+      input: {
+        /**
+         * The preferred metadata language, such as en or zh-CN.
+         * @minLength 1
+         * @pattern \S
+         */
+        lang?: string;
+      };
+      output: {
+        /**
+         * The current OOMOL team identifier.
+         * @minLength 1
+         * @pattern \S
+         */
+        teamId: string;
+        /** The team's configured skill packages. */
+        packages: Array<{
+          /**
+           * The exact registry package name, including its scope when present.
+           * @minLength 1
+           * @pattern \S
+           */
+          packageName: string;
+          /** The latest published package version when available. */
+          version?: string;
+          /** The package display name when available. */
+          title?: string;
+          /** The package description. */
+          description: string;
+          /** The package visibility when reported by the upstream service. */
+          visibility?: "public" | "private";
+          /** The skills contained in this package. */
+          skills: Array<{
+            /**
+             * The skill name or path used for installation.
+             * @minLength 1
+             * @pattern \S
+             */
+            name: string;
+            /** The skill display name when available. */
+            title?: string;
+            /** The skill description. */
+            description: string;
+            [key: string]: unknown;
+          }>;
+          [key: string]: unknown;
+        }>;
+      };
+    };
+    /** List the OOMOL teams the authenticated user or service account belongs to. */
     "oomol_console.list_teams": {
       input: Record<string, never>;
       output: {
@@ -1040,6 +1214,33 @@ declare module "@oomol-lab/connector" {
           /** Whether OOMOL created the team as the account's default team. */
           systemCreated?: boolean;
         }>;
+      };
+    };
+    /** Revoke the current team's access through this package binding for the entire registry package. Requires package access and team write permission. Does not delete the package, change its visibility, remove other access grants, or uninstall local skills. */
+    "oomol_console.remove_skill_package_from_team": {
+      input: {
+        /**
+         * The exact registry package name, such as @scope/name, without a version or share ID.
+         * @minLength 1
+         * @pattern \S
+         */
+        packageName: string;
+      };
+      output: {
+        /** Whether the upstream operation succeeded. */
+        success: true;
+        /**
+         * The registry package whose team access changed.
+         * @minLength 1
+         * @pattern \S
+         */
+        packageName: string;
+        /**
+         * The current OOMOL team identifier.
+         * @minLength 1
+         * @pattern \S
+         */
+        teamId: string;
       };
     };
     /** Replace the action permission of a Connection's non-deletable default permission group. */
