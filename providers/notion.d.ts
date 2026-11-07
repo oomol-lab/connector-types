@@ -2355,11 +2355,31 @@ declare module "@oomol-lab/connector" {
     "notion.search": {
       input: {
         /** The search query text. */
-        query: string;
+        query?: string;
         /** The filter object to narrow results. */
-        filter?: Record<string, unknown>;
+        filter?: {
+          /** The property to filter by. */
+          property: "object";
+          /** The object type to return. */
+          value: "page" | "data_source";
+          /** Whether to return objects in the trash. */
+          in_trash?: boolean;
+        } | {
+          /** Whether to return objects in the trash. */
+          in_trash: boolean;
+        };
         /** The sort object to order results. */
-        sort?: Record<string, unknown>;
+        sort?: {
+          /** The timestamp to sort by. */
+          timestamp: "last_edited_time";
+          /** The sort direction. */
+          direction: "ascending" | "descending";
+        } | {
+          /** The property to sort by. */
+          property: "relevance";
+        };
+        /** Page property names or IDs to include. Unknown properties are skipped; data source schemas are unaffected. */
+        filterProperties?: Array<string>;
         /**
          * The number of results per page.
          * @minimum 1
