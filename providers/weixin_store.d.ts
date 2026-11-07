@@ -149,11 +149,8 @@ declare module "@oomol-lab/connector" {
         };
       };
       output: {
-        /**
-         * The audit id to pass to get_category_application.
-         * @exclusiveMinimum 0
-         */
-        audit_id?: number;
+        /** The audit id to pass to get_category_application. */
+        audit_id?: number | string;
         [key: string]: unknown;
       };
     };
@@ -185,6 +182,27 @@ declare module "@oomol-lab/connector" {
       output: {
         /** The address, with its send/recv flags and the address_info object (user_name, tel_number, province_name, city_name, county_name, detail_info, postal_code, national_code, house_number, lat, lng). */
         address_detail?: Record<string, unknown>;
+        [key: string]: unknown;
+      };
+    };
+    /** Read an after-sale dispute by its complaint id, including state and evidence history. This does not submit evidence, accept a refund or resolve the dispute. */
+    "weixin_store.get_aftersale_complaint": {
+      input: {
+        /**
+         * The complaint id from an after-sale record or dispute event.
+         * @minLength 1
+         */
+        complaintId: string;
+      };
+      output: {
+        /** The after-sale id. */
+        after_sale_order_id?: string;
+        /** The order id. */
+        order_id?: string;
+        /** The upstream dispute status. */
+        status?: number;
+        /** Dispute events, including media_infos with temporary evidence URLs. */
+        history?: Array<Record<string, unknown>>;
         [key: string]: unknown;
       };
     };
@@ -222,25 +240,16 @@ declare module "@oomol-lab/connector" {
     /** Get the status and any rejection reason of a category application by audit id. */
     "weixin_store.get_category_application": {
       input: {
-        /**
-         * The audit_id returned by apply_category.
-         * @exclusiveMinimum 0
-         */
-        auditId: number;
+        /** The audit_id returned by apply_category, as a number or decimal string, at most 9007199254740991. Larger returned ids are preserved for reporting but cannot be queried by this action. */
+        auditId: number | string;
       };
       output: {
         /** The audit status and submitted materials. */
         info?: {
-          /**
-           * The audit id.
-           * @exclusiveMinimum 0
-           */
-          audit_id?: number;
-          /**
-           * The leaf category id.
-           * @exclusiveMinimum 0
-           */
-          cat_id?: number;
+          /** The audit id. */
+          audit_id?: number | string;
+          /** The leaf category id. */
+          cat_id?: number | string;
           /** 1 = in review, 2 = rejected, 3 = approved, 4 = canceled. */
           status?: number;
           /** The rejection reason, when rejected. */
@@ -322,6 +331,38 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
+    /** Read daily shop-wide product clicks, transactions and refunds. T+1 historical data only; no same-day traffic inference. Counts and monetary values retain upstream strings, with money in fen. */
+    "weixin_store.get_compass_shop_overview": {
+      input: {
+        /**
+         * A valid historical date as YYYYMMDD, yesterday or earlier in Asia/Shanghai.
+         * @pattern ^[0-9]{8}$
+         * @example "20240520"
+         */
+        date: string;
+      };
+      output: {
+        /** Historical shop-wide data. */
+        data?: {
+          /** Unique product-click visitors. */
+          product_click_uv?: string;
+          /** Paid GMV in fen. */
+          pay_gmv?: string;
+          /** Paying users. */
+          pay_uv?: string;
+          /** Paid orders. */
+          pay_order_cnt?: string;
+          /** Refund amount in fen. */
+          pay_refund_gmv?: string;
+          /** Live-stream GMV in fen. */
+          live_pay_gmv?: string;
+          /** Short-video GMV in fen. */
+          feed_pay_gmv?: string;
+          [key: string]: unknown;
+        };
+        [key: string]: unknown;
+      };
+    };
     /** Get one freight template by template_id, including its valuation type, shipping method, sender address, and freight rules. Freight templates bind to products through expressInfo on add_product. */
     "weixin_store.get_freight_template": {
       input: {
@@ -337,6 +378,52 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
+    /** Read the store's available and pending-settlement balances. Does not withdraw funds or change the settlement account. Amounts retain the upstream units. */
+    "weixin_store.get_funds_balance": {
+      input: Record<string, never>;
+      output: {
+        /** Available balance in upstream units. */
+        available_amount?: number;
+        /** Pending-settlement balance in upstream units. */
+        pending_amount?: number;
+        /** The sub-merchant id. */
+        sub_mchid?: string;
+        [key: string]: unknown;
+      };
+    };
+    /** Read one funds flow, including income/expense, fees and related order/after-sale ids. Preserve the upstream amount units; an unavailable flow is an error, not a zero balance. */
+    "weixin_store.get_funds_flow": {
+      input: {
+        /**
+         * A flow id from list_funds_flows.
+         * @minLength 1
+         */
+        flowId: string;
+      };
+      output: {
+        /** The recorded flow. */
+        funds_flow?: {
+          /** The flow id. */
+          flow_id?: string;
+          /** The upstream funds category. */
+          funds_type?: number;
+          /** The category description. */
+          funds_type_desc?: string;
+          /** 1 = income, 2 = expense. */
+          flow_type?: number;
+          /** Flow amount in upstream units. */
+          amount?: number;
+          /** Balance in upstream units. */
+          balance?: number;
+          /** The upstream bookkeeping time. */
+          bookkeeping_time?: string;
+          /** Linked orders, after-sales and other transactions. */
+          related_info_list?: Array<Record<string, unknown>>;
+          [key: string]: unknown;
+        };
+        [key: string]: unknown;
+      };
+    };
     /** Read an existing alliance plan's activation, eligibility and commission. The returned item.type uses legacy values 1/2/3; do not reuse it as request type 100/300. */
     "weixin_store.get_league_plan": {
       input: {
@@ -344,7 +431,7 @@ declare module "@oomol-lab/connector" {
         type: 100 | 300;
         /** The existing product id; must be a safe positive integer. */
         productId: number | string;
-        /** The existing promotion plan id; must be a safe positive integer. */
+        /** The existing promotion plan id; numeric strings must also be within the safe integer range. Larger returned ids cannot be used by this action. */
         promotionPlanId?: number | string;
       };
       output: {
@@ -412,6 +499,41 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
+    /** Read one merchant complaint ticket, including its deadline and merchant/platform response history. */
+    "weixin_store.get_merchant_ticket": {
+      input: {
+        /**
+         * The ticket id from list_merchant_tickets.
+         * @minLength 1
+         */
+        ticketId: string;
+      };
+      output: {
+        /** A merchant ticket. Currently only shipping-reminder tickets are supported, not general platform notices. */
+        merchant_ticket?: {
+          /** The ticket id. */
+          ticket_id?: string;
+          /** 9 = shipping reminder. */
+          ticket_class_type?: number;
+          /** 1 = awaiting merchant, 2 = awaiting platform, 3 = closed. */
+          ticket_state?: number;
+          /** The merchant response deadline as a Unix timestamp in seconds. */
+          ticket_deal_end_time?: number;
+          /** The related order id. */
+          order_id?: string;
+          /** The related after-sale id, when present. */
+          aftersale_id?: string;
+          /** The issue description. */
+          description?: string;
+          /** The merchant's response and negotiation record. */
+          merchant_operate?: Record<string, unknown>;
+          /** The platform's review and response. */
+          platform_operate?: Record<string, unknown>;
+          [key: string]: unknown;
+        };
+        [key: string]: unknown;
+      };
+    };
     /** Get one order by order_id, including its products, payment, price, and delivery details. Buyer address fields are masked. */
     "weixin_store.get_order": {
       input: {
@@ -459,6 +581,55 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
+    /** Get a shareable H5 purchase link for an on-sale, self-operated store product. Optional linked WeCom company and member ids attribute orders to that company. Only WeChat Store accounts support this API. */
+    "weixin_store.get_product_h5_url": {
+      input: {
+        /** The product_id returned by add_product or list_products. WeChat documents it as a number in some responses and a string in others; both forms are accepted. */
+        productId: string | number;
+        /**
+         * Optional WeCom corporation id already bound to this store.
+         * @minLength 1
+         */
+        wecomCorpId?: string;
+        /**
+         * Optional member id of the bound WeCom corporation.
+         * @minLength 1
+         */
+        wecomUserId?: string;
+      };
+      output: {
+        /**
+         * The shareable product H5 short link returned by WeChat.
+         * @format uri
+         */
+        product_h5url?: string;
+        [key: string]: unknown;
+      };
+    };
+    /** Get a QR-code image URL for an on-sale self-operated product, optionally as standard or gift artwork. Optional bound WeCom ids attribute resulting orders. This does not publish the image. */
+    "weixin_store.get_product_qr_code": {
+      input: {
+        /** The product_id returned by add_product or list_products. WeChat documents it as a number in some responses and a string in others; both forms are accepted. */
+        productId: string | number;
+        /**
+         * Optional WeCom corporation id already bound to this store.
+         * @minLength 1
+         */
+        wecomCorpId?: string;
+        /**
+         * Optional member id of the bound WeCom corporation.
+         * @minLength 1
+         */
+        wecomUserId?: string;
+        /** 1 = QR code (default), 2 = standard artwork, 3 = gift artwork. */
+        qrcodeType?: 1 | 2 | 3;
+      };
+      output: {
+        /** The QR-code image URL, not a purchase page URL. */
+        product_qrcode?: string;
+        [key: string]: unknown;
+      };
+    };
     /** Read restricted sales scenes for 1 to 50 products, including alliance and talent-window restrictions. This does not change product status. Merchant quota: 100 calls per minute. */
     "weixin_store.get_product_restricted_info": {
       input: {
@@ -488,6 +659,28 @@ declare module "@oomol-lab/connector" {
           }>;
           [key: string]: unknown;
         };
+        [key: string]: unknown;
+      };
+    };
+    /** Get the WeChat sharing token for an on-sale self-operated product, with optional bound WeCom attribution. The returned token only opens inside WeChat; it is not an ordinary HTTPS link. */
+    "weixin_store.get_product_tag_link": {
+      input: {
+        /** The product_id returned by add_product or list_products. WeChat documents it as a number in some responses and a string in others; both forms are accepted. */
+        productId: string | number;
+        /**
+         * Optional WeCom corporation id already bound to this store.
+         * @minLength 1
+         */
+        wecomCorpId?: string;
+        /**
+         * Optional member id of the bound WeCom corporation.
+         * @minLength 1
+         */
+        wecomUserId?: string;
+      };
+      output: {
+        /** The complete WeChat-only sharing token. */
+        product_taglink?: string;
         [key: string]: unknown;
       };
     };
@@ -580,6 +773,42 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
+    /** Read the current after-sale reason codes and labels instead of guessing their meanings. */
+    "weixin_store.list_aftersale_reasons": {
+      input: Record<string, never>;
+      output: {
+        /** Available reasons. */
+        reason_list?: Array<{
+          /** The upstream reason code. */
+          reason?: string;
+          /** The reason label. */
+          reason_text?: string;
+          [key: string]: unknown;
+        }>;
+        [key: string]: unknown;
+      };
+    };
+    /** Read current rejection reasons, applicable after-sale scenes and need_proof. If a chosen reason requires proof, upload images with upload_aftersale_image and pass mediaFiles to reject_aftersale. */
+    "weixin_store.list_aftersale_reject_reasons": {
+      input: Record<string, never>;
+      output: {
+        /** Available rejection reasons. */
+        reason_list?: Array<{
+          /** Code passed to reject_aftersale. */
+          reject_reason_type?: number;
+          /** Reason label. */
+          reject_reason_type_text?: string;
+          /** Default explanation. */
+          reject_reason?: string;
+          /** 1 = refund, 4 = return/refund, 5 = exchange, 6 = exchange shipment, 7 = fast-exchange receipt. */
+          reject_scene?: number;
+          /** 1 means evidence is required. */
+          need_proof?: number;
+          [key: string]: unknown;
+        }>;
+        [key: string]: unknown;
+      };
+    };
     /** Get the full category tree of the store, including the qualifications each category requires. Use the leaf cat_id values from cats_v2 for add_product and get_category. */
     "weixin_store.list_categories": {
       input: Record<string, never>;
@@ -600,11 +829,8 @@ declare module "@oomol-lab/connector" {
       output: {
         /** The category permissions. */
         list?: Array<{
-          /**
-           * The leaf category id.
-           * @exclusiveMinimum 0
-           */
-          id?: number;
+          /** The leaf category id. */
+          id?: number | string;
           /** 1 = effective, 2 = expired. */
           status?: number;
           /** Why an expired permission is no longer effective. */
@@ -654,6 +880,52 @@ declare module "@oomol-lab/connector" {
       output: {
         /** The freight template ids in this page. */
         template_id_list?: Array<string>;
+        [key: string]: unknown;
+      };
+    };
+    /** List funds-flow ids for reconciliation; inspect each with get_funds_flow. Daily flows become available after 16:00 the following day. Continue while has_more using the returned next_key, incrementing page and keeping pageSize unchanged. nextKey is required when page * pageSize >= 10000. */
+    "weixin_store.list_funds_flows": {
+      input: {
+        /**
+         * One-based page, defaults to 1.
+         * @exclusiveMinimum 0
+         * @default 1
+         */
+        page?: number;
+        /**
+         * Page size, defaults to 10.
+         * @exclusiveMinimum 0
+         * @default 10
+         */
+        pageSize?: number;
+        /**
+         * The pagination cursor returned by the previous call. Omit for the first page.
+         * @minLength 1
+         */
+        nextKey?: string;
+        /**
+         * Optional flow start time, Unix seconds.
+         * @exclusiveMinimum 0
+         */
+        startTime?: number;
+        /**
+         * Optional flow end time, Unix seconds. WeChat caps this to yesterday's midnight before 16:00, or today's midnight after 16:00.
+         * @exclusiveMinimum 0
+         */
+        endTime?: number;
+        /**
+         * Optional payment transaction id.
+         * @minLength 1
+         */
+        transactionId?: string;
+      };
+      output: {
+        /** Flow ids for get_funds_flow. */
+        flow_ids?: Array<string>;
+        /** Whether another page exists. */
+        has_more?: boolean;
+        /** Cursor for the next page. */
+        next_key?: string;
         [key: string]: unknown;
       };
     };
@@ -726,7 +998,7 @@ declare module "@oomol-lab/connector" {
         /** Product data. */
         list?: Array<{
           /** The product id. */
-          spu_id?: number;
+          spu_id?: number | string;
           /** Sales metrics. */
           product_data?: {
             /** Lifetime sales GMV, in upstream units. */
@@ -780,6 +1052,145 @@ declare module "@oomol-lab/connector" {
           talent_appid?: string;
           /** The talent nickname; not a lookup identifier. */
           nickname?: string;
+          [key: string]: unknown;
+        }>;
+        [key: string]: unknown;
+      };
+    };
+    /** List merchant complaint tickets and response deadlines. WeChat currently exposes shipping-reminder tickets (class 9) only; this is not a general platform-notification inbox. Paginate with start/limit and total; omitted state includes all states. */
+    "weixin_store.list_merchant_tickets": {
+      input: {
+        /** 1 = awaiting merchant, 2 = awaiting platform, 3 = closed. */
+        ticketState?: 1 | 2 | 3;
+        /** The currently supported shipping-reminder class. */
+        ticketClassType?: 9;
+        /**
+         * Optional ticket or order id.
+         * @minLength 1
+         */
+        searchTicketId?: string;
+        /**
+         * Optional ticket creation-time start, Unix seconds.
+         * @exclusiveMinimum 0
+         */
+        startTime?: number;
+        /**
+         * Optional ticket creation-time end, Unix seconds.
+         * @exclusiveMinimum 0
+         */
+        endTime?: number;
+        /** 1 = creation time, 2 = response deadline ascending. Omit for creation time descending. */
+        sortOrderType?: 1 | 2;
+        /**
+         * Page size, defaults to 10. This action follows WeChat's recommended maximum of 50.
+         * @maximum 50
+         * @exclusiveMinimum 0
+         * @default 10
+         */
+        limit?: number;
+        /**
+         * Zero-based page offset, defaults to 0.
+         * @minimum 0
+         * @default 0
+         */
+        start?: number;
+      };
+      output: {
+        /** Merchant tickets. */
+        ticket_item_list?: Array<{
+          /** The ticket id. */
+          ticket_id?: string;
+          /** 9 = shipping reminder. */
+          ticket_class_type?: number;
+          /** 1 = awaiting merchant, 2 = awaiting platform, 3 = closed. */
+          ticket_state?: number;
+          /** The merchant response deadline as a Unix timestamp in seconds. */
+          ticket_deal_end_time?: number;
+          /** The related order id. */
+          order_id?: string;
+          /** The related after-sale id, when present. */
+          aftersale_id?: string;
+          /** The issue description. */
+          description?: string;
+          /** The merchant's response and negotiation record. */
+          merchant_operate?: Record<string, unknown>;
+          /** The platform's review and response. */
+          platform_operate?: Record<string, unknown>;
+          [key: string]: unknown;
+        }>;
+        /** Total matching tickets. */
+        total?: number;
+        [key: string]: unknown;
+      };
+    };
+    /** Read order settlement, refund and fee breakdowns, in fen. Uses stable page-context pagination by default: pass the returned page_ctx until it is empty. Set usePageContext false to use offsets. Expected settlement is not actual profit or received cash. */
+    "weixin_store.list_order_settlements": {
+      input: {
+        /** 0 = all, 1 = pending, 2 = no settlement, 60 = settled, 100 = partly settled. */
+        settleState: 0 | 1 | 2 | 60 | 100;
+        /** 0 = all, 20 = pending shipment, 30 = awaiting receipt, 100 = completed. */
+        orderState?: 0 | 20 | 30 | 100;
+        /** 0 = all, 1 = ordinary payment, 2 = pay after use. */
+        payMethod?: 0 | 1 | 2;
+        /** The order_id returned by list_orders. WeChat documents it as a number in some endpoints and a string in others; both forms are accepted. */
+        orderId?: string | number;
+        /**
+         * Page size, defaults to 20, at most 100.
+         * @maximum 100
+         * @exclusiveMinimum 0
+         * @default 20
+         */
+        limit?: number;
+        /**
+         * Offset; only valid when usePageContext is false.
+         * @minimum 0
+         */
+        offset?: number;
+        /**
+         * Use stable context pagination, defaults to true.
+         * @default true
+         */
+        usePageContext?: boolean;
+        /** The previous page_ctx. Omit or pass an empty string for the first page. */
+        pageContext?: string;
+        /**
+         * Optional inclusive creation-time start, Unix seconds.
+         * @exclusiveMinimum 0
+         */
+        createTimeStart?: number;
+        /**
+         * Optional exclusive creation-time end, Unix seconds.
+         * @exclusiveMinimum 0
+         */
+        createTimeEnd?: number;
+      };
+      output: {
+        /** Approximate total, which may change during pagination. */
+        total_count?: number;
+        /** Continuation context; empty means no further page. */
+        page_ctx?: string;
+        /** Order settlement records; all upstream fields are preserved. */
+        data_list?: Array<{
+          /** Order id. */
+          order_id?: string;
+          /** Settlement state. */
+          order_settle_state?: number;
+          /** Merchant receipts in fen. */
+          mch_received_amount?: number;
+          /** Expenses in fen. */
+          expense_amount?: number;
+          /** Actual or expected settlement in fen; inspect the state. */
+          mch_settle_amount?: number;
+          /** Buyer refunds in fen. */
+          buyer_refund_amount?: number;
+          /** Actual or expected platform fee in fen. */
+          platform_commission_amount?: number;
+          /** Expenses after settlement, including linked order identifiers. */
+          post_settlement_expense?: {
+            /** The linked order id. */
+            freight_insurance_make_up_order_id?: number | string;
+            [key: string]: unknown;
+          };
           [key: string]: unknown;
         }>;
         [key: string]: unknown;
@@ -866,7 +1277,7 @@ declare module "@oomol-lab/connector" {
         /** Existing plan identifiers. */
         list?: Array<{
           /** The plan id. */
-          promotion_plan_id?: number | null;
+          promotion_plan_id?: number | string | null;
           /** 100 all, 200 filtered, 300 specified talents. */
           promotion_plan_type?: number | null;
           [key: string]: unknown;
@@ -879,7 +1290,7 @@ declare module "@oomol-lab/connector" {
       input: {
         /** The existing product id; must be a safe positive integer. */
         productId: number | string;
-        /** The existing promotion plan id; must be a safe positive integer. */
+        /** The existing promotion plan id; numeric strings must also be within the safe integer range. Larger returned ids cannot be used by this action. */
         promotionPlanId: number | string;
         /**
          * Optional talent appid filter.
@@ -920,7 +1331,7 @@ declare module "@oomol-lab/connector" {
           /** Read-only commission terms. */
           commission_info?: {
             /** The plan id. */
-            promotion_plan_id?: number;
+            promotion_plan_id?: number | string;
             /** The plan type. */
             promotion_plan_type?: number;
             /** Upstream scale: 1000000 means 100%; not the 0–90 percentage scale of update_league_plan. */
@@ -1010,7 +1421,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
-    /** Reject a buyer's after-sale request with a reason. */
+    /** Reject a buyer's after-sale request using a current reason from list_aftersale_reject_reasons. Check reject_scene and need_proof; when proof is required, supply mediaFiles with complete C2C URLs (upload_aftersale_image for images). */
     "weixin_store.reject_aftersale": {
       input: {
         /**
@@ -1019,7 +1430,7 @@ declare module "@oomol-lab/connector" {
          */
         afterSaleOrderId: string;
         /**
-         * The rejection reason type, from the reason enum of the after-sale order.
+         * The applicable rejection code from list_aftersale_reject_reasons.
          * @exclusiveMinimum 0
          */
         rejectReasonType: number;
@@ -1028,6 +1439,38 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         rejectReason?: string;
+        /**
+         * Evidence required when the selected reason has need_proof = 1.
+         * @minItems 1
+         */
+        mediaFiles?: Array<{
+          /** Value. */
+          type: 1;
+          /** The image reference. */
+          picture: {
+            /**
+             * The complete img_info.img_url, including all query parameters.
+             * @minLength 1
+             */
+            c2cUrl: string;
+          };
+        } | {
+          /** Value. */
+          type: 2;
+          /** The video reference. */
+          video: {
+            /**
+             * The complete video C2C URL, including all query parameters.
+             * @minLength 1
+             */
+            c2cUrl: string;
+          };
+          /**
+           * Optional video duration in seconds.
+           * @minimum 0
+           */
+          videoPlayLength?: number;
+        }>;
       };
       output: Record<string, unknown>;
     };
@@ -1080,6 +1523,109 @@ declare module "@oomol-lab/connector" {
       };
       output: Record<string, unknown>;
     };
+    /** Record shipment of a replacement in an exchange after receiving the buyer's return. Requires an actual carrier and waybill. Do not submit shipments for multiple after-sales of the same order within one minute. */
+    "weixin_store.send_exchange_delivery": {
+      input: {
+        /**
+         * The exchange after-sale id.
+         * @minLength 1
+         */
+        afterSaleOrderId: string;
+        /**
+         * Carrier id from list_delivery_companies, or OTHER.
+         * @minLength 1
+         */
+        deliveryId: string;
+        /**
+         * The actual replacement waybill number.
+         * @minLength 1
+         */
+        waybillId: string;
+      };
+      output: Record<string, unknown>;
+    };
+    /** Correct express-package logistics using old/new package identities (change_infos), including split shipments where supported. WeChat permits at most three corrections before order completion and rejects virtual-goods corrections. Confirm the actual shipment before changing its carrier or waybill. */
+    "weixin_store.update_delivery_info": {
+      input: {
+        /** The order_id returned by list_orders. WeChat documents it as a number in some endpoints and a string in others; both forms are accepted. */
+        orderId: string | number;
+        /**
+         * Package corrections.
+         * @minItems 1
+         */
+        changeInfos: Array<{
+          /** An express package identified by its carrier, waybill and products. */
+          old: {
+            /**
+             * Carrier id from list_delivery_companies, or OTHER.
+             * @minLength 1
+             */
+            deliveryId: string;
+            /**
+             * The waybill number.
+             * @minLength 1
+             */
+            waybillId: string;
+            /**
+             * The products in this package.
+             * @minItems 1
+             */
+            productInfos: Array<{
+              /**
+               * The product id.
+               * @minLength 1
+               */
+              productId: string;
+              /**
+               * The SKU id.
+               * @minLength 1
+               */
+              skuId: string;
+              /**
+               * The quantity in this package.
+               * @exclusiveMinimum 0
+               */
+              productCnt: number;
+            }>;
+          };
+          /** An express package identified by its carrier, waybill and products. */
+          new: {
+            /**
+             * Carrier id from list_delivery_companies, or OTHER.
+             * @minLength 1
+             */
+            deliveryId: string;
+            /**
+             * The waybill number.
+             * @minLength 1
+             */
+            waybillId: string;
+            /**
+             * The products in this package.
+             * @minItems 1
+             */
+            productInfos: Array<{
+              /**
+               * The product id.
+               * @minLength 1
+               */
+              productId: string;
+              /**
+               * The SKU id.
+               * @minLength 1
+               */
+              skuId: string;
+              /**
+               * The quantity in this package.
+               * @exclusiveMinimum 0
+               */
+              productCnt: number;
+            }>;
+          };
+        }>;
+      };
+      output: Record<string, unknown>;
+    };
     /** Change one existing alliance promotion plan: edit commission and activate (1), delist (2), or activate (4). Obtain approval for the exact plan and change first; activation or commission changes can incur commission spending. Read the plan before and after; no automatic fallback, audience changes, new plan creation or deletion is provided. */
     "weixin_store.update_league_plan": {
       input: {
@@ -1087,7 +1633,7 @@ declare module "@oomol-lab/connector" {
         type: 100 | 300;
         /** The existing product id; must be a safe positive integer. */
         productId: number | string;
-        /** The existing promotion plan id; must be a safe positive integer. */
+        /** The existing promotion plan id; numeric strings must also be within the safe integer range. Larger returned ids cannot be used by this action. */
         promotionPlanId: number | string;
         /** Edit commission and activate. */
         operateType: 1;
@@ -1102,14 +1648,14 @@ declare module "@oomol-lab/connector" {
         type: 100 | 300;
         /** The existing product id; must be a safe positive integer. */
         productId: number | string;
-        /** The existing promotion plan id; must be a safe positive integer. */
+        /** The existing promotion plan id; numeric strings must also be within the safe integer range. Larger returned ids cannot be used by this action. */
         promotionPlanId: number | string;
         /** 2 = delist, 4 = activate. No commission fields accepted. */
         operateType: 2 | 4;
       };
       output: {
         /** The updated plan id. */
-        promotion_plan_id?: number;
+        promotion_plan_id?: number | string;
         /** Talents that failed to update; a nonempty list means partial failure. */
         fail_talent_appids?: Array<string>;
         [key: string]: unknown;
@@ -1227,6 +1773,25 @@ declare module "@oomol-lab/connector" {
         skus: Array<Record<string, unknown>>;
       };
       output: Record<string, unknown>;
+    };
+    /** Upload a JPEG, PNG, BMP or GIF transit file up to 10 MB as after-sale evidence (scene 170). Returns a C2C image URL for reject_aftersale mediaFiles. Keep the complete URL including query parameters; ordinary product-image URLs cannot substitute for this upload. */
+    "weixin_store.upload_aftersale_image": {
+      input: {
+        /**
+         * Public URL of a JPEG, PNG, BMP or GIF evidence image, at most 10 MB.
+         * @format uri
+         */
+        fileUrl: string;
+      };
+      output: {
+        /** The uploaded image. */
+        img_info?: {
+          /** Complete C2C URL to pass unchanged as mediaFiles[].picture.c2cUrl. */
+          img_url?: string;
+          [key: string]: unknown;
+        };
+        [key: string]: unknown;
+      };
     };
     /** Ask WeChat to fetch and host a public image URL for use in product image fields. At most 10 MB per image. */
     "weixin_store.upload_image": {

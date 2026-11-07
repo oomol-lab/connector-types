@@ -125,6 +125,73 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
+    /** Compare AI visibility for named groups of domains and brands. */
+    "aisa.compare_dataforseo_ai_mentions": {
+      input: {
+        /** array of results filtering parameters optional field you can add several filters at once (8 filters maximum) you should set a logical operator and , or between the conditions the following operators are supported: = , <> , in , not_in , like , not_like , ilike , not_ilike , match , not_match you can use the % operator with like and not_like to match any string of zero or more characters example: ["ai_search_volume",">",1000] The full list of possible filters is available here. */
+        filters?: Array<string | number | boolean | Record<string, unknown> | null | Array<unknown>> | null;
+        /** array of filter expressions applied before aggregation optional field you can use this array to filter expressions applied to the raw mentions database before aggregation to limit the rows contributing to the result; you can add several filters at once (8 filters maximum) you should set a logical operator and , or between the conditions the following operators are supported: = , <> , in , not_in , like , not_like , ilike , not_ilike , match , not_match you can use the % operator with like and not_like to match any string of zero or more characters example: ["ai_search_volume",">",1000] the full list of possible filters is available here. learn more about the initial dataset filters in this help center article. */
+        initialDatasetFilters?: Array<string | number | boolean | Record<string, unknown> | null | Array<unknown>> | null;
+        /**
+         * maximum number of elements within internal arrays optional field you can use this field to limit the number of elements within the following arrays: sources_domain search_results_domain minimum value: 1 maximum value: 10 default value: 5
+         * @minimum 1
+         * @maximum 10
+         */
+        internalListLimit?: number | null;
+        /** search language code optional field if you use this field, you don't need to specify language_name ; you can receive the list of available languages of the search engine with their language_code by making a separate request to the https://api.dataforseo.com/v3/ai_optimization/llm_mentions/locations_and_languages default value: en Note: chat_gpt data is available for en only */
+        languageCode?: string | null;
+        /** full name of search language optional field if you use this field, you don't need to specify language_code ; if you don't specify this field, the language_code with en value will be used by default; you can receive the list of available languages of the search engine with their language_name by making a separate request to the https://api.dataforseo.com/v3/ai_optimization/llm_mentions/locations_and_languages Note: chat_gpt data is available for English only */
+        languageName?: string | null;
+        /**
+         * the maximum number of returned objects optional field default value: 100 maximum value: 1000
+         * @maximum 1000
+         */
+        limit?: number | null;
+        /** search location code optional field if you use this field, you don't need to specify location_name you can receive the list of available locations of the search engine with their location_code by making a separate request to the https://api.dataforseo.com/v3/ai_optimization/llm_mentions/locations_and_languages default value: 2840 Note: chat_gpt data is available for 2840 only */
+        locationCode?: number | null;
+        /** full name of search location optional field if you use this field, you don't need to specify location_code if you don't specify this field, the location_code with 2840 value will be used by default; you can receive the list of available locations of the search engine with their location_name by making a separate request to the https://api.dataforseo.com/v3/ai_optimization/llm_mentions/locations_and_languages Note: chat_gpt data is available for United States only */
+        locationName?: string | null;
+        /** offset in the results array of the returned mentions data optional field default value: 0 example: if you specify the 10 value, the first ten mentions objects in the results array will be omitted and the data will be provided for the successive objects; Note: the maximum value is 1000000 , use the search_after_token if you would like to offset more results */
+        offset?: number | null;
+        /** results sorting rules optional field you can use the same values as in the filters array to sort the results possible sorting types: asc - results will be sorted in the ascending order desc - results will be sorted in the descending order you should use a comma to set up a sorting type example: ["ai_search_volume,desc"] Note: you can set no more than three sorting rules in a single request you should use a comma to separate several sorting rules */
+        orderBy?: Array<string> | null;
+        /** target platform optional field possible values: chat_gpt , google default value: google Note: if the platform is not specified, the data is returned for both platforms Note #2: chat_gpt data is available for the United States and English only */
+        platform?: string | null;
+        /** user-defined task identifier optional field the character limit is 255 you can use this parameter to identify the task and match it with the result you will find the specified tag value in the data object of the response */
+        tag?: string | null;
+        /**
+         * Two to ten named groups of target entities to compare.
+         * @minItems 2
+         * @maxItems 10
+         */
+        targets: Array<{
+          /**
+           * The label used to identify this group in comparisons.
+           * @maxLength 250
+           */
+          key: string;
+          /**
+           * array of objects containing target entities required field you can specify up to 10 entities (objects) in the target field one target entity can contain either one domain or one keyword and related parametersexamples: target array with a domain entity [{"domain": "en.wikipedia.org", "search_filter": "exclude"}] target array with a keyword entity [{"keyword": "bmw", "search_scope": ["question"], "match_type ": "partial_match"}] target array with multiple entities [{"domain": "en.wikipedia.org", "search_filter": "exclude"}, {"keyword": "bmw", "match_type ": "partial_match", "search_scope": ["answer"]}]
+           * @minItems 1
+           * @maxItems 10
+           */
+          target: Array<Record<string, unknown>>;
+        }>;
+      };
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
     /** Compare organic or paid keyword portfolios across domains. */
     "aisa.compare_semrush_domains": {
       input: {
@@ -549,16 +616,108 @@ declare module "@oomol-lab/connector" {
       input: Record<string, unknown>;
       output: Record<string, unknown>;
     };
+    /** Get reported company guidance with metric and period filters. */
+    "aisa.get_company_guidance": {
+      input: {
+        /** Opaque pagination cursor from a previous response's next_page_url. When provided, all other query parameters are ignored: the cursor carries the original request's filters. Treat it as opaque; do not construct or modify it. */
+        cursor?: string;
+        /**
+         * Number of periods to return. This is the total across all pages, not a page size: each page holds up to 10 records, linked by `next_page_url`.
+         * @maximum 50
+         */
+        limit?: number;
+        /** Filter to a specific metric. */
+        metricName?: string;
+        /** Filter by period type: quarterly or annual. */
+        period?: "quarterly" | "annual";
+        /**
+         * Only return guidance on or after this date (YYYY-MM-DD).
+         * @format date
+         */
+        reportPeriodGte?: string;
+        /**
+         * Only return guidance on or before this date (YYYY-MM-DD).
+         * @format date
+         */
+        reportPeriodLte?: string;
+        /** The ticker symbol. */
+        ticker: string;
+      };
+      output: Record<string, unknown>;
+    };
+    /** Get company-specific operating performance indicators. */
+    "aisa.get_company_kpis": {
+      input: {
+        /** Opaque pagination cursor from a previous response's next_page_url. When provided, all other query parameters are ignored: the cursor carries the original request's filters. Treat it as opaque; do not construct or modify it. */
+        cursor?: string;
+        /**
+         * Number of periods to return. Returns all metrics for the N most recent periods. This is the total across all pages, not a page size: each page holds up to 10 records, linked by `next_page_url`.
+         * @maximum 50
+         */
+        limit?: number;
+        /** Filter to a specific metric (e.g., load_factor, cet1_ratio). */
+        metricName?: string;
+        /** Filter by period type: quarterly or annual. */
+        period?: "quarterly" | "annual";
+        /**
+         * Only return metrics on or after this date (YYYY-MM-DD).
+         * @format date
+         */
+        reportPeriodGte?: string;
+        /**
+         * Only return metrics on or before this date (YYYY-MM-DD).
+         * @format date
+         */
+        reportPeriodLte?: string;
+        /** The ticker symbol. */
+        ticker: string;
+      };
+      output: Record<string, unknown>;
+    };
     /** Get recent financial news, optionally filtered by ticker. */
     "aisa.get_company_news": {
       input: {
-        /** The public-market ticker symbol to query. */
-        ticker?: string;
+        /**
+         * Opaque pagination cursor from a previous response's next_page_url. When provided, all other query parameters are ignored: the cursor carries the original request's filters. Treat it as opaque; do not construct or modify it.
+         * @minLength 1
+         */
+        cursor?: string;
         /**
          * The maximum number of records to return.
          * @minimum 1
          */
         limit?: number;
+        /** The public-market ticker symbol to query. */
+        ticker?: string;
+      };
+      output: Record<string, unknown>;
+    };
+    /** Get reported non-GAAP financial metrics. */
+    "aisa.get_company_non_gaap_metrics": {
+      input: {
+        /** Opaque pagination cursor from a previous response's next_page_url. When provided, all other query parameters are ignored: the cursor carries the original request's filters. Treat it as opaque; do not construct or modify it. */
+        cursor?: string;
+        /**
+         * Number of periods to return. This is the total across all pages, not a page size: each page holds up to 10 records, linked by `next_page_url`.
+         * @maximum 50
+         */
+        limit?: number;
+        /** Filter to a specific metric. */
+        metricName?: string;
+        /** Filter by period type: quarterly or annual. */
+        period?: "quarterly" | "annual";
+        /**
+         * Only return metrics on or after this date (YYYY-MM-DD).
+         * @format date
+         */
+        reportPeriodGte?: string;
+        /**
+         * Only return metrics on or before this date (YYYY-MM-DD).
+         * @format date
+         */
+        reportPeriodLte?: string;
+        /** The ticker symbol. */
+        ticker: string;
       };
       output: Record<string, unknown>;
     };
@@ -600,28 +759,6 @@ declare module "@oomol-lab/connector" {
         toTimestamp: number;
         /** The decimal precision accepted by CoinGecko. */
         precision?: string;
-      };
-      output: Record<string, unknown>;
-    };
-    /** Get recent cryptocurrency news with optional coin and language filters. */
-    "aisa.get_crypto_news": {
-      input: {
-        /** The CoinGecko coin ID, such as bitcoin. */
-        coinId?: string;
-        /** The news language code. */
-        language?: string;
-        /** The CoinGecko news content type. */
-        articleType?: "news" | "guides";
-        /**
-         * The one-based result page.
-         * @minimum 1
-         */
-        page?: number;
-        /**
-         * The maximum articles per page.
-         * @minimum 1
-         */
-        perPage?: number;
       };
       output: Record<string, unknown>;
     };
@@ -701,6 +838,148 @@ declare module "@oomol-lab/connector" {
     "aisa.get_dataforseo_ai_keyword_volume": {
       input: (Record<string, unknown>) & (Record<string, unknown>);
       output: Record<string, unknown>;
+    };
+    /** Compare changes in AI mentions across time periods. */
+    "aisa.get_dataforseo_ai_mentions_delta": {
+      input: {
+        /**
+         * start date of the time range required field minimal value: 2025-08-01 date format: "yyyy-mm-dd"
+         * @format date
+         */
+        dateFrom?: string;
+        /**
+         * end date of the time range required field Note: the value specified in date_from cannot exceed the value in date_to date format: "yyyy-mm-dd"
+         * @format date
+         */
+        dateTo?: string;
+        /** timeseries delta range required field possible values: day , week , month , year */
+        groupRange?: string;
+        /** search language code optional field if you use this field, you don't need to specify language_name ; you can receive the list of available languages of the search engine with their language_code by making a separate request to the https://api.dataforseo.com/v3/ai_optimization/llm_mentions/locations_and_languages default value: en Note: chat_gpt data is available for en only */
+        languageCode?: string | null;
+        /** full name of search language optional field if you use this field, you don't need to specify language_code ; if you don't specify this field, the language_code with en value will be used by default; you can receive the list of available languages of the search engine with their language_name by making a separate request to the https://api.dataforseo.com/v3/ai_optimization/llm_mentions/locations_and_languages Note: chat_gpt data is available for English only */
+        languageName?: string | null;
+        /** search location code optional field if you use this field, you don't need to specify location_name you can receive the list of available locations of the search engine with their location_code by making a separate request to the https://api.dataforseo.com/v3/ai_optimization/llm_mentions/locations_and_languages default value: 2840 Note: chat_gpt data is available for 2840 only */
+        locationCode?: number | null;
+        /** full name of search location optional field if you use this field, you don't need to specify location_code if you don't specify this field, the location_code with 2840 value will be used by default; you can receive the list of available locations of the search engine with their location_name by making a separate request to the https://api.dataforseo.com/v3/ai_optimization/llm_mentions/locations_and_languages Note: chat_gpt data is available for United States only */
+        locationName?: string | null;
+        /** target platform optional field possible values: chat_gpt , google default value: google Note: if the platform is not specified, the data is returned for both platforms Note #2: chat_gpt data is available for the United States and English only */
+        platform?: string | null;
+        /** user-defined task identifier optional field the character limit is 255 you can use this parameter to identify the task and match it with the result you will find the specified tag value in the data object of the response */
+        tag?: string | null;
+        /**
+         * array of objects containing target entities required field you can specify up to 10 entities (objects) in the target field one target entity can contain either one domain or one keyword and related parameters examples: target array with a domain entity
+         * @minItems 1
+         * @maxItems 10
+         */
+        target: Array<Record<string, unknown>>;
+      };
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get historical AI mentions for a domain or brand. */
+    "aisa.get_dataforseo_ai_mentions_history": {
+      input: {
+        /**
+         * start date of the time range optional field minimal value 2025-08-01 date format "yyyy-mm-dd"
+         * @format date
+         */
+        dateFrom?: string | null;
+        /**
+         * end date of the time range optional field Note value specified in date_from cannot exceed the value in date_to date format "yyyy-mm-dd"
+         * @format date
+         */
+        dateTo?: string | null;
+        /** search language code optional field if you use this field, you don't need to specify language_name ; you can receive the list of available languages of the search engine with their language_code by making a separate request to the https://api.dataforseo.com/v3/ai_optimization/llm_mentions/locations_and_languages default value: en Note: chat_gpt data is available for en only */
+        languageCode?: string | null;
+        /** full name of search language optional field if you use this field, you don't need to specify language_code ; if you don't specify this field, the language_code with en value will be used by default; you can receive the list of available languages of the search engine with their language_name by making a separate request to the https://api.dataforseo.com/v3/ai_optimization/llm_mentions/locations_and_languages Note: chat_gpt data is available for English only */
+        languageName?: string | null;
+        /** search location code optional field if you use this field, you don't need to specify location_name you can receive the list of available locations of the search engine with their location_code by making a separate request to the https://api.dataforseo.com/v3/ai_optimization/llm_mentions/locations_and_languages default value: 2840 Note: chat_gpt data is available for 2840 only */
+        locationCode?: number | null;
+        /** full name of search location optional field if you use this field, you don't need to specify location_code if you don't specify this field, the location_code with 2840 value will be used by default; you can receive the list of available locations of the search engine with their location_name by making a separate request to the https://api.dataforseo.com/v3/ai_optimization/llm_mentions/locations_and_languages Note: chat_gpt data is available for United States only */
+        locationName?: string | null;
+        /** target platform optional field possible values: chat_gpt , google Note: if the platform is not specified, the data is returned for both platforms Note #2: chat_gpt data is available for the United States and English only */
+        platform?: string | null;
+        /** user-defined task identifier optional field the character limit is 255 you can use this parameter to identify the task and match it with the result you will find the specified tag value in the data object of the response */
+        tag?: string | null;
+        /**
+         * array of objects containing target entities required field you can specify up to 10 entities (objects) in the target field one target entity can contain either one domain or one keyword and related parameters examples: target array with a domain entity
+         * @minItems 1
+         * @maxItems 10
+         */
+        target: Array<Record<string, unknown>>;
+      };
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Track new and lost AI mentions over time. */
+    "aisa.get_dataforseo_ai_mentions_new_lost": {
+      input: {
+        /**
+         * start date of the time range required field minimal value: 2025-08-01 date format: "yyyy-mm-dd"
+         * @format date
+         */
+        dateFrom?: string;
+        /**
+         * end date of the time range required field Note: the value specified in date_from cannot exceed the value in date_to date format: "yyyy-mm-dd"
+         * @format date
+         */
+        dateTo?: string;
+        /** timeseries range required field possible values: day , week , month , year */
+        groupRange?: string;
+        /** search language code optional field if you use this field, you don't need to specify language_name ; you can receive the list of available languages of the search engine with their language_code by making a separate request to the https://api.dataforseo.com/v3/ai_optimization/llm_mentions/locations_and_languages default value: en Note: chat_gpt data is available for en only */
+        languageCode?: string | null;
+        /** full name of search language optional field if you use this field, you don't need to specify language_code ; if you don't specify this field, the language_code with en value will be used by default; you can receive the list of available languages of the search engine with their language_name by making a separate request to the https://api.dataforseo.com/v3/ai_optimization/llm_mentions/locations_and_languages Note: chat_gpt data is available for English only */
+        languageName?: string | null;
+        /** search location code optional field if you use this field, you don't need to specify location_name you can receive the list of available locations of the search engine with their location_code by making a separate request to the https://api.dataforseo.com/v3/ai_optimization/llm_mentions/locations_and_languages default value: 2840 Note: chat_gpt data is available for 2840 only */
+        locationCode?: number | null;
+        /** full name of search location optional field if you use this field, you don't need to specify location_code if you don't specify this field, the location_code with 2840 value will be used by default; you can receive the list of available locations of the search engine with their location_name by making a separate request to the https://api.dataforseo.com/v3/ai_optimization/llm_mentions/locations_and_languages Note: chat_gpt data is available for United States only */
+        locationName?: string | null;
+        /** target platform optional field possible values: chat_gpt , google default value: google Note: if the platform is not specified, the data is returned for both platforms Note #2: chat_gpt data is available for the United States and English only */
+        platform?: string | null;
+        /** user-defined task identifier optional field the character limit is 255 you can use this parameter to identify the task and match it with the result you will find the specified tag value in the data object of the response */
+        tag?: string | null;
+        /**
+         * array of objects containing target entities required field you can specify up to 10 entities (objects) in the target field one target entity can contain either one domain or one keyword and related parameters examples: target array with a domain entity
+         * @minItems 1
+         * @maxItems 10
+         */
+        target: Array<Record<string, unknown>>;
+      };
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
     };
     /** Get AI mentioned brands through DataForSEO. */
     "aisa.get_dataforseo_ai_mentions_top_brands": {
@@ -1148,6 +1427,94 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
+    /** Compare referring domains linking to selected websites or pages. */
+    "aisa.get_dataforseo_backlink_gap": {
+      input: {
+        /** filter the backlinks of your target optional field you can use this field to filter the initial backlinks that will be included in the dataset for aggregated metrics for your target you can filter the backlinks by all fields available in the response of this endpoint using this parameter, you can include only dofollow backlinks in the response and create a flexible backlinks dataset to calculate the metrics for example: "backlinks_filters": [["dofollow", "=", true]] */
+        backlinksFilters?: Array<string | number | boolean | Record<string, unknown> | null | Array<unknown>> | null;
+        /** set what backlinks to return and count optional field you can use this field to choose what backlinks will be returned and used for aggregated metrics for your targets ; possible values: all - all backlinks will be returned and counted; live - backlinks found during the last check will be returned and counted; lost - lost backlinks will be returned and counted; default value: live */
+        backlinksStatusType?: string | null;
+        /** indicates whether the backlinks from subdomains of the target are excluded optional field if set to false , the backlinks from subdomains of the target will be omitted and you won't receive the same domain in the response; default value: true */
+        excludeInternalBacklinks?: boolean | null;
+        /** domains, subdomains or webpages you want to exclude optional field you can specify up to 10 domains, subdomains or webpages if you use this array, results will contain the referring domains that link to targets but don't link to exclude_targets example: `"exclude_targets": [ "bbc.com", "https://www.apple.com/iphone/*", "https://dataforseo.com/apis/*"]` */
+        excludeTargets?: Array<string> | null;
+        /** array of results filtering parameters optional field you can add several filters at once (8 filters maximum) you should set a logical operator and , or between the conditions the following operators are supported: regex , not_regex , = , <> , in , not_in , like , not_like , ilike , not_ilike , match , not_match you can use the % operator with like and not_like to match any string of zero or more characters example: ["1.internal_links_count",">","1"] [["2.referring_pages",">","2"], "and", ["1.backlinks",">","10"]] [["1.first_seen",">","2017-10-23 11:31:45 +00:00"], "and", [["2.target","like","%dataforseo.com%"],"or",["1.referring_domains",">","10"]]] The full list of possible filters is available here. */
+        filters?: Array<string | number | boolean | Record<string, unknown> | null | Array<unknown>> | null;
+        /** indicates if indirect links to the targets will be included in the results optional field if set to true , the results will include data on indirect links pointing to a page that either redirects to a target, or points to a canonical page if set to false , indirect links will be ignored default value: true */
+        includeIndirectLinks?: boolean | null;
+        /** indicates if the subdomains of the target will be included in the search optional field if set to false , the subdomains will be ignored default value: true */
+        includeSubdomains?: boolean | null;
+        /**
+         * maximum number of elements within internal arrays optional field you can use this field to limit the number of elements within the following arrays: referring_links_tld referring_links_types referring_links_attributes referring_links_platform_types referring_links_semantic_locations default value: 10 maximum value: 1000
+         * @maximum 1000
+         */
+        internalListLimit?: number | null;
+        /** indicates whether to intersect backlinks optional field use this field to intersect or merge results for the specified domains possible values: all , partial all - results are based on all backlinks; partial - results are based on the intersecting backlinks only; default value: all */
+        intersectionMode?: string | null;
+        /**
+         * the maximum number of returned results optional field default value: 100 maximum value: 1000
+         * @maximum 1000
+         */
+        limit?: number | null;
+        /** offset in the array of returned results optional field default value: 0 if you specify the 10 value, the first ten backlinks in the results array will be omitted and the data will be provided for the successive backlinks */
+        offset?: number | null;
+        /** results sorting rules optional field you can use the same values as in the filters array to sort the results possible sorting types: asc - results will be sorted in the ascending order desc - results will be sorted in the descending order you should use a comma to set up a sorting type example: ["backlinks,desc"] note that you can set no more than three sorting rules in a single request you should use a comma to separate several sorting rules example: ["backlinks,desc","rank,asc"] */
+        orderBy?: Array<string> | null;
+        /** defines the scale used for calculating and displaying the rank , domain_from_rank , and page_from_rank values optional field you can use this parameter to choose whether rank values are presented on a 0–100 or 0–1000 scale possible values: one_hundred — rank values are displayed on a 0–100 scale one_thousand — rank values are displayed on a 0–1000 scale default value: one_thousand learn more about how this parameter works and how ranking metrics are calculated in this Help Center article */
+        rankScale?: string | null;
+        /** user-defined task identifier optional field the character limit is 255 you can use this parameter to identify the task and match it with the result you will find the specified tag value in the data object of the response */
+        tag?: string | null;
+        /** domains, subdomains or webpages to get links for required field you can set up to 20 domains, subdomains or webpages a domain or a subdomain should be specified without https:// and www. a page should be specified with absolute URL (including http:// or https:// ) example: `"targets": { "1": "http://planet.postgresql.org/", "2": "http://gborg.postgresql.org/" }` */
+        targets: Record<string, string | null>;
+      };
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Get historical backlink metrics for a domain. */
+    "aisa.get_dataforseo_backlink_history": {
+      input: {
+        /**
+         * starting date of the time range optional field minimum value 2019-01-01 if you don't specify this field, the minimum value will be used by default date format: "yyyy-mm-dd" example: "2019-01-15"
+         * @format date
+         */
+        dateFrom?: string | null;
+        /**
+         * ending date of the time range optional field if you don't specify this field, the today's date will be used by default date format: "yyyy-mm-dd" example: "2019-01-15"
+         * @format date
+         */
+        dateTo?: string | null;
+        /** defines the scale used for calculating and displaying the rank , domain_from_rank , and page_from_rank values optional field you can use this parameter to choose whether rank values are presented on a 0–100 or 0–1000 scale possible values: one_hundred — rank values are displayed on a 0–100 scale one_thousand — rank values are displayed on a 0–1000 scale default value: one_thousand learn more about how this parameter works and how ranking metrics are calculated in this Help Center article */
+        rankScale?: string | null;
+        /** user-defined task identifier optional field the character limit is 255 you can use this parameter to identify the task and match it with the result you will find the specified tag value in the data object of the response */
+        tag?: string | null;
+        /** domain required field a domain should be specified without https:// and www. */
+        target: string;
+      };
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
     /** Get bulk backlink spam scores through DataForSEO. */
     "aisa.get_dataforseo_backlinks_bulk_spam_score": {
       input: {
@@ -1333,6 +1700,42 @@ declare module "@oomol-lab/connector" {
          * a page should be specified with absolute URL (including http:// or https://)
          * @minLength 1
          */
+        target: string;
+      };
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Track newly acquired and lost backlinks over time. */
+    "aisa.get_dataforseo_backlinks_new_lost": {
+      input: {
+        /**
+         * starting date of the time range optional field this field indicates the date which will be used as a threshold for new and lost backlinks and referring domains; the backlinks and referring domains that appeared in our index after the specified date will be considered as new; the backlinks and referring domains that weren't found after the specified date, but were present before, will be considered as lost; minimum value: 2019-01-30 maximum value shouldn't exceed the date specified in the date_to date format: "yyyy-mm-dd" example: "2021-01-01"
+         * @format date
+         */
+        dateFrom?: string | null;
+        /**
+         * ending date of the time range optional field if you don't specify this field, the today's date will be used by default minimum value shouldn't preceed the date specified in the date_from maximum value: today's date date format: "yyyy-mm-dd" example: "2021-01-15"
+         * @format date
+         */
+        dateTo?: string | null;
+        /** time range which will be used to group the results optional field default value: month possible values: day , week , month , year note: for day , we will return items corresponding to all dates between and including date_from and date_to ; for week / month / year , we will return items corresponding to full weeks/months/years, where each item will indicate the last day of the week/month/year for example, if you specify: "group_range": "month", "date_from": "2022-03-23", "date_to": "2022-05-13" we will return items falling between 2022-03-01 and 2022-05-31, namely, three items corresponding to the following dates: 2022-03-31 , 2022-04-30 , 2022-05-31 if there is no data for a certain day / week / month / year , we will return 0 */
+        groupRange?: string | null;
+        /** indicates if the subdomains of the target will be included in the search optional field if set to false , the subdomains will be ignored default value: true */
+        includeSubdomains?: boolean | null;
+        /** user-defined task identifier optional field the character limit is 255 you can use this parameter to identify the task and match it with the result you will find the specified tag value in the data object of the response */
+        tag?: string | null;
+        /** domain to get data for required field a domain should be specified without https:// and www. example: "forbes.com" */
         target: string;
       };
       output: {
@@ -2119,6 +2522,35 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
+    /** Find shared or missing Google keywords between two domains. */
+    "aisa.get_dataforseo_keyword_gap": {
+      input: ({
+        locationCode: unknown;
+        [key: string]: unknown;
+      } | {
+        locationName: unknown;
+        [key: string]: unknown;
+      }) & ({
+        languageCode: unknown;
+        [key: string]: unknown;
+      } | {
+        languageName: unknown;
+        [key: string]: unknown;
+      });
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
     /** Compare popularity over time for up to five keywords using DataForSEO Trends for Google Search, News, or Shopping. These are DataForSEO estimates, not original Google Trends data or absolute search volumes. */
     "aisa.get_dataforseo_keyword_trends": {
       input: {
@@ -2719,75 +3151,101 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
-    /** Aggregate LLM mention metrics for domains and keyword entities. */
+    /** Aggregate AI mentions with initial dataset filters. */
     "aisa.get_dataforseo_llm_mention_metrics": {
       input: {
+        /** array of filter expressions applied before aggregation optional field you can use this array to filter expressions applied to the raw mentions database before aggregation to limit the rows contributing to the result;you can add several filters at once (8 filters maximum) you should set a logical operator and, or between the conditions the following operators are supported: =, , in, not_in, like, not_like, ilike, not_ilike, match, not_match you can use the % operator with like and not_like to match any string of zero or more characters example: ["ai_search_volume",">","1000"]the full list of possible filters is available here. learn more about the initial dataset filters in this help center article. */
+        initialDatasetFilters?: Array<unknown>;
         /**
-         * The one to ten domain or keyword entities to analyze.
+         * maximum number of elements within internal arrays optional field you can use this field to limit the number of elements within the following arrays: sources_domain search_results_domain minimum value: 1 maximum value: 20 default value: 10
+         * @minimum 1
+         * @maximum 20
+         */
+        internalListLimit?: number;
+        /** search language code optional field if you use this field, you don't need to specify language_name; you can receive the list of available languages of the search engine with their language_code_by making a separate request to the https://api.dataforseo.com/v3/ai_optimization/llm_mentions/locations_and_languages default value: en Note: chat_gpt data is available for en onlyn */
+        languageCode?: string;
+        /** full name of search language optional field if you use this field, you don't need to specify language_code; if you don't specify this field, the language_code with en value will be used by default; you can receive the list of available languages of the search engine with their language_name by making a separate request to the https://api.dataforseo.com/v3/ai_optimization/llm_mentions/locations_and_languages Note: chat_gpt data is available for English only */
+        languageName?: string;
+        /** search location code optional field if you use this field, you don't need to specify location_name you can receive the list of available locations of the search engine with their location_code by making a separate request to the https://api.dataforseo.com/v3/ai_optimization/llm_mentions/locations_and_languages default value: 2840 Note: chat_gpt data is available for 2840 only */
+        locationCode?: number;
+        /** full name of search location optional field if you use this field, you don't need to specify location_code if you don't specify this field, the location_code with 2840 value will be used by default; you can receive the list of available locations of the search engine with their location_name by making a separate request to the https://api.dataforseo.com/v3/ai_optimization/llm_mentions/locations_and_languages Note: chat_gpt data is available for United States only */
+        locationName?: string;
+        /** target platform optional field possible values: chat_gpt, google default value: google Note: the data returned depends on the selected platform Note #2:chat_gpt data is available for the United States and English only */
+        platform?: string;
+        /** user-defined task identifier optional field the character limit is 255 you can use this parameter to identify the task and match it with the result you will find the specified tag value in the data object of the response */
+        tag?: string;
+        /**
+         * array of objects containing target entities required field you can specify up to 10 entities (objects) in the target field one target entity can contain either one domain or one keyword and related parametersexamples: target array with a domain entity [{"domain": "en.wikipedia.org", "search_filter": "exclude"}] target array with a keyword entity [{"keyword": "bmw", "search_scope": ["question"], "match_type ": "partial_match"}] target array with multiple entities [{"domain": "en.wikipedia.org", "search_filter": "exclude"}, {"keyword": "bmw", "match_type ": "partial_match", "search_scope": ["answer"]}]
          * @minItems 1
          * @maxItems 10
          */
-        targets: Array<Record<string, unknown>>;
-        /** The search location name. */
-        locationName?: string;
-        /** The DataForSEO search location code. */
-        locationCode?: number;
-        /** The search language name. */
-        languageName?: string;
-        /** The search language code. */
-        languageCode?: string;
-        /** The AI-answer platform whose mentions should be analyzed. */
-        platform?: "chat_gpt" | "google";
-        /** Which cited links should contribute to aggregation. */
-        linksScope?: "sources" | "search_results";
-        /**
-         * The maximum number of mention records to return.
-         * @minimum 1
-         * @maximum 1000
-         */
-        limit?: number;
-        /**
-         * A caller-defined identifier returned with the result.
-         * @maxLength 255
-         */
-        tag?: string;
+        target: Array<Record<string, unknown>>;
       };
-      output: Record<string, unknown>;
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
     };
-    /** Get domains cited most often in LLM responses matching target entities. */
+    /** Rank domains cited in AI mentions with per-list limits. */
     "aisa.get_dataforseo_llm_mention_top_domains": {
       input: {
+        /** array of filter expressions applied before aggregation optional field you can use this array to filter expressions applied to the raw mentions database before aggregation to limit the rows contributing to the result;you can add several filters at once (8 filters maximum) you should set a logical operator and, or between the conditions the following operators are supported: =, , in, not_in, like, not_like, ilike, not_ilike, match, not_match you can use the % operator with like and not_like to match any string of zero or more characters example: ["ai_search_volume",">","1000"]the full list of possible filters is available here. learn more about the initial dataset filters in this help center article. */
+        initialDatasetFilters?: Array<unknown>;
         /**
-         * The one to ten domain or keyword entities to analyze.
+         * maximum number of elements within internal arrays optional field you can use this field to limit the number of elements within the following arrays: sources_domain search_results_domain minimum value: 1 maximum value: 10 default value: 5
+         * @minimum 1
+         * @maximum 10
+         */
+        internalListLimit?: number;
+        /**
+         * maximum number of results in the items array optional field you can use this parameter to limit the number of data objects you receive in the items array minimum value: 1 maximum value: 10 default value: 5
+         * @minimum 1
+         * @maximum 10
+         */
+        itemsListLimit?: number;
+        /** search language code optional field if you use this field, you don't need to specify language_name; you can receive the list of available languages of the search engine with their language_code_by making a separate request to the https://api.dataforseo.com/v3/ai_optimization/llm_mentions/locations_and_languages default value: en Note: chat_gpt data is available for en onlyn */
+        languageCode?: string;
+        /** full name of search language optional field if you use this field, you don't need to specify language_code; if you don't specify this field, the language_code with en value will be used by default; you can receive the list of available languages of the search engine with their language_name by making a separate request to the https://api.dataforseo.com/v3/ai_optimization/llm_mentions/locations_and_languages Note: chat_gpt data is available for English only */
+        languageName?: string;
+        /** links source scope optional field this parameter specifies which links will be used to extract domains and aggregation data possible values: sources, search_results default value: sources */
+        linksScope?: string;
+        /** search location code optional field if you use this field, you don't need to specify location_name you can receive the list of available locations of the search engine with their location_code by making a separate request to the https://api.dataforseo.com/v3/ai_optimization/llm_mentions/locations_and_languages default value: 2840 Note: chat_gpt data is available for 2840 only */
+        locationCode?: number;
+        /** full name of search location optional field if you use this field, you don't need to specify location_code if you don't specify this field, the location_code with 2840 value will be used by default; you can receive the list of available locations of the search engine with their location_name by making a separate request to the https://api.dataforseo.com/v3/ai_optimization/llm_mentions/locations_and_languages Note: chat_gpt data is available for United States only */
+        locationName?: string;
+        /** target platform optional field possible values: chat_gpt, google default value: google Note: the data returned depends on the selected platform Note #2:chat_gpt data is available for the United States and English only */
+        platform?: string;
+        /** user-defined task identifier optional field the character limit is 255 you can use this parameter to identify the task and match it with the result you will find the specified tag value in the data object of the response */
+        tag?: string;
+        /**
+         * array of objects containing target entities required field you can specify up to 10 entities (objects) in the target field one target entity can contain either one domain or one keyword and related parametersexamples: target array with a domain entity [{"domain": "en.wikipedia.org", "search_filter": "exclude"}] target array with a keyword entity [{"keyword": "bmw", "search_scope": ["question"], "match_type ": "partial_match"}] target array with multiple entities [{"domain": "en.wikipedia.org", "search_filter": "exclude"}, {"keyword": "bmw", "match_type ": "partial_match", "search_scope": ["answer"]}]
          * @minItems 1
          * @maxItems 10
          */
-        targets: Array<Record<string, unknown>>;
-        /** The search location name. */
-        locationName?: string;
-        /** The DataForSEO search location code. */
-        locationCode?: number;
-        /** The search language name. */
-        languageName?: string;
-        /** The search language code. */
-        languageCode?: string;
-        /** The AI-answer platform whose mentions should be analyzed. */
-        platform?: "chat_gpt" | "google";
-        /** Which cited links should contribute to aggregation. */
-        linksScope?: "sources" | "search_results";
-        /**
-         * The maximum number of mention records to return.
-         * @minimum 1
-         * @maximum 1000
-         */
-        limit?: number;
-        /**
-         * A caller-defined identifier returned with the result.
-         * @maxLength 255
-         */
-        tag?: string;
+        target: Array<Record<string, unknown>>;
       };
-      output: Record<string, unknown>;
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
     };
     /** Get Lighthouse audits through DataForSEO. */
     "aisa.get_dataforseo_onpage_lighthouse": {
@@ -3398,6 +3856,184 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
+    /** Read FRED observations with date, vintage, frequency, and unit transformations. */
+    "aisa.get_fred_observations": {
+      input: {
+        /**
+         * A key that indicates the aggregation method used for frequency aggregation. This parameter has no affect if the frequency parameter is not set.
+         * string, optional, default: avg
+         * One of the following values: 'avg', 'sum', 'eop' avg = Average sum = Sum eop = End of Period
+         * avg = Average sum = Sum eop = End of Period
+         */
+        aggregationMethod?: "avg" | "sum" | "eop";
+        /**
+         * An optional parameter that indicates a lower frequency to aggregate values to. The FRED frequency aggregation feature converts higher frequency data series into lower frequency data series (e.g. converts a monthly data series into an annual data series). In FRED, the highest frequency data is daily, and the lowest frequency data is annual. There are 3 aggregation methods available- average, sum, and end of period. See the aggregation_method parameter.
+         * string, optional, default: no value for no frequency aggregation
+         * One of the following values: 'd', 'w', 'bw', 'm', 'q', 'sa', 'a', 'wef', 'weth', 'wew', 'wetu', 'wem', 'wesu', 'wesa', 'bwew', 'bwem' Frequencies without period descriptions: d = Daily w = Weekly bw = Biweekly m = Monthly q = Quarterly sa = Semiannual a = Annual Frequencies with period descriptions: wef = Weekly, Ending Friday weth = Weekly, Ending Thursday wew = Weekly, Ending Wednesday wetu = Weekly, Ending Tuesday wem = Weekly, Ending Monday wesu = Weekly, Ending Sunday wesa = Weekly, Ending Saturday bwew = Biweekly, Ending Wednesday bwem = Biweekly, Ending Monday
+         * Frequencies without period descriptions: d = Daily w = Weekly bw = Biweekly m = Monthly q = Quarterly sa = Semiannual a = Annual
+         * d = Daily w = Weekly bw = Biweekly m = Monthly q = Quarterly sa = Semiannual a = Annual
+         * Frequencies with period descriptions: wef = Weekly, Ending Friday weth = Weekly, Ending Thursday wew = Weekly, Ending Wednesday wetu = Weekly, Ending Tuesday wem = Weekly, Ending Monday wesu = Weekly, Ending Sunday wesa = Weekly, Ending Saturday bwew = Biweekly, Ending Wednesday bwem = Biweekly, Ending Monday
+         * wef = Weekly, Ending Friday weth = Weekly, Ending Thursday wew = Weekly, Ending Wednesday wetu = Weekly, Ending Tuesday wem = Weekly, Ending Monday wesu = Weekly, Ending Sunday wesa = Weekly, Ending Saturday bwew = Biweekly, Ending Wednesday bwem = Biweekly, Ending Monday
+         * Note that an error will be returned if a frequency is specified that is higher than the native frequency of the series. For instance if a series has the native frequency 'Monthly' (as returned by the fred/series request), it is not possible to aggregate the series to the higher 'Daily' frequency using the frequency parameter value 'd'.
+         * No frequency aggregation will occur if the frequency specified by the frequency parameter matches the native frequency of the series. For instance if the value of the frequency parameter is 'm' and the native frequency of the series is 'Monthly' (as returned by the fred/series request), observations will be returned, but they will not be aggregated to a lower frequency.
+         * For most cases, it will be sufficient to specify a lower frequency without a period description (e.g. 'd', 'w', 'bw', 'm', 'q', 'sa', 'a') as opposed to frequencies with period descriptions (e.g. 'wef', 'weth', 'wew', 'wetu', 'wem', 'wesu', 'wesa', 'bwew', 'bwem') which only exist for the weekly and biweekly frequencies. The weekly and biweekly frequencies with periods exist to offer more options and override the default periods implied by values 'w' and 'bw'. The value 'w' defaults to frequency and period 'Weekly, Ending Friday' when aggregating daily series. The value 'bw' defaults to frequency and period 'Biweekly, Ending Wednesday' when aggregating daily and weekly series. Consider the difference between values 'w' for 'Weekly' and 'wef' for 'Weekly, Ending Friday'. When aggregating observations from daily to weekly, the value 'w' defaults to frequency and period 'Weekly, Ending Friday' which is the same as 'wef'. Here, the difference is that the period 'Ending Friday' is implicit for value 'w' but explicit for value 'wef'. However, if a series has native frequency 'Weekly, Ending Monday', an error will be returned for value 'wef' but not value 'w'.
+         * The weekly and biweekly frequencies with periods exist to offer more options and override the default periods implied by values 'w' and 'bw'.
+         * The value 'w' defaults to frequency and period 'Weekly, Ending Friday' when aggregating daily series.
+         * The value 'bw' defaults to frequency and period 'Biweekly, Ending Wednesday' when aggregating daily and weekly series.
+         * Consider the difference between values 'w' for 'Weekly' and 'wef' for 'Weekly, Ending Friday'. When aggregating observations from daily to weekly, the value 'w' defaults to frequency and period 'Weekly, Ending Friday' which is the same as 'wef'. Here, the difference is that the period 'Ending Friday' is implicit for value 'w' but explicit for value 'wef'. However, if a series has native frequency 'Weekly, Ending Monday', an error will be returned for value 'wef' but not value 'w'.
+         * Note that frequency aggregation is currently only available for file_type equal to xml or json due to time constraints.
+         * Read the 'Frequency Aggregation' section of the FRED FAQs for implementation details.
+         */
+        frequency?: "d" | "w" | "bw" | "m" | "q" | "sa" | "a" | "wef" | "weth" | "wew" | "wetu" | "wem" | "wesu" | "wesa" | "bwew" | "bwem";
+        /**
+         * The maximum number of results to return.
+         * integer between 1 and 100000, optional, default: 100000
+         * @minimum 1
+         * @maximum 100000
+         */
+        limit?: number;
+        /**
+         * The end of the observation period.
+         * YYYY-MM-DD formatted string, optional, default: 9999-12-31 (latest available)
+         * @format date
+         */
+        observationEnd?: string;
+        /**
+         * The start of the observation period.
+         * YYYY-MM-DD formatted string, optional, default: 1776-07-04 (earliest available)
+         * @format date
+         */
+        observationStart?: string;
+        /**
+         * non-negative integer, optional, default: 0
+         * @minimum 0
+         */
+        offset?: number;
+        /**
+         * An integer that indicates an output type.
+         * integer, optional, default: 1
+         * One of the following values: '1', '2', '3', '4' 1 = Observations by Real-Time Period 2 = Observations by Vintage Date, All Observations 3 = Observations by Vintage Date, New and Revised Observations Only 4 = Observations, Initial Release Only
+         * 1 = Observations by Real-Time Period 2 = Observations by Vintage Date, All Observations 3 = Observations by Vintage Date, New and Revised Observations Only 4 = Observations, Initial Release Only
+         * For output types '2' and '3', some XML attribute names start with the series ID which may have a first character that is a number (i.e. 0 through 9). In this case only, the XML attribute name starts with an underscore then the series ID in order to avoid invalid XML. If the series ID starts with a letter (i.e. A through Z) then an underscore is not prepended.
+         * For more information, read: https://alfred.stlouisfed.org/help/downloaddata#outputformats
+         */
+        outputType?: 1 | 2 | 3 | 4;
+        /**
+         * The end of the real-time period. For more information, see Real-Time Periods , vintage_dates .
+         * YYYY-MM-DD formatted string, optional, default: today's date
+         * @format date
+         */
+        realtimeEnd?: string;
+        /**
+         * The start of the real-time period. For more information, see Real-Time Periods , vintage_dates .
+         * YYYY-MM-DD formatted string, optional, default: today's date
+         * @format date
+         */
+        realtimeStart?: string;
+        /**
+         * The id for a series.
+         * string, required
+         */
+        seriesId: string;
+        /**
+         * Sort results is ascending or descending observation_date order.
+         * One of the following strings: 'asc', 'desc'.
+         * optional, default: asc
+         */
+        sortOrder?: "asc" | "desc";
+        /**
+         * A key that indicates a data value transformation.
+         * string, optional, default: lin (No transformation)
+         * One of the following values: 'lin', 'chg', 'ch1', 'pch', 'pc1', 'pca', 'cch', 'cca', 'log' lin = Levels (No transformation) chg = Change ch1 = Change from Year Ago pch = Percent Change pc1 = Percent Change from Year Ago pca = Compounded Annual Rate of Change cch = Continuously Compounded Rate of Change cca = Continuously Compounded Annual Rate of Change log = Natural Log
+         * lin = Levels (No transformation) chg = Change ch1 = Change from Year Ago pch = Percent Change pc1 = Percent Change from Year Ago pca = Compounded Annual Rate of Change cch = Continuously Compounded Rate of Change cca = Continuously Compounded Annual Rate of Change log = Natural Log
+         * For unit transformation formulas, see: https://alfred.stlouisfed.org/help#growth_formulas
+         */
+        units?: "lin" | "chg" | "ch1" | "pch" | "pc1" | "pca" | "cch" | "cca" | "log";
+        /**
+         * A comma separated string of YYYY-MM-DD formatted dates in history (e.g. 2000-01-01,2005-02-24). Vintage dates are used to download data as it existed on these specified dates in history. Vintage dates can be specified instead of a real-time period using realtime_start and realtime_end.
+         * Sometimes it may be useful to enter a vintage date that is not a date when the data values were revised. For instance you may want to know the latest available revisions on a particular date. Entering a vintage date is also useful to compare series on different releases with different release dates.
+         * string, optional, no vintage dates are set by default.
+         * Your query will be limited to a specific number of vintage dates depending on the series_id , file_type and output_type specified.
+         * output_type=2, series_id=USRECD: 110 csv, 55 xlsx
+         * output_type=2, any daily series: 450 csv, 225 xlsx
+         * any output_type or other series: 1000 csv, 1000 xlsx, 2000 json, 2000 xml
+         */
+        vintageDates?: string;
+      };
+      output: Record<string, unknown>;
+    };
+    /** List FRED economic release dates and publication metadata. */
+    "aisa.get_fred_release_dates": {
+      input: {
+        /**
+         * Determines whether release dates with no data available are returned. The defalut value 'false' excludes release dates that do not have data. In particular, this excludes future release dates which may be available in the FRED release calendar or the ALFRED release calendar .
+         * If include_release_dates_with_no_data is set to true, the XML tag release_date has an extra attribute release_last_updated that can be compared to the release date to determine if data has been updated.
+         * One of the following strings: 'true', 'false'.
+         * optional, default: false
+         */
+        includeReleaseDatesWithNoData?: "true" | "false";
+        /**
+         * The maximum number of results to return.
+         * integer between 1 and 1000, optional, default: 1000
+         * @minimum 1
+         * @maximum 1000
+         */
+        limit?: number;
+        /**
+         * non-negative integer, optional, default: 0
+         * @minimum 0
+         */
+        offset?: number;
+        /**
+         * Order results by values of the specified attribute.
+         * One of the following strings: 'release_date', 'release_id', 'release_name'.
+         * optional, default: release_date
+         */
+        orderBy?: "release_date" | "release_id" | "release_name";
+        /**
+         * The end of the real-time period. For more information, see Real-Time Periods .
+         * YYYY-MM-DD formatted string, optional, default: 9999-12-31 (latest available)
+         * @format date
+         */
+        realtimeEnd?: string;
+        /**
+         * The start of the real-time period. For more information, see Real-Time Periods .
+         * YYYY-MM-DD formatted string, optional, default: First day of the current year
+         * @format date
+         */
+        realtimeStart?: string;
+        /**
+         * Sort results is ascending or descending release date order.
+         * One of the following strings: 'asc', 'desc'.
+         * optional, default: desc
+         */
+        sortOrder?: "asc" | "desc";
+      };
+      output: Record<string, unknown>;
+    };
+    /** Get FRED series metadata, units, and observation coverage. */
+    "aisa.get_fred_series": {
+      input: {
+        /**
+         * The end of the real-time period. For more information, see Real-Time Periods .
+         * YYYY-MM-DD formatted string, optional, default: today's date
+         * @format date
+         */
+        realtimeEnd?: string;
+        /**
+         * The start of the real-time period. For more information, see Real-Time Periods .
+         * YYYY-MM-DD formatted string, optional, default: today's date
+         * @format date
+         */
+        realtimeStart?: string;
+        /**
+         * The id for a series.
+         * string, required
+         */
+        seriesId: string;
+      };
+      output: Record<string, unknown>;
+    };
     /** Get standardized income statements for a company. */
     "aisa.get_income_statements": {
       input: Record<string, unknown>;
@@ -3405,34 +4041,7 @@ declare module "@oomol-lab/connector" {
     };
     /** List reported insider transactions for a ticker. */
     "aisa.get_insider_trades": {
-      input: {
-        /** The public-market ticker symbol to query. */
-        ticker: string;
-        /**
-         * The maximum number of records to return.
-         * @minimum 1
-         */
-        limit?: number;
-        /** Text to match against the reporting insider's name. */
-        insiderName?: string;
-        /** The transaction type to return. */
-        transactionType?: string;
-        /**
-         * The exact filing date in YYYY-MM-DD format.
-         * @format date
-         */
-        filingDate?: string;
-        /**
-         * Return filings on or after this date.
-         * @format date
-         */
-        filingDateFrom?: string;
-        /**
-         * Return filings on or before this date.
-         * @format date
-         */
-        filingDateTo?: string;
-      };
+      input: Record<string, unknown>;
       output: Record<string, unknown>;
     };
     /** List Kalshi prediction markets with live quotes, settlement rules, and pagination. */
@@ -3505,38 +4114,6 @@ declare module "@oomol-lab/connector" {
         cursor?: string;
         /** The executed Kalshi trades matching the filters. */
         trades: Array<Record<string, unknown>>;
-      };
-    };
-    /** Get one wallet's Polymarket split, merge, and redemption activity. */
-    "aisa.get_polymarket_activity": {
-      input: {
-        /**
-         * The wallet address whose Polymarket activity should be returned.
-         * @pattern ^0x[0-9a-fA-F]{40}$
-         */
-        user: string;
-        /** Return activity at or after this Unix timestamp. */
-        startTimestamp?: number;
-        /** Return activity at or before this Unix timestamp. */
-        endTimestamp?: number;
-        /** The Polymarket market slug to filter by. */
-        marketSlug?: string;
-        /** The Polymarket condition ID to filter by. */
-        conditionId?: string;
-        /**
-         * The maximum number of activity records to return.
-         * @minimum 1
-         * @maximum 1000
-         */
-        limit?: number;
-        /** The pagination key returned by the previous response. */
-        paginationKey?: string;
-      };
-      output: {
-        /** The wallet activity records matching the filters. */
-        activities: Array<Record<string, unknown>>;
-        /** Pagination metadata, including the next pagination key when available. */
-        pagination: Record<string, unknown>;
       };
     };
     /** List Polymarket events and their related prediction markets. */
@@ -3660,6 +4237,23 @@ declare module "@oomol-lab/connector" {
         includeTag?: boolean;
       };
       output: Array<Record<string, unknown>>;
+    };
+    /** Read public Reddit comments for a post URL. */
+    "aisa.get_reddit_post_comments": {
+      input: {
+        /** Cursor to get more comments, or replies. */
+        cursor?: string;
+        /** Set to true for a trimmed down version of the response */
+        trim?: boolean;
+        /** The trimmed value. */
+        trimmed?: string;
+        /**
+         * Reddit post URL
+         * @minLength 1
+         */
+        url: string;
+      };
+      output: Record<string, unknown>;
     };
     /** Get backlink anchor text and backlink counts for a domain or URL. */
     "aisa.get_semrush_backlink_anchors": {
@@ -4385,8 +4979,8 @@ declare module "@oomol-lab/connector" {
          * @maximum 20
          */
         limit: number;
-        /** The geography available on the current AIsa plan. */
-        country?: "us" | "ww";
+        /** The supported geography for this endpoint on AIsa: worldwide. */
+        country?: "ww";
         /**
          * The number of rows to skip before returning results.
          * @minimum 0
@@ -4422,8 +5016,8 @@ declare module "@oomol-lab/connector" {
          * @maximum 20
          */
         limit: number;
-        /** The geography available on the current AIsa plan. */
-        country?: "us" | "ww";
+        /** The supported geography for this endpoint on AIsa: worldwide. */
+        country?: "ww";
         /**
          * The number of rows to skip before returning results.
          * @minimum 0
@@ -4696,10 +5290,7 @@ declare module "@oomol-lab/connector" {
     };
     /** Get the most recent earnings snapshot for a ticker. */
     "aisa.get_stock_earnings": {
-      input: {
-        /** The public-market ticker symbol to query. */
-        ticker: string;
-      };
+      input: Record<string, unknown>;
       output: Record<string, unknown>;
     };
     /** Get the latest available market-price snapshot for a ticker. */
@@ -4712,22 +5303,7 @@ declare module "@oomol-lab/connector" {
     };
     /** Get historical market prices for a ticker and date range. */
     "aisa.get_stock_prices": {
-      input: {
-        /** The public-market ticker symbol to query. */
-        ticker: string;
-        /** The requested price-bar interval. */
-        interval: "day" | "week" | "month" | "year";
-        /**
-         * The first market date in YYYY-MM-DD format.
-         * @format date
-         */
-        startDate: string;
-        /**
-         * The last market date in YYYY-MM-DD format.
-         * @format date
-         */
-        endDate: string;
-      };
+      input: Record<string, unknown>;
       output: Record<string, unknown>;
     };
     /** Get CoinGecko metadata and market data for a token contract. */
@@ -4878,10 +5454,13 @@ declare module "@oomol-lab/connector" {
     /** List SEC filings by ticker, CIK, and filing type. */
     "aisa.list_company_filings": {
       input: {
-        /** The public-market ticker symbol to query. */
-        ticker?: string;
         /** The SEC Central Index Key used to identify the company. */
         cik?: string;
+        /**
+         * Opaque pagination cursor from a previous response's next_page_url. When provided, all other query parameters are ignored: the cursor carries the original request's filters. Treat it as opaque; do not construct or modify it.
+         * @minLength 1
+         */
+        cursor?: string;
         /** The SEC filing type, such as 10-K or 10-Q. */
         filingType?: string;
         /**
@@ -4889,6 +5468,8 @@ declare module "@oomol-lab/connector" {
          * @minimum 1
          */
         limit?: number;
+        /** The public-market ticker symbol to query. */
+        ticker?: string;
       };
       output: Record<string, unknown>;
     };
@@ -4945,6 +5526,53 @@ declare module "@oomol-lab/connector" {
         priceChangePercentages?: Array<string>;
       };
       output: Array<Record<string, unknown>>;
+    };
+    /** List backlinks with filters, sorting, and pagination. */
+    "aisa.list_dataforseo_backlinks": {
+      input: {
+        /** set what backlinks to return and count optional field you can use this field to choose what backlinks will be returned and used for aggregated metrics for your target ; possible values: all - all backlinks will be returned and counted; live - backlinks found during the last check will be returned and counted; lost - lost backlinks will be returned and counted; default value: live */
+        backlinksStatusType?: string | null;
+        /** detailed results grouping type optional field use this object to get a specific number of backlinks per field if you use custom_mode , then mode will be ignored example: "custom_mode": {"field": "domain", "value": 100} */
+        customMode?: Record<string, Record<string, unknown> | null> | null;
+        /** indicates if internal backlinks from subdomains to the target will be excluded from the results optional field if set to true , the results will not include data on internal backlinks from subdomains of the same domain as target if set to false , internal links will be included in the results default value: true */
+        excludeInternalBacklinks?: boolean | null;
+        /** array of results filtering parameters optional field you can add several filters at once (8 filters maximum) you should set a logical operator and , or between the conditions the following operators are supported: = , <> , in , not_in , like , not_like , ilike , not_ilike , regex , not_regex , match , not_match you can use the % operator with like and not_like to match any string of zero or more characters example: ["rank",">","80"] [["page_from_rank",">","55"], "and", ["dofollow","=",true]] [["first_seen",">","2017-10-23 11:31:45 +00:00"], "and", [["anchor","like","%seo%"],"or",["text_pre","like","%seo%"]]] The full list of possible filters is available here. */
+        filters?: Array<string | number | boolean | Record<string, unknown> | null | Array<unknown>> | null;
+        /** indicates if the subdomains of the target will be included in the search optional field if set to false , the subdomains will be ignored default value: true */
+        includeSubdomains?: boolean | null;
+        /**
+         * the maximum number of returned backlinks optional field default value: 100 maximum value: 1000
+         * @maximum 1000
+         */
+        limit?: number | null;
+        /** results grouping type optional field possible grouping types: as_is - returns all backlinks one_per_domain - returns one backlink per domain one_per_anchor - returns one backlink per anchor default value: as_is */
+        mode?: string | null;
+        /** offset in the results array of the returned backlinks optional field default value: 0 if you specify the 10 value, the first ten backlinks in the results array will be omitted and the data will be provided for the successive backlinks; Note: the maximum value is 20,000 , use the search_after_token if you would like to offset more results */
+        offset?: number | null;
+        /** results sorting rules optional field you can use the same values as in the filters array to sort the results possible sorting types: asc - results will be sorted in the ascending order desc - results will be sorted in the descending order you should use a comma to set up a sorting type example: ["rank,desc"] note that you can set no more than three sorting rules in a single request you should use a comma to separate several sorting rules example: ["domain_from_rank,desc","page_from_rank,asc"] */
+        orderBy?: Array<string> | null;
+        /** defines the scale used for calculating and displaying the rank , domain_from_rank , and page_from_rank values optional field you can use this parameter to choose whether rank values are presented on a 0–100 or 0–1000 scale possible values: one_hundred — rank values are displayed on a 0–100 scale one_thousand — rank values are displayed on a 0–1000 scale default value: one_thousand learn more about how this parameter works and how ranking metrics are calculated in this Help Center article */
+        rankScale?: string | null;
+        /** token for subsequent requests optional field provided in the identical filed of the response to each request; use this parameter to avoid timeouts while trying to obtain over 20,000 results in a single request; by specifying the unique search_after_token value from the response array, you will get the subsequent results of the initial task; search_after_token values are unique for each subsequent task ; Note: if the search_after_token is specified in the request, all other parameters should be identical to the previous request */
+        searchAfterToken?: string | null;
+        /** user-defined task identifier optional field the character limit is 255 you can use this parameter to identify the task and match it with the result you will find the specified tag value in the data object of the response */
+        tag?: string | null;
+        /** domain, subdomain or webpage to get backlinks for required field a domain or a subdomain should be specified without https:// and www. a page should be specified with absolute URL (including http:// or https:// ) */
+        target: string;
+      };
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
     };
     /** Look up the public contact email for one creator profile; not-found results are billed. */
     "aisa.lookup_creator_email": {
@@ -5257,6 +5885,22 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
+    /** Screen stocks by financial metrics and company identifiers. */
+    "aisa.screen_stocks": {
+      input: {
+        /**
+         * An array of filter objects to apply to the search.
+         * @minItems 1
+         */
+        filters: Array<(unknown)>;
+        /**
+         * The maximum number of results to return.
+         * @minimum 1
+         */
+        limit?: number;
+      };
+      output: Record<string, unknown>;
+    };
     /** Find Akta companies by name, website, or UUID. */
     "aisa.search_akta_companies": {
       input: {
@@ -5386,6 +6030,38 @@ declare module "@oomol-lab/connector" {
          * @maximum 100
          */
         perPage?: number;
+        /** Find organizations based on the technologies they currently use. Apollo supports filtering by 1,500+ technologies. Apollo calculates technologies data from multiple sources. This data is updated regularly. Check out the full list of supported technologies by downloading this CSV file . Use underscores (_) to replace spaces and periods for the technologies listed in the CSV file. Examples: salesforce; google_analytics; wordpress_org */
+        currentlyUsingAnyOfTechnologyUids?: Array<string>;
+        /** The maximium amount the company received with its most recent funding round. Use this parameter in combination with latest_funding_amount_range[min] to set a monetary range for the company's most recent funding round. Do not enter currency symbols, commas, or decimal points in the figure. Examples: 5000000; 15000000 */
+        latestFundingAmountRangeMax?: number;
+        /** The minimum amount the company received with its most recent funding round. Use this parameter in combination with latest_funding_amount_range[max] to set a monetary range for the company's most recent funding round. Do not enter currency symbols, commas, or decimal points in the figure. Examples: 5000000; 15000000 */
+        latestFundingAmountRangeMin?: number;
+        /** The latest date when the company received its most recent funding round. Use this parameter in combination with latest_funding_date_range[min] to set a date range for when the company received its most recent funding round. Example: 2025-09-25 */
+        latestFundingDateRangeMax?: string;
+        /** The earliest date when the company received its most recent funding round. Use this parameter in combination with latest_funding_date_range[max] to set a date range for when the company received its most recent funding round. Example: 2025-07-25 */
+        latestFundingDateRangeMin?: string;
+        /** The locations of the jobs being actively recruited by the company. Examples: atlanta; japan */
+        organizationJobLocations?: Array<string>;
+        /** The latest date when jobs were posted by the company. Use this parameter in combination with organization_job_posted_at_range[min] to set a date range for when jobs posted. Example: 2025-09-25 */
+        organizationJobPostedAtRangeMax?: string;
+        /** The earliest date when jobs were posted by the company. Use this parameter in combination with organization_job_posted_at_range[max] to set a date range for when jobs posted. Example: 2025-07-25 */
+        organizationJobPostedAtRangeMin?: string;
+        /** The maximum number of job postings active at the company. Use this parameter in combination with organization_num_jobs_range[min] to set a job postings range. Examples: 50; 500 */
+        organizationNumJobsRangeMax?: number;
+        /** The minimum number of job postings active at the company. Use this parameter in combination with organization_num_jobs_range[max] to set a job postings range. Examples: 50; 500 */
+        organizationNumJobsRangeMin?: number;
+        /** The job titles that are listed in active job postings at the company. Examples: sales manager; research analyst */
+        qOrganizationJobTitles?: Array<string>;
+        /** Filter search results based on keywords associated with companies. For example, you can enter mining as a value to return only companies that have an association with the mining industry. Examples: mining; sales strategy; consulting */
+        qOrganizationKeywordTags?: Array<string>;
+        /** Search for organizations based on their revenue. Use this parameter to set the upper range of organization revenue. Use the revenue_range[min] parameter to set the lower range of revenue. Do not enter currency symbols, commas, or decimal points in the figure. Example: 50000000 */
+        revenueRangeMax?: number;
+        /** Search for organizations based on their revenue. Use this parameter to set the lower range of organization revenue. Use the revenue_range[max] parameter to set the upper range of revenue. Do not enter currency symbols, commas, or decimal points in the figure. Example: 300000 */
+        revenueRangeMin?: number;
+        /** The maximum amount the company received during all of its funding rounds combined. Use this parameter in combination with total_funding_range[min] to set a monetary range for all of the company's funding rounds. Do not enter currency symbols, commas, or decimal points in the figure. Examples: 50000000; 350000000 */
+        totalFundingRangeMax?: number;
+        /** The minimum amount the company received during all of its funding rounds combined. Use this parameter in combination with total_funding_range[max] to set a monetary range for all of the company's funding rounds. Do not enter currency symbols, commas, or decimal points in the figure. Examples: 50000000; 350000000 */
+        totalFundingRangeMin?: number;
       };
       output: Record<string, unknown>;
     };
@@ -5421,6 +6097,30 @@ declare module "@oomol-lab/connector" {
          * @maximum 100
          */
         perPage?: number;
+        /** The email statuses for the people you want to find. You can add multiple statuses to expand your search. The statuses you can search include: verified unverified likely to engage unavailable */
+        contactEmailStatus?: Array<string>;
+        /** Exclude people from your search based on any of the technologies their current employer uses. Apollo supports filtering by 1,500+ technologies. Apollo calculates technologies data from multiple sources. This data is updated regularly. Check out the full list of supported technologies by downloading this CSV file . Use underscores (_) to replace spaces and periods for the technologies listed in the CSV file. Examples: salesforce; google_analytics; wordpress_org */
+        currentlyNotUsingAnyOfTechnologyUids?: Array<string>;
+        /** Find people based on all of the technologies their current employer uses. Apollo supports filtering by 1,500+ technologies. Apollo calculates technologies data from multiple sources. This data is updated regularly. Check out the full list of supported technologies by downloading this CSV file . Use underscores (_) to replace spaces and periods for the technologies listed in the CSV file. Examples: salesforce; google_analytics; wordpress_org */
+        currentlyUsingAllOfTechnologyUids?: Array<string>;
+        /** Find people based on any of the technologies their current employer uses. Apollo supports filtering by 1,500+ technologies. Apollo calculates technologies data from multiple sources. This data is updated regularly. Check out the full list of supported technologies by downloading this CSV file . Use underscores (_) to replace spaces and periods for the technologies listed in the CSV file. Examples: salesforce; google_analytics; wordpress_org */
+        currentlyUsingAnyOfTechnologyUids?: Array<string>;
+        /** The locations of the jobs being actively recruited by the person's employer. Examples: atlanta; japan */
+        organizationJobLocations?: Array<string>;
+        /** The latest date when jobs were posted by the person's current employer. Use this parameter in combination with organization_job_posted_at_range[min] to set a date range for when jobs posted. Example: 2025-09-25 */
+        organizationJobPostedAtRangeMax?: string;
+        /** The earliest date when jobs were posted by the person's current employer. Use this parameter in combination with organization_job_posted_at_range[max] to set a date range for when jobs posted. Example: 2025-07-25 */
+        organizationJobPostedAtRangeMin?: string;
+        /** The maximum number of job postings active at the person's current employer. Use this parameter in combination with organization_num_jobs_range[min] to set a job postings range. Examples: 50; 500 */
+        organizationNumJobsRangeMax?: number;
+        /** The minimum number of job postings active at the person's current employer. Use this parameter in combination with organization_num_jobs_range[max] to set a job postings range. Examples: 50; 500 */
+        organizationNumJobsRangeMin?: number;
+        /** The job titles that are listed in active job postings at the person's current employer. Examples: sales manager; research analyst */
+        qOrganizationJobTitles?: Array<string>;
+        /** The maximum revenue the person's current employer generates. Use this parameter in combination with revenue_range[min] to set a revenue range. Do not enter currency symbols, commas, or decimal points in the figure. Examples: 500000; 1500000 */
+        revenueRangeMax?: number;
+        /** The minimum revenue the person's current employer generates. Use this parameter in combination with revenue_range[max] to set a revenue range. Do not enter currency symbols, commas, or decimal points in the figure. Examples: 500000; 1500000 */
+        revenueRangeMin?: number;
       };
       output: Record<string, unknown>;
     };
@@ -5483,40 +6183,97 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
-    /** Search individual LLM mention records for domains and keywords. */
+    /** Find business listings by category, location, title, and review filters. */
+    "aisa.search_dataforseo_business_listings": {
+      input: {
+        /** business categories optional field the categories you specify are used to search for business listings; if you don't use this field, we will return business listings found in the specified location; you can specify up to 10 categories */
+        categories?: Array<string> | null;
+        /** description of the element in SERP optional field the description of the business entity for which the results are collected; can contain up to 200 characters */
+        description?: string | null;
+        /** array of results filtering parameters optional field you can add several filters at once (8 filters maximum) you should set a logical operator and , or between the conditions the following operators are supported: regex , not_regex , < , <= , > , >= , = , <> , in , not_in , like , not_like , ilike , not_ilike , match , not_match you can use the % operator with like and not_like to match any string of zero or more characters example: ["rating.value",">",3] you can receive the list of available filters_by making a separate request to https://api.dataforseo.com/v3/business_data/business_listings/available_filters The full list of possible filters is available here. n */
+        filters?: Array<string | number | boolean | Record<string, unknown> | null | Array<unknown>> | null;
+        /** indicates whether the business is verified by its owner on Google Maps optional field */
+        isClaimed?: boolean | null;
+        /**
+         * the maximum number of returned businesses optional field default value: 100 maximum value: 1000
+         * @maximum 1000
+         */
+        limit?: number | null;
+        /** GPS coordinates of a location optional field location_coordinate parameter should be specified in the "latitude,longitude,radius" format the maximum number of decimal digits for "latitude" and "longitude" : 7 the value of "radius" is specified in kilometres (km) the minimum value for "radius" : 1 the maximum value for "radius" : 100000 example: 53.476225,-2.243572,200 learn more about how to set location parameters in this API on our Help Center */
+        locationCoordinate?: string | null;
+        /** offset in the results array of returned businesses optional field default value: 0 if you specify the 10 value, the first ten entities in the results array will be omitted and the data will be provided for the successive entities Note: we recommend using this parameter only when retrieving up to 10,000 results for retrieving over 10,000 results, use the offset_token instead */
+        offset?: number | null;
+        /** token for subsequent requests optional field provided in the identical filed of the response to each request; use this parameter to avoid timeouts while trying to obtain over 100,000 results in a single request; by specifying the unique offset_token value from the response array, you will get the subsequent results of the initial task; offset_token values are unique for each subsequent task Note: if the offset_token is specified in the request, all other parameters should be identical to the previous request learn more about this parameter on our Help Center */
+        offsetToken?: string | null;
+        /** results sorting rules optional field you can use the same values as in the filters array to sort the results possible sorting types: asc - results will be sorted in the ascending order desc - results will be sorted in the descending order you should use a comma to set up a sorting parameter example: ["rating.value,desc"] note that you can set no more than three sorting rules in a single request you should use a comma to separate several sorting rules example: ["rating.value,desc","rating.votes_count,desc"] */
+        orderBy?: Array<string> | null;
+        /** user-defined task identifier optional field the character limit is 255 you can use this parameter to identify the task and match it with the result you will find the specified tag value in the data object of the response */
+        tag?: string | null;
+        /** title of the element in SERP optional field the name of the business entity for which the results are collected; can contain up to 200 characters */
+        title?: string | null;
+      };
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
+    };
+    /** Search AI mentions with filters, sorting, and pagination. */
     "aisa.search_dataforseo_llm_mentions": {
       input: {
-        /**
-         * The one to ten domain or keyword entities to analyze.
-         * @minItems 1
-         * @maxItems 10
-         */
-        targets: Array<Record<string, unknown>>;
-        /** The search location name. */
-        locationName?: string;
-        /** The DataForSEO search location code. */
-        locationCode?: number;
-        /** The search language name. */
-        languageName?: string;
-        /** The search language code. */
+        /** array of results filtering parameters optional field you can add several filters at once (8 filters maximum) you should set a logical operator and, or between the conditions the following operators are supported: =, , in, not_in, like, not_like, ilike, not_ilike, match, not_match you can use the % operator with like and not_like to match any string of zero or more characters example: ["ai_search_volume",">","1000"]The full list of possible filters is available here. */
+        filters?: Array<unknown>;
+        /** search language code optional field if you use this field, you don't need to specify language_name; you can receive the list of available languages of the search engine with their language_code_by making a separate request to the https://api.dataforseo.com/v3/ai_optimization/llm_mentions/locations_and_languages default value: en Note: chat_gpt data is available for en onlyn */
         languageCode?: string;
-        /** The AI-answer platform whose mentions should be analyzed. */
-        platform?: "chat_gpt" | "google";
-        /** Which cited links should contribute to aggregation. */
-        linksScope?: "sources" | "search_results";
+        /** full name of search language optional field if you use this field, you don't need to specify language_code; if you don't specify this field, the language_code with en value will be used by default; you can receive the list of available languages of the search engine with their language_name by making a separate request to the https://api.dataforseo.com/v3/ai_optimization/llm_mentions/locations_and_languages Note: chat_gpt data is available for English only */
+        languageName?: string;
         /**
-         * The maximum number of mention records to return.
-         * @minimum 1
+         * the maximum number of returned objects optional fielddefault value: 100 maximum value: 1000
          * @maximum 1000
          */
         limit?: number;
-        /**
-         * A caller-defined identifier returned with the result.
-         * @maxLength 255
-         */
+        /** search location code optional field if you use this field, you don't need to specify location_name you can receive the list of available locations of the search engine with their location_code by making a separate request to the https://api.dataforseo.com/v3/ai_optimization/llm_mentions/locations_and_languages default value: 2840 Note: chat_gpt data is available for 2840 only */
+        locationCode?: number;
+        /** full name of search location optional field if you use this field, you don't need to specify location_code if you don't specify this field, the location_code with 2840 value will be used by default; you can receive the list of available locations of the search engine with their location_name by making a separate request to the https://api.dataforseo.com/v3/ai_optimization/llm_mentions/locations_and_languages Note: chat_gpt data is available for United States only */
+        locationName?: string;
+        /** offset in the results array of the returned mentions data optional fielddefault value: 0 example: if you specify the 10 value, the first ten mentions objects in the results array will be omitted and the data will be provided for the successive objects; Note: the maximum value is 9,000, use the search_after_token if you would like to offset more results */
+        offset?: number;
+        /** results sorting rules optional field you can use the same values as in the filters array to sort the results possible sorting types: asc - results will be sorted in the ascending order desc - results will be sorted in the descending order you should use a comma to set up a sorting type example: ["ai_search_volume,desc"] note that you can set no more than three sorting rules in a single request you should use a comma to separate several sorting rules */
+        orderBy?: Array<string>;
+        /** target platform optional field possible values: chat_gpt, google default value: google Note: the data returned depends on the selected platform Note #2:chat_gpt data is available for the United States and English only */
+        platform?: string;
+        /** token for subsequent requests optional field provided in the identical filed of the response to each request; use this parameter to avoid timeouts while trying to obtain over 20,000 results in a single request; by specifying the unique search_after_token value from the response array, you will get the subsequent results of the initial task; search_after_token values are unique for each subsequent task ; Note: if the search_after_token is specified in the request, all other parameters should be identical to the previous request */
+        searchAfterToken?: string;
+        /** user-defined task identifier optional field the character limit is 255 you can use this parameter to identify the task and match it with the result you will find the specified tag value in the data object of the response */
         tag?: string;
+        /**
+         * array of objects containing target entities required field you can specify up to 10 entities (objects) in the target field one target entity can contain either one domain or one keyword and related parametersexamples: target array with a domain entity [{"domain": "en.wikipedia.org", "search_filter": "exclude"}] target array with a keyword entity [{"keyword": "bmw", "search_scope": ["question"], "match_type ": "partial_match"}] target array with multiple entities [{"domain": "en.wikipedia.org", "search_filter": "exclude"}, {"keyword": "bmw", "match_type ": "partial_match", "search_scope": ["answer"]}]
+         * @minItems 1
+         * @maxItems 10
+         */
+        target: Array<Record<string, unknown>>;
       };
-      output: Record<string, unknown>;
+      output: {
+        /** The overall response status code. */
+        status_code?: number;
+        /** The overall response status message. */
+        status_message?: string;
+        /** The supplier-reported cost; not the source of Marketplace customer billing. */
+        cost?: number;
+        /** The number of failed tasks. */
+        tasks_error?: number;
+        /** Task results; HTTP success does not imply that every task succeeded. */
+        tasks?: Array<Record<string, unknown>> | null;
+        [key: string]: unknown;
+      };
     };
     /** Search the web semantically through Exa. Request contents to include page text, or retrieve selected URLs with get_exa_contents. */
     "aisa.search_exa": {
@@ -5595,6 +6352,29 @@ declare module "@oomol-lab/connector" {
         output?: unknown;
         [key: string]: unknown;
       };
+    };
+    /** Compare selected financial line items across companies. */
+    "aisa.search_financial_line_items": {
+      input: {
+        /**
+         * The maximum number of results to return.
+         * @minimum 1
+         */
+        limit?: number;
+        /**
+         * An array of line items to apply to the search.
+         * @minItems 1
+         */
+        lineItems: Array<string>;
+        /** The time period for the financial data. */
+        period?: "annual" | "quarterly" | "ttm";
+        /**
+         * An array of tickers to apply to the search.
+         * @minItems 1
+         */
+        tickers: Array<string>;
+      };
+      output: Record<string, unknown>;
     };
     /** Search the web through Firecrawl and return ranked URLs, titles, and snippets. */
     "aisa.search_firecrawl": {
@@ -5699,6 +6479,134 @@ declare module "@oomol-lab/connector" {
         metadata?: Record<string, unknown>;
         [key: string]: unknown;
       };
+    };
+    /** Find FRED economic series by text, tags, and frequency. */
+    "aisa.search_fred_series": {
+      input: {
+        /**
+         * A semicolon delimited list of tag names that series match none of.
+         * String, optional, no filtering by tags by default.
+         * Example value: 'discontinued;m1'. Filter results to series having neither tag 'discontinued' nor tag 'm1'.
+         * Parameter exclude_tag_names requires that parameter tag_names also be set to limit the number of matching series.
+         */
+        excludeTagNames?: string;
+        /**
+         * The value of the filter_variable attribute to filter results by.
+         * String, optional, no filter by default
+         */
+        filterValue?: string;
+        /**
+         * The attribute to filter results by.
+         * One of the following strings: 'frequency', 'units', 'seasonal_adjustment'.
+         * optional, no filter by default
+         */
+        filterVariable?: "frequency" | "units" | "seasonal_adjustment";
+        /**
+         * The maximum number of results to return.
+         * integer between 1 and 1000, optional, default: 1000
+         * @minimum 1
+         * @maximum 1000
+         */
+        limit?: number;
+        /**
+         * non-negative integer, optional, default: 0
+         * @minimum 0
+         */
+        offset?: number;
+        /**
+         * Order results by values of the specified attribute.
+         * One of the following strings: 'search_rank', 'series_id', 'title', 'units', 'frequency', 'seasonal_adjustment', 'realtime_start', 'realtime_end', 'last_updated', 'observation_start', 'observation_end', 'popularity', 'group_popularity'.
+         * optional, default: If the value of search_type is 'full_text' then the default value of order_by is 'search_rank'. If the value of search_type is 'series_id' then the default value of order_by is 'series_id'.
+         */
+        orderBy?: "search_rank" | "series_id" | "title" | "units" | "frequency" | "seasonal_adjustment" | "realtime_start" | "realtime_end" | "last_updated" | "observation_start" | "observation_end" | "popularity" | "group_popularity";
+        /**
+         * The end of the real-time period. For more information, see Real-Time Periods .
+         * YYYY-MM-DD formatted string, optional, default: today's date
+         * @format date
+         */
+        realtimeEnd?: string;
+        /**
+         * The start of the real-time period. For more information, see Real-Time Periods .
+         * YYYY-MM-DD formatted string, optional, default: today's date
+         * @format date
+         */
+        realtimeStart?: string;
+        /** The words to match against economic data series. */
+        searchText: string;
+        /**
+         * Determines the type of search to perform.
+         * One of the following strings: 'full_text', 'series_id'.
+         * 'full_text' searches series attributes title, units, frequency, and tags by parsing words into stems. This makes it possible for searches like 'Industry' to match series containing related words such as 'Industries'. Of course, you can search for multiple words like 'money' and 'stock'. Remember to url encode spaces (e.g. 'money%20stock').
+         * 'series_id' performs a substring search on series IDs. Searching for 'ex' will find series containing 'ex' anywhere in a series ID. '*' can be used to anchor searches and match 0 or more of any character. Searching for 'ex*' will find series containing 'ex' at the beginning of a series ID. Searching for '*ex' will find series containing 'ex' at the end of a series ID. It's also possible to put an '*' in the middle of a string. 'm*sl' finds any series starting with 'm' and ending with 'sl'.
+         * optional, default: full_text.
+         */
+        searchType?: "full_text" | "series_id";
+        /**
+         * Sort results is ascending or descending order for attribute values specified by order_by.
+         * One of the following strings: 'asc', 'desc'.
+         * optional, default: If order_by is equal to 'search_rank' or 'popularity', then the default value of sort_order is 'desc'. Otherwise, the default sort order is 'asc'.
+         */
+        sortOrder?: "asc" | "desc";
+        /**
+         * A semicolon delimited list of tag names that series match all of.
+         * String, optional, no filtering by tags by default
+         * Example value: 'usa;m2'. Filter results to series having both tags 'usa' and 'm2'.
+         * See the related request fred/tags .
+         */
+        tagNames?: string;
+      };
+      output: Record<string, unknown>;
+    };
+    /** Search public Reddit posts or comments with pagination. */
+    "aisa.search_reddit_posts": {
+      input: {
+        /** Used to paginate to next page */
+        after?: string;
+        /** The count value. */
+        count?: string;
+        /** Search posts or comments */
+        filter?: "comments" | "posts";
+        /** The limit value. */
+        limit?: string;
+        /**
+         * Search query
+         * @minLength 1
+         */
+        query: string;
+        /** Sort by */
+        sort?: string;
+        /** The time value. */
+        time?: string;
+        /** Timeframe */
+        timeframe?: string;
+        /** Set to true for a trimmed down version of the response */
+        trim?: string;
+        /** The trimmed value. */
+        trimmed?: string;
+      };
+      output: Record<string, unknown>;
+    };
+    /** Search public Reddit discussions within one subreddit. */
+    "aisa.search_reddit_subreddit": {
+      input: {
+        /** Cursor to get more results. Get 'cursor' from previous response. */
+        cursor?: string;
+        /**
+         * Search query to find matching content
+         * @minLength 1
+         */
+        query: string;
+        /** Sort order. For posts/media: relevance, hot, top, new, comments. For comments: relevance, top, new */
+        sort?: string;
+        /**
+         * Subreddit name (e.g. 'Fitness', not 'r/Fitness' or a full URL)
+         * @minLength 1
+         */
+        subreddit: string;
+        /** Timeframe to filter results */
+        timeframe?: string;
+      };
+      output: Record<string, unknown>;
     };
     /** Search public Twitter posts using X query syntax and cursor pagination. */
     "aisa.search_twitter_posts": {
