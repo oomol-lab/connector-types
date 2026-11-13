@@ -57,10 +57,10 @@ declare module "@oomol-lab/connector" {
     "qwen.create_designed_voice": {
       input: {
         /**
-         * The Qwen-Audio 3.0 TTS model bound to the voice.
+         * The Qwen-Audio TTS model bound to the voice.
          * @default "qwen-audio-3.0-tts-flash"
          */
-        targetModel?: "qwen-audio-3.0-tts-flash" | "qwen-audio-3.0-tts-plus";
+        targetModel?: "qwen-audio-3.0-tts-flash" | "qwen-audio-3.0-tts-plus" | "qwen-audio-3.1-tts-plus";
         /**
          * An alphanumeric voice-name prefix of at most ten characters.
          * @minLength 1
@@ -121,10 +121,10 @@ declare module "@oomol-lab/connector" {
     "qwen.create_voice_clone": {
       input: {
         /**
-         * The Qwen-Audio 3.0 TTS model bound to the voice.
+         * The Qwen-Audio TTS model bound to the voice.
          * @default "qwen-audio-3.0-tts-flash"
          */
-        targetModel?: "qwen-audio-3.0-tts-flash" | "qwen-audio-3.0-tts-plus";
+        targetModel?: "qwen-audio-3.0-tts-flash" | "qwen-audio-3.0-tts-plus" | "qwen-audio-3.1-tts-plus";
         /**
          * An alphanumeric voice-name prefix of at most ten characters.
          * @minLength 1
@@ -321,14 +321,14 @@ declare module "@oomol-lab/connector" {
         inputImageCount: number;
       };
     };
-    /** Generate speech with Qwen-Audio 3.0 TTS. */
+    /** Generate speech with Qwen-Audio TTS. */
     "qwen.generate_speech": {
       input: {
         /**
-         * The Qwen-Audio 3.0 TTS model.
+         * The Qwen-Audio TTS model.
          * @default "qwen-audio-3.0-tts-flash"
          */
-        model?: "qwen-audio-3.0-tts-flash" | "qwen-audio-3.0-tts-plus";
+        model?: "qwen-audio-3.0-tts-flash" | "qwen-audio-3.0-tts-plus" | "qwen-audio-3.1-tts-plus";
         /**
          * The text to synthesize.
          * @minLength 1
@@ -424,8 +424,8 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         voiceId: string;
-        /** The Qwen-Audio 3.0 TTS model bound to the voice. */
-        targetModel?: "qwen-audio-3.0-tts-flash" | "qwen-audio-3.0-tts-plus";
+        /** The Qwen-Audio TTS model bound to the voice. */
+        targetModel?: "qwen-audio-3.0-tts-flash" | "qwen-audio-3.0-tts-plus" | "qwen-audio-3.1-tts-plus";
         /** The upstream voice status. */
         status?: string;
         /** The upstream voice creation time. */
@@ -496,7 +496,7 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** Retrieve a Qwen-Audio 3.0 transcription task and its normalized result. */
+    /** Retrieve a Qwen-Audio transcription task and its normalized result. */
     "qwen.get_speech_recognition": {
       input: {
         /**
@@ -650,8 +650,8 @@ declare module "@oomol-lab/connector" {
            * @minLength 1
            */
           voiceId: string;
-          /** The Qwen-Audio 3.0 TTS model bound to the voice. */
-          targetModel?: "qwen-audio-3.0-tts-flash" | "qwen-audio-3.0-tts-plus";
+          /** The Qwen-Audio TTS model bound to the voice. */
+          targetModel?: "qwen-audio-3.0-tts-flash" | "qwen-audio-3.0-tts-plus" | "qwen-audio-3.1-tts-plus";
           /** The upstream voice status. */
           status?: string;
           /** The upstream voice creation time. */
@@ -726,7 +726,7 @@ declare module "@oomol-lab/connector" {
         taskId: string;
       };
     };
-    /** Submit a Qwen-Audio 3.0 asynchronous audio or video transcription task. */
+    /** Submit a Qwen-Audio asynchronous audio or video transcription task. */
     "qwen.submit_speech_recognition": {
       input: {
         /**

@@ -7,103 +7,6 @@ declare module "@oomol-lab/connector" {
       input: (unknown) & (unknown);
       output: Record<string, unknown>;
     };
-    /** Get cphone-nano-banana task result */
-    "fusion-api.cphone_nano_banana_result": {
-      input: {
-        /**
-         * Session ID
-         * @example "01936c8e-7890-7abc-def0-123456789abc"
-         */
-        sessionID: string;
-        [key: string]: unknown;
-      };
-      output: {
-        /** Task state. */
-        state: "completed";
-        /** Task result data. */
-        data: Record<string, unknown>;
-        [key: string]: unknown;
-      } | {
-        /** Task state. */
-        state: "processing";
-        /** Task progress. */
-        progress: number;
-        [key: string]: unknown;
-      } | {
-        /** Task state. */
-        state: "failed" | "not_found";
-        /** Error message. */
-        error: string;
-        [key: string]: unknown;
-      };
-    };
-    /** Get cphone-nano-banana task state */
-    "fusion-api.cphone_nano_banana_state": {
-      input: {
-        /**
-         * Session ID
-         * @example "01936c8e-7890-7abc-def0-123456789abc"
-         */
-        sessionID: string;
-        [key: string]: unknown;
-      };
-      output: {
-        /** Task state. */
-        state: "completed";
-        [key: string]: unknown;
-      } | {
-        /** Task state. */
-        state: "processing";
-        /** Task progress. */
-        progress: number;
-        [key: string]: unknown;
-      } | {
-        /** Task state. */
-        state: "failed" | "not_found";
-        /** Error message. */
-        error: string;
-        [key: string]: unknown;
-      };
-    };
-    /** Edit images with Nano Banana */
-    "fusion-api.cphone_nano_banana_submit": {
-      input: {
-        /**
-         * Text prompt for image generation or editing
-         * @minLength 1
-         * @example "A beautiful landscape painting"
-         */
-        prompt: string;
-        /**
-         * Model name to use, defaults to gemini-2.5-flash-image-preview
-         * @default "gemini-2.5-flash-image-preview"
-         * @example "nano-banana-2"
-         */
-        model?: "nano-banana-2" | "nano-banana-2-2k" | "nano-banana-2-4k" | "gemini-3-pro-image-preview" | "gemini-2.5-flash-image" | "nano-banana-hd" | "nano-banana" | "gemini-2.5-flash-image-preview" | "nano-banana-pro" | "nano-banana-pro-4k";
-        /**
-         * Generated image aspect ratio
-         * @example "1:1"
-         */
-        aspectRatio?: "21:9" | "1:1" | "4:3" | "3:2" | "2:3" | "5:4" | "4:5" | "3:4" | "16:9" | "9:16";
-        /**
-         * List of reference image URLs for image-to-image generation or editing
-         * @minItems 1
-         * @example ["https://example.com/ref.png"]
-         */
-        imageURLs?: Array<string>;
-        /**
-         * Generated image resolution, only supported by nano-banana-2
-         * @example "1K"
-         */
-        imageSize?: "1K" | "2K" | "4K";
-        [key: string]: unknown;
-      };
-      output: {
-        /** Task session ID. */
-        sessionId: string;
-        [key: string]: unknown;
-      };
-    };
     /** Recognize text from a single image. */
     "fusion-api.deepseek_ocr_recognize": {
       input: {
@@ -223,7 +126,7 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          * @example "mp3"
          */
-        format: string;
+        format: "raw" | "wav" | "mp3" | "ogg";
         [key: string]: unknown;
       };
       output: {
@@ -232,67 +135,32 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
-    /** Generate images from text with Doubao Seedream */
+    /** Generate, edit or decompose images with Seedream Pro or Flash */
     "fusion-api.doubao_text_to_image_seedream_generate": {
       input: {
         /**
-         * Text prompt for image generation
-         * @minLength 1
-         * @maxLength 1000
-         * @example "一只在星空下奔跑的白色独角兽"
+         * Seedream Pro or Flash model ID.
+         * @default "doubao-seedream-5-0-flash-260915"
          */
-        prompt: string;
-        /**
-         * Reference image URL or Base64 encoding for image-to-image generation
-         * @example "https://example.com/reference.jpg"
-         */
-        image?: string;
-        /**
-         * Image size, supporting descriptive sizes (1K/2K/4K) or explicit width and height in pixels
-         * @default "2048x2048"
-         */
-        size?: "1K" | "2K" | "4K" | "1k" | "2k" | "4k" | {
-          /**
-           * Image width in pixels
-           * @exclusiveMinimum 0
-           * @example 2048
-           */
-          width: number;
-          /**
-           * Image height in pixels
-           * @exclusiveMinimum 0
-           * @example 2048
-           */
-          height: number;
-          [key: string]: unknown;
-        };
-        /**
-         * Whether to enable multi-image generation mode; auto lets the model decide
-         * @default "disabled"
-         * @example "disabled"
-         */
-        multiple?: "disabled" | "auto";
-        /**
-         * Maximum number of images to generate in one request, only effective in multi-image mode
-         * @minimum 1
-         * @maximum 15
-         * @default 1
-         * @example 1
-         */
-        maxCount?: number;
-        /**
-         * Whether to add a watermark
-         * @default true
-         * @example true
-         */
+        model?: "doubao-seedream-5-0-flash-260915" | "doubao-seedream-5-0-pro-260628";
+        /** Generation or editing prompt; optional for layer decomposition. */
+        prompt?: string;
+        /** One reference URL or data URI, or an array of up to ten references. Layer decomposition requires one image. */
+        image?: unknown;
+        /** 1K, 1.5K, 2K or WIDTHxHEIGHT (921600 to 4624220 pixels, aspect ratio 1/16 to 16); decomposition accepts presets and auto only. */
+        size?: string;
+        /** Return image URLs or Base64 data. */
+        response_format?: "url" | "b64_json";
+        /** PNG or JPEG output; foreground layers are always PNG. */
+        output_format?: "png" | "jpeg";
+        /** Prompt optimization options: mode is standard or fast (Pro only). */
+        optimize_prompt_options?: Record<string, unknown>;
+        /** Split one input image into a background and up to sixteen layers. */
+        layer_decomposition?: boolean;
+        /** Transparent output requires one reference with an alpha channel and PNG output. */
+        background?: "opaque" | "transparent";
+        /** Whether to add a watermark. */
         watermark?: boolean;
-        /**
-         * Generation mode: standard prioritizes quality, fast prioritizes speed
-         * @default "standard"
-         * @example "standard"
-         */
-        optionsnew?: "standard" | "fast";
-        [key: string]: unknown;
       };
       output: Record<string, unknown>;
     };
@@ -360,6 +228,7 @@ declare module "@oomol-lab/connector" {
         /**
          * Text content to synthesize into speech, up to 100,000 characters
          * @minLength 1
+         * @maxLength 100000
          * @example "你好，欢迎使用豆包语音合成服务。"
          */
         text: string;
@@ -2201,7 +2070,7 @@ declare module "@oomol-lab/connector" {
          * @default "qwen3-tts-flash"
          * @example "qwen3-tts-flash"
          */
-        model?: "qwen3-tts-instruct-flash" | "qwen3-tts-flash" | "qwen3-tts-vc-2026-01-22";
+        model?: "qwen3-tts-flash" | "qwen-audio-3.1-tts-plus" | "qwen-audio-3.0-tts-plus" | "qwen-audio-3.0-tts-flash";
         /**
          * Text content to synthesize into speech.
          * @minLength 1
@@ -2209,9 +2078,8 @@ declare module "@oomol-lab/connector" {
          */
         text: string;
         /**
-         * Preset voice name or cloned voice ID.
+         * Compatible system or custom voice. Defaults to the selected model’s system voice.
          * @minLength 1
-         * @default "Cherry"
          * @example "Cherry"
          */
         voice?: string;
@@ -2221,16 +2089,11 @@ declare module "@oomol-lab/connector" {
          */
         languageType?: "Auto" | "Chinese" | "English" | "German" | "Italian" | "Portuguese" | "Spanish" | "Japanese" | "Korean" | "French" | "Russian";
         /**
-         * Speech performance control instruction, only available for instruct models.
+         * Speech performance instruction for Qwen-Audio-TTS models.
          * @minLength 1
          * @example "Speak faster with an upbeat tone."
          */
         instructions?: string;
-        /**
-         * Whether to optimize speech performance instructions, only available for instruct models.
-         * @example true
-         */
-        optimizeInstructions?: boolean;
         [key: string]: unknown;
       };
       output: {
@@ -2241,19 +2104,20 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
-    /** Create a Qwen voice cloning voice and return a preview audio URL. */
+    /** Create a custom Qwen-Audio voice. Return its ID even if preview generation fails. */
     "fusion-api.qwen_voice_cloning_create": {
       input: {
         /**
          * Speech synthesis model that drives the cloned voice.
-         * @default "qwen3-tts-vc-2026-01-22"
-         * @example "qwen3-tts-vc-2026-01-22"
+         * @default "qwen-audio-3.1-tts-plus"
+         * @example "qwen-audio-3.1-tts-plus"
          */
-        targetModel?: "qwen3-tts-vc-realtime-2026-01-15" | "qwen3-tts-vc-realtime-2025-11-27" | "qwen3-tts-vc-2026-01-22";
+        targetModel?: "qwen-audio-3.1-tts-plus" | "qwen-audio-3.0-tts-plus" | "qwen-audio-3.0-tts-flash";
         /**
-         * Short voice name used to identify the cloned voice.
+         * Voice name prefix, at most 10 ASCII letters or digits.
          * @minLength 1
-         * @maxLength 16
+         * @maxLength 10
+         * @pattern ^[A-Za-z0-9]+$
          * @example "guanyu"
          */
         preferredName: string;
@@ -2264,12 +2128,6 @@ declare module "@oomol-lab/connector" {
          */
         audioData: string;
         /**
-         * Transcript matching the source audio content.
-         * @minLength 1
-         * @example "你好，欢迎使用声音复刻服务。"
-         */
-        text?: string;
-        /**
          * Text used to generate the preview audio.
          * @minLength 1
          * @example "你好，欢迎使用声音复刻服务。"
@@ -2279,20 +2137,22 @@ declare module "@oomol-lab/connector" {
          * Language of the source audio.
          * @example "zh"
          */
-        language?: "zh" | "en" | "de" | "it" | "pt" | "es" | "ja" | "ko" | "fr" | "ru";
+        language?: "zh" | "en" | "de" | "it" | "pt" | "es" | "ja" | "ko" | "fr" | "ru" | "th" | "id" | "vi" | "ms" | "fil" | "ar";
         [key: string]: unknown;
       };
       output: {
         /** Created cloned voice ID. */
         voiceId: string;
         /** Speech synthesis model that drives the cloned voice. */
-        targetModel: "qwen3-tts-vc-realtime-2026-01-15" | "qwen3-tts-vc-realtime-2025-11-27" | "qwen3-tts-vc-2026-01-22";
+        targetModel: "qwen-audio-3.1-tts-plus" | "qwen-audio-3.0-tts-plus" | "qwen-audio-3.0-tts-flash";
         /** Temporary URL for the generated preview audio. */
-        audioURL: string;
+        audioURL?: string;
         /** Expiration timestamp for the preview audio URL. */
         expiresAt?: number;
         /** Upstream request ID. */
         requestId: string;
+        /** The voice was created but deployment or preview failed. Query its status and retry synthesis with voiceId; do not create it again. */
+        previewError?: string;
         [key: string]: unknown;
       };
     };
@@ -2301,29 +2161,29 @@ declare module "@oomol-lab/connector" {
       input: {
         /**
          * Speech synthesis model that drives the designed voice.
-         * @default "qwen3-tts-vd-2026-01-26"
-         * @example "qwen3-tts-vd-2026-01-26"
+         * @default "qwen-audio-3.1-tts-plus"
+         * @example "qwen-audio-3.1-tts-plus"
          */
-        targetModel?: "qwen3-tts-vd-2026-01-26";
+        targetModel?: "qwen-audio-3.1-tts-plus" | "qwen-audio-3.0-tts-plus" | "qwen-audio-3.0-tts-flash";
         /**
          * Voice description. Only Chinese and English are supported.
          * @minLength 1
-         * @maxLength 2048
+         * @maxLength 500
          * @example "A calm middle-aged male news anchor with a deep magnetic voice and steady pacing."
          */
         voicePrompt: string;
         /**
          * Text used for preview audio.
-         * @minLength 1
-         * @maxLength 1024
+         * @minLength 15
+         * @maxLength 200
          * @example "各位听众朋友，大家好，欢迎收听晚间新闻。"
          */
         previewText: string;
         /**
-         * Short voice name. Only letters, numbers, and underscores are allowed.
+         * Voice name prefix, at most 10 ASCII letters or digits.
          * @minLength 1
-         * @maxLength 16
-         * @pattern ^[A-Za-z0-9_]+$
+         * @maxLength 10
+         * @pattern ^[A-Za-z0-9]+$
          * @example "announcer"
          */
         preferredName: string;
@@ -2332,26 +2192,26 @@ declare module "@oomol-lab/connector" {
          * @default "zh"
          * @example "zh"
          */
-        language?: "zh" | "en" | "de" | "it" | "pt" | "es" | "ja" | "ko" | "fr" | "ru";
+        language?: "zh" | "en";
         /**
          * Preview audio sample rate.
          * @default 24000
          * @example 24000
          */
-        sampleRate?: 8000 | 16000 | 24000 | 48000;
+        sampleRate?: 16000 | 24000 | 48000;
         /**
          * Preview audio format.
          * @default "wav"
          * @example "wav"
          */
-        responseFormat?: "pcm" | "wav" | "mp3" | "opus";
+        responseFormat?: "pcm" | "wav" | "mp3";
         [key: string]: unknown;
       };
       output: {
         /** Created voice name. */
         voice: string;
         /** Speech synthesis model that drives the designed voice. */
-        targetModel: "qwen3-tts-vd-2026-01-26";
+        targetModel: "qwen-audio-3.1-tts-plus" | "qwen-audio-3.0-tts-plus" | "qwen-audio-3.0-tts-flash";
         /** Preview audio data. */
         previewAudio: {
           /** Base64 encoded preview audio data. */
@@ -2359,7 +2219,7 @@ declare module "@oomol-lab/connector" {
           /** Preview audio sample rate. */
           sampleRate?: number;
           /** Preview audio format. */
-          responseFormat?: "pcm" | "wav" | "mp3" | "opus";
+          responseFormat?: "pcm" | "wav" | "mp3";
           [key: string]: unknown;
         };
         /** Upstream request ID. */
@@ -2367,7 +2227,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
-    /** Delete a Qwen voice design voice. */
+    /** Delete a custom voice. */
     "fusion-api.qwen_voice_design_delete": {
       input: {
         /**
@@ -2403,10 +2263,10 @@ declare module "@oomol-lab/connector" {
         voice: string;
         /**
          * Speech synthesis model for the voice design voice.
-         * @default "qwen3-tts-vd-2026-01-26"
-         * @example "qwen3-tts-vd-2026-01-26"
+         * @default "qwen-audio-3.1-tts-plus"
+         * @example "qwen-audio-3.1-tts-plus"
          */
-        model?: "qwen3-tts-vd-2026-01-26";
+        model?: "qwen-audio-3.1-tts-plus" | "qwen-audio-3.0-tts-plus" | "qwen-audio-3.0-tts-flash";
         [key: string]: unknown;
       };
       output: {
@@ -2419,7 +2279,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
-    /** List Qwen voice design voices. */
+    /** List cloned and designed custom voices. */
     "fusion-api.qwen_voice_design_list": {
       input: {
         /**
@@ -2451,9 +2311,9 @@ declare module "@oomol-lab/connector" {
           /** Voice name. */
           voice: string;
           /** Speech synthesis model that drives the designed voice. */
-          targetModel: "qwen3-tts-vd-2026-01-26";
+          targetModel: "qwen-audio-3.1-tts-plus" | "qwen-audio-3.0-tts-plus" | "qwen-audio-3.0-tts-flash";
           /** Language code. */
-          language?: "zh" | "en" | "de" | "it" | "pt" | "es" | "ja" | "ko" | "fr" | "ru";
+          language?: "zh" | "en";
           /** Voice description. */
           voicePrompt?: string;
           /** Preview text. */
@@ -2462,6 +2322,8 @@ declare module "@oomol-lab/connector" {
           createdAt?: string;
           /** Voice update time. */
           updatedAt?: string;
+          /** Voice deployment status. OK means the voice is ready for synthesis. */
+          status?: string;
           [key: string]: unknown;
         }>;
         /** Upstream request ID. */
@@ -2469,7 +2331,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
-    /** Get details for a Qwen voice design voice. */
+    /** Query custom voice details and deployment status. */
     "fusion-api.qwen_voice_design_query": {
       input: {
         /**
@@ -2484,9 +2346,9 @@ declare module "@oomol-lab/connector" {
         /** Voice name. */
         voice: string;
         /** Speech synthesis model that drives the designed voice. */
-        targetModel: "qwen3-tts-vd-2026-01-26";
+        targetModel: "qwen-audio-3.1-tts-plus" | "qwen-audio-3.0-tts-plus" | "qwen-audio-3.0-tts-flash";
         /** Language code. */
-        language?: "zh" | "en" | "de" | "it" | "pt" | "es" | "ja" | "ko" | "fr" | "ru";
+        language?: "zh" | "en";
         /** Voice description. */
         voicePrompt?: string;
         /** Preview text. */
@@ -2497,6 +2359,8 @@ declare module "@oomol-lab/connector" {
         updatedAt?: string;
         /** Upstream request ID. */
         requestId: string;
+        /** Voice deployment status. OK means the voice is ready for synthesis. */
+        status?: string;
         [key: string]: unknown;
       };
     };
