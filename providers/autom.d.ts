@@ -2,6 +2,162 @@ import "@oomol-lab/connector";
 
 declare module "@oomol-lab/connector" {
   interface ActionRegistry {
+    /** Search Bing and get organic results with their position, title, link and snippet. */
+    "autom.bing_search": {
+      input: {
+        /**
+         * Search query (e.g., "best electric cars").
+         * @minLength 1
+         */
+        query: string;
+        /**
+         * Bing market code (e.g., "en-US").
+         * @minLength 1
+         */
+        market?: string;
+        /**
+         * Page of results, starting at 1.
+         * @minimum 1
+         */
+        page?: number;
+        /**
+         * Number of results per page (e.g., 10).
+         * @minimum 1
+         */
+        numResults?: number;
+      };
+      output: {
+        /** Organic results. */
+        organic_results?: Array<{
+          /** Position of the result on the page. */
+          position?: number | null;
+          /** Title of the result. */
+          title?: string | null;
+          /** URL of the result. */
+          link?: string | null;
+          /** Domain of the result. */
+          domain?: string | null;
+          /** Link as the search engine displays it. */
+          displayed_link?: string | null;
+          /** Source or site name. */
+          source?: string | null;
+          /** Snippet shown under the title. */
+          snippet?: string | null;
+          /** Date shown with the result, when there is one. */
+          date?: string | null;
+          [key: string]: unknown;
+        }>;
+        /** Search information returned by Autom. */
+        search_information?: {
+          /** Estimated total number of results. */
+          total_results?: number | null;
+          [key: string]: unknown;
+        };
+        /** Pagination returned by Autom. */
+        pagination?: {
+          /** Whether another page of results exists. */
+          has_next_page?: boolean | null;
+          [key: string]: unknown;
+        };
+        [key: string]: unknown;
+      };
+    };
+    /** Search Brave's web index and get organic results with their position, title, link and snippet. */
+    "autom.brave_search": {
+      input: {
+        /**
+         * Search query (e.g., "best electric cars").
+         * @minLength 1
+         */
+        query: string;
+        /**
+         * Two-letter country code to search from (e.g., "us").
+         * @minLength 1
+         */
+        country?: string;
+        /**
+         * Two-letter language code of the results (e.g., "en").
+         * @minLength 1
+         */
+        language?: string;
+        /**
+         * Page of results, starting at 1.
+         * @minimum 1
+         */
+        page?: number;
+      };
+      output: {
+        /** Organic results. */
+        organic_results?: Array<{
+          /** Position of the result on the page. */
+          position?: number | null;
+          /** Title of the result. */
+          title?: string | null;
+          /** URL of the result. */
+          link?: string | null;
+          /** Domain of the result. */
+          domain?: string | null;
+          /** Link as the search engine displays it. */
+          displayed_link?: string | null;
+          /** Source or site name. */
+          source?: string | null;
+          /** Snippet shown under the title. */
+          snippet?: string | null;
+          /** Date shown with the result, when there is one. */
+          date?: string | null;
+          [key: string]: unknown;
+        }>;
+        [key: string]: unknown;
+      };
+    };
+    /** Search DuckDuckGo and get organic results with their position, title, link and snippet. */
+    "autom.duckduckgo_search": {
+      input: {
+        /**
+         * Search query (e.g., "best electric cars").
+         * @minLength 1
+         */
+        query: string;
+        /**
+         * Two-letter country code to search from (e.g., "us").
+         * @minLength 1
+         */
+        country?: string;
+        /**
+         * Two-letter language code of the results (e.g., "en").
+         * @minLength 1
+         */
+        language?: string;
+        /**
+         * Page of results, starting at 1.
+         * @minimum 1
+         */
+        page?: number;
+      };
+      output: {
+        /** Organic results. */
+        organic_results?: Array<{
+          /** Position of the result on the page. */
+          position?: number | null;
+          /** Title of the result. */
+          title?: string | null;
+          /** URL of the result. */
+          link?: string | null;
+          /** Domain of the result. */
+          domain?: string | null;
+          /** Link as the search engine displays it. */
+          displayed_link?: string | null;
+          /** Source or site name. */
+          source?: string | null;
+          /** Snippet shown under the title. */
+          snippet?: string | null;
+          /** Date shown with the result, when there is one. */
+          date?: string | null;
+          [key: string]: unknown;
+        }>;
+        [key: string]: unknown;
+      };
+    };
     /** Search supported Google countries in Autom and return matching country codes. */
     "autom.find_google_countries": {
       input: {
@@ -148,6 +304,313 @@ declare module "@oomol-lab/connector" {
             [key: string]: unknown;
           };
         };
+      };
+    };
+    /** Get the Google Search autocomplete suggestions for a partial query. */
+    "autom.google_autocomplete": {
+      input: {
+        /**
+         * Search query (e.g., "best electric cars").
+         * @minLength 1
+         */
+        query: string;
+        /**
+         * Two-letter country code to search from (e.g., "us").
+         * @minLength 1
+         */
+        country?: string;
+        /**
+         * Two-letter language code of the results (e.g., "en").
+         * @minLength 1
+         */
+        language?: string;
+      };
+      output: {
+        /** Autocomplete suggestions. */
+        suggestions?: Array<string>;
+        [key: string]: unknown;
+      };
+    };
+    /** Search Google Maps and get places with address, website, phone number and coordinates. */
+    "autom.google_maps": {
+      input: {
+        /**
+         * Search query (e.g., "best electric cars").
+         * @minLength 1
+         */
+        query: string;
+        /**
+         * Two-letter country code to search from (e.g., "us").
+         * @minLength 1
+         */
+        country?: string;
+        /**
+         * Two-letter language code of the results (e.g., "en").
+         * @minLength 1
+         */
+        language?: string;
+        /**
+         * Page of results, starting at 1.
+         * @minimum 1
+         */
+        page?: number;
+      };
+      output: {
+        /** Places found on Google Maps */
+        places: Array<{
+          /** Name of the place. */
+          title?: string | null;
+          /** Address of the place. */
+          address?: string | null;
+          /** Website of the place. */
+          website?: string | null;
+          /** Phone number of the place. */
+          phone_number?: string | null;
+          /** Latitude. */
+          lat?: number | null;
+          /** Longitude. */
+          long?: number | null;
+          /** Google Maps feature ID of the place. */
+          fid?: string | null;
+          [key: string]: unknown;
+        }>;
+      };
+    };
+    /** Search Google News and get articles with title, source, date, link and snippet. */
+    "autom.google_news": {
+      input: {
+        /**
+         * Search query (e.g., "best electric cars").
+         * @minLength 1
+         */
+        query: string;
+        /**
+         * Two-letter country code to search from (e.g., "us").
+         * @minLength 1
+         */
+        country?: string;
+        /**
+         * Two-letter language code of the results (e.g., "en").
+         * @minLength 1
+         */
+        language?: string;
+        /**
+         * Page of results, starting at 1.
+         * @minimum 1
+         */
+        page?: number;
+        /**
+         * Number of results per page (e.g., 10).
+         * @minimum 1
+         */
+        numResults?: number;
+      };
+      output: {
+        /** News articles. */
+        organic_results?: Array<{
+          /** Position of the result on the page. */
+          position?: number | null;
+          /** Title of the result. */
+          title?: string | null;
+          /** URL of the result. */
+          link?: string | null;
+          /** Domain of the result. */
+          domain?: string | null;
+          /** Link as the search engine displays it. */
+          displayed_link?: string | null;
+          /** Source or site name. */
+          source?: string | null;
+          /** Snippet shown under the title. */
+          snippet?: string | null;
+          /** Date shown with the result, when there is one. */
+          date?: string | null;
+          [key: string]: unknown;
+        }>;
+        /** Pagination returned by Autom. */
+        pagination?: {
+          /** Whether another page of results exists. */
+          has_next_page?: boolean | null;
+          [key: string]: unknown;
+        };
+        [key: string]: unknown;
+      };
+    };
+    /** Search Google and get organic results with their position, title, link and snippet, the knowledge graph and the estimated total. */
+    "autom.google_search": {
+      input: {
+        /**
+         * Search query (e.g., "best electric cars").
+         * @minLength 1
+         */
+        query: string;
+        /**
+         * Two-letter country code to search from (e.g., "us").
+         * @minLength 1
+         */
+        country?: string;
+        /**
+         * Two-letter language code of the results (e.g., "en").
+         * @minLength 1
+         */
+        language?: string;
+        /**
+         * Google advanced filters, such as "qdr:d" for the past day.
+         * @minLength 1
+         */
+        tbs?: string;
+        /** Google SafeSearch setting. Omit to use Google's default. */
+        safe?: "active" | "off";
+        /**
+         * Google location name to search from, as Find Google Locations returns it (e.g., "Paris,Paris,Ile-de-France,France").
+         * @minLength 1
+         */
+        location?: string;
+        /**
+         * Page of results, starting at 1.
+         * @minimum 1
+         */
+        page?: number;
+        /**
+         * Number of results per page (e.g., 10).
+         * @minimum 1
+         */
+        numResults?: number;
+      };
+      output: {
+        /** Organic results. */
+        organic_results?: Array<{
+          /** Position of the result on the page. */
+          position?: number | null;
+          /** Title of the result. */
+          title?: string | null;
+          /** URL of the result. */
+          link?: string | null;
+          /** Domain of the result. */
+          domain?: string | null;
+          /** Link as the search engine displays it. */
+          displayed_link?: string | null;
+          /** Source or site name. */
+          source?: string | null;
+          /** Snippet shown under the title. */
+          snippet?: string | null;
+          /** Date shown with the result, when there is one. */
+          date?: string | null;
+          [key: string]: unknown;
+        }>;
+        /** Knowledge graph panel, when Google shows one. */
+        knowledge_graph?: {
+          /** Title of the entity. */
+          title?: string | null;
+          /** Type of the entity. */
+          type?: string | null;
+          /** Website of the entity. */
+          website?: string | null;
+          [key: string]: unknown;
+        };
+        /** Search information returned by Autom. */
+        search_information?: {
+          /** Estimated total number of results. */
+          total_results?: number | null;
+          [key: string]: unknown;
+        };
+        /** Pagination returned by Autom. */
+        pagination?: {
+          /** Whether another page of results exists. */
+          has_next_page?: boolean | null;
+          [key: string]: unknown;
+        };
+        [key: string]: unknown;
+      };
+    };
+    /** Search Google and get only the organic results, the fastest and cheapest Google search. */
+    "autom.google_search_light": {
+      input: {
+        /**
+         * Search query (e.g., "best electric cars").
+         * @minLength 1
+         */
+        query: string;
+        /**
+         * Two-letter country code to search from (e.g., "us").
+         * @minLength 1
+         */
+        country?: string;
+        /**
+         * Two-letter language code of the results (e.g., "en").
+         * @minLength 1
+         */
+        language?: string;
+      };
+      output: {
+        /** Organic results. */
+        organic_results?: Array<{
+          /** Position of the result on the page. */
+          position?: number | null;
+          /** Title of the result. */
+          title?: string | null;
+          /** URL of the result. */
+          link?: string | null;
+          /** Domain of the result. */
+          domain?: string | null;
+          /** Link as the search engine displays it. */
+          displayed_link?: string | null;
+          /** Source or site name. */
+          source?: string | null;
+          /** Snippet shown under the title. */
+          snippet?: string | null;
+          /** Date shown with the result, when there is one. */
+          date?: string | null;
+          [key: string]: unknown;
+        }>;
+        [key: string]: unknown;
+      };
+    };
+    /** Search Yahoo and get organic results with their position, title, link and snippet. */
+    "autom.yahoo_search": {
+      input: {
+        /**
+         * Search query (e.g., "best electric cars").
+         * @minLength 1
+         */
+        query: string;
+        /**
+         * Two-letter country code to search from (e.g., "us").
+         * @minLength 1
+         */
+        country?: string;
+        /**
+         * Two-letter language code of the results (e.g., "en").
+         * @minLength 1
+         */
+        language?: string;
+        /**
+         * Page of results, starting at 1.
+         * @minimum 1
+         */
+        page?: number;
+      };
+      output: {
+        /** Organic results. */
+        organic_results?: Array<{
+          /** Position of the result on the page. */
+          position?: number | null;
+          /** Title of the result. */
+          title?: string | null;
+          /** URL of the result. */
+          link?: string | null;
+          /** Domain of the result. */
+          domain?: string | null;
+          /** Link as the search engine displays it. */
+          displayed_link?: string | null;
+          /** Source or site name. */
+          source?: string | null;
+          /** Snippet shown under the title. */
+          snippet?: string | null;
+          /** Date shown with the result, when there is one. */
+          date?: string | null;
+          [key: string]: unknown;
+        }>;
+        [key: string]: unknown;
       };
     };
   }

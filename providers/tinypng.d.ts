@@ -91,7 +91,7 @@ declare module "@oomol-lab/connector" {
          * The TinyPNG output URL for the compressed image.
          * @format uri
          */
-        outputUrl: string;
+        outputUrl?: string;
         /** The current monthly compression count. */
         compressionCount?: number;
         /** Metadata for the original input image. */

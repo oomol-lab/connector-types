@@ -743,13 +743,11 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
-    /** Start a Firecrawl deep research job. This endpoint remains alpha and Firecrawl currently documents it outside the main v2 endpoint set. */
+    /** Start a Firecrawl deep research job. The Firecrawl agent researches the query and returns a markdown report with its sources. */
     "firecrawl.deep_research": {
       input: {
         /** The research question or topic. */
         query: string;
-        /** The output formats requested from deep research. */
-        formats?: Array<string>;
         /** Options for structured JSON output. */
         jsonOptions?: {
           /** An extraction prompt that explains the desired JSON structure. */
@@ -758,12 +756,11 @@ declare module "@oomol-lab/connector" {
           schema?: Record<string, unknown>;
           [key: string]: unknown;
         };
-        /** The maximum URLs the research job may analyze. */
-        maxUrls?: number;
-        /** The maximum research depth for the job. */
-        maxDepth?: number;
-        /** The research time limit in seconds. */
-        timeLimit?: number;
+        /**
+         * The maximum credits the research job may spend.
+         * @minimum 1
+         */
+        maxCredits?: number;
         /** A system prompt that guides the research agent. */
         systemPrompt?: string;
         /** A synthesis prompt that guides the final analysis. */
@@ -777,10 +774,6 @@ declare module "@oomol-lab/connector" {
         id: string;
         /** The current deep research status. */
         status?: string;
-        /** The current research depth. */
-        currentDepth?: number;
-        /** The configured maximum research depth. */
-        maxDepth?: number;
         /** The ISO 8601 expiry timestamp for the job data. */
         expiresAt?: string;
         /** The initial research result payload. */
@@ -1005,12 +998,6 @@ declare module "@oomol-lab/connector" {
         id?: string;
         /** The current deep research status. */
         status?: string;
-        /** The current research depth. */
-        currentDepth?: number;
-        /** The configured maximum research depth. */
-        maxDepth?: number;
-        /** The total URLs processed by the job. */
-        totalUrls?: number;
         /** The ISO 8601 expiry timestamp for the job data. */
         expiresAt?: string;
         /** The research result payload. */
@@ -1025,20 +1012,6 @@ declare module "@oomol-lab/connector" {
           description?: string;
           /** The source icon URL. */
           icon?: string;
-          [key: string]: unknown;
-        }>;
-        /** The deep research activity timeline. */
-        activities?: Array<{
-          /** The activity type. */
-          type?: string;
-          /** The research depth for the activity. */
-          depth?: number;
-          /** The activity status. */
-          status?: string;
-          /** The activity summary message. */
-          message?: string;
-          /** The ISO 8601 timestamp of the activity. */
-          timestamp?: string;
           [key: string]: unknown;
         }>;
         [key: string]: unknown;
@@ -1075,13 +1048,18 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
-    /** Start an LLMs.txt generation job for a website. This endpoint remains outside the main v2 endpoint set in Firecrawl's docs. */
+    /** Start an LLMs.txt generation job for a website. Firecrawl maps the site and batch scrapes its pages; pass the returned url and urls to llms_txt_get along with the id. */
     "firecrawl.llms_txt_generate": {
       input: {
         /** The root URL to turn into LLMs.txt. */
         url: string;
-        /** The maximum URLs to analyze. */
+        /**
+         * The maximum URLs to analyze. Defaults to 10.
+         * @minimum 1
+         */
         maxUrls?: number;
+        /** Whether cached pages may be used. Set false to request fresh scrapes. */
+        cache?: boolean;
         /** Whether the llms-full.txt content should also be generated. */
         showFullText?: boolean;
         [key: string]: unknown;
@@ -1089,8 +1067,12 @@ declare module "@oomol-lab/connector" {
       output: {
         /** Whether the job was accepted successfully. */
         success: boolean;
-        /** The Firecrawl LLMs.txt job ID. */
+        /** The Firecrawl batch scrape job ID behind this LLMs.txt job. */
         id: string;
+        /** The root URL, to pass to llms_txt_get. */
+        url: string;
+        /** The page URLs Firecrawl map found, in map order, to pass to llms_txt_get. */
+        urls: Array<string>;
         [key: string]: unknown;
       };
     };
@@ -1099,6 +1081,10 @@ declare module "@oomol-lab/connector" {
       input: {
         /** The Firecrawl LLMs.txt job ID. */
         id: string;
+        /** The url returned by llms_txt_generate, used in the llms.txt header. Defaults to the site origin. */
+        url?: string;
+        /** The urls returned by llms_txt_generate, used to list the pages in map order. */
+        urls?: Array<string>;
         [key: string]: unknown;
       };
       output: {

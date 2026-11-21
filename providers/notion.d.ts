@@ -501,13 +501,13 @@ declare module "@oomol-lab/connector" {
     /** Create a Notion page under a parent page, data source, or workspace-level private area. Use parentId + title for a simple child page under an existing page. Use parent with an official Notion parent payload for advanced cases: { page_id: "..." }, { data_source_id: "..." }, or { workspace: true } for OAuth public integrations. When parent is provided, do not use the top-level title field; provide the page title through properties.title instead. Internal integration secrets usually cannot create workspace-level private pages and should use a parent page or data source. */
     "notion.create_page": {
       input: {
-        /** The parent page ID. */
+        /** Simple child-page form: provide parentId with title and omit parent. Use a native parent object for data source rows. */
         parentId?: string;
-        /** The page title. */
+        /** Page title for the simple parentId form. Do not combine with parent; native parent objects use properties instead. */
         title?: string;
-        /** The official Notion parent object payload. Use { page_id: "..." } for a child page under an existing page, { data_source_id: "..." } for a data source row, or { workspace: true } to create a workspace-level private page when the credential is an OAuth public integration. When parent is provided, do not use the top-level title field; set the title through properties.title instead. Internal integration secrets usually cannot create workspace-level private pages and should use a parent page or data source. */
+        /** The official Notion parent object payload. Use { page_id: "..." } for a child page under an existing page, { data_source_id: "..." } for a data source row, or { workspace: true } to create a workspace-level private page when the credential is an OAuth public integration. When parent is provided, do not use the top-level title field; set the title through the appropriate properties key instead. Internal integration secrets usually cannot create workspace-level private pages and should use a parent page or data source. */
         parent?: Record<string, unknown>;
-        /** The page properties. */
+        /** Notion page properties. A page parent permits only title. Data source property names must match its schema. With parentId + title, the title property is generated automatically. */
         properties?: Record<string, unknown>;
         /** The child blocks to add. */
         children?: Array<Record<string, unknown>>;
@@ -1254,7 +1254,7 @@ declare module "@oomol-lab/connector" {
       input: {
         /** The ID of the page to move. */
         pageId: string;
-        /** The new parent of the page. */
+        /** The new parent object, not a string UUID. Use {"page_id":"..."} or {"data_source_id":"..."}. */
         parent: {
           /** The ID of the parent page, with or without dashes. */
           page_id: string;
@@ -2355,11 +2355,31 @@ declare module "@oomol-lab/connector" {
     "notion.search": {
       input: {
         /** The search query text. */
-        query: string;
+        query?: string;
         /** The filter object to narrow results. */
-        filter?: Record<string, unknown>;
+        filter?: {
+          /** The property to filter by. */
+          property: "object";
+          /** The object type to return. */
+          value: "page" | "data_source";
+          /** Whether to return objects in the trash. */
+          in_trash?: boolean;
+        } | {
+          /** Whether to return objects in the trash. */
+          in_trash: boolean;
+        };
         /** The sort object to order results. */
-        sort?: Record<string, unknown>;
+        sort?: {
+          /** The timestamp to sort by. */
+          timestamp: "last_edited_time";
+          /** The sort direction. */
+          direction: "ascending" | "descending";
+        } | {
+          /** The property to sort by. */
+          property: "relevance";
+        };
+        /** Page property names or IDs to include. Unknown properties are skipped; data source schemas are unaffected. */
+        filterProperties?: Array<string>;
         /**
          * The number of results per page.
          * @minimum 1

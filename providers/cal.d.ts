@@ -192,7 +192,7 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** Compatibility alias for the cancel-booking-via-uid action name. Cancels a booking by UID. */
+    /** Cancels a booking by UID. */
     "cal.cancel_booking_via_uid": {
       input: {
         /**
@@ -758,7 +758,7 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** Compatibility alias for the create-user-availability-schedule action name. Creates a schedule. */
+    /** Creates a schedule. */
     "cal.create_user_availability_schedule": {
       input: {
         /**
@@ -987,7 +987,7 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** Compatibility alias for the delete-event-type-by-id action name. Deletes a Cal.com event type by ID. */
+    /** Deletes a Cal.com event type by ID. */
     "cal.delete_event_type_by_id": {
       input: {
         /** The numeric Cal.com event type ID. */
@@ -1039,7 +1039,7 @@ declare module "@oomol-lab/connector" {
         success: boolean;
       };
     };
-    /** Compatibility alias for the delete-schedule-by-id action name. Deletes a schedule. */
+    /** Deletes a schedule. */
     "cal.delete_schedule_by_id": {
       input: {
         /** The numeric Cal.com schedule ID. */
@@ -1050,7 +1050,7 @@ declare module "@oomol-lab/connector" {
         success: boolean;
       };
     };
-    /** Compatibility alias for the fetch-all-bookings action name. Lists bookings with optional filters and pagination. */
+    /** Lists bookings with optional filters and pagination. */
     "cal.fetch_all_bookings": {
       input: {
         /**
@@ -1151,11 +1151,11 @@ declare module "@oomol-lab/connector" {
           /** The metadata attached to the booking. */
           metadata?: Record<string, unknown>;
         }>;
-        /** The opaque cursor for the next page, or null when there are no more results. */
-        nextCursor: string | null;
+        /** Cal.com pagination metadata, or null when omitted by the server. */
+        pagination: Record<string, unknown> | null;
       };
     };
-    /** Compatibility alias for the fetch-event-type-details action name. Gets a single Cal.com event type by ID. */
+    /** Gets a single Cal.com event type by ID. */
     "cal.fetch_event_type_details": {
       input: {
         /** The Cal.com event type ID, as a number or non-empty string. */
@@ -1200,7 +1200,7 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** Compatibility alias for the fetch-schedule-by-id action name. Gets a schedule by numeric ID. */
+    /** Gets a schedule by numeric ID. */
     "cal.fetch_schedule_by_id": {
       input: {
         /** The numeric Cal.com schedule ID. */
@@ -1404,7 +1404,7 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** Compatibility alias for the get-booking-references action name. Lists booking references. */
+    /** Lists booking references. */
     "cal.get_booking_references": {
       input: {
         /**
@@ -1452,7 +1452,7 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** Compatibility alias for the get-default-schedule-details action name. Returns the default schedule for the authenticated user. */
+    /** Returns the default schedule for the authenticated user. */
     "cal.get_default_schedule_details": {
       input: Record<string, never>;
       output: {
@@ -1689,13 +1689,16 @@ declare module "@oomol-lab/connector" {
         /** Only return bookings that end before this time. */
         beforeEnd?: string;
         /**
-         * The maximum number of records to return.
+         * The maximum number of bookings to return.
          * @minimum 1
-         * @maximum 200
+         * @maximum 250
          */
-        limit?: number;
-        /** The opaque pagination cursor returned by Cal.com. */
-        cursor?: string;
+        take?: number;
+        /**
+         * The number of bookings to skip.
+         * @minimum 0
+         */
+        skip?: number;
       };
       output: {
         /** The bookings returned by Cal.com. */
@@ -1759,21 +1762,13 @@ declare module "@oomol-lab/connector" {
           /** The metadata attached to the booking. */
           metadata?: Record<string, unknown>;
         }>;
-        /** The opaque cursor for the next page, or null when there are no more results. */
-        nextCursor: string | null;
+        /** Cal.com pagination metadata, or null when omitted by the server. */
+        pagination: Record<string, unknown> | null;
       };
     };
-    /** List Cal.com event types for the authenticated user with optional pagination and status filters. */
+    /** List Cal.com event types for the authenticated user with optional status filters. */
     "cal.list_event_types": {
       input: {
-        /**
-         * The maximum number of records to return.
-         * @minimum 1
-         * @maximum 200
-         */
-        limit?: number;
-        /** The opaque pagination cursor returned by Cal.com. */
-        cursor?: string;
         /** The numeric Cal.com team ID. */
         teamId?: number;
         /** The Cal.com username to scope the request to. */
@@ -1818,22 +1813,11 @@ declare module "@oomol-lab/connector" {
             timeZone?: string;
           }>;
         }>;
-        /** The opaque cursor for the next page, or null when there are no more results. */
-        nextCursor: string | null;
       };
     };
     /** List schedules available to the authenticated Cal.com user. */
     "cal.list_schedules": {
-      input: {
-        /**
-         * The maximum number of records to return.
-         * @minimum 1
-         * @maximum 200
-         */
-        limit?: number;
-        /** The opaque pagination cursor returned by Cal.com. */
-        cursor?: string;
-      };
+      input: Record<string, never>;
       output: {
         /** The schedules returned by Cal.com. */
         schedules: Array<{
@@ -1852,8 +1836,6 @@ declare module "@oomol-lab/connector" {
           /** The list of schedule overrides. */
           overrides?: Array<Record<string, unknown>>;
         }>;
-        /** The opaque cursor for the next page, or null when there are no more results. */
-        nextCursor: string | null;
       };
     };
     /** Mark a Cal.com booking host or attendees absent. */
@@ -1997,7 +1979,7 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** Compatibility alias for the post-new-booking-request action name. Creates a booking. */
+    /** Creates a booking. */
     "cal.post_new_booking_request": {
       input: {
         /**
@@ -2341,7 +2323,7 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** Compatibility alias for the reschedule-booking-by-uid action name. Reschedules a booking by UID. */
+    /** Reschedules a booking by UID. */
     "cal.reschedule_booking_by_uid": {
       input: {
         /**
@@ -2484,7 +2466,7 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** Compatibility alias for the retrieve-booking-details-by-uid action name. Gets a booking by UID. */
+    /** Gets a booking by UID. */
     "cal.retrieve_booking_details_by_uid": {
       input: {
         /**
@@ -2616,7 +2598,7 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** Compatibility alias for the retrieve-calendar-busy-times action name. Returns busy ranges for specific calendars. */
+    /** Returns busy ranges for specific calendars. */
     "cal.retrieve_calendar_busy_times": {
       input: {
         /** The IANA time zone used for this request. */
@@ -2656,7 +2638,7 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** Compatibility alias for the retrieve-calendar-list action name. Lists connected calendars and the selected destination calendar. */
+    /** Lists connected calendars and the selected destination calendar. */
     "cal.retrieve_calendar_list": {
       input: Record<string, never>;
       output: {
@@ -2727,7 +2709,7 @@ declare module "@oomol-lab/connector" {
         } | null;
       };
     };
-    /** Compatibility alias for the retrieve-event-type-by-id action name. Gets a single Cal.com event type by ID. */
+    /** Gets a single Cal.com event type by ID. */
     "cal.retrieve_event_type_by_id": {
       input: {
         /** The Cal.com event type ID, as a number or non-empty string. */
@@ -2772,7 +2754,7 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** Compatibility alias for the retrieve-my-information action name. Returns the authenticated Cal.com user's profile. */
+    /** Returns the authenticated Cal.com user's profile. */
     "cal.retrieve_my_information": {
       input: Record<string, never>;
       output: {
@@ -2805,7 +2787,7 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** Compatibility alias for the retrieve-schedules-list action name. Lists schedules for the authenticated user. */
+    /** Lists schedules for the authenticated user. */
     "cal.retrieve_schedules_list": {
       input: Record<string, never>;
       output: {
@@ -2826,11 +2808,9 @@ declare module "@oomol-lab/connector" {
           /** The list of schedule overrides. */
           overrides?: Array<Record<string, unknown>>;
         }>;
-        /** The opaque cursor for the next page, or null when there are no more results. */
-        nextCursor: string | null;
       };
     };
-    /** Compatibility alias for the update-destination-calendar-integration action name. Updates the destination calendar used for created events. */
+    /** Updates the destination calendar used for created events. */
     "cal.update_destination_calendar_integration": {
       input: {
         /**
@@ -3010,7 +2990,7 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** Compatibility alias for the update-schedule-by-id action name. Updates a schedule. */
+    /** Updates a schedule. */
     "cal.update_schedule_by_id": {
       input: {
         /** The numeric Cal.com schedule ID. */
@@ -3060,7 +3040,7 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** Compatibility alias for the update-user-profile-details action name. Updates the authenticated Cal.com user's profile. */
+    /** Updates the authenticated Cal.com user's profile. */
     "cal.update_user_profile_details": {
       input: {
         /** The display name to set on the profile. */

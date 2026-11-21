@@ -1355,6 +1355,10 @@ declare module "@oomol-lab/connector" {
       input: {
         /** Gmail thread ID. */
         threadId: string;
+        /** Email subject line. */
+        subject?: string;
+        /** Verified Gmail send-as alias to use in the From header. */
+        fromEmail?: string;
         /** Primary recipient email address. */
         recipientEmail?: string;
         /** Additional To recipients. */

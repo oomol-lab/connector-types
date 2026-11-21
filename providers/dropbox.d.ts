@@ -45,6 +45,8 @@ declare module "@oomol-lab/connector" {
           expiresAt: string | null;
           /** A generic JSON object returned by Dropbox. */
           sharingInfo: Record<string, unknown> | null;
+          /** Whether the file has explicit members, when requested in the listing. */
+          hasExplicitSharedMembers: boolean | null;
           /** Shared-link permission metadata when Dropbox includes it. */
           linkPermissions: Record<string, unknown> | null;
         };
@@ -89,6 +91,8 @@ declare module "@oomol-lab/connector" {
           expiresAt: string | null;
           /** A generic JSON object returned by Dropbox. */
           sharingInfo: Record<string, unknown> | null;
+          /** Whether the file has explicit members, when requested in the listing. */
+          hasExplicitSharedMembers: boolean | null;
           /** Shared-link permission metadata when Dropbox includes it. */
           linkPermissions: Record<string, unknown> | null;
         };
@@ -146,6 +150,8 @@ declare module "@oomol-lab/connector" {
           expiresAt: string | null;
           /** A generic JSON object returned by Dropbox. */
           sharingInfo: Record<string, unknown> | null;
+          /** Whether the file has explicit members, when requested in the listing. */
+          hasExplicitSharedMembers: boolean | null;
           /** Shared-link permission metadata when Dropbox includes it. */
           linkPermissions: Record<string, unknown> | null;
         };
@@ -190,6 +196,8 @@ declare module "@oomol-lab/connector" {
           expiresAt: string | null;
           /** A generic JSON object returned by Dropbox. */
           sharingInfo: Record<string, unknown> | null;
+          /** Whether the file has explicit members, when requested in the listing. */
+          hasExplicitSharedMembers: boolean | null;
           /** Shared-link permission metadata when Dropbox includes it. */
           linkPermissions: Record<string, unknown> | null;
         };
@@ -289,6 +297,8 @@ declare module "@oomol-lab/connector" {
           expiresAt: string | null;
           /** A generic JSON object returned by Dropbox. */
           sharingInfo: Record<string, unknown> | null;
+          /** Whether the file has explicit members, when requested in the listing. */
+          hasExplicitSharedMembers: boolean | null;
           /** Shared-link permission metadata when Dropbox includes it. */
           linkPermissions: Record<string, unknown> | null;
         };
@@ -364,6 +374,8 @@ declare module "@oomol-lab/connector" {
           expiresAt: string | null;
           /** A generic JSON object returned by Dropbox. */
           sharingInfo: Record<string, unknown> | null;
+          /** Whether the file has explicit members, when requested in the listing. */
+          hasExplicitSharedMembers: boolean | null;
           /** Shared-link permission metadata when Dropbox includes it. */
           linkPermissions: Record<string, unknown> | null;
         };
@@ -430,11 +442,174 @@ declare module "@oomol-lab/connector" {
           expiresAt: string | null;
           /** A generic JSON object returned by Dropbox. */
           sharingInfo: Record<string, unknown> | null;
+          /** Whether the file has explicit members, when requested in the listing. */
+          hasExplicitSharedMembers: boolean | null;
           /** Shared-link permission metadata when Dropbox includes it. */
           linkPermissions: Record<string, unknown> | null;
         };
         /** The temporary Dropbox link. */
         link: string;
+      };
+    };
+    /** List a Dropbox file's user, group and invited members, including inherited access by default. */
+    "dropbox.list_file_members": {
+      input: {
+        /**
+         * The Dropbox file ID or path whose members should be listed.
+         * @minLength 1
+         * @pattern \S
+         */
+        file: string;
+        /**
+         * Include members whose access is inherited from a parent shared folder.
+         * @default true
+         */
+        includeInherited?: boolean;
+        /**
+         * The maximum number of members to return per page.
+         * @minimum 1
+         * @maximum 300
+         */
+        limit?: number;
+      };
+      output: {
+        /** User memberships of the shared file. */
+        users: Array<{
+          /** Value. */
+          access_type: {
+            /** The Dropbox access level, such as owner, editor, or viewer. */
+            ".tag": string;
+            [key: string]: unknown;
+          };
+          /** Whether this membership is inherited from a parent shared folder. */
+          is_inherited: boolean;
+          /** Member permissions. */
+          permissions?: Array<Record<string, unknown>>;
+          /** A generic JSON object returned by Dropbox. */
+          user?: Record<string, unknown>;
+          /** A generic JSON object returned by Dropbox. */
+          group?: Record<string, unknown>;
+          /** A generic JSON object returned by Dropbox. */
+          invitee?: Record<string, unknown>;
+          [key: string]: unknown;
+        }>;
+        /** Group memberships of the shared file. */
+        groups: Array<{
+          /** Value. */
+          access_type: {
+            /** The Dropbox access level, such as owner, editor, or viewer. */
+            ".tag": string;
+            [key: string]: unknown;
+          };
+          /** Whether this membership is inherited from a parent shared folder. */
+          is_inherited: boolean;
+          /** Member permissions. */
+          permissions?: Array<Record<string, unknown>>;
+          /** A generic JSON object returned by Dropbox. */
+          user?: Record<string, unknown>;
+          /** A generic JSON object returned by Dropbox. */
+          group?: Record<string, unknown>;
+          /** A generic JSON object returned by Dropbox. */
+          invitee?: Record<string, unknown>;
+          [key: string]: unknown;
+        }>;
+        /** Invited members who have not claimed the file. */
+        invitees: Array<{
+          /** Value. */
+          access_type: {
+            /** The Dropbox access level, such as owner, editor, or viewer. */
+            ".tag": string;
+            [key: string]: unknown;
+          };
+          /** Whether this membership is inherited from a parent shared folder. */
+          is_inherited: boolean;
+          /** Member permissions. */
+          permissions?: Array<Record<string, unknown>>;
+          /** A generic JSON object returned by Dropbox. */
+          user?: Record<string, unknown>;
+          /** A generic JSON object returned by Dropbox. */
+          group?: Record<string, unknown>;
+          /** A generic JSON object returned by Dropbox. */
+          invitee?: Record<string, unknown>;
+          [key: string]: unknown;
+        }>;
+        /** Continue with this cursor; null means the membership listing is complete. */
+        cursor: string | null;
+      };
+    };
+    /** Continue a Dropbox file-member listing until the returned cursor is null. */
+    "dropbox.list_file_members_continue": {
+      input: {
+        /**
+         * The cursor returned by a previous file-member listing.
+         * @minLength 1
+         * @pattern \S
+         */
+        cursor: string;
+      };
+      output: {
+        /** User memberships of the shared file. */
+        users: Array<{
+          /** Value. */
+          access_type: {
+            /** The Dropbox access level, such as owner, editor, or viewer. */
+            ".tag": string;
+            [key: string]: unknown;
+          };
+          /** Whether this membership is inherited from a parent shared folder. */
+          is_inherited: boolean;
+          /** Member permissions. */
+          permissions?: Array<Record<string, unknown>>;
+          /** A generic JSON object returned by Dropbox. */
+          user?: Record<string, unknown>;
+          /** A generic JSON object returned by Dropbox. */
+          group?: Record<string, unknown>;
+          /** A generic JSON object returned by Dropbox. */
+          invitee?: Record<string, unknown>;
+          [key: string]: unknown;
+        }>;
+        /** Group memberships of the shared file. */
+        groups: Array<{
+          /** Value. */
+          access_type: {
+            /** The Dropbox access level, such as owner, editor, or viewer. */
+            ".tag": string;
+            [key: string]: unknown;
+          };
+          /** Whether this membership is inherited from a parent shared folder. */
+          is_inherited: boolean;
+          /** Member permissions. */
+          permissions?: Array<Record<string, unknown>>;
+          /** A generic JSON object returned by Dropbox. */
+          user?: Record<string, unknown>;
+          /** A generic JSON object returned by Dropbox. */
+          group?: Record<string, unknown>;
+          /** A generic JSON object returned by Dropbox. */
+          invitee?: Record<string, unknown>;
+          [key: string]: unknown;
+        }>;
+        /** Invited members who have not claimed the file. */
+        invitees: Array<{
+          /** Value. */
+          access_type: {
+            /** The Dropbox access level, such as owner, editor, or viewer. */
+            ".tag": string;
+            [key: string]: unknown;
+          };
+          /** Whether this membership is inherited from a parent shared folder. */
+          is_inherited: boolean;
+          /** Member permissions. */
+          permissions?: Array<Record<string, unknown>>;
+          /** A generic JSON object returned by Dropbox. */
+          user?: Record<string, unknown>;
+          /** A generic JSON object returned by Dropbox. */
+          group?: Record<string, unknown>;
+          /** A generic JSON object returned by Dropbox. */
+          invitee?: Record<string, unknown>;
+          [key: string]: unknown;
+        }>;
+        /** Continue with this cursor; null means the membership listing is complete. */
+        cursor: string | null;
       };
     };
     /** List files and folders inside one Dropbox folder. */
@@ -488,6 +663,8 @@ declare module "@oomol-lab/connector" {
           expiresAt: string | null;
           /** A generic JSON object returned by Dropbox. */
           sharingInfo: Record<string, unknown> | null;
+          /** Whether the file has explicit members, when requested in the listing. */
+          hasExplicitSharedMembers: boolean | null;
           /** Shared-link permission metadata when Dropbox includes it. */
           linkPermissions: Record<string, unknown> | null;
         }>;
@@ -538,6 +715,8 @@ declare module "@oomol-lab/connector" {
           expiresAt: string | null;
           /** A generic JSON object returned by Dropbox. */
           sharingInfo: Record<string, unknown> | null;
+          /** Whether the file has explicit members, when requested in the listing. */
+          hasExplicitSharedMembers: boolean | null;
           /** Shared-link permission metadata when Dropbox includes it. */
           linkPermissions: Record<string, unknown> | null;
         }>;
@@ -545,6 +724,168 @@ declare module "@oomol-lab/connector" {
         cursor: string;
         /** Whether more entries are available. */
         hasMore: boolean;
+      };
+    };
+    /** List a shared Dropbox folder's users, groups, and invitees. Supply a path to include inherited access. */
+    "dropbox.list_folder_members": {
+      input: {
+        /**
+         * The ID of the shared folder whose members should be listed.
+         * @minLength 1
+         * @pattern \S
+         */
+        sharedFolderId: string;
+        /**
+         * Optional folder path for including inherited access. Provide it together with sharedFolderId; Dropbox uses the path to identify the folder.
+         * @minLength 1
+         * @pattern \S
+         */
+        path?: string;
+        /**
+         * The maximum number of users, groups, and invitees to return per page.
+         * @minimum 1
+         * @maximum 1000
+         */
+        limit?: number;
+      };
+      output: {
+        /** User memberships of the shared folder. */
+        users: Array<{
+          /** Value. */
+          access_type: {
+            /** The Dropbox access level, such as owner, editor, or viewer. */
+            ".tag": string;
+            [key: string]: unknown;
+          };
+          /** Whether this membership is inherited from a parent shared folder. */
+          is_inherited: boolean;
+          /** Member permissions. */
+          permissions?: Array<Record<string, unknown>>;
+          /** A generic JSON object returned by Dropbox. */
+          user?: Record<string, unknown>;
+          /** A generic JSON object returned by Dropbox. */
+          group?: Record<string, unknown>;
+          /** A generic JSON object returned by Dropbox. */
+          invitee?: Record<string, unknown>;
+          [key: string]: unknown;
+        }>;
+        /** Group memberships of the shared folder. */
+        groups: Array<{
+          /** Value. */
+          access_type: {
+            /** The Dropbox access level, such as owner, editor, or viewer. */
+            ".tag": string;
+            [key: string]: unknown;
+          };
+          /** Whether this membership is inherited from a parent shared folder. */
+          is_inherited: boolean;
+          /** Member permissions. */
+          permissions?: Array<Record<string, unknown>>;
+          /** A generic JSON object returned by Dropbox. */
+          user?: Record<string, unknown>;
+          /** A generic JSON object returned by Dropbox. */
+          group?: Record<string, unknown>;
+          /** A generic JSON object returned by Dropbox. */
+          invitee?: Record<string, unknown>;
+          [key: string]: unknown;
+        }>;
+        /** Invited members who have not joined the shared folder. */
+        invitees: Array<{
+          /** Value. */
+          access_type: {
+            /** The Dropbox access level, such as owner, editor, or viewer. */
+            ".tag": string;
+            [key: string]: unknown;
+          };
+          /** Whether this membership is inherited from a parent shared folder. */
+          is_inherited: boolean;
+          /** Member permissions. */
+          permissions?: Array<Record<string, unknown>>;
+          /** A generic JSON object returned by Dropbox. */
+          user?: Record<string, unknown>;
+          /** A generic JSON object returned by Dropbox. */
+          group?: Record<string, unknown>;
+          /** A generic JSON object returned by Dropbox. */
+          invitee?: Record<string, unknown>;
+          [key: string]: unknown;
+        }>;
+        /** Continue with this cursor; null means the membership listing is complete. */
+        cursor: string | null;
+      };
+    };
+    /** Continue a Dropbox shared-folder member listing until the returned cursor is null. */
+    "dropbox.list_folder_members_continue": {
+      input: {
+        /**
+         * The cursor returned by a previous folder-member listing.
+         * @minLength 1
+         * @pattern \S
+         */
+        cursor: string;
+      };
+      output: {
+        /** User memberships of the shared folder. */
+        users: Array<{
+          /** Value. */
+          access_type: {
+            /** The Dropbox access level, such as owner, editor, or viewer. */
+            ".tag": string;
+            [key: string]: unknown;
+          };
+          /** Whether this membership is inherited from a parent shared folder. */
+          is_inherited: boolean;
+          /** Member permissions. */
+          permissions?: Array<Record<string, unknown>>;
+          /** A generic JSON object returned by Dropbox. */
+          user?: Record<string, unknown>;
+          /** A generic JSON object returned by Dropbox. */
+          group?: Record<string, unknown>;
+          /** A generic JSON object returned by Dropbox. */
+          invitee?: Record<string, unknown>;
+          [key: string]: unknown;
+        }>;
+        /** Group memberships of the shared folder. */
+        groups: Array<{
+          /** Value. */
+          access_type: {
+            /** The Dropbox access level, such as owner, editor, or viewer. */
+            ".tag": string;
+            [key: string]: unknown;
+          };
+          /** Whether this membership is inherited from a parent shared folder. */
+          is_inherited: boolean;
+          /** Member permissions. */
+          permissions?: Array<Record<string, unknown>>;
+          /** A generic JSON object returned by Dropbox. */
+          user?: Record<string, unknown>;
+          /** A generic JSON object returned by Dropbox. */
+          group?: Record<string, unknown>;
+          /** A generic JSON object returned by Dropbox. */
+          invitee?: Record<string, unknown>;
+          [key: string]: unknown;
+        }>;
+        /** Invited members who have not joined the shared folder. */
+        invitees: Array<{
+          /** Value. */
+          access_type: {
+            /** The Dropbox access level, such as owner, editor, or viewer. */
+            ".tag": string;
+            [key: string]: unknown;
+          };
+          /** Whether this membership is inherited from a parent shared folder. */
+          is_inherited: boolean;
+          /** Member permissions. */
+          permissions?: Array<Record<string, unknown>>;
+          /** A generic JSON object returned by Dropbox. */
+          user?: Record<string, unknown>;
+          /** A generic JSON object returned by Dropbox. */
+          group?: Record<string, unknown>;
+          /** A generic JSON object returned by Dropbox. */
+          invitee?: Record<string, unknown>;
+          [key: string]: unknown;
+        }>;
+        /** Continue with this cursor; null means the membership listing is complete. */
+        cursor: string | null;
       };
     };
     /** List revisions for one Dropbox file. */
@@ -594,6 +935,8 @@ declare module "@oomol-lab/connector" {
           expiresAt: string | null;
           /** A generic JSON object returned by Dropbox. */
           sharingInfo: Record<string, unknown> | null;
+          /** Whether the file has explicit members, when requested in the listing. */
+          hasExplicitSharedMembers: boolean | null;
           /** Shared-link permission metadata when Dropbox includes it. */
           linkPermissions: Record<string, unknown> | null;
         }>;
@@ -646,6 +989,8 @@ declare module "@oomol-lab/connector" {
           expiresAt: string | null;
           /** A generic JSON object returned by Dropbox. */
           sharingInfo: Record<string, unknown> | null;
+          /** Whether the file has explicit members, when requested in the listing. */
+          hasExplicitSharedMembers: boolean | null;
           /** Shared-link permission metadata when Dropbox includes it. */
           linkPermissions: Record<string, unknown> | null;
         }>;
@@ -713,6 +1058,8 @@ declare module "@oomol-lab/connector" {
           expiresAt: string | null;
           /** A generic JSON object returned by Dropbox. */
           sharingInfo: Record<string, unknown> | null;
+          /** Whether the file has explicit members, when requested in the listing. */
+          hasExplicitSharedMembers: boolean | null;
           /** Shared-link permission metadata when Dropbox includes it. */
           linkPermissions: Record<string, unknown> | null;
         };
@@ -761,6 +1108,8 @@ declare module "@oomol-lab/connector" {
           expiresAt: string | null;
           /** A generic JSON object returned by Dropbox. */
           sharingInfo: Record<string, unknown> | null;
+          /** Whether the file has explicit members, when requested in the listing. */
+          hasExplicitSharedMembers: boolean | null;
           /** Shared-link permission metadata when Dropbox includes it. */
           linkPermissions: Record<string, unknown> | null;
         };
@@ -809,6 +1158,8 @@ declare module "@oomol-lab/connector" {
           expiresAt: string | null;
           /** A generic JSON object returned by Dropbox. */
           sharingInfo: Record<string, unknown> | null;
+          /** Whether the file has explicit members, when requested in the listing. */
+          hasExplicitSharedMembers: boolean | null;
           /** Shared-link permission metadata when Dropbox includes it. */
           linkPermissions: Record<string, unknown> | null;
         };
@@ -875,6 +1226,8 @@ declare module "@oomol-lab/connector" {
           expiresAt: string | null;
           /** A generic JSON object returned by Dropbox. */
           sharingInfo: Record<string, unknown> | null;
+          /** Whether the file has explicit members, when requested in the listing. */
+          hasExplicitSharedMembers: boolean | null;
           /** Shared-link permission metadata when Dropbox includes it. */
           linkPermissions: Record<string, unknown> | null;
         } | null;
@@ -927,6 +1280,8 @@ declare module "@oomol-lab/connector" {
           expiresAt: string | null;
           /** A generic JSON object returned by Dropbox. */
           sharingInfo: Record<string, unknown> | null;
+          /** Whether the file has explicit members, when requested in the listing. */
+          hasExplicitSharedMembers: boolean | null;
           /** Shared-link permission metadata when Dropbox includes it. */
           linkPermissions: Record<string, unknown> | null;
         } | null;
@@ -999,6 +1354,8 @@ declare module "@oomol-lab/connector" {
             expiresAt: string | null;
             /** A generic JSON object returned by Dropbox. */
             sharingInfo: Record<string, unknown> | null;
+            /** Whether the file has explicit members, when requested in the listing. */
+            hasExplicitSharedMembers: boolean | null;
             /** Shared-link permission metadata when Dropbox includes it. */
             linkPermissions: Record<string, unknown> | null;
           };
@@ -1056,6 +1413,8 @@ declare module "@oomol-lab/connector" {
             expiresAt: string | null;
             /** A generic JSON object returned by Dropbox. */
             sharingInfo: Record<string, unknown> | null;
+            /** Whether the file has explicit members, when requested in the listing. */
+            hasExplicitSharedMembers: boolean | null;
             /** Shared-link permission metadata when Dropbox includes it. */
             linkPermissions: Record<string, unknown> | null;
           };
@@ -1128,6 +1487,8 @@ declare module "@oomol-lab/connector" {
           expiresAt: string | null;
           /** A generic JSON object returned by Dropbox. */
           sharingInfo: Record<string, unknown> | null;
+          /** Whether the file has explicit members, when requested in the listing. */
+          hasExplicitSharedMembers: boolean | null;
           /** Shared-link permission metadata when Dropbox includes it. */
           linkPermissions: Record<string, unknown> | null;
         };

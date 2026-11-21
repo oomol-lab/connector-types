@@ -14,7 +14,7 @@ declare module "@oomol-lab/connector" {
         arguments?: Record<string, unknown>;
       };
       output: {
-        /** The tool result. Structured MCP content is returned directly; otherwise the MCP content envelope is preserved. */
+        /** The tool result. Structured content or a single JSON object text is returned as an object; other content envelopes remain intact. */
         result: unknown;
       };
     };
@@ -27,8 +27,8 @@ declare module "@oomol-lab/connector" {
          */
         name: string;
         /** The file extension without a leading dot. */
-        file_extension: "otl" | "docx" | "pdf" | "xls" | "xlsx" | "ksheet" | "dbt";
-        /** UTF-8 Markdown content for OTL, DOCX, or PDF files. */
+        file_extension: "otl" | "docx" | "md" | "pdf" | "xls" | "xlsx" | "ksheet" | "dbt";
+        /** UTF-8 Markdown content for OTL, DOCX, MD, or PDF files. */
         content?: string;
         /**
          * The destination WPS drive ID. Defaults to the personal drive.
@@ -51,68 +51,56 @@ declare module "@oomol-lab/connector" {
       };
       output: unknown;
     };
-    /** Create a folder in a known WPS drive and parent folder. */
+    /** Create a folder in WPS, defaulting to the personal cloud document root. */
     "wps_mcp.create_folder": {
       input: {
         /**
-         * The destination WPS drive ID.
+         * The destination WPS drive ID. Defaults to the personal drive.
          * @minLength 1
          */
-        drive_id: string;
+        drive_id?: string;
         /**
-         * The parent folder ID. Use 0 for the drive root.
+         * The parent folder ID. Omit for the personal cloud root; 0 refers to the root of the specified drive.
          * @minLength 1
          */
-        parent_id: string;
+        parent_id?: string;
         /**
          * The folder name without a file extension.
          * @minLength 1
          */
         name: string;
-        /** How WPS should handle an existing name. */
-        on_name_conflict?: "fail" | "rename";
+        /** How WPS should handle an existing name. Defaults to rename; reuse returns the existing folder. */
+        on_name_conflict?: "fail" | "rename" | "reuse";
         /** Relative folder path segments that WPS should create when missing. */
         parent_path?: Array<string>;
       };
       output: unknown;
     };
+    /** Get download information for a binary WPS file such as DOCX, XLSX, PDF, PPTX, or an image. Online OTL, DBT, and KSHEET documents are unsupported; use read_file for their content. */
+    "wps_mcp.download_file": {
+      input: Record<string, unknown>;
+      output: unknown;
+    };
     /** Get metadata, drive details, extended attributes, or permissions for a WPS file. */
     "wps_mcp.get_file_info": {
-      input: {
-        /**
-         * A WPS file ID used to select the document.
-         * @minLength 1
-         */
-        file_id?: string;
-        /**
-         * A WPS share link ID used to select the document.
-         * @minLength 1
-         */
-        link_id?: string;
-        /**
-         * A WPS document URL used to select the document.
-         * @format uri
-         */
-        url?: string;
-        /** Whether the response should include the containing drive. */
-        with_drive?: boolean;
-        /** Whether the response should include extended attributes. */
-        with_ext_attrs?: boolean;
-        /** Whether the response should include operation permissions. */
-        with_permission?: boolean;
-      };
+      input: Record<string, unknown>;
+      output: unknown;
+    };
+    /** Get the online access link for a WPS cloud document. */
+    "wps_mcp.get_file_link": {
+      input: Record<string, unknown>;
       output: unknown;
     };
     /** List entries in a known WPS drive folder with filtering, sorting, and pagination. */
     "wps_mcp.list_files": {
       input: {
         /**
-         * The WPS drive ID.
+         * The WPS drive ID. Required for parent_id 0; optional for a specific folder ID.
          * @minLength 1
          */
-        drive_id: string;
+        drive_id?: string;
         /**
-         * The folder ID. Use 0 for the drive root.
+         * The folder ID. Use 0 only with an explicit drive_id; use list_my_files for the personal cloud root.
          * @minLength 1
          */
         parent_id: string;
@@ -138,6 +126,32 @@ declare module "@oomol-lab/connector" {
         /** Whether each entry should include extended attributes. */
         with_ext_attrs?: boolean;
         /** Whether each entry should include operation permissions. */
+        with_permission?: boolean;
+      };
+      output: unknown;
+    };
+    /** List recently accessed WPS documents with creator and file extension filters. */
+    "wps_mcp.list_latest_items": {
+      input: {
+        /** Comma-separated creator IDs to include. */
+        include_creators?: string;
+        /** Comma-separated creator IDs to exclude. */
+        exclude_creators?: string;
+        /** Comma-separated file extensions to include. */
+        include_exts?: string;
+        /** Comma-separated file extensions to exclude. */
+        exclude_exts?: string;
+        /**
+         * The page size from 1 to 500. Defaults to 20.
+         * @minimum 1
+         * @maximum 500
+         */
+        page_size?: number;
+        /** The pagination token returned by the previous request. */
+        page_token?: string;
+        /** Whether to include share link information. */
+        with_link?: boolean;
+        /** Whether to include file operation permissions. */
         with_permission?: boolean;
       };
       output: unknown;
@@ -205,44 +219,7 @@ declare module "@oomol-lab/connector" {
     };
     /** Read a WPS cloud document as Markdown, plain text, structured KDC data, or spreadsheet cells according to its format. */
     "wps_mcp.read_file": {
-      input: {
-        /**
-         * A WPS file ID used to select the document.
-         * @minLength 1
-         */
-        file_id?: string;
-        /**
-         * A WPS share link ID used to select the document.
-         * @minLength 1
-         */
-        link_id?: string;
-        /**
-         * A WPS document URL used to select the document.
-         * @format uri
-         */
-        url?: string;
-        /** The output format for supported text documents. */
-        format?: "markdown" | "plain" | "kdc";
-        /** Whether extracted media should be uploaded and returned as temporary download URLs. */
-        enable_upload_medias?: boolean;
-        /** The numeric spreadsheet sheet ID. It takes priority over sheet_name. */
-        sheet_id?: number;
-        /** The spreadsheet sheet name. */
-        sheet_name?: string;
-        /** A zero-based inclusive spreadsheet cell range. */
-        sheet_range?: {
-          /** The zero-based first row. */
-          row_from?: number;
-          /** The zero-based last row, inclusive. */
-          row_to?: number;
-          /** The zero-based first column. */
-          col_from?: number;
-          /** The zero-based last column, inclusive. */
-          col_to?: number;
-        };
-        /** The task ID returned by a previous incomplete read request. */
-        task_id?: string;
-      };
+      input: Record<string, unknown>;
       output: unknown;
     };
     /** Search WPS cloud documents and folders across drives by file name, content, creator, location, type, or time. */

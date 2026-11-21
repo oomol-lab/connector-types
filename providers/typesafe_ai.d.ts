@@ -30,14 +30,14 @@ declare module "@oomol-lab/connector" {
             /** The TypeSafe question type. */
             type: "choice";
             /** Text or structured JSON content, or null when the API permits no description. */
-            instructions: string | Record<string, unknown> | Array<unknown> | null;
+            instructions?: string | Record<string, unknown> | Array<unknown> | null;
             /** Candidate option names mapped to optional descriptions. */
             criteria: Record<string, string | Record<string, unknown> | Array<unknown> | null>;
           } | {
             /** The TypeSafe question type. */
             type: "score";
             /** Text or structured JSON content, or null when the API permits no description. */
-            instructions: string | Record<string, unknown> | Array<unknown> | null;
+            instructions?: string | Record<string, unknown> | Array<unknown> | null;
             /**
              * Ordered rubric levels from the lowest to the highest score.
              * @minItems 2

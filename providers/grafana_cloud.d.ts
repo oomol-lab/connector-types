@@ -82,20 +82,9 @@ declare module "@oomol-lab/connector" {
         raw: Record<string, unknown>;
       };
     };
-    /** List Grafana Cloud stacks in the connected organization. */
+    /** List every Grafana Cloud stack in the connected organization in one response. */
     "grafana_cloud.list_stacks": {
-      input: {
-        /**
-         * The number of records to request from Grafana Cloud.
-         * @minimum 1
-         */
-        pageSize?: number;
-        /**
-         * The Grafana Cloud pagination cursor from a previous response.
-         * @minLength 1
-         */
-        pageCursor?: string;
-      };
+      input: Record<string, never>;
       output: {
         /** Stacks returned by Grafana Cloud. */
         stacks: Array<{
@@ -120,10 +109,6 @@ declare module "@oomol-lab/connector" {
           /** The raw Grafana Cloud API object. */
           raw: Record<string, unknown>;
         }>;
-        /** The cursor to pass as pageCursor for the next Grafana Cloud stacks request. */
-        nextPageCursor: string | null;
-        /** The next page URL returned by Grafana Cloud, if present. */
-        nextPage: string | null;
         /** The raw Grafana Cloud API object. */
         raw: Record<string, unknown>;
       };

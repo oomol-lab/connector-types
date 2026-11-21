@@ -2,13 +2,271 @@ import "@oomol-lab/connector";
 
 declare module "@oomol-lab/connector" {
   interface ActionRegistry {
-    /** Retrieves the public product detail for a 1688 wholesale listing by item ID. Use it to review a known offer during product sourcing or catalog research. */
-    "justoneapi.1688_product_details": {
+    /** Retrieves 1688 category information by category ID, or root categories when no ID is supplied. Use it to navigate categories during product sourcing. */
+    "justoneapi.1688_category_information": {
       input: {
+        /** 1688 platform category ID. */
+        catId?: string;
+      };
+      output: {
+        /** Business status code; zero indicates success. */
+        code: number;
+        /** The upstream response message. */
+        message?: string | null;
+        /** Upstream business data, preserving platform fields, cursors, and media URLs. */
+        data: unknown;
+        /** The upstream record time when provided. */
+        recordTime?: string | null;
+        /** The upstream request identifier when provided. */
+        requestId?: string;
+        /** The upstream reason when provided. */
+        reason?: string;
+        [key: string]: unknown;
+      };
+    };
+    /** Retrieves 1688 products by category ID with output language, pagination, sorting and price filters. Use it to discover category products for multilingual sourcing. */
+    "justoneapi.1688_category_products": {
+      input: {
+        /** 1688 platform category ID. */
+        catId: string;
         /**
-         * A unique product identifier on 1688.
-         * @minLength 1
+         * Output language.
+         *
+         * Available Values:
+         * - `en`: English
+         * - `zh`: Chinese
+         * - `ru`: Russian
+         * - `vi`: Vietnamese
+         * - `ja`: Japanese
+         * - `ko`: Korean
+         * @default "zh"
          */
+        language?: "en" | "zh" | "ru" | "vi" | "ja" | "ko";
+        /**
+         * Page number, starting at 1.
+         * @format int32
+         * @default 1
+         */
+        page?: number;
+        /**
+         * Number of items requested per page. The returned count may differ.
+         * @format int32
+         * @default 20
+         */
+        pageSize?: number;
+        /**
+         * Product sort order.
+         *
+         * Available Values:
+         * - `default`: Default order
+         * - `sales`: Sales order
+         * - `price_up`: Price ascending
+         * - `price_down`: Price descending
+         * @default "default"
+         */
+        sort?: "default" | "sales" | "price_up" | "price_down";
+        /** Minimum price filter in CNY. */
+        priceStart?: string;
+        /** Maximum price filter in CNY. */
+        priceEnd?: string;
+        /** Filter for new products. */
+        newArrival?: boolean;
+        /** Filter for support for dropshipping. */
+        supportDropshipping?: boolean;
+        /** Filter for free shipping. */
+        freeShipping?: boolean;
+        /** Optional super-factory filter. */
+        isSuperFactory?: boolean;
+      };
+      output: {
+        /** Business status code; zero indicates success. */
+        code: number;
+        /** The upstream response message. */
+        message?: string | null;
+        /** Upstream business data, preserving platform fields, cursors, and media URLs. */
+        data: unknown;
+        /** The upstream record time when provided. */
+        recordTime?: string | null;
+        /** The upstream request identifier when provided. */
+        requestId?: string;
+        /** The upstream reason when provided. */
+        reason?: string;
+        [key: string]: unknown;
+      };
+    };
+    /** Searches 1688 cross-border products by keyword or category with language selection, pagination and sourcing filters. Use it to discover products for multilingual procurement. */
+    "justoneapi.1688_cross_border_product_search": {
+      input: {
+        /** @minLength 1 */
+        keyword: string;
+        [key: string]: unknown;
+      } | {
+        /** @minLength 1 */
+        catId: string;
+        [key: string]: unknown;
+      };
+      output: {
+        /** Business status code; zero indicates success. */
+        code: number;
+        /** The upstream response message. */
+        message?: string | null;
+        /** Upstream business data, preserving platform fields, cursors, and media URLs. */
+        data: unknown;
+        /** The upstream record time when provided. */
+        recordTime?: string | null;
+        /** The upstream request identifier when provided. */
+        requestId?: string;
+        /** The upstream reason when provided. */
+        reason?: string;
+        [key: string]: unknown;
+      };
+    };
+    /** Searches 1688 cross-border products by image with language selection, pagination, sorting and sourcing filters. Use it to find products for multilingual visual sourcing. */
+    "justoneapi.1688_cross_border_product_search_by_image": {
+      input: {
+        /** Image reference returned by Image Conversion with searchApiEndpoint=cross_border_v2. Convert full image URLs before searching. */
+        imgUrl: string;
+        /**
+         * Output language.
+         *
+         * Available Values:
+         * - `en`: English
+         * - `zh`: Chinese
+         * - `ru`: Russian
+         * - `vi`: Vietnamese
+         * - `ja`: Japanese
+         * - `ko`: Korean
+         * @default "en"
+         */
+        language?: "en" | "zh" | "ru" | "vi" | "ja" | "ko";
+        /**
+         * Page number, starting at 1.
+         * @format int32
+         * @default 1
+         */
+        page?: number;
+        /**
+         * Number of items requested per page. The returned count may differ.
+         * @format int32
+         * @default 20
+         */
+        pageSize?: number;
+        /**
+         * Product sort order.
+         *
+         * Available Values:
+         * - `default`: Default order
+         * - `sales`: Sales order
+         * - `price_up`: Price ascending
+         * - `price_down`: Price descending
+         * @default "default"
+         */
+        sort?: "default" | "sales" | "price_up" | "price_down";
+        /** Minimum price filter in CNY. */
+        priceStart?: string;
+        /** Maximum price filter in CNY. */
+        priceEnd?: string;
+        /** Filter for support for dropshipping. */
+        supportDropshipping?: boolean;
+        /** Filter by factory status. */
+        isFactory?: boolean;
+        /** Filter for verified sellers. */
+        verifiedSupplier?: boolean;
+        /** Filter for free shipping. */
+        freeShipping?: boolean;
+        /** Filter for new products. */
+        newArrival?: boolean;
+      };
+      output: {
+        /** Business status code; zero indicates success. */
+        code: number;
+        /** The upstream response message. */
+        message?: string | null;
+        /** Upstream business data, preserving platform fields, cursors, and media URLs. */
+        data: unknown;
+        /** The upstream record time when provided. */
+        recordTime?: string | null;
+        /** The upstream request identifier when provided. */
+        requestId?: string;
+        /** The upstream reason when provided. */
+        reason?: string;
+        [key: string]: unknown;
+      };
+    };
+    /** Searches 1688 factories by keyword with pagination and default or repurchase-rate sorting. Use it to discover manufacturers during procurement research. */
+    "justoneapi.1688_factory_search": {
+      input: {
+        /** Factory search keyword. */
+        keyword: string;
+        /**
+         * Page number, starting at 1.
+         * @format int32
+         * @default 1
+         */
+        page?: number;
+        /**
+         * Number of items requested per page. The returned count may differ.
+         * @format int32
+         * @default 20
+         */
+        pageSize?: number;
+        /**
+         * Factory sort order.
+         *
+         * Available Values:
+         * - `default`: Default order
+         * - `repurchase_rate`: Repurchase-rate order
+         * @default "default"
+         */
+        sort?: "default" | "repurchase_rate";
+      };
+      output: {
+        /** Business status code; zero indicates success. */
+        code: number;
+        /** The upstream response message. */
+        message?: string | null;
+        /** Upstream business data, preserving platform fields, cursors, and media URLs. */
+        data: unknown;
+        /** The upstream record time when provided. */
+        recordTime?: string | null;
+        /** The upstream request identifier when provided. */
+        requestId?: string;
+        /** The upstream reason when provided. */
+        reason?: string;
+        [key: string]: unknown;
+      };
+    };
+    /** Converts an image URL or JPEG Base64 input into an image reference for a selected 1688 image search endpoint. Use it to prepare external images for visual product sourcing. */
+    "justoneapi.1688_image_conversion": {
+      input: {
+        /** @minLength 1 */
+        url: string;
+        [key: string]: unknown;
+      } | {
+        /** @minLength 1 */
+        imgBase64: string;
+        [key: string]: unknown;
+      };
+      output: {
+        /** Business status code; zero indicates success. */
+        code: number;
+        /** The upstream response message. */
+        message?: string | null;
+        /** Upstream business data, preserving platform fields, cursors, and media URLs. */
+        data: unknown;
+        /** The upstream record time when provided. */
+        recordTime?: string | null;
+        /** The upstream request identifier when provided. */
+        requestId?: string;
+        /** The upstream reason when provided. */
+        reason?: string;
+        [key: string]: unknown;
+      };
+    };
+    /** Retrieves 1688 product description images by item ID. Use it to review listing descriptions during catalog preparation and product research. */
+    "justoneapi.1688_product_description_images": {
+      input: {
+        /** 1688 product ID. */
         itemId: string;
       };
       output: {
@@ -27,14 +285,450 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
-    /** Searches 1688 wholesale product listings by keyword. Use it to discover candidate products or suppliers during sourcing and market research. */
+    /** Retrieves 1688 product details by item ID with an optional output language and dropshipping scene. Use it to inspect a known product during sourcing and catalog research. */
+    "justoneapi.1688_product_details": {
+      input: {
+        /** 1688 product ID. */
+        itemId: string;
+        /**
+         * Optional dropshipping pricing scene.
+         *
+         * Available Values:
+         * - `drop_shipping`: Dropshipping
+         */
+        scene?: "drop_shipping";
+        /**
+         * Optimize Chinese titles by removing non-core words.
+         * @default false
+         */
+        optimizeTitle?: boolean;
+        /**
+         * Output language.
+         *
+         * Available Values:
+         * - `en`: English
+         * - `zh`: Chinese
+         * - `ru`: Russian
+         * - `th`: Thai
+         * - `pt`: Portuguese
+         * - `es`: Spanish
+         * - `tr`: Turkish
+         * - `vi`: Vietnamese
+         * - `ja`: Japanese
+         * - `ko`: Korean
+         * @default "zh"
+         */
+        language?: "en" | "zh" | "ru" | "th" | "pt" | "es" | "tr" | "vi" | "ja" | "ko";
+      };
+      output: {
+        /** Business status code; zero indicates success. */
+        code: number;
+        /** The upstream response message. */
+        message?: string | null;
+        /** Upstream business data, preserving platform fields, cursors, and media URLs. */
+        data: unknown;
+        /** The upstream record time when provided. */
+        recordTime?: string | null;
+        /** The upstream request identifier when provided. */
+        requestId?: string;
+        /** The upstream reason when provided. */
+        reason?: string;
+        [key: string]: unknown;
+      };
+    };
+    /** Retrieves 1688 product details by product URL with an optional output language. Use it to inspect a known listing during sourcing and catalog research. */
+    "justoneapi.1688_product_details_by_url": {
+      input: {
+        /** 1688 product URL. */
+        url: string;
+        /**
+         * Optional dropshipping pricing scene.
+         *
+         * Available Values:
+         * - `drop_shipping`: Dropshipping
+         */
+        scene?: "drop_shipping";
+        /**
+         * Optimize Chinese titles by removing non-core words.
+         * @default false
+         */
+        optimizeTitle?: boolean;
+        /**
+         * Output language.
+         *
+         * Available Values:
+         * - `en`: English
+         * - `zh`: Chinese
+         * - `ru`: Russian
+         * - `th`: Thai
+         * - `pt`: Portuguese
+         * - `es`: Spanish
+         * - `tr`: Turkish
+         * - `vi`: Vietnamese
+         * - `ja`: Japanese
+         * - `ko`: Korean
+         * @default "zh"
+         */
+        language?: "en" | "zh" | "ru" | "th" | "pt" | "es" | "tr" | "vi" | "ja" | "ko";
+      };
+      output: {
+        /** Business status code; zero indicates success. */
+        code: number;
+        /** The upstream response message. */
+        message?: string | null;
+        /** Upstream business data, preserving platform fields, cursors, and media URLs. */
+        data: unknown;
+        /** The upstream record time when provided. */
+        recordTime?: string | null;
+        /** The upstream request identifier when provided. */
+        requestId?: string;
+        /** The upstream reason when provided. */
+        reason?: string;
+        [key: string]: unknown;
+      };
+    };
+    /** Retrieves 1688 product reviews by item ID with pagination and default or latest sorting. Use it to review buyer feedback during product sourcing. */
+    "justoneapi.1688_product_reviews": {
+      input: {
+        /** 1688 product ID. */
+        itemId: string;
+        /**
+         * Page number, starting at 1.
+         * @format int32
+         * @default 1
+         */
+        page?: number;
+        /**
+         * Review sort order.
+         *
+         * Available Values:
+         * - `default`: Default order
+         * - `latest`: Latest reviews first
+         * @default "default"
+         */
+        sortType?: "default" | "latest";
+      };
+      output: {
+        /** Business status code; zero indicates success. */
+        code: number;
+        /** The upstream response message. */
+        message?: string | null;
+        /** Upstream business data, preserving platform fields, cursors, and media URLs. */
+        data: unknown;
+        /** The upstream record time when provided. */
+        recordTime?: string | null;
+        /** The upstream request identifier when provided. */
+        requestId?: string;
+        /** The upstream reason when provided. */
+        reason?: string;
+        [key: string]: unknown;
+      };
+    };
+    /** Searches 1688 products by keyword with pagination, sorting, price ranges and optional sourcing filters. Use it to discover products during procurement and market research. */
     "justoneapi.1688_product_search": {
       input: {
-        /**
-         * Search keyword.
-         * @minLength 1
-         */
+        /** Search keyword. */
         keyword: string;
+        /**
+         * Page number, starting at 1.
+         * @format int32
+         * @default 1
+         */
+        page?: number;
+        /**
+         * Number of items requested per page. The returned count may differ.
+         * @format int32
+         * @default 20
+         */
+        pageSize?: number;
+        /**
+         * Product sort order.
+         *
+         * Available Values:
+         * - `default`: Default order
+         * - `sales`: Sales order
+         * - `price_up`: Price ascending
+         * - `price_down`: Price descending
+         * @default "default"
+         */
+        sort?: "default" | "sales" | "price_up" | "price_down";
+        /**
+         * Minimum order quantity filter.
+         * @format int32
+         */
+        moq?: number;
+        /** Minimum price filter in CNY. */
+        priceStart?: string;
+        /** Maximum price filter in CNY. */
+        priceEnd?: string;
+        /** Filter for new products. */
+        newArrival?: boolean;
+        /** Filter for support for dropshipping. */
+        supportDropshipping?: boolean;
+        /** Filter for free shipping. */
+        freeShipping?: boolean;
+        /** Optional super-factory filter. */
+        isSuperFactory?: boolean;
+      };
+      output: {
+        /** Business status code; zero indicates success. */
+        code: number;
+        /** The upstream response message. */
+        message?: string | null;
+        /** Upstream business data, preserving platform fields, cursors, and media URLs. */
+        data: unknown;
+        /** The upstream record time when provided. */
+        recordTime?: string | null;
+        /** The upstream request identifier when provided. */
+        requestId?: string;
+        /** The upstream reason when provided. */
+        reason?: string;
+        [key: string]: unknown;
+      };
+    };
+    /** Searches 1688 products by image with pagination, sorting and optional sourcing filters. Use it to find matching products during visual sourcing. */
+    "justoneapi.1688_product_search_by_image": {
+      input: {
+        /** Image URL or image reference returned by Image Conversion. Convert external images for the selected search target before searching. */
+        imgUrl: string;
+        /**
+         * Page number, starting at 1.
+         * @format int32
+         * @default 1
+         */
+        page?: number;
+        /**
+         * Number of items requested per page. The returned count may differ.
+         * @format int32
+         * @default 20
+         */
+        pageSize?: number;
+        /**
+         * Product sort order.
+         *
+         * Available Values:
+         * - `default`: Default order
+         * - `sales`: Sales order
+         * - `price_up`: Price ascending
+         * - `price_down`: Price descending
+         * @default "default"
+         */
+        sort?: "default" | "sales" | "price_up" | "price_down";
+        /**
+         * Minimum order quantity filter.
+         * @format int32
+         */
+        moq?: number;
+        /** Minimum price filter in CNY. */
+        priceStart?: string;
+        /** Maximum price filter in CNY. */
+        priceEnd?: string;
+        /** Filter for support for dropshipping. */
+        supportDropshipping?: boolean;
+        /** Filter by factory status. */
+        isFactory?: boolean;
+        /** Filter for verified sellers. */
+        verifiedSupplier?: boolean;
+        /** Filter for free shipping. */
+        freeShipping?: boolean;
+        /** Filter for new products. */
+        newArrival?: boolean;
+      };
+      output: {
+        /** Business status code; zero indicates success. */
+        code: number;
+        /** The upstream response message. */
+        message?: string | null;
+        /** Upstream business data, preserving platform fields, cursors, and media URLs. */
+        data: unknown;
+        /** The upstream record time when provided. */
+        recordTime?: string | null;
+        /** The upstream request identifier when provided. */
+        requestId?: string;
+        /** The upstream reason when provided. */
+        reason?: string;
+        [key: string]: unknown;
+      };
+    };
+    /** Retrieves a 1688 product shipping estimate for a Chinese province using quantity and optional total weight. Use it to estimate domestic procurement shipping costs. */
+    "justoneapi.1688_product_shipping_fee": {
+      input: {
+        /** 1688 product ID. */
+        itemId: string;
+        /** Chinese province name or abbreviation, for example Guangdong or gd. */
+        province: string;
+        /**
+         * Total number of items to ship.
+         * @format int32
+         * @default 1
+         */
+        totalQuantity?: number;
+        /** Total shipment weight in kilograms. */
+        totalWeight?: number;
+      };
+      output: {
+        /** Business status code; zero indicates success. */
+        code: number;
+        /** The upstream response message. */
+        message?: string | null;
+        /** Upstream business data, preserving platform fields, cursors, and media URLs. */
+        data: unknown;
+        /** The upstream record time when provided. */
+        recordTime?: string | null;
+        /** The upstream request identifier when provided. */
+        requestId?: string;
+        /** The upstream reason when provided. */
+        reason?: string;
+        [key: string]: unknown;
+      };
+    };
+    /** Retrieves all categories for a 1688 shop by shop URL or seller member ID. Use it to navigate a shop catalog during product sourcing. */
+    "justoneapi.1688_shop_categories": {
+      input: {
+        /** @minLength 1 */
+        shopUrl: string;
+        [key: string]: unknown;
+      } | {
+        /** @minLength 1 */
+        memberId: string;
+        [key: string]: unknown;
+      };
+      output: {
+        /** Business status code; zero indicates success. */
+        code: number;
+        /** The upstream response message. */
+        message?: string | null;
+        /** Upstream business data, preserving platform fields, cursors, and media URLs. */
+        data: unknown;
+        /** The upstream record time when provided. */
+        recordTime?: string | null;
+        /** The upstream request identifier when provided. */
+        requestId?: string;
+        /** The upstream reason when provided. */
+        reason?: string;
+        [key: string]: unknown;
+      };
+    };
+    /** Retrieves 1688 shop information by shop URL or seller member ID. Use it to research a known shop during procurement. */
+    "justoneapi.1688_shop_information": {
+      input: {
+        /** @minLength 1 */
+        shopUrl: string;
+        [key: string]: unknown;
+      } | {
+        /** @minLength 1 */
+        memberId: string;
+        [key: string]: unknown;
+      };
+      output: {
+        /** Business status code; zero indicates success. */
+        code: number;
+        /** The upstream response message. */
+        message?: string | null;
+        /** Upstream business data, preserving platform fields, cursors, and media URLs. */
+        data: unknown;
+        /** The upstream record time when provided. */
+        recordTime?: string | null;
+        /** The upstream request identifier when provided. */
+        requestId?: string;
+        /** The upstream reason when provided. */
+        reason?: string;
+        [key: string]: unknown;
+      };
+    };
+    /** Retrieves 1688 shop products by seller member ID with pagination, sorting and optional category and price filters. Use it to research a shop product catalog. */
+    "justoneapi.1688_shop_products_by_member_id": {
+      input: {
+        /** Seller member ID. */
+        memberId: string;
+        /**
+         * Page number, starting at 1.
+         * @format int32
+         * @default 1
+         */
+        page?: number;
+        /**
+         * Number of items requested per page. The returned count may differ.
+         * @format int32
+         * @default 20
+         */
+        pageSize?: number;
+        /**
+         * Shop product sort order.
+         *
+         * Available Values:
+         * - `default`: Default order
+         * - `sales`: Sales order
+         * - `price_up`: Price ascending
+         * - `price_down`: Price descending
+         * - `time_up`: Time ascending
+         * - `time_down`: Time descending
+         * @default "default"
+         */
+        sort?: "default" | "sales" | "price_up" | "price_down" | "time_up" | "time_down";
+        /** Shop category ID. */
+        shopCatId?: string;
+        /** Minimum price filter in CNY. */
+        priceStart?: string;
+        /** Maximum price filter in CNY. */
+        priceEnd?: string;
+      };
+      output: {
+        /** Business status code; zero indicates success. */
+        code: number;
+        /** The upstream response message. */
+        message?: string | null;
+        /** Upstream business data, preserving platform fields, cursors, and media URLs. */
+        data: unknown;
+        /** The upstream record time when provided. */
+        recordTime?: string | null;
+        /** The upstream request identifier when provided. */
+        requestId?: string;
+        /** The upstream reason when provided. */
+        reason?: string;
+        [key: string]: unknown;
+      };
+    };
+    /** Retrieves 1688 shop products by shop homepage URL with pagination, sorting and optional category filters. Use it to research a shop product catalog. */
+    "justoneapi.1688_shop_products_by_url": {
+      input: {
+        /** 1688 shop homepage URL. */
+        shopUrl: string;
+        /**
+         * Page number, starting at 1.
+         * @format int32
+         * @default 1
+         */
+        page?: number;
+        /**
+         * Number of items requested per page. The returned count may differ.
+         * @format int32
+         * @default 20
+         */
+        pageSize?: number;
+        /**
+         * Shop product sort order.
+         *
+         * Available Values:
+         * - `default`: Default order
+         * - `sales`: Sales order
+         * - `price_up`: Price ascending
+         * - `price_down`: Price descending
+         * - `time_up`: Time ascending
+         * - `time_down`: Time descending
+         * @default "default"
+         */
+        sort?: "default" | "sales" | "price_up" | "price_down" | "time_up" | "time_down";
+        /** Optional category ID filter. */
+        cat?: string;
+        /**
+         * Optional category mode: 0 or 1.
+         *
+         * Available Values:
+         * - `0`: Category mode 0
+         * - `1`: Category mode 1
+         */
+        catType?: "0" | "1";
       };
       output: {
         /** Business status code; zero indicates success. */
@@ -2746,36 +3440,6 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
-    /** Retrieves videos published by a Douyin (TikTok China) user with cursor pagination. Use it to browse a known creator's public video history or continue through video pages. */
-    "justoneapi.douyin_tiktok_china_user_published_videos": {
-      input: {
-        /**
-         * The unique user ID (sec_uid) on Douyin.
-         * @minLength 1
-         */
-        secUid: string;
-        /**
-         * Pagination cursor; use 0 for the first page, and the `max_cursor` from the previous response for subsequent pages.
-         * @default 0
-         */
-        maxCursor?: number;
-      };
-      output: {
-        /** Business status code; zero indicates success. */
-        code: number;
-        /** The upstream response message. */
-        message?: string | null;
-        /** Upstream business data, preserving platform fields, cursors, and media URLs. */
-        data: unknown;
-        /** The upstream record time when provided. */
-        recordTime?: string | null;
-        /** The upstream request identifier when provided. */
-        requestId?: string;
-        /** The upstream reason when provided. */
-        reason?: string;
-        [key: string]: unknown;
-      };
-    };
     /** Searches Douyin (TikTok China) users by keyword with page-based pagination and optional account-type filtering. Use it to discover creators, brands, or verified accounts for research. */
     "justoneapi.douyin_tiktok_china_user_search": {
       input: {
@@ -4099,16 +4763,11 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
-    /** Retrieve paginated JD.com product comments for a specific SKU. Use it to review buyer feedback for that product. */
-    "justoneapi.jdcom_product_comments": {
+    /** Retrieve JD.com product description images and product attributes by item ID. Use it to review product introductions for catalog research and product presentation. */
+    "justoneapi.jdcom_product_description_images": {
       input: {
-        /**
-         * A unique product identifier on JD.com (item ID).
-         * @minLength 1
-         */
+        /** A unique product identifier on JD.com (item ID). */
         itemId: string;
-        /** Page number for paginated comments. */
-        page?: string;
       };
       output: {
         /** Business status code; zero indicates success. */
@@ -4151,14 +4810,11 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
-    /** Retrieve the current JD.com product price for a known item ID. Use it to check a product's price before catalog comparison or purchase analysis. */
+    /** Retrieve JD.com product prices for up to 10 comma-separated item IDs in one request. Use it for batch price checks and catalog comparisons. */
     "justoneapi.jdcom_product_price": {
       input: {
-        /**
-         * A unique product identifier on JD.com (item ID).
-         * @minLength 1
-         */
-        itemId: string;
+        /** Between 1 and 10 numeric JD.com item IDs, separated by commas without spaces. */
+        itemIds: string;
       };
       output: {
         /** Business status code; zero indicates success. */
@@ -4419,37 +5075,164 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
-    /** Retrieves LinkedIn comments for an activity post with relevance or recent sorting, page-based navigation, a pagination token, and optional share URN. Use it to review public discussion around known professional content. */
-    "justoneapi.linkedin_post_comments": {
+    /** Retrieves a public LinkedIn company profile by its vanity name or company page URL. Use it to research a company and obtain its company identifier before querying company job postings. */
+    "justoneapi.linkedin_company_details": {
       input: {
+        /** LinkedIn company vanity name or company page URL. School pages are not supported. */
+        company: string;
+      };
+      output: {
+        /** Business status code; zero indicates success. */
+        code: number;
+        /** The upstream response message. */
+        message?: string | null;
+        /** Upstream business data, preserving platform fields, cursors, and media URLs. */
+        data: unknown;
+        /** The upstream record time when provided. */
+        recordTime?: string | null;
+        /** The upstream request identifier when provided. */
+        requestId?: string;
+        /** The upstream reason when provided. */
+        reason?: string;
+        [key: string]: unknown;
+      };
+    };
+    /** Retrieves LinkedIn job postings for companies identified by company IDs, vanity names, or company page URLs, with optional keyword, location, posting age, and pagination filters. Use it to track company hiring activity across one or more employers. */
+    "justoneapi.linkedin_company_jobs": {
+      input: {
+        /** @minLength 1 */
+        companyId: string;
+        [key: string]: unknown;
+      } | {
+        /** @minLength 1 */
+        company: string;
+        [key: string]: unknown;
+      };
+      output: {
+        /** Business status code; zero indicates success. */
+        code: number;
+        /** The upstream response message. */
+        message?: string | null;
+        /** Upstream business data, preserving platform fields, cursors, and media URLs. */
+        data: unknown;
+        /** The upstream record time when provided. */
+        recordTime?: string | null;
+        /** The upstream request identifier when provided. */
+        requestId?: string;
+        /** The upstream reason when provided. */
+        reason?: string;
+        [key: string]: unknown;
+      };
+    };
+    /** Retrieves LinkedIn job details for up to 20 distinct job identifiers, with optional field projection. Use it to inspect selected postings after a job search; unavailable postings are omitted from the result. */
+    "justoneapi.linkedin_job_details": {
+      input: {
+        /** Comma-separated job IDs returned by job search or raw numeric LinkedIn posting IDs, up to 20 distinct values. */
+        jobId: string;
         /**
-         * LinkedIn post ID.
-         * @minLength 1
+         * Comma-separated job fields to include. job_id and job_title are always included.
+         * @default ""
          */
-        postId: string;
+        fields?: string;
+      };
+      output: {
+        /** Business status code; zero indicates success. */
+        code: number;
+        /** The upstream response message. */
+        message?: string | null;
+        /** Upstream business data, preserving platform fields, cursors, and media URLs. */
+        data: unknown;
+        /** The upstream record time when provided. */
+        recordTime?: string | null;
+        /** The upstream request identifier when provided. */
+        requestId?: string;
+        /** The upstream reason when provided. */
+        reason?: string;
+        [key: string]: unknown;
+      };
+    };
+    /** Searches LinkedIn job postings by keyword with location, posting age, company, employment type, seniority, and pagination filters. Use it to discover recruitment opportunities and research hiring activity. */
+    "justoneapi.linkedin_job_search": {
+      input: {
+        /** Free-form job search keyword. */
+        keyword: string;
         /**
-         * Page number, starting from 1.
+         * Free-text location, such as London, United Kingdom.
+         * @default ""
+         */
+        location?: string;
+        /**
+         * First page to fetch, from 1 to 100. Each page contains up to 10 jobs.
+         * @minimum 1
+         * @maximum 100
+         * @format int32
          * @default 1
          */
         page?: number;
         /**
-         * Comment sort order.
+         * Number of consecutive pages to fetch, from 1 to 20. The last requested page must not exceed 100.
+         * @minimum 1
+         * @maximum 20
+         * @format int32
+         * @default 1
+         */
+        numPages?: number;
+        /**
+         * Numeric LinkedIn geographic location ID. Required when radius is supplied.
+         * @default ""
+         */
+        geoId?: string;
+        /**
+         * Sort order. Date sorting applies to the jobs returned in this response.
          *
          * Available Values:
-         * - `RELEVANCE`: Sort comments by relevance
-         * - `RECENT`: Sort comments from most recent
+         * - `relevance`: Keep relevance ordering
+         * - `date`: Sort the returned jobs from newest to oldest
+         * @default "relevance"
          */
-        sortOrder?: "RELEVANCE" | "RECENT";
+        sortBy?: "relevance" | "date";
         /**
-         * Pagination token returned by a previous response.
+         * Job posting age filter.
+         *
+         * Available Values:
+         * - `all`: All posting dates
+         * - `today`: Posted within the last 24 hours
+         * - `3days`: Posted within the last 72 hours
+         * - `week`: Posted within the last 7 days
+         * - `month`: Posted within the last 30 days
+         * @default "all"
+         */
+        datePosted?: "all" | "today" | "3days" | "week" | "month";
+        /** Comma-separated employment types. Applying this filter enables job details and may return fewer jobs than the requested page size. */
+        employmentTypes?: Array<"FULLTIME" | "PARTTIME" | "CONTRACTOR" | "INTERN">;
+        /** Comma-separated seniority levels. Applying this filter enables job details and may return fewer jobs than the requested page size. */
+        seniorityLevels?: Array<"Internship" | "Entry level" | "Associate" | "Mid-Senior level" | "Director" | "Executive" | "Not Applicable">;
+        /**
+         * Numeric LinkedIn company ID to restrict the search to one company.
          * @default ""
          */
-        paginationToken?: string;
+        companyId?: string;
         /**
-         * Optional share URN for a shared post.
+         * Return only jobs with an explicit remote marker. This best-effort filter may omit remote jobs.
+         * @default false
+         */
+        remoteJobsOnly?: boolean;
+        /**
+         * Fetch details for up to 100 jobs per request in addition to search cards. Employment and seniority filters enable details regardless of this value.
+         * @default true
+         */
+        includeDetails?: boolean;
+        /**
+         * Search radius in kilometres, at least 1. Requires geoId.
+         * @minimum 1
+         * @format int32
+         */
+        radius?: number;
+        /**
+         * Comma-separated job fields to include. job_id and job_title are always included.
          * @default ""
          */
-        shareUrn?: string;
+        fields?: string;
       };
       output: {
         /** Business status code; zero indicates success. */
@@ -4475,50 +5258,6 @@ declare module "@oomol-lab/connector" {
          * @minLength 1
          */
         username: string;
-      };
-      output: {
-        /** Business status code; zero indicates success. */
-        code: number;
-        /** The upstream response message. */
-        message?: string | null;
-        /** Upstream business data, preserving platform fields, cursors, and media URLs. */
-        data: unknown;
-        /** The upstream record time when provided. */
-        recordTime?: string | null;
-        /** The upstream request identifier when provided. */
-        requestId?: string;
-        /** The upstream reason when provided. */
-        reason?: string;
-        [key: string]: unknown;
-      };
-    };
-    /** Retrieves posts published, commented on, or reacted to by a LinkedIn member using a profile URL, activity type, offset, and pagination token. Use it to review public professional activity and continue through additional result pages. */
-    "justoneapi.linkedin_user_published_posts": {
-      input: {
-        /**
-         * Full LinkedIn profile URL.
-         * @minLength 1
-         */
-        url: string;
-        /**
-         * User activity type.
-         *
-         * Available Values:
-         * - `POSTS`: Posts published by the user
-         * - `COMMENTS`: Posts commented on by the user
-         * - `REACTIONS`: Posts reacted to by the user
-         */
-        type?: "POSTS" | "COMMENTS" | "REACTIONS";
-        /**
-         * Pagination offset starting from 0, normally increasing by 50.
-         * @default 0
-         */
-        start?: number;
-        /**
-         * Pagination token returned by a previous response.
-         * @default ""
-         */
-        paginationToken?: string;
       };
       output: {
         /** Business status code; zero indicates success. */
@@ -4563,6 +5302,77 @@ declare module "@oomol-lab/connector" {
          * @maximum 100
          */
         maxPages?: number;
+      };
+      output: {
+        /** Business status code; zero indicates success. */
+        code: number;
+        /** The upstream response message. */
+        message?: string | null;
+        /** Upstream business data, preserving platform fields, cursors, and media URLs. */
+        data: unknown;
+        /** The upstream record time when provided. */
+        recordTime?: string | null;
+        /** The upstream request identifier when provided. */
+        requestId?: string;
+        /** The upstream reason when provided. */
+        reason?: string;
+        [key: string]: unknown;
+      };
+    };
+    /** Lists QQ Huxuan hot Video Account content by month and creator category, with six descending sort metrics and page-number pagination. Use it to research monthly content trends for Tencent Huxuan campaign planning. */
+    "justoneapi.qq_huxuan_creator_marketplace_hot_content_trends": {
+      input: {
+        /**
+         * Creator category. ALL includes every category.
+         *
+         * Available Values:
+         * - `ALL`: All creator categories
+         * - `FOOD`: Food
+         * - `LIFESTYLE`: Lifestyle
+         * - `COMEDY`: Comedy
+         * - `EMOTION`: Emotion and relationships
+         * - `SOCIETY`: Society
+         * - `HUMANITIES_ARTS`: Humanities and arts
+         * - `DRAMA`: Drama
+         * - `ENTERTAINMENT`: Entertainment
+         * - `TECHNOLOGY`: Technology
+         * - `FINANCE`: Finance
+         * - `FILM_TV_VARIETY`: Film, television and variety shows
+         * - `GAMING`: Gaming
+         * - `PARENTING`: Parenting
+         * - `MUSIC`: Music
+         * - `TRAVEL`: Travel
+         * - `SPORTS`: Sports
+         * - `SCIENCE`: Science education
+         * - `AUTOMOTIVE`: Automotive
+         * - `EDUCATION`: Education
+         * - `CAREER`: Career
+         * - `HEALTH`: Health
+         * - `PETS`: Pets
+         * @default "ALL"
+         */
+        category?: "ALL" | "FOOD" | "LIFESTYLE" | "COMEDY" | "EMOTION" | "SOCIETY" | "HUMANITIES_ARTS" | "DRAMA" | "ENTERTAINMENT" | "TECHNOLOGY" | "FINANCE" | "FILM_TV_VARIETY" | "GAMING" | "PARENTING" | "MUSIC" | "TRAVEL" | "SPORTS" | "SCIENCE" | "AUTOMOTIVE" | "EDUCATION" | "CAREER" | "HEALTH" | "PETS";
+        /**
+         * Sort metric. Results are sorted in descending order.
+         *
+         * Available Values:
+         * - `INTERACTION`: Interaction count
+         * - `PLAY`: Play count
+         * - `THUMB_LIKE`: Thumbs-up like count
+         * - `HEART_LIKE`: Heart like count
+         * - `COMMENT`: Comment count
+         * - `SHARE`: Share count
+         * @default "INTERACTION"
+         */
+        sort?: "INTERACTION" | "PLAY" | "THUMB_LIKE" | "HEART_LIKE" | "COMMENT" | "SHARE";
+        /** Statistics month in yyyy-MM format. Omit to use the latest month available on QQ Huxuan. */
+        month?: string;
+        /**
+         * Page number, starting at 1. Each page contains up to 48 items.
+         * @format int32
+         * @default 1
+         */
+        page?: number;
       };
       output: {
         /** Business status code; zero indicates success. */
@@ -5502,6 +6312,28 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
+    /** Retrieves Taobao or Tmall product description HTML and a separate list of description images by item ID. Use it to collect listing description assets for catalog preparation and product content review. */
+    "justoneapi.taobao_and_tmall_product_description_images": {
+      input: {
+        /** Unique product identifier on Taobao/Tmall (item ID). */
+        itemId: string;
+      };
+      output: {
+        /** Business status code; zero indicates success. */
+        code: number;
+        /** The upstream response message. */
+        message?: string | null;
+        /** Upstream business data, preserving platform fields, cursors, and media URLs. */
+        data: unknown;
+        /** The upstream record time when provided. */
+        recordTime?: string | null;
+        /** The upstream request identifier when provided. */
+        requestId?: string;
+        /** The upstream reason when provided. */
+        reason?: string;
+        [key: string]: unknown;
+      };
+    };
     /** Retrieves Taobao or Tmall product details by item ID through the V9 endpoint. Use it to perform direct product lookup for catalog research, product monitoring, or ecommerce analysis. */
     "justoneapi.taobao_and_tmall_product_details": {
       input: {
@@ -5626,16 +6458,56 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
-    /** Retrieves products from a Taobao or Tmall shop by seller ID with page-based pagination. Use it to browse or monitor a known seller's catalog across result pages. */
+    /** Retrieves a Taobao shop's homepage information, shop categories, and default product listing by seller ID and shop ID. Use it to inspect a shop and discover its categories before querying products. */
+    "justoneapi.taobao_and_tmall_shop_detail": {
+      input: {
+        /** Taobao seller user ID associated with the shop. */
+        sellerId: string;
+        /** Taobao shop ID associated with the seller. */
+        shopId: string;
+      };
+      output: {
+        /** Business status code; zero indicates success. */
+        code: number;
+        /** The upstream response message. */
+        message?: string | null;
+        /** Upstream business data, preserving platform fields, cursors, and media URLs. */
+        data: unknown;
+        /** The upstream record time when provided. */
+        recordTime?: string | null;
+        /** The upstream request identifier when provided. */
+        requestId?: string;
+        /** The upstream reason when provided. */
+        reason?: string;
+        [key: string]: unknown;
+      };
+    };
+    /** Retrieves products from a Taobao shop by seller ID and shop ID, with optional shop-category filtering, keyword search, sorting, and page-based pagination. Use it to browse a shop catalog or find matching products within a shop. */
     "justoneapi.taobao_and_tmall_shop_product_list": {
       input: {
-        /**
-         * Taobao/Tmall seller user ID used to identify the shop.
-         * @minLength 1
-         */
+        /** Taobao seller user ID associated with the shop. */
         sellerId: string;
+        /** Taobao shop ID associated with the seller. */
+        shopId: string;
+        /** Shop category ID from Shop Detail. Omit to include all shop categories. */
+        catId?: string;
+        /** Keyword to search for products within the shop. Omit to list products without a keyword filter. */
+        keyword?: string;
         /**
-         * Page number for pagination.
+         * Product sort order.
+         *
+         * Available Values:
+         * - `comprehensive`: Comprehensive sorting
+         * - `sales`: Sort by sales volume
+         * - `new`: Sort by new arrivals, newest first
+         * - `price-asc`: Price, lowest first
+         * - `price-desc`: Price, highest first
+         * @default "comprehensive"
+         */
+        sort?: "comprehensive" | "sales" | "new" | "price-asc" | "price-desc";
+        /**
+         * Page number, starting from 1.
+         * @format int32
          * @default 1
          */
         page?: number;
@@ -6559,6 +7431,32 @@ declare module "@oomol-lab/connector" {
          * @default ""
          */
         cookies_buffer?: string;
+      };
+      output: {
+        /** Business status code; zero indicates success. */
+        code: number;
+        /** The upstream response message. */
+        message?: string | null;
+        /** Upstream business data, preserving platform fields, cursors, and media URLs. */
+        data: unknown;
+        /** The upstream record time when provided. */
+        recordTime?: string | null;
+        /** The upstream request identifier when provided. */
+        requestId?: string;
+        /** The upstream reason when provided. */
+        reason?: string;
+        [key: string]: unknown;
+      };
+    };
+    /** Generates a share link for a WeChat Channels video identified by objectId. Use it to share a known Channels video or obtain its link for a subsequent lookup. */
+    "justoneapi.wechat_channels_video_share_url": {
+      input: {
+        /**
+         * WeChat Channels video objectId as a numeric string of up to 32 digits.
+         * @maxLength 32
+         * @pattern ^[0-9]+$
+         */
+        objectId: string;
       };
       output: {
         /** Business status code; zero indicates success. */
@@ -7889,14 +8787,18 @@ declare module "@oomol-lab/connector" {
          */
         page?: number;
         /**
-         * Creator search sorting. Values: FANS sorts by follower count descending, DEFAULT uses Pugongying intelligent ranking.
+         * Creator search sorting. Defaults to FANS.
          *
          * Available Values:
          * - `DEFAULT`: Platform default intelligent ranking
          * - `FANS`: Sort by follower count descending
+         * - `READ_MEDIAN`: Sort by daily-note median reads descending
+         * - `ENGAGEMENT_MEDIAN`: Sort by daily-note median interactions descending
+         * - `PRICE_ASC`: Sort by all quoted prices ascending
+         * - `PRICE_DESC`: Sort by all quoted prices descending
          * @default "FANS"
          */
-        sort?: "DEFAULT" | "FANS";
+        sort?: "DEFAULT" | "FANS" | "READ_MEDIAN" | "ENGAGEMENT_MEDIAN" | "PRICE_ASC" | "PRICE_DESC";
         /** Minimum number of fans. */
         fansNumberLower?: number;
         /** Maximum number of fans. */
@@ -8764,6 +9666,28 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
+    /** Retrieves Xiaohongshu E-commerce (RedNote) product details by SKU ID. Use it to look up a specific marketplace product for product research and catalog workflows. */
+    "justoneapi.xiaohongshu_e_commerce_rednote_product_detail": {
+      input: {
+        /** Product SKU ID. */
+        skuId: string;
+      };
+      output: {
+        /** Business status code; zero indicates success. */
+        code: number;
+        /** The upstream response message. */
+        message?: string | null;
+        /** Upstream business data, preserving platform fields, cursors, and media URLs. */
+        data: unknown;
+        /** The upstream record time when provided. */
+        recordTime?: string | null;
+        /** The upstream request identifier when provided. */
+        requestId?: string;
+        /** The upstream reason when provided. */
+        reason?: string;
+        [key: string]: unknown;
+      };
+    };
     /** Searches Xiaohongshu E-commerce (RedNote) products by keyword with page and search-ID pagination; pages after the first require the search ID returned by the initial search. Use it to discover marketplace products and continue through multi-page results. */
     "justoneapi.xiaohongshu_e_commerce_rednote_product_search": {
       input: {
@@ -9197,6 +10121,33 @@ declare module "@oomol-lab/connector" {
         sort?: "time" | "hot";
         /** Pagination cursor from the previous page. */
         cursor?: string;
+      };
+      output: {
+        /** Business status code; zero indicates success. */
+        code: number;
+        /** The upstream response message. */
+        message?: string | null;
+        /** Upstream business data, preserving platform fields, cursors, and media URLs. */
+        data: unknown;
+        /** The upstream record time when provided. */
+        recordTime?: string | null;
+        /** The upstream request identifier when provided. */
+        requestId?: string;
+        /** The upstream reason when provided. */
+        reason?: string;
+        [key: string]: unknown;
+      };
+    };
+    /** Retrieves a Xiaohongshu (RedNote) user's favorited notes by user ID with cursor pagination. Use it to review a user's saved content and research content interests. */
+    "justoneapi.xiaohongshu_rednote_user_favorited_notes": {
+      input: {
+        /** Unique user identifier on Xiaohongshu. */
+        userId: string;
+        /**
+         * For the next page, pass the cursor from the previous response. Omit or pass an empty value for the first page.
+         * @default ""
+         */
+        lastCursor?: string;
       };
       output: {
         /** Business status code; zero indicates success. */

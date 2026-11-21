@@ -2,6 +2,83 @@ import "@oomol-lab/connector";
 
 declare module "@oomol-lab/connector" {
   interface ActionRegistry {
+    /** Post a comment on a GitLab issue. */
+    "gitlab.create_issue_note": {
+      input: {
+        /**
+         * The GitLab project ID or URL-encoded path with namespace, such as 123 or group%2Fproject.
+         * @minLength 1
+         */
+        projectId: string;
+        /**
+         * The internal issue ID within the project.
+         * @exclusiveMinimum 0
+         */
+        issueIid: number;
+        /**
+         * The comment in GitLab Markdown. GitLab runs quick actions such as /close or /assign found on their own line and removes them from the stored note.
+         * @minLength 1
+         * @maxLength 1000000
+         */
+        body: string;
+        /** Post an internal note, which only project members with access to internal notes can see. */
+        internal?: boolean;
+      };
+      output: {
+        /** A GitLab note (comment) record. */
+        note: {
+          /** The note ID. */
+          id?: number;
+          /** The note type, such as DiscussionNote or DiffNote, or null for a plain comment. */
+          type?: string | null;
+          /** The note content in Markdown. */
+          body?: string;
+          /** A GitLab user record. */
+          author?: {
+            /** The GitLab user ID. */
+            id?: number;
+            /** The GitLab username. */
+            username?: string;
+            /** The display name. */
+            name?: string;
+            /** The user state. */
+            state?: string;
+            /** The avatar URL. */
+            avatar_url?: string | null;
+            /** The GitLab profile URL. */
+            web_url?: string;
+            /** The email address when visible. */
+            email?: string;
+            /** The public email address when visible. */
+            public_email?: string;
+            [key: string]: unknown;
+          };
+          /** The note creation timestamp. */
+          created_at?: string;
+          /** The note update timestamp. */
+          updated_at?: string;
+          /** Whether GitLab generated the note for an activity, rather than a user. */
+          system?: boolean;
+          /** The global ID of the issue or merge request the note belongs to. */
+          noteable_id?: number;
+          /** The kind of object the note belongs to, such as Issue or MergeRequest. */
+          noteable_type?: string;
+          /** The internal ID of the issue or merge request. */
+          noteable_iid?: number | null;
+          /** The project ID. */
+          project_id?: number;
+          /** Whether the note starts or belongs to a resolvable thread. */
+          resolvable?: boolean;
+          /** Whether the note is internal, visible only to project members. */
+          internal?: boolean;
+          [key: string]: unknown;
+        } | null;
+        /** Changes GitLab applied from quick actions in the body; empty when there were none. */
+        commandsChanges: Record<string, unknown>;
+        /** GitLab's summary of applied quick actions when the body held only quick actions; otherwise empty. */
+        commandSummary: Array<string>;
+      };
+    };
     /** Create a GitLab merge request. */
     "gitlab.create_merge_request": {
       input: {
@@ -60,6 +137,83 @@ declare module "@oomol-lab/connector" {
         /** The target branch name. */
         target_branch?: string;
         [key: string]: unknown;
+      };
+    };
+    /** Post a comment on a GitLab merge request. The comment is not attached to a line of the diff. */
+    "gitlab.create_merge_request_note": {
+      input: {
+        /**
+         * The GitLab project ID or URL-encoded path with namespace, such as 123 or group%2Fproject.
+         * @minLength 1
+         */
+        projectId: string;
+        /**
+         * The internal merge request ID within the project.
+         * @exclusiveMinimum 0
+         */
+        mergeRequestIid: number;
+        /**
+         * The comment in GitLab Markdown. GitLab runs quick actions such as /close or /assign found on their own line and removes them from the stored note.
+         * @minLength 1
+         * @maxLength 1000000
+         */
+        body: string;
+        /** Post an internal note, which only project members with access to internal notes can see. */
+        internal?: boolean;
+      };
+      output: {
+        /** A GitLab note (comment) record. */
+        note: {
+          /** The note ID. */
+          id?: number;
+          /** The note type, such as DiscussionNote or DiffNote, or null for a plain comment. */
+          type?: string | null;
+          /** The note content in Markdown. */
+          body?: string;
+          /** A GitLab user record. */
+          author?: {
+            /** The GitLab user ID. */
+            id?: number;
+            /** The GitLab username. */
+            username?: string;
+            /** The display name. */
+            name?: string;
+            /** The user state. */
+            state?: string;
+            /** The avatar URL. */
+            avatar_url?: string | null;
+            /** The GitLab profile URL. */
+            web_url?: string;
+            /** The email address when visible. */
+            email?: string;
+            /** The public email address when visible. */
+            public_email?: string;
+            [key: string]: unknown;
+          };
+          /** The note creation timestamp. */
+          created_at?: string;
+          /** The note update timestamp. */
+          updated_at?: string;
+          /** Whether GitLab generated the note for an activity, rather than a user. */
+          system?: boolean;
+          /** The global ID of the issue or merge request the note belongs to. */
+          noteable_id?: number;
+          /** The kind of object the note belongs to, such as Issue or MergeRequest. */
+          noteable_type?: string;
+          /** The internal ID of the issue or merge request. */
+          noteable_iid?: number | null;
+          /** The project ID. */
+          project_id?: number;
+          /** Whether the note starts or belongs to a resolvable thread. */
+          resolvable?: boolean;
+          /** Whether the note is internal, visible only to project members. */
+          internal?: boolean;
+          [key: string]: unknown;
+        } | null;
+        /** Changes GitLab applied from quick actions in the body; empty when there were none. */
+        commandsChanges: Record<string, unknown>;
+        /** GitLab's summary of applied quick actions when the body held only quick actions; otherwise empty. */
+        commandSummary: Array<string>;
       };
     };
     /** Create a new GitLab project owned by the authenticated user. */
@@ -323,6 +477,46 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
+    /** Get a single merge request from a GitLab project by its internal merge request ID. */
+    "gitlab.get_merge_request": {
+      input: {
+        /**
+         * The GitLab project ID or URL-encoded path with namespace, such as 123 or group%2Fproject.
+         * @minLength 1
+         */
+        projectId: string;
+        /**
+         * The internal merge request ID within the project.
+         * @exclusiveMinimum 0
+         */
+        mergeRequestIid: number;
+        /** Include how many commits the source branch is behind the target branch. */
+        includeDivergedCommitsCount?: boolean;
+        /** Include whether a rebase is in progress. */
+        includeRebaseInProgress?: boolean;
+      };
+      output: {
+        /** The global merge request ID. */
+        id?: number;
+        /** The internal merge request ID within the project. */
+        iid?: number;
+        /** The target project ID. */
+        project_id?: number;
+        /** The merge request title. */
+        title?: string;
+        /** The merge request description. */
+        description?: string | null;
+        /** The merge request state. */
+        state?: string;
+        /** The merge request URL. */
+        web_url?: string;
+        /** The source branch name. */
+        source_branch?: string;
+        /** The target branch name. */
+        target_branch?: string;
+        [key: string]: unknown;
+      };
+    };
     /** Get a GitLab project by numeric ID or URL-encoded path with namespace. */
     "gitlab.get_project": {
       input: {
@@ -492,6 +686,176 @@ declare module "@oomol-lab/connector" {
         /** The number of notes on the issue. */
         user_notes_count?: number;
         [key: string]: unknown;
+      };
+    };
+    /** List the notes (comments and system activity) on a GitLab issue, to read a thread before answering it. */
+    "gitlab.list_issue_notes": {
+      input: {
+        /**
+         * The GitLab project ID or URL-encoded path with namespace, such as 123 or group%2Fproject.
+         * @minLength 1
+         */
+        projectId: string;
+        /**
+         * The internal issue ID within the project.
+         * @exclusiveMinimum 0
+         */
+        issueIid: number;
+        /** Return user comments, system activity notes, or both. GitLab defaults to all_notes. */
+        activityFilter?: "all_notes" | "only_comments" | "only_activity";
+        /** Sort direction. GitLab defaults to desc, newest first. */
+        sort?: "asc" | "desc";
+        /** Order notes by creation or update time. */
+        orderBy?: "created_at" | "updated_at";
+        /**
+         * The page number to fetch.
+         * @minimum 1
+         */
+        page?: number;
+        /**
+         * The number of results per page.
+         * @minimum 1
+         * @maximum 100
+         */
+        perPage?: number;
+      };
+      output: {
+        /** Notes returned by GitLab. */
+        notes: Array<{
+          /** The note ID. */
+          id?: number;
+          /** The note type, such as DiscussionNote or DiffNote, or null for a plain comment. */
+          type?: string | null;
+          /** The note content in Markdown. */
+          body?: string;
+          /** A GitLab user record. */
+          author?: {
+            /** The GitLab user ID. */
+            id?: number;
+            /** The GitLab username. */
+            username?: string;
+            /** The display name. */
+            name?: string;
+            /** The user state. */
+            state?: string;
+            /** The avatar URL. */
+            avatar_url?: string | null;
+            /** The GitLab profile URL. */
+            web_url?: string;
+            /** The email address when visible. */
+            email?: string;
+            /** The public email address when visible. */
+            public_email?: string;
+            [key: string]: unknown;
+          };
+          /** The note creation timestamp. */
+          created_at?: string;
+          /** The note update timestamp. */
+          updated_at?: string;
+          /** Whether GitLab generated the note for an activity, rather than a user. */
+          system?: boolean;
+          /** The global ID of the issue or merge request the note belongs to. */
+          noteable_id?: number;
+          /** The kind of object the note belongs to, such as Issue or MergeRequest. */
+          noteable_type?: string;
+          /** The internal ID of the issue or merge request. */
+          noteable_iid?: number | null;
+          /** The project ID. */
+          project_id?: number;
+          /** Whether the note starts or belongs to a resolvable thread. */
+          resolvable?: boolean;
+          /** Whether the note is internal, visible only to project members. */
+          internal?: boolean;
+          [key: string]: unknown;
+        }>;
+        /** The total number of notes when GitLab returns it. */
+        total: number | null;
+        /** The next page number when another page exists. */
+        nextPage: number | null;
+      };
+    };
+    /** List the notes (comments and system activity) on a GitLab merge request, to read a thread before answering it. */
+    "gitlab.list_merge_request_notes": {
+      input: {
+        /**
+         * The GitLab project ID or URL-encoded path with namespace, such as 123 or group%2Fproject.
+         * @minLength 1
+         */
+        projectId: string;
+        /**
+         * The internal merge request ID within the project.
+         * @exclusiveMinimum 0
+         */
+        mergeRequestIid: number;
+        /** Sort direction. GitLab defaults to desc, newest first. */
+        sort?: "asc" | "desc";
+        /** Order notes by creation or update time. */
+        orderBy?: "created_at" | "updated_at";
+        /**
+         * The page number to fetch.
+         * @minimum 1
+         */
+        page?: number;
+        /**
+         * The number of results per page.
+         * @minimum 1
+         * @maximum 100
+         */
+        perPage?: number;
+      };
+      output: {
+        /** Notes returned by GitLab. */
+        notes: Array<{
+          /** The note ID. */
+          id?: number;
+          /** The note type, such as DiscussionNote or DiffNote, or null for a plain comment. */
+          type?: string | null;
+          /** The note content in Markdown. */
+          body?: string;
+          /** A GitLab user record. */
+          author?: {
+            /** The GitLab user ID. */
+            id?: number;
+            /** The GitLab username. */
+            username?: string;
+            /** The display name. */
+            name?: string;
+            /** The user state. */
+            state?: string;
+            /** The avatar URL. */
+            avatar_url?: string | null;
+            /** The GitLab profile URL. */
+            web_url?: string;
+            /** The email address when visible. */
+            email?: string;
+            /** The public email address when visible. */
+            public_email?: string;
+            [key: string]: unknown;
+          };
+          /** The note creation timestamp. */
+          created_at?: string;
+          /** The note update timestamp. */
+          updated_at?: string;
+          /** Whether GitLab generated the note for an activity, rather than a user. */
+          system?: boolean;
+          /** The global ID of the issue or merge request the note belongs to. */
+          noteable_id?: number;
+          /** The kind of object the note belongs to, such as Issue or MergeRequest. */
+          noteable_type?: string;
+          /** The internal ID of the issue or merge request. */
+          noteable_iid?: number | null;
+          /** The project ID. */
+          project_id?: number;
+          /** Whether the note starts or belongs to a resolvable thread. */
+          resolvable?: boolean;
+          /** Whether the note is internal, visible only to project members. */
+          internal?: boolean;
+          [key: string]: unknown;
+        }>;
+        /** The total number of notes when GitLab returns it. */
+        total: number | null;
+        /** The next page number when another page exists. */
+        nextPage: number | null;
       };
     };
     /** List issues for a GitLab project with common state, label, assignee, and search filters. */
