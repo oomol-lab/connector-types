@@ -24,7 +24,7 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
-    /** Send text through a selected Leina robot's configured Home channels without invoking a model. Delivered means at least one channel succeeded, not that the recipient read it. Retry uncertain delivery within one hour using the same Idempotency-Key and unchanged input; deduplication does not survive a Hermes restart. */
+    /** Send text without invoking a model. Supply the opaque subscription returned by flow_notification_subscribe to deliver to that conversation; never expose the credential or derive a recipient yourself. Omit subscription to use the robot's configured Home channels. Retry uncertain delivery within one hour using the same Idempotency-Key and unchanged input. Subscription delivery deduplication survives Hermes restarts; Home deduplication does not. Delivered is not a read receipt. */
     "leina.send_notification": {
       input: {
         /**
@@ -38,6 +38,12 @@ declare module "@oomol-lab/connector" {
          * @pattern \S
          */
         message: string;
+        /**
+         * The opaque conversation subscription returned by flow_notification_subscribe. Store it as a fixed literal in a Flow. Omit to use Home; null and blank values are invalid. An unknown subscription fails without falling back to Home.
+         * @minLength 1
+         * @pattern \S
+         */
+        subscription?: string;
       };
       output: {
         /**
@@ -45,7 +51,7 @@ declare module "@oomol-lab/connector" {
          * @pattern ^(default|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$
          */
         leinaId: string;
-        /** At least one Home channel accepted the notification. */
+        /** The subscription target or at least one Home channel accepted the notification. */
         status: "delivered";
         /** The notification identity used for delivery deduplication. */
         requestId: string;

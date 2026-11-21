@@ -355,6 +355,41 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
+    /** Download a Jira attachment and upload it to Connector file transit storage for downstream processing. */
+    "jira.download_attachment": {
+      input: {
+        /**
+         * The Jira attachment ID.
+         * @minLength 1
+         */
+        attachmentId: string;
+        /**
+         * Optional filename override; defaults to the Jira attachment metadata filename.
+         * @minLength 1
+         */
+        fileName?: string;
+        /**
+         * Optional MIME type override; defaults to the Jira attachment metadata or response Content-Type.
+         * @minLength 1
+         */
+        mimeType?: string;
+      };
+      output: {
+        /** The Jira attachment ID. */
+        attachmentId: string;
+        /** The attachment filename. */
+        filename: string;
+        /** The attachment MIME type. */
+        mimeType: string;
+        /** Downloaded attachment size in bytes. */
+        sizeBytes: number;
+        /**
+         * Temporary Connector file transit URL for downloading the attachment.
+         * @format uri
+         */
+        transitUrl: string;
+      };
+    };
     /** Get one Jira issue by issue ID or key. */
     "jira.get_issue": {
       input: {
@@ -1049,6 +1084,51 @@ declare module "@oomol-lab/connector" {
           /** Cursor for the next Jira page, or null when there are no more results. */
           nextCursor: string | null;
         };
+      };
+    };
+    /** Upload a file attachment from a public URL to one Jira issue. */
+    "jira.upload_attachment": {
+      input: {
+        /**
+         * The Jira issue ID or key.
+         * @minLength 1
+         */
+        issueIdOrKey: string;
+        /**
+         * Public HTTP(S) URL of the file to download and attach to the Jira issue.
+         * @format uri
+         */
+        fileUrl: string;
+        /**
+         * Optional attachment filename override when uploading from fileUrl.
+         * @minLength 1
+         */
+        fileName?: string;
+        /**
+         * Optional MIME type override when uploading from fileUrl.
+         * @minLength 1
+         */
+        mimeType?: string;
+      };
+      output: {
+        /** The attachments uploaded to the Jira issue. */
+        attachments: Array<{
+          /** The Jira attachment ID. */
+          id: string;
+          /** The attachment filename. */
+          filename: string;
+          /** The attachment MIME type. */
+          mimeType: string;
+          /** The attachment size in bytes. */
+          size: number;
+          /** The Jira attachment content URL. */
+          content: string;
+          /** The attachment creation timestamp. */
+          created?: string;
+          /** The original Jira attachment payload. */
+          raw?: Record<string, unknown>;
+          [key: string]: unknown;
+        }>;
       };
     };
   }

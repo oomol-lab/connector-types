@@ -147,15 +147,96 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** Fetch one Zoom user by user ID, email address, or me when supported by the app. */
+    /** Fetch the AI Companion summary of one meeting instance by its UUID. When Zoom answers 403 code 2305 (summary access restricted to IP ranges, summaries shared by email only, or the summary in Trash), the result is available false with a reason instead of an error. */
+    "zoom.get_meeting_summary": {
+      input: {
+        /**
+         * The meeting instance UUID returned by list_user_meeting_summaries.
+         * @minLength 1
+         */
+        meetingUuid: string;
+      };
+      output: {
+        /** Whether Zoom returned the summary through the API. */
+        available: boolean;
+        /** Zoom answered 403 code 2305: the account restricts summary access to IP ranges or shares summaries by email only, or the summary is in Trash; unavailableMessage carries Zoom's own wording. */
+        unavailableReason: "not_accessible" | null;
+        /** Zoom's own message when the summary is not available. */
+        unavailableMessage: string | null;
+        /** The content and metadata of one Zoom AI Companion meeting summary. */
+        summary: {
+          /** The original Zoom summary record, including additional upstream fields. */
+          raw: Record<string, unknown>;
+          /** The meeting instance UUID. Pass it to get_meeting_summary; it differs for every occurrence. */
+          meetingUuid: string | null;
+          /** The numeric Zoom meeting ID, shared by every occurrence of a recurring meeting. */
+          meetingId: number | string | null;
+          /** The Zoom user ID of the meeting host. */
+          meetingHostId: string | null;
+          /** The email address of the meeting host. */
+          meetingHostEmail: string | null;
+          /** The meeting topic. */
+          meetingTopic: string | null;
+          /** The time the meeting started. */
+          meetingStartTime: string | null;
+          /** The time the meeting ended. */
+          meetingEndTime: string | null;
+          /** The start of the meeting span the summary covers. */
+          summaryStartTime: string | null;
+          /** The end of the meeting span the summary covers. */
+          summaryEndTime: string | null;
+          /** The time Zoom created the summary. */
+          summaryCreatedTime: string | null;
+          /** The time the summary was last edited. */
+          summaryLastModifiedTime: string | null;
+          /** The Zoom user ID of the last editor of the summary. */
+          summaryLastModifiedUserId: string | null;
+          /** The email address of the last editor of the summary. */
+          summaryLastModifiedUserEmail: string | null;
+          /** The summary title. */
+          summaryTitle: string | null;
+          /** The full summary in Markdown, Zoom's unified summary field. */
+          summaryContent: string | null;
+          /** The URL of the summary document in Zoom Docs, when Zoom returns one. */
+          summaryDocUrl: string | null;
+          /** The legacy overview paragraph. Zoom marks it deprecated. */
+          summaryOverview: string | null;
+          /** Labelled sections of the legacy summary. */
+          summaryDetails: Array<{
+            /** The section label. */
+            label: string | null;
+            /** The section text. */
+            summary: string | null;
+          }>;
+          /** Legacy next-step strings Zoom extracted from the meeting. */
+          nextSteps: Array<string>;
+          /** The user-edited version of the legacy fields, when someone edited the summary. */
+          editedSummary: {
+            /** The edited overview paragraph. */
+            summaryOverview: string | null;
+            /** The edited details, as text or as labelled sections. */
+            summaryDetails: string | Array<{
+              /** The section label. */
+              label: string | null;
+              /** The section text. */
+              summary: string | null;
+            }>;
+            /** Legacy next-step strings Zoom extracted from the meeting. */
+            nextSteps: Array<string>;
+          } | null;
+        } | null;
+      };
+    };
+    /** Fetch one Zoom user by ID or email, or the connected user when userId is omitted. */
     "zoom.get_user": {
       input: {
         /**
          * The Zoom user ID or email address. Use me when the credential can act on the current app user.
          * @minLength 1
          * @pattern \S
+         * @default "me"
          */
-        userId: string;
+        userId?: string;
       };
       output: {
         /** A normalized Zoom user record. */
@@ -270,6 +351,78 @@ declare module "@oomol-lab/connector" {
           /** The raw Zoom meeting object returned by the API. */
           raw: Record<string, unknown>;
         }>;
+      };
+    };
+    /** List a user's AI Companion meeting summaries in a time window, newest first, without their content. Zoom's page token expires 15 minutes after it is issued; an expired token is refused as invalid input. */
+    "zoom.list_user_meeting_summaries": {
+      input: {
+        /**
+         * The Zoom user ID or email address. Use me when the credential can act on the current app user.
+         * @minLength 1
+         * @pattern \S
+         * @default "me"
+         */
+        userId?: string;
+        /**
+         * A UTC date-time in Zoom's yyyy-MM-ddTHH:mm:ssZ form, such as 2026-11-01T00:00:00Z.
+         * @format date-time
+         */
+        from?: string;
+        /**
+         * A UTC date-time in Zoom's yyyy-MM-ddTHH:mm:ssZ form, such as 2026-11-01T00:00:00Z.
+         * @format date-time
+         */
+        to?: string;
+        /** Which summary time from and to filter on. Zoom defaults to summary_start_time. */
+        timeFilterField?: "summary_start_time" | "summary_created_time";
+        /**
+         * The number of summaries per page. Zoom defaults to 30.
+         * @minimum 1
+         * @maximum 300
+         */
+        pageSize?: number;
+        /**
+         * The next_page_token value returned by Zoom for the next page of results.
+         * @minLength 1
+         */
+        nextPageToken?: string;
+      };
+      output: {
+        /** The summaries on this page; empty when the window has none. */
+        summaries: Array<{
+          /** The original Zoom summary record, including additional upstream fields. */
+          raw: Record<string, unknown>;
+          /** The meeting instance UUID. Pass it to get_meeting_summary; it differs for every occurrence. */
+          meetingUuid: string | null;
+          /** The numeric Zoom meeting ID, shared by every occurrence of a recurring meeting. */
+          meetingId: number | string | null;
+          /** The Zoom user ID of the meeting host. */
+          meetingHostId: string | null;
+          /** The email address of the meeting host. */
+          meetingHostEmail: string | null;
+          /** The meeting topic. */
+          meetingTopic: string | null;
+          /** The time the meeting started. */
+          meetingStartTime: string | null;
+          /** The time the meeting ended. */
+          meetingEndTime: string | null;
+          /** The start of the meeting span the summary covers. */
+          summaryStartTime: string | null;
+          /** The end of the meeting span the summary covers. */
+          summaryEndTime: string | null;
+          /** The time Zoom created the summary. */
+          summaryCreatedTime: string | null;
+          /** The time the summary was last edited. */
+          summaryLastModifiedTime: string | null;
+        }>;
+        /** The token for the next page, or null on the last page. */
+        nextPageToken: string | null;
+        /** The page size Zoom applied. */
+        pageSize: number | null;
+        /** The window start Zoom applied. */
+        from: string | null;
+        /** The window end Zoom applied. */
+        to: string | null;
       };
     };
     /** Update a Zoom meeting by meeting ID with the core official scheduling fields and first-pass settings. */

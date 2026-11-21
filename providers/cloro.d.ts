@@ -107,51 +107,30 @@ declare module "@oomol-lab/connector" {
           };
         } | {
           /** Task engine. */
-          taskType: "COPILOT";
-          /** Copilot monitoring parameters. */
-          payload: (unknown);
-          /**
-           * Priority from 1 to 10; higher runs first. Defaults to 1. Use high priority for product tokens that expire after five minutes.
-           * @minimum 1
-           * @maximum 10
-           */
-          priority?: number;
-          /** Account-wide unique key to prevent duplicate task submission. Reuse returns a conflict rather than creating another task. */
-          idempotencyKey?: string;
-          /** Optional completion webhook delivered by Cloro. */
-          webhook?: {
-            /**
-             * Webhook destination URL.
-             * @format uri
-             */
-            url: string;
-          };
-        } | {
-          /** Task engine. */
-          taskType: "PERPLEXITY";
-          /** Perplexity monitoring parameters. */
-          payload: (unknown);
-          /**
-           * Priority from 1 to 10; higher runs first. Defaults to 1. Use high priority for product tokens that expire after five minutes.
-           * @minimum 1
-           * @maximum 10
-           */
-          priority?: number;
-          /** Account-wide unique key to prevent duplicate task submission. Reuse returns a conflict rather than creating another task. */
-          idempotencyKey?: string;
-          /** Optional completion webhook delivered by Cloro. */
-          webhook?: {
-            /**
-             * Webhook destination URL.
-             * @format uri
-             */
-            url: string;
-          };
-        } | {
-          /** Task engine. */
           taskType: "AIMODE";
           /** AiMode monitoring parameters. */
           payload: Record<string, unknown>;
+          /**
+           * Priority from 1 to 10; higher runs first. Defaults to 1. Use high priority for product tokens that expire after five minutes.
+           * @minimum 1
+           * @maximum 10
+           */
+          priority?: number;
+          /** Account-wide unique key to prevent duplicate task submission. Reuse returns a conflict rather than creating another task. */
+          idempotencyKey?: string;
+          /** Optional completion webhook delivered by Cloro. */
+          webhook?: {
+            /**
+             * Webhook destination URL.
+             * @format uri
+             */
+            url: string;
+          };
+        } | {
+          /** Task engine. */
+          taskType: "BING_AIMODE";
+          /** Bing AI Mode monitoring parameters. */
+          payload: (unknown);
           /**
            * Priority from 1 to 10; higher runs first. Defaults to 1. Use high priority for product tokens that expire after five minutes.
            * @minimum 1
@@ -304,51 +283,30 @@ declare module "@oomol-lab/connector" {
         };
       } | {
         /** Task engine. */
-        taskType: "COPILOT";
-        /** Copilot monitoring parameters. */
-        payload: (unknown);
-        /**
-         * Priority from 1 to 10; higher runs first. Defaults to 1. Use high priority for product tokens that expire after five minutes.
-         * @minimum 1
-         * @maximum 10
-         */
-        priority?: number;
-        /** Account-wide unique key to prevent duplicate task submission. Reuse returns a conflict rather than creating another task. */
-        idempotencyKey?: string;
-        /** Optional completion webhook delivered by Cloro. */
-        webhook?: {
-          /**
-           * Webhook destination URL.
-           * @format uri
-           */
-          url: string;
-        };
-      } | {
-        /** Task engine. */
-        taskType: "PERPLEXITY";
-        /** Perplexity monitoring parameters. */
-        payload: (unknown);
-        /**
-         * Priority from 1 to 10; higher runs first. Defaults to 1. Use high priority for product tokens that expire after five minutes.
-         * @minimum 1
-         * @maximum 10
-         */
-        priority?: number;
-        /** Account-wide unique key to prevent duplicate task submission. Reuse returns a conflict rather than creating another task. */
-        idempotencyKey?: string;
-        /** Optional completion webhook delivered by Cloro. */
-        webhook?: {
-          /**
-           * Webhook destination URL.
-           * @format uri
-           */
-          url: string;
-        };
-      } | {
-        /** Task engine. */
         taskType: "AIMODE";
         /** AiMode monitoring parameters. */
         payload: Record<string, unknown>;
+        /**
+         * Priority from 1 to 10; higher runs first. Defaults to 1. Use high priority for product tokens that expire after five minutes.
+         * @minimum 1
+         * @maximum 10
+         */
+        priority?: number;
+        /** Account-wide unique key to prevent duplicate task submission. Reuse returns a conflict rather than creating another task. */
+        idempotencyKey?: string;
+        /** Optional completion webhook delivered by Cloro. */
+        webhook?: {
+          /**
+           * Webhook destination URL.
+           * @format uri
+           */
+          url: string;
+        };
+      } | {
+        /** Task engine. */
+        taskType: "BING_AIMODE";
+        /** Bing AI Mode monitoring parameters. */
+        payload: (unknown);
         /**
          * Priority from 1 to 10; higher runs first. Defaults to 1. Use high priority for product tokens that expire after five minutes.
          * @minimum 1
@@ -499,7 +457,7 @@ declare module "@oomol-lab/connector" {
     "cloro.list_countries": {
       input: {
         /** Engine filter. */
-        model?: "aimode" | "aioverview" | "chatgpt" | "copilot" | "gemini" | "google" | "perplexity";
+        model?: "aimode" | "aioverview" | "chatgpt" | "gemini" | "google";
       };
       output: {
         /** Country codes. */
@@ -539,8 +497,8 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
-    /** Retrieve ChatGPT results synchronously. For long-running or bulk work, use create_task or create_batch_tasks. Sync calls include a credit surcharge; Google product tokens expire after five minutes. */
-    "cloro.monitor_chatgpt": {
+    /** Retrieve Bing AI Mode results synchronously. For long-running or bulk work, use create_task or create_batch_tasks. Sync calls include a credit surcharge; Google product tokens expire after five minutes. */
+    "cloro.monitor_bing_aimode": {
       input: (unknown);
       output: {
         /** Whether the request succeeded. */
@@ -550,8 +508,8 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
-    /** Retrieve Copilot results synchronously. For long-running or bulk work, use create_task or create_batch_tasks. Sync calls include a credit surcharge; Google product tokens expire after five minutes. */
-    "cloro.monitor_copilot": {
+    /** Retrieve ChatGPT results synchronously. For long-running or bulk work, use create_task or create_batch_tasks. Sync calls include a credit surcharge; Google product tokens expire after five minutes. */
+    "cloro.monitor_chatgpt": {
       input: (unknown);
       output: {
         /** Whether the request succeeded. */
@@ -604,17 +562,6 @@ declare module "@oomol-lab/connector" {
          */
         productResultToken: string;
       };
-      output: {
-        /** Whether the request succeeded. */
-        success: boolean;
-        /** Structured result, or one result per ChatGPT conversation turn. */
-        result: Record<string, unknown> | Array<Record<string, unknown>>;
-        [key: string]: unknown;
-      };
-    };
-    /** Retrieve Perplexity results synchronously. For long-running or bulk work, use create_task or create_batch_tasks. Sync calls include a credit surcharge; Google product tokens expire after five minutes. */
-    "cloro.monitor_perplexity": {
-      input: (unknown);
       output: {
         /** Whether the request succeeded. */
         success: boolean;

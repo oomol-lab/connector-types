@@ -5714,7 +5714,7 @@ declare module "@oomol-lab/connector" {
         user: Record<string, unknown>;
       };
     };
-    /** Get Feishu video meeting metadata and participant data. */
+    /** Get Feishu video meeting metadata and participant data. With includeArtifacts, use the meeting's note_id to fetch note details and return note and verbatim document tokens. Requires vc:note:read for note details; meetings without a note return empty relatedArtifacts. */
     "feishu.get_vc_meeting": {
       input: {
         /**
@@ -5724,10 +5724,20 @@ declare module "@oomol-lab/connector" {
         meetingId: string;
         /** Whether to include participant data. */
         includeParticipants?: boolean;
+        /** Whether to also return the meeting's related artifacts (note and verbatim document tokens). */
+        includeArtifacts?: boolean;
       };
       output: {
         /** A Feishu Minutes or VC object. */
         meeting: Record<string, unknown>;
+        /** Document tokens extracted from note details. Empty when the meeting has no note; a missing document token is an empty string. Unified notes may require download_vc_note_transcript instead of a verbatim document. */
+        relatedArtifacts?: {
+          /** The document token of the meeting notes. */
+          note_doc_token?: string;
+          /** The document token of the verbatim transcript. */
+          verbatim_doc_token?: string;
+          [key: string]: unknown;
+        };
       };
     };
     /** Resolve a video meeting to its note ID and return normalized meeting-note details. */
