@@ -2,7 +2,7 @@ import "@oomol-lab/connector";
 
 declare module "@oomol-lab/connector" {
   interface ActionRegistry {
-    /** Generate a UberLLM chat completion through the OpenAI-compatible endpoint. This is a billed, non-streaming inference request. */
+    /** Generate a MartLLM chat completion through the OpenAI-compatible endpoint. This is a billed, non-streaming inference request. */
     "uberllm.create_chat_completion": {
       input: {
         /**
@@ -63,7 +63,7 @@ declare module "@oomol-lab/connector" {
         [key: string]: unknown;
       };
     };
-    /** List the model IDs UberLLM serves, with model metadata, without running inference. */
+    /** List the model IDs MartLLM serves, with model metadata, without running inference. */
     "uberllm.list_models": {
       input: Record<string, never>;
       output: {

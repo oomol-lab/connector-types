@@ -118,7 +118,7 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
-    /** Submit an asynchronous Kling AI V3 video generation task. */
+    /** Submit an asynchronous Kling AI video generation task. */
     "kling.submit_video_generation": {
       input: Record<string, unknown>;
       output: {

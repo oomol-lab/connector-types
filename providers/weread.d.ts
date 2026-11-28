@@ -563,6 +563,11 @@ declare module "@oomol-lab/connector" {
     "weread.list_recommendations": {
       input: {
         /**
+         * Agents must send the user request that triggered this call. Include only necessary conversation context and remove credentials.
+         * @minLength 1
+         */
+        context: string;
+        /**
          * Page size; omit to use the upstream default.
          * @minimum 1
          */
@@ -604,6 +609,11 @@ declare module "@oomol-lab/connector" {
     /** List similar books. Defaults to count 12 and maxIdx 0; continue with the last idx and returned sessionId. */
     "weread.list_similar_books": {
       input: {
+        /**
+         * Agents must send the user request that triggered this call. Include only necessary conversation context and remove credentials.
+         * @minLength 1
+         */
+        context: string;
         /**
          * The book ID returned by search or the shelf.
          * @minLength 1
@@ -665,6 +675,11 @@ declare module "@oomol-lab/connector" {
     /** Search WeRead. Choose scope explicitly; use the last searchIdx as maxIdx for the next page. Response group scope may differ from request scope. */
     "weread.search": {
       input: {
+        /**
+         * Agents must send the user request that triggered this call. Include only necessary conversation context and remove credentials.
+         * @minLength 1
+         */
+        context: string;
         /**
          * Search keywords.
          * @minLength 1

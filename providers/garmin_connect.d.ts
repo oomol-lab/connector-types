@@ -139,6 +139,67 @@ declare module "@oomol-lab/connector" {
         }>;
       };
     };
+    /** Get one night of heart rate variability in detail: the summary that list_hrv_summaries returns plus the HRV readings taken every five minutes during sleep. The night is the one ending on the date. A night can have a summary but no readings when Garmin recorded no sleep window for it. */
+    "garmin_connect.get_hrv": {
+      input: {
+        /**
+         * The calendar date in YYYY-MM-DD, on the user's local calendar.
+         * @format date
+         */
+        date: string;
+      };
+      output: {
+        /** One night of heart rate variability in detail. */
+        hrv: {
+          /** One night of heart rate variability. */
+          hrvSummary?: {
+            /**
+             * The calendar date of the night.
+             * @format date
+             */
+            calendarDate?: string;
+            /** The average overnight HRV, in milliseconds. */
+            lastNightAvg?: number | null;
+            /** The highest five-minute HRV average of the night, in milliseconds. */
+            lastNight5MinHigh?: number | null;
+            /** The seven-day HRV average, in milliseconds. */
+            weeklyAvg?: number | null;
+            /** The personal baseline range, once Garmin has enough nights to set it. */
+            baseline?: unknown;
+            /** The HRV status, such as BALANCED; NONE until Garmin has enough nights to set a baseline. */
+            status?: string | null;
+            [key: string]: unknown;
+          };
+          /** The HRV readings of the night, one every five minutes inside the sleep window, oldest first. Empty when the night has no sleep window. */
+          hrvReadings?: Array<{
+            /** The HRV of the five-minute period, in milliseconds. */
+            hrvValue?: number | null;
+            /** The time of the reading in GMT, without an offset, such as 2026-07-01T03:15:00.0. */
+            readingTimeGMT?: string;
+            /** The time of the reading on the user's local clock, without an offset. */
+            readingTimeLocal?: string;
+            [key: string]: unknown;
+          }>;
+          /** The start of the period the night's HRV covers, in GMT, without an offset. */
+          startTimestampGMT?: string;
+          /** The end of the period the night's HRV covers, in GMT, without an offset. */
+          endTimestampGMT?: string;
+          /** The start of that period on the user's local clock, without an offset. */
+          startTimestampLocal?: string;
+          /** The end of that period on the user's local clock, without an offset. */
+          endTimestampLocal?: string;
+          /** The start of the sleep window the readings fall in, in GMT, without an offset (not epoch milliseconds as in get_sleep). Null when the night has no sleep window. */
+          sleepStartTimestampGMT?: string | null;
+          /** The end of the sleep window, in GMT, without an offset. Null when the night has no sleep window. */
+          sleepEndTimestampGMT?: string | null;
+          /** The start of the sleep window on the user's local clock. Null when the night has no sleep window. */
+          sleepStartTimestampLocal?: string | null;
+          /** The end of the sleep window on the user's local clock. Null when the night has no sleep window. */
+          sleepEndTimestampLocal?: string | null;
+          [key: string]: unknown;
+        } | null;
+      };
+    };
     /** Get one night of sleep in detail: duration, sleep stages, sleep scores, overnight SpO2, respiration and stress, and Garmin's sleep need estimate. */
     "garmin_connect.get_sleep": {
       input: {

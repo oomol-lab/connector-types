@@ -2,400 +2,582 @@ import "@oomol-lab/connector";
 
 declare module "@oomol-lab/connector" {
   interface ActionRegistry {
-    /** Research monthly Amazon Brand Analytics keywords using rank, search, click, conversion, and market-pattern filters. */
-    "sellersprite_mcp.aba_research_monthly": {
+    /** Look up SP advertising campaigns, ad groups and activity for an ASIN. */
+    "sellersprite_mcp.ads.insights.lookup": {
       input: {
-        /** The Amazon marketplace code supported by SellerSprite. */
-        marketplace: "US" | "JP" | "UK" | "DE" | "FR" | "IT" | "ES" | "CA" | "IN";
+        /** Amazon marketplace code. */
+        marketplace: "AE" | "AU" | "BR" | "CA" | "DE" | "ES" | "FR" | "IN" | "IT" | "JP" | "MX" | "UK" | "US";
+        /** A parent or child ASIN; the server expands its variants. */
+        asin: string;
+        /** Aggregation interval, default MONTH. DAY is not supported. */
+        interval?: "WEEK" | "MONTH";
         /**
-         * The SellerSprite reporting period documented for this tool.
-         * @minLength 1
-         */
-        date?: string;
-        /**
-         * The departments value documented by SellerSprite for this MCP tool.
-         * @minItems 1
-         */
-        departments?: Array<string>;
-        /**
-         * Keywords that results must exclude.
-         * @minLength 1
-         */
-        excludeKeywords?: string;
-        /**
-         * Keywords that results must include.
-         * @minLength 1
-         */
-        includeKeywords?: string;
-        /** The exact flag value documented by SellerSprite for this MCP tool. */
-        exactFlag?: boolean;
-        /** The min rank growth rate value documented by SellerSprite for this MCP tool. */
-        minRankGrowthRate?: number;
-        /** The max rank growth rate value documented by SellerSprite for this MCP tool. */
-        maxRankGrowthRate?: number;
-        /** The min search rank value documented by SellerSprite for this MCP tool. */
-        minSearchRank?: number;
-        /** The max search rank value documented by SellerSprite for this MCP tool. */
-        maxSearchRank?: number;
-        /** The min searches value documented by SellerSprite for this MCP tool. */
-        minSearches?: number;
-        /** The max searches value documented by SellerSprite for this MCP tool. */
-        maxSearches?: number;
-        /** The min monopoly click rate value documented by SellerSprite for this MCP tool. */
-        minMonopolyClickRate?: number;
-        /** The max monopoly click rate value documented by SellerSprite for this MCP tool. */
-        maxMonopolyClickRate?: number;
-        /** The min conversion rate value documented by SellerSprite for this MCP tool. */
-        minConversionRate?: number;
-        /** The max conversion rate value documented by SellerSprite for this MCP tool. */
-        maxConversionRate?: number;
-        /** The min word count value documented by SellerSprite for this MCP tool. */
-        minWordCount?: number;
-        /** The max word count value documented by SellerSprite for this MCP tool. */
-        maxWordCount?: number;
-        /** The min s p r value documented by SellerSprite for this MCP tool. */
-        minSPR?: number;
-        /** The max s p r value documented by SellerSprite for this MCP tool. */
-        maxSPR?: number;
-        /** The min title density value documented by SellerSprite for this MCP tool. */
-        minTitleDensity?: number;
-        /** The max title density value documented by SellerSprite for this MCP tool. */
-        maxTitleDensity?: number;
-        /** The min clicks value documented by SellerSprite for this MCP tool. */
-        minClicks?: number;
-        /** The max clicks value documented by SellerSprite for this MCP tool. */
-        maxClicks?: number;
-        /** The min impressions value documented by SellerSprite for this MCP tool. */
-        minImpressions?: number;
-        /** The max impressions value documented by SellerSprite for this MCP tool. */
-        maxImpressions?: number;
-        /** Search model from 1 through 6: popular, changing, sustained growth, rapid growth, potential, or long-tail market. */
-        searchModel?: 1 | 2 | 3 | 4 | 5 | 6;
-        /**
-         * The one-based result page number.
+         * Months to look back, default 3; used only without startDate/endDate.
          * @minimum 1
+         * @maximum 12
          */
-        page?: number;
-        /**
-         * The number of results requested per page.
-         * @minimum 1
-         * @maximum 15
-         */
-        size?: number;
-        /** SellerSprite result sorting settings. */
-        order?: {
+        months?: number;
+        /** Advertising campaign ID filter. */
+        campaignId?: string;
+        /** Advertising group ID filter. */
+        adId?: string;
+        /** Advertisement type filter. */
+        type?: string;
+        /** Variant filter. */
+        variation?: string;
+        /** Start date (yyyy-MM-dd). With endDate, overrides months. Use the supplied dates when the response cannot echo the effective window. */
+        startDate?: string;
+        /** End date (yyyy-MM-dd). */
+        endDate?: string;
+        /** Group results by campaignId, default false. */
+        combination?: boolean;
+        /** Enable upstream ad-group sorting; the provider chooses the sort key. Default false. */
+        desc?: boolean;
+        /** Ad-group page window. Request additional pages only when the requested result count or explicit export requires them. */
+        page?: {
           /**
-           * The SellerSprite field used to sort the results.
-           * @minLength 1
+           * Offset cursor, default 0.
+           * @minimum 0
+           * @maximum 3000
            */
-          field?: string;
-          /** Whether to sort the results in descending order. */
-          desc?: boolean;
-          [key: string]: unknown;
-        };
-        /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
-         */
-        returnFields?: string;
-      };
-      output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
-        result: unknown;
-      };
-    };
-    /** Retrieve weekly or monthly Amazon Brand Analytics trend data for one keyword. */
-    "sellersprite_mcp.aba_research_trend": {
-      input: {
-        /** The Amazon marketplace code supported by SellerSprite. */
-        marketplace: "US" | "JP" | "UK" | "DE" | "FR" | "IT" | "ES" | "CA" | "IN";
-        /**
-         * The Amazon search keyword.
-         * @minLength 1
-         */
-        keyword: string;
-        /**
-         * The time granularity value documented by SellerSprite for this MCP tool.
-         * @minLength 1
-         */
-        timeGranularity?: string;
-        /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
-         */
-        returnFields?: string;
-      };
-      output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
-        result: unknown;
-      };
-    };
-    /** Research weekly Amazon Brand Analytics keywords using rank, search, click, conversion, and market-pattern filters. */
-    "sellersprite_mcp.aba_research_weekly": {
-      input: {
-        /** The Amazon marketplace code supported by SellerSprite. */
-        marketplace: "US" | "JP" | "UK" | "DE" | "FR" | "IT" | "ES" | "CA" | "IN";
-        /**
-         * The SellerSprite reporting period documented for this tool.
-         * @minLength 1
-         */
-        date?: string;
-        /**
-         * The departments value documented by SellerSprite for this MCP tool.
-         * @minItems 1
-         */
-        departments?: Array<string>;
-        /**
-         * Keywords that results must exclude.
-         * @minLength 1
-         */
-        excludeKeywords?: string;
-        /**
-         * Keywords that results must include.
-         * @minLength 1
-         */
-        includeKeywords?: string;
-        /** The exact flag value documented by SellerSprite for this MCP tool. */
-        exactFlag?: boolean;
-        /** The rank growth value value documented by SellerSprite for this MCP tool. */
-        rankGrowthValue?: number;
-        /** The rank growth rate value documented by SellerSprite for this MCP tool. */
-        rankGrowthRate?: number;
-        /** The min rank growth rate value documented by SellerSprite for this MCP tool. */
-        minRankGrowthRate?: number;
-        /** The max rank growth rate value documented by SellerSprite for this MCP tool. */
-        maxRankGrowthRate?: number;
-        /** The min search rank value documented by SellerSprite for this MCP tool. */
-        minSearchRank?: number;
-        /** The max search rank value documented by SellerSprite for this MCP tool. */
-        maxSearchRank?: number;
-        /** The min searches value documented by SellerSprite for this MCP tool. */
-        minSearches?: number;
-        /** The max searches value documented by SellerSprite for this MCP tool. */
-        maxSearches?: number;
-        /** The min monopoly click rate value documented by SellerSprite for this MCP tool. */
-        minMonopolyClickRate?: number;
-        /** The max monopoly click rate value documented by SellerSprite for this MCP tool. */
-        maxMonopolyClickRate?: number;
-        /** The min conversion rate value documented by SellerSprite for this MCP tool. */
-        minConversionRate?: number;
-        /** The max conversion rate value documented by SellerSprite for this MCP tool. */
-        maxConversionRate?: number;
-        /** The min word count value documented by SellerSprite for this MCP tool. */
-        minWordCount?: number;
-        /** The max word count value documented by SellerSprite for this MCP tool. */
-        maxWordCount?: number;
-        /** The min s p r value documented by SellerSprite for this MCP tool. */
-        minSPR?: number;
-        /** The max s p r value documented by SellerSprite for this MCP tool. */
-        maxSPR?: number;
-        /** The min title density value documented by SellerSprite for this MCP tool. */
-        minTitleDensity?: number;
-        /** The max title density value documented by SellerSprite for this MCP tool. */
-        maxTitleDensity?: number;
-        /** The min clicks value documented by SellerSprite for this MCP tool. */
-        minClicks?: number;
-        /** The max clicks value documented by SellerSprite for this MCP tool. */
-        maxClicks?: number;
-        /** The min impressions value documented by SellerSprite for this MCP tool. */
-        minImpressions?: number;
-        /** The max impressions value documented by SellerSprite for this MCP tool. */
-        maxImpressions?: number;
-        /** Search model from 1 through 6: popular, changing, sustained growth, rapid growth, potential, or long-tail market. */
-        searchModel?: 1 | 2 | 3 | 4 | 5 | 6;
-        /**
-         * The one-based result page number.
-         * @minimum 1
-         */
-        page?: number;
-        /**
-         * The number of results requested per page.
-         * @minimum 1
-         * @maximum 40
-         */
-        size?: number;
-        /** SellerSprite result sorting settings. */
-        order?: {
+          cursor?: number;
           /**
-           * The SellerSprite field used to sort the results.
-           * @minLength 1
+           * Page size, default 100.
+           * @minimum 1
+           * @maximum 100
            */
-          field?: string;
-          /** Whether to sort the results in descending order. */
-          desc?: boolean;
-          [key: string]: unknown;
+          size?: number;
         };
-        /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
-         */
-        returnFields?: string;
       };
       output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
+        /** Structured upstream research data. Fields vary by tool; new fields are preserved. */
         result: unknown;
       };
     };
-    /** Retrieve competing products identified for one Amazon ASIN. */
-    "sellersprite_mcp.asin_competitor": {
+    /** Read product bullet points and main images. */
+    "sellersprite_mcp.asin.content.list": {
       input: {
-        /** The Amazon marketplace code supported by SellerSprite. */
-        marketplace: "US" | "JP" | "UK" | "DE" | "FR" | "IT" | "ES" | "CA" | "IN";
+        /** Amazon marketplace code. */
+        marketplace: "AE" | "AU" | "BR" | "CA" | "DE" | "ES" | "FR" | "IN" | "IT" | "JP" | "MX" | "UK" | "US";
         /**
-         * The ten-character Amazon ASIN.
-         * @minLength 10
-         * @maxLength 10
+         * ASIN.
+         * @pattern ^B[0-9A-Z]{9}$
+         */
+        asin: string;
+      };
+      output: {
+        /** Structured upstream research data. Fields vary by tool; new fields are preserved. */
+        result: unknown;
+      };
+    };
+    /** Read monthly search-volume trends for an ASIN’s leading traffic keywords. */
+    "sellersprite_mcp.asin.coreKeyword.trend": {
+      input: {
+        /** Amazon marketplace code. */
+        marketplace: "AE" | "AU" | "BR" | "CA" | "DE" | "ES" | "FR" | "IN" | "IT" | "JP" | "MX" | "UK" | "US";
+        /**
+         * ASIN.
+         * @pattern ^B[0-9A-Z]{9}$
          */
         asin: string;
         /**
-         * The number of results requested per page.
+         * Number of top keywords, default 5, from 1 to 10.
          * @minimum 1
+         * @maximum 10
          */
-        size?: number;
-        /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
-         */
-        returnFields?: string;
+        topN?: number;
+        /** Historical window. Supply only when a specific window is requested; otherwise use server defaults. */
+        dateRange?: {
+          /** Start date (yyyy-MM-dd). Supply only for an explicitly requested historical window; maximum five years and no earlier than 2022-01. */
+          startDate?: string;
+          /** End date (yyyy-MM-dd). Supply only for an explicitly requested historical window; do not supply future dates. */
+          endDate?: string;
+        };
       };
       output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
+        /** Structured upstream research data. Fields vary by tool; new fields are preserved. */
         result: unknown;
       };
     };
-    /** Retrieve the historical coupon trend for one Amazon ASIN. */
-    "sellersprite_mcp.asin_coupon_trend": {
+    /** Read product details for up to 20 ASINs. */
+    "sellersprite_mcp.asin.detail": {
       input: {
-        /** The Amazon marketplace code supported by SellerSprite. */
-        marketplace: "US" | "JP" | "UK" | "DE" | "FR" | "IT" | "ES" | "CA" | "IN";
         /**
-         * The ten-character Amazon ASIN.
-         * @minLength 10
-         * @maxLength 10
+         * ASINs to query, from 1 to 20 unique values.
+         * @minItems 1
+         * @maxItems 20
+         */
+        asins: Array<string>;
+        /** Amazon marketplace code. */
+        marketplace: "AE" | "AU" | "BR" | "CA" | "DE" | "ES" | "FR" | "IN" | "IT" | "JP" | "MX" | "UK" | "US";
+        /**
+         * Select response fields without changing supplier cost. Omit or pass an empty list for the default fields.
+         * @maxItems 20
+         */
+        includeFields?: Array<"asin" | "marketplace" | "title" | "brand" | "categoryId" | "categoryPath" | "price" | "currency" | "rating" | "reviewCount" | "totalReview" | "bsr" | "seller" | "fulfillment" | "parentAsin" | "dimensions" | "weight" | "availableDate" | "recordUpdatedAt" | "variationList">;
+      };
+      output: {
+        /** Structured upstream research data. Fields vary by tool; new fields are preserved. */
+        result: unknown;
+      };
+    };
+    /** Find Amazon products by keyword, category, brand, sales and price. */
+    "sellersprite_mcp.asin.list": {
+      input: {
+        /** Amazon marketplace code. */
+        marketplace: "AE" | "AU" | "BR" | "CA" | "DE" | "ES" | "FR" | "IN" | "IT" | "JP" | "MX" | "UK" | "US";
+        /** Product title keyword. */
+        keyword?: string;
+        /**
+         * Filter to up to 40 ASINs.
+         * @maxItems 40
+         */
+        asins?: Array<string>;
+        /** Category node ID. */
+        categoryId?: string;
+        /** True searches only this category; otherwise includes subcategories. */
+        categoryIdExact?: boolean;
+        /**
+         * Archived month (yyyyMM). Omit for the last 30 days. An explicit unavailable or future archive fails without falling back. The response dataMode/dataMonth identifies the effective period.
+         * @pattern ^\d{6}$
+         */
+        dataMonth?: string;
+        /**
+         * Brands to include.
+         * @maxItems 20
+         */
+        brandInclude?: Array<string>;
+        /**
+         * Brands to exclude.
+         * @maxItems 20
+         */
+        brandExclude?: Array<string>;
+        /**
+         * Sellers to include.
+         * @maxItems 20
+         */
+        sellerInclude?: Array<string>;
+        /**
+         * Sellers to exclude.
+         * @maxItems 20
+         */
+        sellerExclude?: Array<string>;
+        /**
+         * Exclude matching product title keywords.
+         * @maxItems 20
+         */
+        excludeKeywords?: Array<string>;
+        /**
+         * ASINs to exclude.
+         * @maxItems 20
+         */
+        excludeAsins?: Array<string>;
+        /** Keyword matching field, default TITLE. */
+        searchType?: "ASIN" | "TITLE" | "BRAND" | "SELLER";
+        /** Price range. */
+        price?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Parent monthly sales range, not Amazon child sales. Filters the monthlySales output. */
+        sales?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Monthly revenue range. Filters the monthlyRevenue output. */
+        revenue?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Rating range. */
+        rating?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Monthly synchronized review count range. Filters monthlyReviewCount, not childReviewCount. */
+        monthlyReviewCount?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** BSR rank range. */
+        bsr?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Competing seller count filter. */
+        sellers?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Review growth count filter. */
+        reviewGrowth?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Amazon-reported child sales in the last 30 days. */
+        amazonSales?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Rated product share filter. */
+        ratingShare?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** BSR change filter. */
+        rankingChange?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Conversion rate filter. */
+        conversionRate?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Click conversion rate filter. */
+        crt?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Month-over-month revenue growth filter. */
+        revenueGrowth?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Month-over-month sales growth filter. */
+        salesGrowth?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Year-over-year sales growth filter. */
+        salesGrowthYoy?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Three consecutive months of year-over-year sales growth. */
+        salesGrowthYoy3?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Six consecutive months of year-over-year sales growth. */
+        salesGrowthYoy6?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Product question count range. */
+        questions?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Weight filter. */
+        weight?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** FBA fee filter. */
+        fbaFee?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Variant count range. */
+        variations?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Estimated profit range. */
+        profit?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Listing quality score range. */
+        lqs?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Delivery fee filter. */
+        deliveryPrice?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Listing date lower bound (yyyy-MM-dd). */
+        launchDateFrom?: string;
+        /** Listing date upper bound (yyyy-MM-dd). */
+        launchDateTo?: string;
+        /** First review date lower bound (yyyy-MM-dd). */
+        firstReviewDateFrom?: string;
+        /** First review date upper bound (yyyy-MM-dd). */
+        firstReviewDateTo?: string;
+        /** Product tag filter. */
+        productTags?: Array<string>;
+        /** Main image/video flag filter. */
+        mainImage?: boolean;
+        /** True selects each parent's best-selling variant; false excludes it. Omit for all rows. Ignored when asins is supplied so every requested ASIN can be returned. */
+        bestSellingVariant?: boolean;
+        /** Fulfillment method filter. */
+        fulfillment?: Array<"FBA" | "FBM">;
+        /** Seller country or region codes. */
+        sellerNation?: Array<string>;
+        /** Seller type filter. */
+        sellerType?: Array<"AMAZON" | "THIRD_PARTY">;
+        /** Page window. Request additional pages only when the requested result count or explicit export requires them. */
+        page?: {
+          /**
+           * Offset cursor, default 0, maximum 2000. Reaching the upstream offset limit means truncation, not exhaustion of all results.
+           * @minimum 0
+           * @maximum 2000
+           */
+          cursor?: number;
+          /**
+           * Page size, default 100.
+           * @minimum 1
+           * @maximum 100
+           */
+          size?: number;
+        };
+        /** Sort field: total_amount for revenue, total_units for sales, impression or conversion_rate. Default total_amount descending. */
+        orderField?: "total_amount" | "total_units" | "impression" | "conversion_rate";
+        /** Sort descending, default true. */
+        desc?: boolean;
+        /**
+         * Output fields only; asin is always returned. Default fields include title, brand, price, currency, BSR, rating, monthlyReviewCount, monthlySales, monthlyRevenue, fulfillment, sellerName, sellerNation, badges, parent, bestSellingVariant and availableDate. Request childReviewCount, amzUnit, variations, lqs, profit, fba, questions or coupon explicitly.
+         * @maxItems 30
+         */
+        includeFields?: Array<"asin" | "title" | "brand" | "price" | "currency" | "bsr" | "rating" | "monthlyReviewCount" | "childReviewCount" | "monthlySales" | "monthlySalesScope" | "monthlyRevenue" | "fulfillment" | "sellerName" | "sellerNation" | "badges" | "amzUnit" | "variations" | "lqs" | "profit" | "fba" | "questions" | "coupon" | "parent" | "bestSellingVariant" | "availableDate" | "pkgDimensions" | "pkgDimensionType" | "pkgWeight" | "pkgVolumeWeights">;
+      };
+      output: {
+        /** Structured upstream research data. Fields vary by tool; new fields are preserved. */
+        result: unknown;
+      };
+    };
+    /** Read recent daily sales and BSR estimates for an ASIN. */
+    "sellersprite_mcp.asin.prediction.sales": {
+      input: {
+        /** Amazon marketplace code. */
+        marketplace: "AE" | "AU" | "BR" | "CA" | "DE" | "ES" | "FR" | "IN" | "IT" | "JP" | "MX" | "UK" | "US";
+        /**
+         * ASIN.
+         * @pattern ^B[0-9A-Z]{9}$
          */
         asin: string;
         /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
-         */
-        returnFields?: string;
-      };
-      output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
-        result: unknown;
-      };
-    };
-    /** Retrieve SellerSprite product, sales, ranking, price, review, and seller data for one Amazon ASIN. */
-    "sellersprite_mcp.asin_detail": {
-      input: {
-        /** The Amazon marketplace code supported by SellerSprite. */
-        marketplace: "US" | "JP" | "UK" | "DE" | "FR" | "IT" | "ES" | "CA" | "IN";
-        /**
-         * The ten-character Amazon ASIN.
-         * @minLength 10
-         * @maxLength 10
-         */
-        asin: string;
-        /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
-         */
-        returnFields?: string;
-      };
-      output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
-        result: unknown;
-      };
-    };
-    /** Retrieve ASIN details together with the product's historical coupon trend. */
-    "sellersprite_mcp.asin_detail_with_coupon_trend": {
-      input: {
-        /** The Amazon marketplace code supported by SellerSprite. */
-        marketplace: "US" | "JP" | "UK" | "DE" | "FR" | "IT" | "ES" | "CA" | "IN";
-        /**
-         * The ten-character Amazon ASIN.
-         * @minLength 10
-         * @maxLength 10
-         */
-        asin: string;
-        /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
-         */
-        returnFields?: string;
-      };
-      output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
-        result: unknown;
-      };
-    };
-    /** Retrieve SellerSprite sales predictions for one Amazon ASIN. */
-    "sellersprite_mcp.asin_prediction": {
-      input: {
-        /** The Amazon marketplace code supported by SellerSprite. */
-        marketplace: "US" | "JP" | "UK" | "DE" | "FR" | "IT" | "ES" | "CA" | "IN";
-        /**
-         * The ten-character Amazon ASIN.
-         * @minLength 10
-         * @maxLength 10
-         */
-        asin: string;
-        /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
-         */
-        returnFields?: string;
-      };
-      output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
-        result: unknown;
-      };
-    };
-    /** Retrieve the historical sales trend for one Amazon ASIN. */
-    "sellersprite_mcp.asin_sales_trend": {
-      input: {
-        /** The Amazon marketplace code supported by SellerSprite. */
-        marketplace: "US" | "JP" | "UK" | "DE" | "FR" | "IT" | "ES" | "CA" | "IN";
-        /**
-         * The ten-character Amazon ASIN.
-         * @minLength 10
-         * @maxLength 10
-         */
-        asin: string;
-        /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
-         */
-        returnFields?: string;
-      };
-      output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
-        result: unknown;
-      };
-    };
-    /** Estimate Amazon product sales from a Best Sellers Rank and top-level category. */
-    "sellersprite_mcp.bsr_prediction": {
-      input: {
-        /** The Amazon marketplace code supported by SellerSprite. */
-        marketplace: "US" | "JP" | "UK" | "DE" | "FR" | "IT" | "ES" | "CA" | "IN";
-        /**
-         * The bsr value documented by SellerSprite for this MCP tool.
+         * Number of recent estimated days, default 27, from 1 to 65. Ends on the latest estimated day.
          * @minimum 1
+         * @maximum 65
+         */
+        days?: number;
+      };
+      output: {
+        /** Structured upstream research data. Fields vary by tool; new fields are preserved. */
+        result: unknown;
+      };
+    };
+    /** Find products linked through purchases, browsing and advertising. */
+    "sellersprite_mcp.asin.related.list": {
+      input: {
+        /** Amazon marketplace code. */
+        marketplace: "AE" | "AU" | "BR" | "CA" | "DE" | "ES" | "FR" | "IN" | "IT" | "JP" | "MX" | "UK" | "US";
+        /**
+         * One target ASIN.
+         * @pattern ^B[0-9A-Z]{9}$
+         */
+        asin: string;
+        /**
+         * Relation codes. FBT means frequently bought together and can include unrelated categories; behavioral association does not imply semantic similarity. Omit or pass an empty list for all supported relations.
+         * @maxItems 14
+         */
+        relations?: Array<"MIB" | "FBT" | "CSI" | "COB" | "MIE" | "BAB" | "VAV" | "AVP" | "BAV" | "ASF" | "CPF" | "BCA" | "FSA" | "SP">;
+        /** Page window. Request additional pages only when the requested result count or explicit export requires them. */
+        page?: {
+          /**
+           * Offset cursor, default 0.
+           * @minimum 0
+           * @maximum 3000
+           */
+          cursor?: number;
+          /**
+           * Page size, default 100. cursor + size must not exceed 3000.
+           * @minimum 1
+           * @maximum 100
+           */
+          size?: number;
+        };
+        /** Sort field: createdTime (default) or relationCount. */
+        orderField?: "createdTime" | "relationCount";
+        /** Sort descending, default true. */
+        desc?: boolean;
+        /**
+         * Select response fields without changing supplier cost. Omit or pass an empty list for the default fields.
+         * @maxItems 13
+         */
+        includeFields?: Array<"asin" | "title" | "brand" | "price" | "currency" | "rating" | "reviewCount" | "monthlySales" | "relations" | "pkgDimensions" | "pkgDimensionType" | "pkgWeight" | "pkgVolumeWeights">;
+      };
+      output: {
+        /** Structured upstream research data. Fields vary by tool; new fields are preserved. */
+        result: unknown;
+      };
+    };
+    /** Read up to 100 product reviews with rating, media and SKU filters. */
+    "sellersprite_mcp.asin.review.list": {
+      input: {
+        /** Amazon marketplace code. */
+        marketplace: "AE" | "AU" | "BR" | "CA" | "DE" | "ES" | "FR" | "IN" | "IT" | "JP" | "MX" | "UK" | "US";
+        /** Parent or child ASIN. Reviews are normalized to the parent, not isolated to the requested child. */
+        asin: string;
+        /**
+         * Exact star ratings to include; omit for all ratings.
+         * @minItems 1
+         * @maxItems 5
+         */
+        star?: Array<1 | 2 | 3 | 4 | 5>;
+        /** True selects reviews with images or video; false selects reviews without either. Omit for both. */
+        hasMedia?: boolean;
+        /** Sort order, default DATE_DESC. */
+        sort?: "DATE_DESC" | "DATE_ASC" | "STAR_DESC" | "STAR_ASC" | "HELPFUL_DESC" | "HELPFUL_ASC";
+        /** Case-insensitive substring filter on review SKU values, for example Silver or Color: Silver. Omit for all SKUs. */
+        sku?: string;
+        /**
+         * Number of reviews to return, default and maximum 100.
+         * @minimum 1
+         * @maximum 100
+         */
+        limit?: number;
+      };
+      output: {
+        /** Structured upstream research data. Fields vary by tool; new fields are preserved. */
+        result: unknown;
+      };
+    };
+    /** Read up to 500 product reviews. Extended retrieval may take about two minutes. */
+    "sellersprite_mcp.asin.review.list.extended": {
+      input: {
+        /** Amazon marketplace code. */
+        marketplace: "AE" | "AU" | "BR" | "CA" | "DE" | "ES" | "FR" | "IN" | "IT" | "JP" | "MX" | "UK" | "US";
+        /** Parent or child ASIN. Reviews are normalized to the parent, not isolated to the requested child. */
+        asin: string;
+        /**
+         * Exact star ratings to include; omit for all ratings.
+         * @minItems 1
+         * @maxItems 5
+         */
+        star?: Array<1 | 2 | 3 | 4 | 5>;
+        /** True selects reviews with images or video; false selects reviews without either. Omit for both. */
+        hasMedia?: boolean;
+        /** Sort order, default DATE_DESC. */
+        sort?: "DATE_DESC" | "DATE_ASC" | "STAR_DESC" | "STAR_ASC" | "HELPFUL_DESC" | "HELPFUL_ASC";
+        /** Case-insensitive substring filter on review SKU values, for example Silver or Color: Silver. Omit for all SKUs. */
+        sku?: string;
+        /**
+         * Number of reviews to return, default and maximum 500.
+         * @minimum 1
+         * @maximum 500
+         */
+        limit?: number;
+      };
+      output: {
+        /** Structured upstream research data. Fields vary by tool; new fields are preserved. */
+        result: unknown;
+      };
+    };
+    /** Compare monthly parent and child ASIN sales, revenue and rank trends. */
+    "sellersprite_mcp.asin.sales.trend": {
+      input: {
+        /** Amazon marketplace code. */
+        marketplace: "AE" | "AU" | "BR" | "CA" | "DE" | "ES" | "FR" | "IN" | "IT" | "JP" | "MX" | "UK" | "US";
+        /**
+         * ASIN or parent ASIN; queried as supplied without parent/child conversion.
+         * @pattern ^B[0-9A-Z]{9}$
+         */
+        asin: string;
+        /**
+         * Distinct monthly metrics. Parent sales include all sellers; child sales are Amazon search-page snapshots. SalesAmount metrics are monthly revenue. Price, BSR, rating and reviews are last-valid-day snapshots, not monthly averages. For average price, average Keepa daily prices over the month and disclose coverage.
+         * @minItems 1
+         * @maxItems 8
+         */
+        metrics: Array<"parentSales" | "childSales" | "parentSalesAmount" | "childSalesAmount" | "price" | "bsr" | "rating" | "reviews">;
+        /** Inclusive month window. */
+        monthRange?: {
+          /** Start month (yyyy-MM). When both bounds are omitted, uses the latest available month and the preceding 12 calendar months. */
+          startDate?: string;
+          /** End month (yyyy-MM), capped at the latest available month. Maximum window is 60 months. */
+          endDate?: string;
+        };
+      };
+      output: {
+        /** Structured upstream research data. Fields vary by tool; new fields are preserved. */
+        result: unknown;
+      };
+    };
+    /** Estimate daily and monthly sales from a category and BSR rank. */
+    "sellersprite_mcp.bsr.prediction.sales": {
+      input: {
+        /** Amazon marketplace code. */
+        marketplace: "AE" | "AU" | "BR" | "CA" | "DE" | "ES" | "FR" | "IN" | "IT" | "JP" | "MX" | "UK" | "US";
+        /** Top-level category node ID from category search. */
+        categoryId: string;
+        /**
+         * Top-level category BSR rank, from 1 to 10000000.
+         * @minimum 1
+         * @maximum 10000000
          */
         bsr: number;
         /**
-         * The top-level Amazon category node identifier.
-         * @minLength 1
+         * Select response fields at the same cost. Defaults to marketplace/categoryId/bsr/estDailySales/estMonSales. Request rankSales, curveSales or linerParams explicitly.
+         * @maxItems 8
          */
-        categoryId: string;
-        /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
-         */
-        returnFields?: string;
+        includeFields?: Array<"marketplace" | "categoryId" | "bsr" | "estDailySales" | "estMonSales" | "rankSales" | "curveSales" | "linerParams">;
       };
       output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
+        /** Structured upstream research data. Fields vary by tool; new fields are preserved. */
         result: unknown;
       };
     };
@@ -415,569 +597,1177 @@ declare module "@oomol-lab/connector" {
         result: unknown;
       };
     };
-    /** Find competing Amazon products by marketplace, category, brand, seller, ASIN, keyword, and product filters. */
-    "sellersprite_mcp.competitor_lookup": {
+    /** Explore AI-extracted product attributes for a category. */
+    "sellersprite_mcp.category.ai.feature.list": {
       input: {
-        /** The Amazon marketplace code supported by SellerSprite. */
-        marketplace: "US" | "JP" | "UK" | "DE" | "FR" | "IT" | "ES" | "CA" | "IN";
+        /** Amazon marketplace code. */
+        marketplace: "AE" | "AU" | "BR" | "CA" | "DE" | "ES" | "FR" | "IN" | "IT" | "JP" | "MX" | "UK" | "US";
+        /** Colon-separated category node path, for example 123:456:789. */
+        categoryId: string;
+      };
+      output: {
+        /** Structured upstream research data. Fields vary by tool; new fields are preserved. */
+        result: unknown;
+      };
+    };
+    /** Read category demand, search and purchase trends from Amazon Product Opportunity Explorer. */
+    "sellersprite_mcp.category.demand.report": {
+      input: {
+        /** Amazon marketplace code. */
+        marketplace: "AE" | "AU" | "BR" | "CA" | "DE" | "ES" | "FR" | "IN" | "IT" | "JP" | "MX" | "UK" | "US";
+        /** Full colon-separated category path. Resolve deeper paths with category.search; short leaf IDs can silently return empty data. */
+        categoryId: string;
+        /** Statistics window in days: 7/30/90/365, default 365. */
+        days?: 7 | 30 | 90 | 365;
+      };
+      output: {
+        /** Structured upstream research data. Fields vary by tool; new fields are preserved. */
+        result: unknown;
+      };
+    };
+    /** Explore category keyword demand and 24-month search trends. */
+    "sellersprite_mcp.category.demand.trend": {
+      input: {
+        /** Amazon marketplace code. */
+        marketplace: "AE" | "AU" | "BR" | "CA" | "DE" | "ES" | "FR" | "IN" | "IT" | "JP" | "MX" | "UK" | "US";
+        /** Full colon-separated category path. Resolve deeper paths with category.search; short leaf IDs can silently return empty data. */
+        categoryId: string;
         /**
-         * The historical month in YYYYMM format; omit when the tool supports latest data.
-         * @minLength 6
-         * @maxLength 6
+         * Sample size: 100/200/300/400/500, default 100.
+         * @minimum 100
+         * @maximum 500
          */
-        month?: string;
+        sampleCount?: number;
         /**
-         * The brand value documented by SellerSprite for this MCP tool.
-         * @minLength 1
+         * Keyword page number, default 1. Later pages have an empty trendList. page * size must not exceed 3000. Fetch more pages only for explicitly requested pagination, exports or larger result counts.
+         * @minimum 1
+         * @maximum 3000
          */
-        brand?: string;
+        page?: number;
         /**
-         * The seller name value documented by SellerSprite for this MCP tool.
-         * @minLength 1
+         * Page size, default 100.
+         * @minimum 1
+         * @maximum 100
          */
-        sellerName?: string;
+        size?: number;
+        /** Market period code: N/I/D/S1..S12. Optional keyword filter. */
+        marketPeriod?: string;
+        /** Keywords to include as a comma-separated string, not an array. Uses fuzzy OR matching. */
+        includeKeywords?: string;
+      };
+      output: {
+        /** Structured upstream research data. Fields vary by tool; new fields are preserved. */
+        result: unknown;
+      };
+    };
+    /** Read a category’s market report for the last 30 days or 24 months. */
+    "sellersprite_mcp.category.report.detail": {
+      input: {
+        /** Amazon marketplace code. */
+        marketplace: "AE" | "AU" | "BR" | "CA" | "DE" | "ES" | "FR" | "IN" | "IT" | "JP" | "MX" | "UK" | "US";
+        /** Full colon-separated category path. Resolve deeper paths with category.search; short leaf IDs can silently return empty data. */
+        categoryId: string;
+        /** Report window: LAST_30_DAYS (default) or the complete LAST_24_MONTHS report. */
+        dataRange?: "LAST_30_DAYS" | "LAST_24_MONTHS";
         /**
-         * Amazon ASINs to query, with at most 40 values.
-         * @minItems 1
-         * @maxItems 40
+         * Sample size: 100/200/300/400/500, default 100. Controls monthly top-product sampling and deduplication.
+         * @minimum 100
+         * @maximum 500
+         */
+        sampleCount?: number;
+        /** Leading product count: 3/5/10/20, default 10. Controls competition and brand/seller concentration. LAST_30_DAYS only. */
+        topN?: 3 | 5 | 10 | 20;
+        /**
+         * New-product age threshold in months, default 3. LAST_30_DAYS only.
+         * @minimum 1
+         * @maximum 12
+         */
+        newReleaseNum?: number;
+        /** Archived month (yyyyMM), only when explicitly requested. Omit for last 30 days. LAST_30_DAYS only. */
+        currentMonth?: number;
+        /**
+         * Optional ASIN set to aggregate a report for those products. LAST_30_DAYS only.
+         * @maxItems 100
          */
         asins?: Array<string>;
+        /** Category name language: EN for original English, CN for Chinese translation (default). */
+        language?: "EN" | "CN";
+        /** Variant merging mode. LAST_30_DAYS only. */
+        familyMerge?: boolean;
         /**
-         * The colon-separated Amazon category node path.
-         * @minLength 1
+         * Select base-report fields for LAST_30_DAYS. Omit or pass an empty list for all supported fields. Unsupported for LAST_24_MONTHS.
+         * @maxItems 54
          */
-        nodeIdPath?: string;
-        /** The node id path equal value documented by SellerSprite for this MCP tool. */
-        nodeIdPathEqual?: boolean;
-        /**
-         * The Amazon search keyword.
-         * @minLength 1
-         */
+        includeFields?: Array<"categoryId" | "name" | "nodePath" | "productCount" | "totalRevenue" | "avgRevenue" | "competition" | "newProductFeasibility" | "avgPrice" | "avgRating" | "currency" | "sampleProducts" | "brands" | "sellers" | "avgBsr" | "avgSales" | "avgProfit" | "avgSellers" | "avgVolume" | "avgWeight" | "avgReviews" | "avgReviewsIncr" | "sellerNationRatios" | "shelfDateProducts" | "firstShelfDate" | "lastShelfDate" | "headProducts" | "headAvgBsr" | "headAvgSales" | "headAvgRevenue" | "headAvgPrice" | "headAvgReviews" | "headAvgReviewsIncr" | "headAvgRating" | "brandConcentration" | "sellerConcentration" | "peerAvgProductConcentration" | "peerAvgBrandConcentration" | "peerAvgSellerConcentration" | "peerMarkets" | "newCount" | "newAvgPrice" | "newAvgReviews" | "minNewReviews" | "maxNewReviews" | "newAvgRating" | "newAvgSales" | "newAvgBsr" | "newAvgRevenue" | "newSalesRatio" | "totalSales" | "availableMonths" | "latestMonth" | "collectFlag">;
+      };
+      output: {
+        /** Structured upstream research data. Fields vary by tool; new fields are preserved. */
+        result: unknown;
+      };
+    };
+    /** Find Amazon categories and their node paths. */
+    "sellersprite_mcp.category.search": {
+      input: {
+        /** Amazon marketplace code. */
+        marketplace: "AE" | "AU" | "BR" | "CA" | "DE" | "ES" | "FR" | "IN" | "IT" | "JP" | "MX" | "UK" | "US";
+        /** Category name or product keyword. Omit for no keyword filter. Name search is recommended for finding complete categoryId paths. */
         keyword?: string;
-        /** Keyword match type: 1 for phrase, 2 for broad, or 3 for exact. */
-        matchType?: 1 | 2 | 3;
-        /** Variation handling: N includes variation ASINs and Y excludes them. */
-        variation?: "N" | "Y";
+        /** Full category path whose children are requested. Short leaf IDs cannot be resolved; other category tools may silently return empty data for them. */
+        categoryId?: string;
+        /** Include subcategories, default true. */
+        includeSubcategories?: boolean;
+        /** Page window. Request additional pages only when the requested result count or explicit export requires them. */
+        page?: {
+          /**
+           * Page size, default 100.
+           * @minimum 1
+           * @maximum 100
+           */
+          size?: number;
+          /**
+           * Offset cursor, default 0.
+           * @minimum 0
+           * @maximum 3000
+           */
+          cursor?: number;
+        };
+      };
+      output: {
+        /** Structured upstream research data. Fields vary by tool; new fields are preserved. */
+        result: unknown;
+      };
+    };
+    /** Filter and compare categories by market size, growth and competition. */
+    "sellersprite_mcp.category.stats.list": {
+      input: {
+        /** Amazon marketplace code. */
+        marketplace: "AE" | "AU" | "BR" | "CA" | "DE" | "ES" | "FR" | "IN" | "IT" | "JP" | "MX" | "UK" | "US";
+        /** Full colon-separated category path. Resolve deeper paths with category.search; short leaf IDs can silently return empty data. */
+        categoryId: string;
+        /** Data window: LAST_30_DAYS (default) or LAST_24_MONTHS. */
+        dataRange?: "LAST_30_DAYS" | "LAST_24_MONTHS";
+        /** Category name keyword. */
+        departmentKeyword?: string;
+        /** Category name language: EN for original English, CN for Chinese translation (default). */
+        language?: "EN" | "CN";
         /**
-         * The one-based result page number.
-         * @minimum 1
+         * Sample size: 100/200/300/400/500, default 100. Controls monthly top-product sampling and deduplication for either data window.
+         * @minimum 100
+         * @maximum 500
          */
-        page?: number;
+        sampleCount?: number;
+        /** Seller country filter. */
+        sellerNation?: string;
+        /** Upstream snake_case sort column, default total_sales. LAST_30_DAYS supports total_products/brands/sellers/total_sales/total_revenue/avg_sales/avg_revenue/avg_price/avg_reviews/avg_rating/avg_bsr/avg_volume/avg_weight/avg_profit/yoy_growth_rate/ranking/top_products/top3_avg_*\/top5_avg_*\/top10_avg_*\/l1|l3|l6|l12_new_avg_rating. LAST_24_MONTHS supports total_products/brands/sellers/total_sales/total_revenue/avg_sales/annual_growth_rate/yoy_growth_rate/avg_revenue/avg_price/weighted_avg_price/avg_bsr/avg_ratings/avg_rating/avg_volume/avg_weight/avg_profit/avg_sellers/ebc_ratio/amz_ratio/fba_ratio/fbm_ratio. */
+        orderField?: "total_products" | "brands" | "sellers" | "total_sales" | "total_revenue" | "avg_sales" | "avg_revenue" | "avg_price" | "avg_reviews" | "avg_rating" | "avg_bsr" | "avg_volume" | "avg_weight" | "avg_profit" | "yoy_growth_rate" | "ranking" | "top_products" | "top3_avg_bsr" | "top3_avg_sales" | "top3_avg_revenue" | "top5_avg_bsr" | "top5_avg_sales" | "top5_avg_revenue" | "top10_avg_bsr" | "top10_avg_sales" | "top10_avg_revenue" | "l1_new_avg_rating" | "l3_new_avg_rating" | "l6_new_avg_rating" | "l12_new_avg_rating" | "annual_growth_rate" | "weighted_avg_price" | "avg_ratings" | "avg_sellers" | "ebc_ratio" | "amz_ratio" | "fba_ratio" | "fbm_ratio";
+        /** Sort descending, default true. */
+        desc?: boolean;
+        /** Page window. Request additional pages only when the requested result count or explicit export requires them. */
+        page?: {
+          /**
+           * Offset cursor, default 0.
+           * @minimum 0
+           * @maximum 3000
+           */
+          cursor?: number;
+          /**
+           * Page size, default 100.
+           * @minimum 1
+           * @maximum 100
+           */
+          size?: number;
+        };
+        /** Total product count range; supported in either data window. */
+        totalProducts?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Average sales range; LAST_30_DAYS only. */
+        avgSales?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Average revenue range; LAST_30_DAYS only. */
+        avgRevenue?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Average price range; supported in either data window. */
+        avgPrice?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Average star rating range; LAST_30_DAYS only. */
+        avgRating?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Average BSR range; LAST_30_DAYS only. */
+        avgBsr?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Average weight range; supported in either data window. */
+        avgWeight?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Average profit range; LAST_30_DAYS only. */
+        avgProfit?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Brand count range; supported in either data window. */
+        brands?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Seller count range; supported in either data window. */
+        sellers?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Average seller count range; supported in either data window. */
+        avgSellers?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Share of sellers from sellerNation; supported in either data window. */
+        sellerRatio?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Amazon-operated product share range; supported in either data window. */
+        amzRatio?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** A+ page share range; supported in either data window. */
+        ebcRatio?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** FBA share range; supported in either data window. */
+        fbaProportion?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** FBM share range; supported in either data window. */
+        fbmRatio?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** New-product share range; supported in either data window. */
+        newProportion?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Leading brand sales concentration, top three or top five in some archives; supported in either window. */
+        brandConcentration?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Leading product concentration, top three or top five in some archives; supported in either window. */
+        productConcentration?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Leading seller concentration, top three or top five in some archives; supported in either window. */
+        sellerConcentration?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Leading product average sales range; supported in either data window. */
+        headListingAvgSales?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Leading product average revenue range; supported in either data window. */
+        headListingAvgRevenue?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Leading product average BSR range; LAST_30_DAYS only. */
+        headListingAvgBsr?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** New-product sales range: average sales for LAST_30_DAYS, total sales for LAST_24_MONTHS. */
+        newAvgSales?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** New-product revenue range: average revenue for LAST_30_DAYS, total revenue for LAST_24_MONTHS. */
+        newAvgRevenue?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** New-product price range: average price for LAST_30_DAYS, weighted average for LAST_24_MONTHS. */
+        newAvgPrice?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** New-product average star rating range; supported in either data window. */
+        newAvgRating?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** New-product average review count range; LAST_30_DAYS only. */
+        newAvgReviews?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** New-product sales share range; supported in either data window. */
+        newSalesRatio?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Return rate range; LAST_24_MONTHS only. */
+        returnRatio?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Category total sales range; supported in either data window. */
+        totalSales?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Category total revenue range; supported in either data window. */
+        totalRevenue?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Year-over-year growth range as a fraction (0.15 is 15%); supported in either data window. */
+        yoyGrowthRate?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Annual growth range; LAST_24_MONTHS only. */
+        annualGrowthRate?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Average volume range; supported in either data window. */
+        avgVolume?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Average review count across all products; LAST_30_DAYS only. */
+        avgReviews?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** New-product count range; LAST_30_DAYS only. */
+        newCount?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Seller countries, for example CN and US. */
+        sellerNations?: Array<string>;
+        /** Category tag filter; LAST_24_MONTHS only. */
+        tags?: Array<string>;
+      };
+      output: {
+        /** Structured upstream research data. Fields vary by tool; new fields are preserved. */
+        result: unknown;
+      };
+    };
+    /** Rank leading products, brands or sellers within a category. */
+    "sellersprite_mcp.category.top.list": {
+      input: {
+        /** Amazon marketplace code. */
+        marketplace: "AE" | "AU" | "BR" | "CA" | "DE" | "ES" | "FR" | "IN" | "IT" | "JP" | "MX" | "UK" | "US";
+        /** Full colon-separated category path. Top-level nodes use one segment. Resolve deeper paths with category.search; short leaf IDs can silently return empty data. */
+        categoryId: string;
+        /** Ranking dimension. */
+        dimension: "product" | "brand" | "seller";
         /**
-         * The number of results requested per page.
+         * Archived month (yyyyMM), only when explicitly requested. Omitted or unavailable months use the latest data; the response dataMonth is authoritative.
+         * @pattern ^\d{6}$
+         */
+        dataMonth?: string;
+        /**
+         * Number of leading results, default 10.
          * @minimum 1
          * @maximum 100
          */
-        size?: number;
-        /** SellerSprite result sorting settings. */
-        order?: {
-          /**
-           * The SellerSprite field used to sort the results.
-           * @minLength 1
-           */
-          field?: string;
-          /** Whether to sort the results in descending order. */
-          desc?: boolean;
-          [key: string]: unknown;
-        };
-        /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
-         */
-        returnFields?: string;
+        topN?: number;
+        /** New-product age threshold in months; omit to avoid distinguishing new products. */
+        newProductMonths?: number;
       };
       output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
+        /** Structured upstream research data. Fields vary by tool; new fields are preserved. */
         result: unknown;
       };
     };
-    /** Retrieve Google Trends interest data for an Amazon marketplace keyword. */
-    "sellersprite_mcp.google_trend": {
+    /** Compare category distributions by sales, price, ratings, listing age and sellers. */
+    "sellersprite_mcp.category.trend": {
       input: {
-        /** The Amazon marketplace code supported by SellerSprite. */
-        marketplace: "US" | "JP" | "UK" | "DE" | "FR" | "IT" | "ES" | "CA" | "IN";
+        /** Amazon marketplace code. */
+        marketplace: "AE" | "AU" | "BR" | "CA" | "DE" | "ES" | "FR" | "IN" | "IT" | "JP" | "MX" | "UK" | "US";
+        /** Full colon-separated category path, for example 1055398:284507:289668:289719:3736921. Top-level nodes use one segment. Resolve deeper paths with category.search; short leaf IDs can silently return empty data. */
+        categoryId: string;
         /**
-         * The Amazon search keyword.
-         * @minLength 1
+         * Distinct distribution metrics. Use ratingsCount or ratingValue for rating distributions; rating is unsupported.
+         * @minItems 1
+         * @maxItems 9
          */
-        keyword?: string;
+        metrics: Array<"industrySales" | "shelfTime" | "shelfTrend" | "ratingsCount" | "ratingValue" | "price" | "sellerType" | "sellerNation" | "apVideo">;
         /**
-         * The google prop value documented by SellerSprite for this MCP tool.
-         * @minLength 1
+         * Archived month (yyyyMM), only when explicitly requested. Omit for latest available. Unavailable archives fail. industrySales only supports the latest window; use category.report.detail monthlyList for historical sales/revenue within 24 months.
+         * @pattern ^\d{6}$
          */
-        googleProp?: string;
-        /** The monthly value documented by SellerSprite for this MCP tool. */
-        monthly?: boolean;
+        dataMonth?: string;
         /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
+         * Number of leading products sampled for distributions, default 100.
+         * @minimum 1
          */
-        returnFields?: string;
+        topN?: number;
+        /**
+         * Months of industry sales history, default 5.
+         * @minimum 1
+         */
+        months?: number;
       };
       output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
+        /** Structured upstream research data. Fields vary by tool; new fields are preserved. */
         result: unknown;
       };
     };
-    /** Retrieve SellerSprite's Keepa-style historical product trend data for one Amazon ASIN. */
-    "sellersprite_mcp.keepa_info": {
+    /** Read historical prices, rankings, ratings and coupon data. */
+    "sellersprite_mcp.keepa.trend": {
       input: {
-        /** The Amazon marketplace code supported by SellerSprite. */
-        marketplace: "US" | "JP" | "UK" | "DE" | "FR" | "IT" | "ES" | "CA" | "IN";
+        /** Amazon marketplace code. */
+        marketplace: "AE" | "AU" | "BR" | "CA" | "DE" | "ES" | "FR" | "IN" | "IT" | "JP" | "MX" | "UK" | "US";
         /**
-         * The ten-character Amazon ASIN.
-         * @minLength 10
-         * @maxLength 10
+         * ASIN or parent ASIN.
+         * @pattern ^B[0-9A-Z]{9}$
          */
         asin: string;
-        /** The start timestamp value documented by SellerSprite for this MCP tool. */
-        startTimestamp?: number;
-        /** The end timestamp value documented by SellerSprite for this MCP tool. */
-        endTimestamp?: number;
-        /** The daily latest value documented by SellerSprite for this MCP tool. */
-        dailyLatest?: boolean;
         /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
+         * History metrics; defaults to price/bsr/rating/reviews/sellers. Request additional enum values explicitly. monthlySoldHistory is a child snapshot, not parent monthly sales. Daily closing price can be averaged across a full month with coverage disclosed.
+         * @maxItems 16
          */
-        returnFields?: string;
+        metrics?: Array<"price" | "dealPrice" | "buybox" | "priceList" | "priceFBA" | "priceFBM" | "pricePrime" | "buyBoxSellerIdHistory" | "bsr" | "subSalesRank" | "reviews" | "rating" | "sellers" | "monthlySoldHistory" | "couponHistory" | "oneTimeCouponHistory">;
+        /** Date window; default three months, maximum twelve months. */
+        dateRange?: {
+          /** Start date (yyyy-MM-dd), default three months before today. */
+          startDate?: string;
+          /** End date (yyyy-MM-dd), default today. Windows over twelve months fail. */
+          endDate?: string;
+        };
       };
       output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
+        /** Structured upstream research data. Fields vary by tool; new fields are preserved. */
         result: unknown;
       };
     };
-    /** Analyze Amazon keyword search, click, purchase, conversion, advertising, price, and budget performance. */
-    "sellersprite_mcp.keyword_conversion": {
+    /** Search ABA keyword rankings or look up rankings by ASIN. */
+    "sellersprite_mcp.keyword.aba.list": {
       input: {
-        /** The Amazon marketplace code supported by SellerSprite. */
-        marketplace: "US" | "JP" | "UK" | "DE" | "FR" | "IT" | "ES" | "CA" | "IN";
+        /** Amazon marketplace code. */
+        marketplace?: "AE" | "AU" | "BR" | "CA" | "DE" | "ES" | "FR" | "IN" | "IT" | "JP" | "MX" | "UK" | "US";
+        /** Forward-query keyword filter. */
+        keyword?: string;
         /**
-         * The Amazon search keyword.
-         * @minLength 1
+         * Reverse-query ASINs, up to 10.
+         * @maxItems 10
          */
-        keyword: string;
+        asins?: Array<string>;
+        /** Optional ranking filter: 1 popular, 2 unusual movement, 3 continuous growth, 4 rapid rise, 5 potential, 6 long tail. Omit for all matches ordered by search-frequency rank. */
+        searchModel?: 1 | 2 | 3 | 4 | 5 | 6;
+        /** Forward-query category filter. */
+        departments?: Array<string>;
+        /** Period: WEEK or MONTH (default). MONTH accepts archived yyyyMM dates. */
+        dateType?: "WEEK" | "MONTH";
         /**
-         * The time type value documented by SellerSprite for this MCP tool.
-         * @minLength 1
+         * WEEK uses the week's Saturday (yyyyMMdd); MONTH uses yyyyMM. Omit for latest available. Do not infer future periods. Unarchived MONTH values fall back to the default month table and may return empty results.
+         * @pattern ^(\d{6}|\d{8})$
          */
-        timeType?: string;
-        /** The min searches value documented by SellerSprite for this MCP tool. */
-        minSearches?: number;
-        /** The max searches value documented by SellerSprite for this MCP tool. */
-        maxSearches?: number;
-        /** The min clicks value documented by SellerSprite for this MCP tool. */
-        minClicks?: number;
-        /** The max clicks value documented by SellerSprite for this MCP tool. */
-        maxClicks?: number;
-        /** The min purchases value documented by SellerSprite for this MCP tool. */
-        minPurchases?: number;
-        /** The max purchases value documented by SellerSprite for this MCP tool. */
-        maxPurchases?: number;
-        /** The min search conv rate value documented by SellerSprite for this MCP tool. */
-        minSearchConvRate?: number;
-        /** The max search conv rate value documented by SellerSprite for this MCP tool. */
-        maxSearchConvRate?: number;
-        /** The min click conv rate value documented by SellerSprite for this MCP tool. */
-        minClickConvRate?: number;
-        /** The max click conv rate value documented by SellerSprite for this MCP tool. */
-        maxClickConvRate?: number;
-        /** The min ppc value documented by SellerSprite for this MCP tool. */
-        minPpc?: number;
-        /** The max ppc value documented by SellerSprite for this MCP tool. */
-        maxPpc?: number;
-        /** The min cpa value documented by SellerSprite for this MCP tool. */
-        minCpa?: number;
-        /** The max cpa value documented by SellerSprite for this MCP tool. */
-        maxCpa?: number;
-        /** The min product price value documented by SellerSprite for this MCP tool. */
-        minProductPrice?: number;
-        /** The max product price value documented by SellerSprite for this MCP tool. */
-        maxProductPrice?: number;
-        /** The min acos value documented by SellerSprite for this MCP tool. */
-        minAcos?: number;
-        /** The max acos value documented by SellerSprite for this MCP tool. */
-        maxAcos?: number;
-        /** The min clicking rate value documented by SellerSprite for this MCP tool. */
-        minClickingRate?: number;
-        /** The max clicking rate value documented by SellerSprite for this MCP tool. */
-        maxClickingRate?: number;
-        /** The min conversion rate value documented by SellerSprite for this MCP tool. */
-        minConversionRate?: number;
-        /** The max conversion rate value documented by SellerSprite for this MCP tool. */
-        maxConversionRate?: number;
-        /** The min phrase count value documented by SellerSprite for this MCP tool. */
-        minPhraseCount?: number;
-        /** The max phrase count value documented by SellerSprite for this MCP tool. */
-        maxPhraseCount?: number;
-        /** The min budget value documented by SellerSprite for this MCP tool. */
-        minBudget?: number;
-        /** The max budget value documented by SellerSprite for this MCP tool. */
-        maxBudget?: number;
-        /** The match type value documented by SellerSprite for this MCP tool. */
-        matchType?: number;
-        /**
-         * Keywords that results must include.
-         * @minItems 1
-         */
-        includeKeywords?: Array<string>;
-        /**
-         * Keywords that results must exclude.
-         * @minItems 1
-         */
-        excludeKeywords?: Array<string>;
-        /** The custom avg product price value documented by SellerSprite for this MCP tool. */
-        customAvgProductPrice?: number;
-        /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
-         */
-        returnFields?: string;
-      };
-      output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
-        result: unknown;
-      };
-    };
-    /** Discover related Amazon keywords using search volume, purchase, competition, relevancy, PPC, price, and review filters. */
-    "sellersprite_mcp.keyword_miner": {
-      input: {
-        /** The Amazon marketplace code supported by SellerSprite. */
-        marketplace: "US" | "JP" | "UK" | "DE" | "FR" | "IT" | "ES" | "CA" | "IN";
-        /** The historical month in YYYYMM format; omit for the latest period. */
-        historyDate?: string;
-        /**
-         * The Amazon search keyword.
-         * @minLength 1
-         */
-        keyword: string;
-        /**
-         * Amazon search keywords used by the query.
-         * @minItems 1
-         */
-        keywordList?: Array<string>;
-        /** The min search value documented by SellerSprite for this MCP tool. */
-        minSearch?: number;
-        /** The max search value documented by SellerSprite for this MCP tool. */
-        maxSearch?: number;
-        /** The min purchases value documented by SellerSprite for this MCP tool. */
-        minPurchases?: number;
-        /** The max purchases value documented by SellerSprite for this MCP tool. */
-        maxPurchases?: number;
-        /** The min purchases rate value documented by SellerSprite for this MCP tool. */
-        minPurchasesRate?: number;
-        /** The max purchases rate value documented by SellerSprite for this MCP tool. */
-        maxPurchasesRate?: number;
-        /** The min s p r value documented by SellerSprite for this MCP tool. */
-        minSPR?: number;
-        /** The max s p r value documented by SellerSprite for this MCP tool. */
-        maxSPR?: number;
-        /** The min title density value documented by SellerSprite for this MCP tool. */
-        minTitleDensity?: number;
-        /** The max title density value documented by SellerSprite for this MCP tool. */
-        maxTitleDensity?: number;
-        /** The min relevancy value documented by SellerSprite for this MCP tool. */
-        minRelevancy?: number;
-        /** The max relevancy value documented by SellerSprite for this MCP tool. */
-        maxRelevancy?: number;
-        /** The min search rank value documented by SellerSprite for this MCP tool. */
-        minSearchRank?: number;
-        /** The max search rank value documented by SellerSprite for this MCP tool. */
-        maxSearchRank?: number;
-        /** The min products value documented by SellerSprite for this MCP tool. */
-        minProducts?: number;
-        /** The max products value documented by SellerSprite for this MCP tool. */
-        maxProducts?: number;
-        /** The min supply demand ratio value documented by SellerSprite for this MCP tool. */
-        minSupplyDemandRatio?: number;
-        /** The max supply demand ratio value documented by SellerSprite for this MCP tool. */
-        maxSupplyDemandRatio?: number;
-        /** The min ad products value documented by SellerSprite for this MCP tool. */
-        minAdProducts?: number;
-        /** The max ad products value documented by SellerSprite for this MCP tool. */
-        maxAdProducts?: number;
-        /** The min word count value documented by SellerSprite for this MCP tool. */
-        minWordCount?: number;
-        /** The max word count value documented by SellerSprite for this MCP tool. */
-        maxWordCount?: number;
-        /** The min monopoly click rate value documented by SellerSprite for this MCP tool. */
-        minMonopolyClickRate?: number;
-        /** The max monopoly click rate value documented by SellerSprite for this MCP tool. */
-        maxMonopolyClickRate?: number;
-        /** The min bid value documented by SellerSprite for this MCP tool. */
-        minBid?: number;
-        /** The max bid value documented by SellerSprite for this MCP tool. */
-        maxBid?: number;
-        /** The min price value documented by SellerSprite for this MCP tool. */
-        minPrice?: number;
-        /** The max price value documented by SellerSprite for this MCP tool. */
-        maxPrice?: number;
-        /** The min ratings value documented by SellerSprite for this MCP tool. */
-        minRatings?: number;
-        /** The max ratings value documented by SellerSprite for this MCP tool. */
-        maxRatings?: number;
-        /** The min rating value documented by SellerSprite for this MCP tool. */
-        minRating?: number;
-        /** The max rating value documented by SellerSprite for this MCP tool. */
-        maxRating?: number;
-        /** The amazon choice value documented by SellerSprite for this MCP tool. */
-        amazonChoice?: boolean;
-        /** Root-word filter: 0 includes all keywords and 1 includes only root-word matches. */
-        filterRootWord?: 0 | 1;
-        /** Keyword match type: 2 for broad or 3 for phrase. */
-        matchType?: 2 | 3;
-        /**
-         * Keywords that results must include.
-         * @minItems 1
-         */
-        includeKeywords?: Array<string>;
-        /**
-         * Keywords that results must exclude.
-         * @minItems 1
-         */
-        excludeKeywords?: Array<string>;
-        /**
-         * The one-based result page number.
-         * @minimum 1
-         */
-        page?: number;
-        /**
-         * The number of results requested per page.
-         * @minimum 1
-         * @maximum 100
-         */
-        size?: number;
-        /** SellerSprite result sorting settings. */
-        order?: {
-          /**
-           * The SellerSprite field used to sort the results.
-           * @minLength 1
-           */
-          field?: string;
-          /** Whether to sort the results in descending order. */
-          desc?: boolean;
-          [key: string]: unknown;
+        date?: string;
+        /** Search volume range. */
+        searches?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Search rank range. */
+        searchRank?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Rank growth fraction; positive for improvement, negative for decline. */
+        rankGrowthRate?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Click concentration range. */
+        monopolyClickRate?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Click count range. */
+        clicks?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Impression count range. */
+        impressions?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Conversion rate range. */
+        conversionRate?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Word count range. */
+        wordCount?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** SPR range. */
+        spr?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Title density range. */
+        titleDensity?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
         };
         /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
+         * Keywords to exclude.
+         * @maxItems 20
          */
-        returnFields?: string;
-      };
-      output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
-        result: unknown;
-      };
-    };
-    /** Reverse-search the weekly or monthly Amazon keywords that generated orders for selected ASINs. */
-    "sellersprite_mcp.keyword_order": {
-      input: {
-        /** The Amazon marketplace code supported by SellerSprite. */
-        marketplace: "US" | "JP" | "UK" | "DE" | "FR" | "IT" | "ES" | "CA" | "IN";
+        excludeKeywords?: Array<string>;
+        /** Bid match type filter. */
+        keywordBidMatchType?: string;
+        /** Use exact matching. */
+        exactFlag?: boolean;
+        /** Filter unusual market movement. */
+        movementMarket?: boolean;
         /**
-         * Amazon ASINs to query, with at most 20 values.
+         * Forward anchor or included keywords, combined with OR. A nonempty list overrides keyword and cannot be combined with asins. Maximum 20 values.
          * @minItems 1
          * @maxItems 20
          */
-        asins: Array<string>;
-        /** Reverse-search period: W for weekly or M for monthly. */
-        reverseType: "W" | "M";
-        /**
-         * The SellerSprite reporting period documented for this tool.
-         * @minLength 1
-         */
-        date?: string;
-        /**
-         * Conversion categories: E for high quality, S for stable, L for lost, and I for ineffective impressions.
-         * @minItems 1
-         */
-        conversionType?: Array<"E" | "S" | "L" | "I">;
-        /**
-         * Variation handling values: Y excludes variations and N includes them.
-         * @minItems 1
-         */
-        variation?: Array<"Y" | "N">;
-        /**
-         * The one-based result page number.
-         * @minimum 1
-         */
-        page?: number;
-        /** The fixed SellerSprite page size of 50 results. */
-        size?: 50;
-        /** SellerSprite result sorting settings. */
-        order?: {
+        includeKeywords?: Array<string>;
+        /** Search rank change since the previous period; positive for improvement and negative for decline. */
+        rankGrowthValue?: number;
+        /** Page window. Request additional pages only when the requested result count or explicit export requires them. */
+        page?: {
           /**
-           * The SellerSprite field used to sort the results.
-           * @minLength 1
+           * Offset cursor, default 0.
+           * @minimum 0
+           * @maximum 3000
            */
-          field?: string;
-          /** Whether to sort the results in descending order. */
-          desc?: boolean;
-          [key: string]: unknown;
+          cursor?: number;
+          /**
+           * Page size, default 100.
+           * @minimum 1
+           * @maximum 100
+           */
+          size?: number;
         };
-        /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
-         */
-        returnFields?: string;
       };
       output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
+        /** Structured upstream research data. Fields vary by tool; new fields are preserved. */
         result: unknown;
       };
     };
-    /** Research Amazon keywords using search, purchase, competition, price, review, growth, PPC, and demand filters. */
-    "sellersprite_mcp.keyword_research": {
+    /** Read ABA rank, search volume and top-three click and conversion share trends. */
+    "sellersprite_mcp.keyword.aba.trend": {
       input: {
-        /** The Amazon marketplace code supported by SellerSprite. */
-        marketplace: "US" | "JP" | "UK" | "DE" | "FR" | "IT" | "ES" | "CA" | "IN";
+        /** Amazon marketplace code. */
+        marketplace: "AE" | "AU" | "BR" | "CA" | "DE" | "ES" | "FR" | "IN" | "IT" | "JP" | "MX" | "UK" | "US";
+        /** Keyword. */
+        keyword: string;
+        /** Metrics to include; omit for all metrics. */
+        metrics?: Array<"abaRank" | "abaSearchVolume" | "top3ClickShare" | "top3ConversionShare">;
+        /** WEEK or MONTH (default). Weekly dates use yyyy-MM-dd; monthly dates use the first day of the month. */
+        granularity?: "WEEK" | "MONTH";
+        /** Historical date window, only when explicitly requested. Defaults to one year before the latest available data point. Response dateRange is authoritative. */
+        dateRange?: {
+          /** Start date (yyyy-MM-dd), only for an explicitly requested window. Defaults to one year before the latest available data point. */
+          startDate?: string;
+          /** End date (yyyy-MM-dd), only for an explicitly requested window. Omitted or later values are capped at the latest available data point. */
+          endDate?: string;
+        };
+      };
+      output: {
+        /** Structured upstream research data. Fields vary by tool; new fields are preserved. */
+        result: unknown;
+      };
+    };
+    /** Find traffic keywords for up to 10 ASINs and compare their traffic shares. */
+    "sellersprite_mcp.keyword.asin.list": {
+      input: {
+        /** Amazon marketplace code. */
+        marketplace: "AE" | "AU" | "BR" | "CA" | "DE" | "ES" | "FR" | "IN" | "IT" | "JP" | "MX" | "UK" | "US";
         /**
-         * The historical month in YYYYMM format; omit when the tool supports latest data.
-         * @minLength 6
-         * @maxLength 6
+         * ASIN set, from 1 to 10; deduplicated by the server.
+         * @minItems 1
+         * @maxItems 10
+         */
+        asins: Array<string>;
+        /**
+         * LAST_30_DAYS (default) is rolling and forbids month. MONTH uses an archived calendar month; omit month for the latest archive.
+         * @default "LAST_30_DAYS"
+         */
+        dataRange?: "LAST_30_DAYS" | "MONTH";
+        /**
+         * Archived month (yyyyMM), only with dataRange=MONTH. Omit for latest archive. Do not infer the month from today's date.
+         * @pattern ^\d{6}$
          */
         month?: string;
         /**
-         * The departments value documented by SellerSprite for this MCP tool.
+         * Traffic types as a string array, for example ORGANIC and ADS, combined with OR. Omit for no filter. Affects items, not summary.typeStats.
          * @minItems 1
+         * @maxItems 16
          */
-        departments?: Array<string>;
-        /**
-         * The keywords value documented by SellerSprite for this MCP tool.
-         * @minLength 1
-         */
-        keywords?: string;
-        /**
-         * Keywords that results must exclude.
-         * @minLength 1
-         */
-        excludeKeywords?: string;
-        /** The min searches value documented by SellerSprite for this MCP tool. */
-        minSearches?: number;
-        /** The max searches value documented by SellerSprite for this MCP tool. */
-        maxSearches?: number;
-        /** The min searches cr value documented by SellerSprite for this MCP tool. */
-        minSearchesCr?: number;
-        /** The max searches cr value documented by SellerSprite for this MCP tool. */
-        maxSearchesCr?: number;
-        /** The min products value documented by SellerSprite for this MCP tool. */
-        minProducts?: number;
-        /** The max products value documented by SellerSprite for this MCP tool. */
-        maxProducts?: number;
-        /** The min purchases value documented by SellerSprite for this MCP tool. */
-        minPurchases?: number;
-        /** The max purchases value documented by SellerSprite for this MCP tool. */
-        maxPurchases?: number;
-        /** The min purchase rate value documented by SellerSprite for this MCP tool. */
-        minPurchaseRate?: number;
-        /** The max purchase rate value documented by SellerSprite for this MCP tool. */
-        maxPurchaseRate?: number;
-        /** The with yearly growth value documented by SellerSprite for this MCP tool. */
-        withYearlyGrowth?: boolean;
-        /** The min search month cv value documented by SellerSprite for this MCP tool. */
-        minSearchMonthCv?: number;
-        /** The max search month cv value documented by SellerSprite for this MCP tool. */
-        maxSearchMonthCv?: number;
-        /** The min search month cr value documented by SellerSprite for this MCP tool. */
-        minSearchMonthCr?: number;
-        /** The max search month cr value documented by SellerSprite for this MCP tool. */
-        maxSearchMonthCr?: number;
-        /** The min search nearly cv value documented by SellerSprite for this MCP tool. */
-        minSearchNearlyCv?: number;
-        /** The max search nearly cv value documented by SellerSprite for this MCP tool. */
-        maxSearchNearlyCv?: number;
-        /** The min search nearly cr value documented by SellerSprite for this MCP tool. */
-        minSearchNearlyCr?: number;
-        /** The max search nearly cr value documented by SellerSprite for this MCP tool. */
-        maxSearchNearlyCr?: number;
-        /**
-         * The market period value documented by SellerSprite for this MCP tool.
-         * @minLength 1
-         */
-        marketPeriod?: string;
-        /** The min avg price value documented by SellerSprite for this MCP tool. */
-        minAvgPrice?: number;
-        /** The max avg price value documented by SellerSprite for this MCP tool. */
-        maxAvgPrice?: number;
-        /** The min ratings value documented by SellerSprite for this MCP tool. */
-        minRatings?: number;
-        /** The max ratings value documented by SellerSprite for this MCP tool. */
-        maxRatings?: number;
-        /** The min rating value documented by SellerSprite for this MCP tool. */
-        minRating?: number;
-        /** The max rating value documented by SellerSprite for this MCP tool. */
-        maxRating?: number;
-        /** The min bid value documented by SellerSprite for this MCP tool. */
-        minBid?: number;
-        /** The max bid value documented by SellerSprite for this MCP tool. */
-        maxBid?: number;
-        /** The min ara click rate value documented by SellerSprite for this MCP tool. */
-        minAraClickRate?: number;
-        /** The max ara click rate value documented by SellerSprite for this MCP tool. */
-        maxAraClickRate?: number;
-        /** The min goods value value documented by SellerSprite for this MCP tool. */
-        minGoodsValue?: number;
-        /** The max goods value value documented by SellerSprite for this MCP tool. */
-        maxGoodsValue?: number;
-        /** The min supply demand ratio value documented by SellerSprite for this MCP tool. */
-        minSupplyDemandRatio?: number;
-        /** The max supply demand ratio value documented by SellerSprite for this MCP tool. */
-        maxSupplyDemandRatio?: number;
-        /** The min word count value documented by SellerSprite for this MCP tool. */
-        minWordCount?: number;
-        /** The max word count value documented by SellerSprite for this MCP tool. */
-        maxWordCount?: number;
-        /**
-         * The one-based result page number.
-         * @minimum 1
-         */
-        page?: number;
-        /**
-         * The number of results requested per page.
-         * @minimum 1
-         * @maximum 15
-         */
-        size?: number;
-        /** SellerSprite result sorting settings. */
-        order?: {
+        trafficWordType?: Array<"ORGANIC" | "ADS" | "AMAZON_CHOICE" | "EDITORIAL_RECOMMENDATION" | "FOUR_STAR" | "HIGHLY_RATED" | "SPONSOR_BRAND" | "SPONSOR_VIDEO" | "PRIMARY" | "PRECISE" | "PRECISE_LONG_TAIL" | "EFFECTIVE" | "CONVERSION_EXCELLENT" | "CONVERSION_STABLE" | "CONVERSION_LOST" | "INVALID">;
+        /** Item sort field: searches for monthly estimated search volume or trafficShare for group traffic share (default descending). */
+        orderField?: "searches" | "trafficShare";
+        /** Sort descending, default true. */
+        orderDesc?: boolean;
+        /** Page window. Request additional pages only when the requested result count or explicit export requires them. */
+        page?: {
           /**
-           * The SellerSprite field used to sort the results.
-           * @minLength 1
+           * Offset cursor, default 0; cursor + size must not exceed 3000.
+           * @minimum 0
+           * @maximum 3000
            */
-          field?: string;
-          /** Whether to sort the results in descending order. */
-          desc?: boolean;
-          [key: string]: unknown;
+          cursor?: number;
+          /**
+           * Page size, default 100.
+           * @minimum 1
+           * @maximum 100
+           */
+          size?: number;
         };
         /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
+         * Select item output fields. Omit for defaults. Does not affect summary or page.
+         * @minItems 1
+         * @maxItems 26
          */
-        returnFields?: string;
+        includeFields?: Array<"keyword" | "searchVolume" | "searchesRank" | "trafficShare" | "trafficWordTypes" | "purchases" | "purchaseRate" | "clicks" | "impressions" | "products" | "supplyDemandRatio" | "bid" | "ppc" | "avgPrice" | "avgRating" | "avgReviews" | "titleDensity" | "spr" | "monopolyClickRate" | "adProducts" | "updatedTime" | "bestRank" | "bestAdRank" | "matchedAsins" | "clickShareRate" | "conversionShareRate">;
       };
       output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
+        /** Structured upstream research data. Fields vary by tool; new fields are preserved. */
         result: unknown;
       };
     };
-    /** Retrieve the historical SellerSprite trend for one Amazon keyword. */
-    "sellersprite_mcp.keyword_research_trends": {
+    /** Compare search and purchase metrics for up to 20 keywords. */
+    "sellersprite_mcp.keyword.batch.info": {
       input: {
-        /** The Amazon marketplace code supported by SellerSprite. */
-        marketplace: "US" | "JP" | "UK" | "DE" | "FR" | "IT" | "ES" | "CA" | "IN";
+        /** Amazon marketplace code. */
+        marketplace: "AE" | "AU" | "BR" | "CA" | "DE" | "ES" | "FR" | "IN" | "IT" | "JP" | "MX" | "UK" | "US";
         /**
-         * The Amazon search keyword.
-         * @minLength 1
+         * Keywords, from 1 to 20.
+         * @minItems 1
+         * @maxItems 20
          */
-        keyword: string;
+        keywords: Array<string>;
         /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
+         * Archived month (yyyyMM), only when explicitly requested. Omit for server defaults. Unavailable archives are normalized to the latest available month; response month is authoritative.
+         * @pattern ^\d{6}$
          */
-        returnFields?: string;
+        month?: string;
+        /** Upstream KeywordMinerOrderColumns.orderField, default searches. relevancy maps to upstream code 21. */
+        orderField?: "searches" | "purchases" | "purchase_rate" | "products" | "supply_demand_ratio" | "latest1daysAds" | "bid" | "titleDensityExact" | "cprExact" | "avg_price" | "monopoly_click_rate" | "avg_rating" | "avg_reviews" | "relevancy" | "adProducts7" | "rank" | "clicks" | "impressions" | "goods_value" | "cvsShareRate" | "searches_growth" | "yearly_growth_rate";
+        /** Sort descending, default true. */
+        desc?: boolean;
       };
       output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
+        /** Structured upstream research data. Fields vary by tool; new fields are preserved. */
+        result: unknown;
+      };
+    };
+    /** Analyze keyword advertising clicks, conversions, ACOS and CPA. */
+    "sellersprite_mcp.keyword.conversion.analysis": {
+      input: {
+        /** Amazon marketplace code. */
+        marketplace: "AE" | "AU" | "BR" | "CA" | "DE" | "ES" | "FR" | "IN" | "IT" | "JP" | "MX" | "UK" | "US";
+        /** Keyword. */
+        keyword: string;
+        /** Analysis time period. */
+        timeType: "WEEK" | "90D";
+        /** Keyword matching mode, default PHRASE. */
+        matchType?: "PHRASE" | "BROAD";
+        /** Bid match type filter. */
+        bidMatchType?: string;
+        /** Custom average product price. */
+        customAvgProductPrice?: number;
+        /**
+         * Niche market filter.
+         * @maxItems 20
+         */
+        nicheMarkets?: Array<string>;
+        /**
+         * Included-word filter, not a batch query.
+         * @maxItems 20
+         */
+        includeKeywords?: Array<string>;
+        /**
+         * Excluded-word filter.
+         * @maxItems 20
+         */
+        excludeKeywords?: Array<string>;
+        /** Search volume range. */
+        searches?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Click count range. */
+        clicks?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Purchase volume range. */
+        purchases?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Search conversion rate range. */
+        searchConvRate?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Click conversion rate range. */
+        clickConvRate?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** PPC bid range. */
+        ppc?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** CPA range. */
+        cpa?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Product price range. */
+        productPrice?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** ACOS range. */
+        acos?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Click-through rate range. */
+        clickingRate?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Conversion rate range. */
+        conversionRate?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Phrase count range. */
+        phraseCount?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Suggested budget range. */
+        budget?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Sort by searches/clicks/purchases/searchConvRate/clickConvRate/clickingRate/avgProductPrice. Sorting by ppc/cpa/acos/budget also requires bidMatchType; otherwise the provider falls back to searches. */
+        orderField?: "searches" | "clicks" | "purchases" | "searchConvRate" | "clickConvRate" | "clickingRate" | "avgProductPrice" | "ppc" | "cpa" | "acos" | "budget";
+        /** Sort descending, default true. */
+        desc?: boolean;
+        /** Page window. Request additional pages only when the requested result count or explicit export requires them. */
+        page?: {
+          /**
+           * Offset cursor, default 0.
+           * @minimum 0
+           * @maximum 3000
+           */
+          cursor?: number;
+          /**
+           * Page size, default 100.
+           * @minimum 1
+           * @maximum 100
+           */
+          size?: number;
+        };
+      };
+      output: {
+        /** Structured upstream research data. Fields vary by tool; new fields are preserved. */
+        result: unknown;
+      };
+    };
+    /** Read Google Trends interest for a keyword on Web or Shopping. */
+    "sellersprite_mcp.keyword.google.trend": {
+      input: {
+        /** Amazon marketplace code. */
+        marketplace: "AE" | "AU" | "BR" | "CA" | "DE" | "ES" | "FR" | "IN" | "IT" | "JP" | "MX" | "UK" | "US";
+        /** Keyword. */
+        keyword: string;
+        /** Google search source, default WEB. */
+        gprop?: "WEB" | "SHOPPING";
+        /** Date window, maximum five years. */
+        dateRange?: {
+          /** Start date (yyyy-MM-dd), default five years before today. */
+          startDate?: string;
+          /** End date (yyyy-MM-dd), default today. */
+          endDate?: string;
+        };
+      };
+      output: {
+        /** Structured upstream research data. Fields vary by tool; new fields are preserved. */
+        result: unknown;
+      };
+    };
+    /** Expand a seed keyword and compare demand, competition and PPC bids. */
+    "sellersprite_mcp.keyword.related.list": {
+      input: {
+        /** Amazon marketplace code. */
+        marketplace: "AE" | "AU" | "BR" | "CA" | "DE" | "ES" | "FR" | "IN" | "IT" | "JP" | "MX" | "UK" | "US";
+        /** Seed keyword. */
+        seedKeyword: string;
+        /** Search volume range. */
+        searchVolume?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Purchase volume range. */
+        purchaseVolume?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Purchase rate range. */
+        purchaseRate?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Word count range. */
+        wordCount?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Competition range measured by product count. */
+        competition?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** PPC bid range. */
+        ppcBid?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Relevance range. */
+        relevancy?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** SPR range. */
+        spr?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Title density filter. */
+        titleDensity?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Supply-demand ratio filter. */
+        supplyDemandRatio?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Advertising product count filter. */
+        adProducts?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Search rank filter. */
+        searchRank?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Matching product average price filter. */
+        avgPrice?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Matching product average rating filter. */
+        avgRating?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Matching product average review count filter. */
+        avgReviewCount?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Click count filter. */
+        clicks?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Impression count filter. */
+        impressions?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Click concentration filter. */
+        monopolyClickRate?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Search volume growth filter. */
+        searchesGrowth?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /** Annual growth filter. */
+        yearlyGrowthRate?: {
+          /** Minimum value. */
+          min?: number;
+          /** Maximum value. */
+          max?: number;
+        };
+        /**
+         * Keywords to include.
+         * @maxItems 20
+         */
+        includeKeywords?: Array<string>;
+        /**
+         * Keywords to exclude.
+         * @maxItems 20
+         */
+        excludeKeywords?: Array<string>;
+        /** Bid match type filter. */
+        keywordBidMatchType?: string;
+        /**
+         * Category node paths, mapped to upstream departmentList.
+         * @maxItems 20
+         */
+        departments?: Array<string>;
+        /** Amazon's Choice filter. */
+        amazonChoice?: boolean;
+        /** Broad matching filter. */
+        extensiveMatch?: boolean;
+        /** Page window. Request additional pages only when the requested result count or explicit export requires them. */
+        page?: {
+          /**
+           * Offset cursor, default 0.
+           * @minimum 0
+           * @maximum 3000
+           */
+          cursor?: number;
+          /**
+           * Page size, default 100.
+           * @minimum 1
+           * @maximum 100
+           */
+          size?: number;
+        };
+        /** Upstream KeywordMinerOrderColumns.orderField, default searches. relevancy maps to upstream code 21. */
+        orderField?: "searches" | "purchases" | "purchase_rate" | "products" | "supply_demand_ratio" | "latest1daysAds" | "bid" | "titleDensityExact" | "cprExact" | "avg_price" | "monopoly_click_rate" | "avg_rating" | "avg_reviews" | "relevancy" | "adProducts7" | "rank" | "clicks" | "impressions" | "goods_value" | "cvsShareRate" | "searches_growth" | "yearly_growth_rate";
+        /** Sort descending, default true. */
+        desc?: boolean;
+        /**
+         * Output field selection. Omit or pass an empty list for defaults. Allowed fields are listed in items.enum.
+         * @maxItems 9
+         */
+        includeFields?: Array<"keyword" | "searchVolume" | "purchaseVolume" | "purchaseRate" | "competition" | "ppcBid" | "wordCount" | "spr" | "relevancy">;
+      };
+      output: {
+        /** Structured upstream research data. Fields vary by tool; new fields are preserved. */
+        result: unknown;
+      };
+    };
+    /** Read keyword search volume, purchase volume and conversion trends. */
+    "sellersprite_mcp.keyword.trend": {
+      input: {
+        /** Amazon marketplace code. */
+        marketplace: "AE" | "AU" | "BR" | "CA" | "DE" | "ES" | "FR" | "IN" | "IT" | "JP" | "MX" | "UK" | "US";
+        /** Keyword. */
+        keyword: string;
+        /**
+         * Distinct trend metrics. Leading months before coverage have null searchVolume; zero inside coverage is a real zero. Uncovered keywords fail instead of returning an all-zero series.
+         * @minItems 1
+         * @maxItems 6
+         */
+        metrics: Array<"searchVolume" | "purchaseVolume" | "purchaseRate" | "yearlyGrowth" | "chainGrowth" | "threeMonthGrowth">;
+        /** Date window rounded to calendar months. With both bounds omitted, uses the latest available month and preceding 36 calendar months. Response dateRange is authoritative. */
+        dateRange?: {
+          /** Start date (yyyy-MM-dd), only for an explicitly requested window. Defaults to 36 calendar months before the latest available month. */
+          startDate?: string;
+          /** End date (yyyy-MM-dd), only for an explicitly requested window. Omitted or later dates are capped at the latest available month. */
+          endDate?: string;
+        };
+        /** Aggregation granularity, default MONTH. */
+        granularity?: "MONTH";
+      };
+      output: {
+        /** Structured upstream research data. Fields vary by tool; new fields are preserved. */
         result: unknown;
       };
     };
@@ -1011,1357 +1801,6 @@ declare module "@oomol-lab/connector" {
           /** The current JSON Schema for the tool arguments, supplied by SellerSprite MCP. */
           inputSchema: Record<string, unknown>;
         }>;
-      };
-    };
-    /** Retrieve brand concentration for one Amazon category market. */
-    "sellersprite_mcp.market_brand_concentration": {
-      input: {
-        /** The Amazon marketplace code supported by SellerSprite. */
-        marketplace: "US" | "JP" | "UK" | "DE" | "FR" | "IT" | "ES" | "CA" | "IN";
-        /**
-         * The historical month in YYYYMM format; omit when the tool supports latest data.
-         * @minLength 6
-         * @maxLength 6
-         */
-        month?: string;
-        /** The top n value documented by SellerSprite for this MCP tool. */
-        topN?: number;
-        /** The new product value documented by SellerSprite for this MCP tool. */
-        newProduct?: number;
-        /**
-         * The colon-separated Amazon category node path.
-         * @minLength 1
-         */
-        nodeIdPath: string;
-        /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
-         */
-        returnFields?: string;
-      };
-      output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
-        result: unknown;
-      };
-    };
-    /** Retrieve the A+ content and video distribution for one Amazon category market. */
-    "sellersprite_mcp.market_ebc_distribution": {
-      input: {
-        /** The Amazon marketplace code supported by SellerSprite. */
-        marketplace: "US" | "JP" | "UK" | "DE" | "FR" | "IT" | "ES" | "CA" | "IN";
-        /**
-         * The historical month in YYYYMM format; omit when the tool supports latest data.
-         * @minLength 6
-         * @maxLength 6
-         */
-        month?: string;
-        /** The top n value documented by SellerSprite for this MCP tool. */
-        topN?: number;
-        /** The new product value documented by SellerSprite for this MCP tool. */
-        newProduct?: number;
-        /**
-         * The colon-separated Amazon category node path.
-         * @minLength 1
-         */
-        nodeIdPath: string;
-        /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
-         */
-        returnFields?: string;
-      };
-      output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
-        result: unknown;
-      };
-    };
-    /** Retrieve the listing-age distribution for one Amazon category market. */
-    "sellersprite_mcp.market_listing_date_distribution": {
-      input: {
-        /** The Amazon marketplace code supported by SellerSprite. */
-        marketplace: "US" | "JP" | "UK" | "DE" | "FR" | "IT" | "ES" | "CA" | "IN";
-        /**
-         * The historical month in YYYYMM format; omit when the tool supports latest data.
-         * @minLength 6
-         * @maxLength 6
-         */
-        month?: string;
-        /** The top n value documented by SellerSprite for this MCP tool. */
-        topN?: number;
-        /** The new product value documented by SellerSprite for this MCP tool. */
-        newProduct?: number;
-        /**
-         * The colon-separated Amazon category node path.
-         * @minLength 1
-         */
-        nodeIdPath: string;
-        /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
-         */
-        returnFields?: string;
-      };
-      output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
-        result: unknown;
-      };
-    };
-    /** Retrieve Amazon market listing-trend distribution data using the supplied optional market filters. */
-    "sellersprite_mcp.market_listing_trend_distribution": {
-      input: {
-        /** The Amazon marketplace code supported by SellerSprite. */
-        marketplace?: "US" | "JP" | "UK" | "DE" | "FR" | "IT" | "ES" | "CA" | "IN";
-        /**
-         * The historical month in YYYYMM format; omit when the tool supports latest data.
-         * @minLength 6
-         * @maxLength 6
-         */
-        month?: string;
-        /** The top n value documented by SellerSprite for this MCP tool. */
-        topN?: number;
-        /** The new product value documented by SellerSprite for this MCP tool. */
-        newProduct?: number;
-        /**
-         * The colon-separated Amazon category node path.
-         * @minLength 1
-         */
-        nodeIdPath?: string;
-        /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
-         */
-        returnFields?: string;
-      };
-      output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
-        result: unknown;
-      };
-    };
-    /** Retrieve the price distribution for one Amazon category market. */
-    "sellersprite_mcp.market_price_distribution": {
-      input: {
-        /** The Amazon marketplace code supported by SellerSprite. */
-        marketplace: "US" | "JP" | "UK" | "DE" | "FR" | "IT" | "ES" | "CA" | "IN";
-        /**
-         * The historical month in YYYYMM format; omit when the tool supports latest data.
-         * @minLength 6
-         * @maxLength 6
-         */
-        month?: string;
-        /** The top n value documented by SellerSprite for this MCP tool. */
-        topN?: number;
-        /** The new product value documented by SellerSprite for this MCP tool. */
-        newProduct?: number;
-        /**
-         * The colon-separated Amazon category node path.
-         * @minLength 1
-         */
-        nodeIdPath: string;
-        /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
-         */
-        returnFields?: string;
-      };
-      output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
-        result: unknown;
-      };
-    };
-    /** Retrieve product concentration for one Amazon category market. */
-    "sellersprite_mcp.market_product_concentration": {
-      input: {
-        /** The Amazon marketplace code supported by SellerSprite. */
-        marketplace: "US" | "JP" | "UK" | "DE" | "FR" | "IT" | "ES" | "CA" | "IN";
-        /**
-         * The historical month in YYYYMM format; omit when the tool supports latest data.
-         * @minLength 6
-         * @maxLength 6
-         */
-        month?: string;
-        /** The top n value documented by SellerSprite for this MCP tool. */
-        topN?: number;
-        /** The new product value documented by SellerSprite for this MCP tool. */
-        newProduct?: number;
-        /**
-         * The colon-separated Amazon category node path.
-         * @minLength 1
-         */
-        nodeIdPath: string;
-        /**
-         * Amazon ASINs used by the query.
-         * @minItems 1
-         */
-        asins?: Array<string>;
-        /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
-         */
-        returnFields?: string;
-      };
-      output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
-        result: unknown;
-      };
-    };
-    /** Retrieve the product-demand trend for one Amazon category market. */
-    "sellersprite_mcp.market_product_demand_trend": {
-      input: {
-        /** The Amazon marketplace code supported by SellerSprite. */
-        marketplace: "US" | "JP" | "UK" | "DE" | "FR" | "IT" | "ES" | "CA" | "IN";
-        /**
-         * The historical month in YYYYMM format; omit when the tool supports latest data.
-         * @minLength 6
-         * @maxLength 6
-         */
-        month?: string;
-        /** The top n value documented by SellerSprite for this MCP tool. */
-        topN?: number;
-        /** The new product value documented by SellerSprite for this MCP tool. */
-        newProduct?: number;
-        /**
-         * The colon-separated Amazon category node path.
-         * @minLength 1
-         */
-        nodeIdPath: string;
-        /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
-         */
-        returnFields?: string;
-      };
-      output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
-        result: unknown;
-      };
-    };
-    /** Retrieve the star-rating distribution for one Amazon category market. */
-    "sellersprite_mcp.market_rating_distribution": {
-      input: {
-        /** The Amazon marketplace code supported by SellerSprite. */
-        marketplace: "US" | "JP" | "UK" | "DE" | "FR" | "IT" | "ES" | "CA" | "IN";
-        /**
-         * The historical month in YYYYMM format; omit when the tool supports latest data.
-         * @minLength 6
-         * @maxLength 6
-         */
-        month?: string;
-        /** The top n value documented by SellerSprite for this MCP tool. */
-        topN?: number;
-        /** The new product value documented by SellerSprite for this MCP tool. */
-        newProduct?: number;
-        /**
-         * The colon-separated Amazon category node path.
-         * @minLength 1
-         */
-        nodeIdPath: string;
-        /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
-         */
-        returnFields?: string;
-      };
-      output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
-        result: unknown;
-      };
-    };
-    /** Retrieve the review-count distribution for one Amazon category market. */
-    "sellersprite_mcp.market_ratings_count_distribution": {
-      input: {
-        /** The Amazon marketplace code supported by SellerSprite. */
-        marketplace: "US" | "JP" | "UK" | "DE" | "FR" | "IT" | "ES" | "CA" | "IN";
-        /**
-         * The historical month in YYYYMM format; omit when the tool supports latest data.
-         * @minLength 6
-         * @maxLength 6
-         */
-        month?: string;
-        /** The top n value documented by SellerSprite for this MCP tool. */
-        topN?: number;
-        /** The new product value documented by SellerSprite for this MCP tool. */
-        newProduct?: number;
-        /**
-         * The colon-separated Amazon category node path.
-         * @minLength 1
-         */
-        nodeIdPath: string;
-        /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
-         */
-        returnFields?: string;
-      };
-      output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
-        result: unknown;
-      };
-    };
-    /** Research Amazon categories and market segments using demand, competition, concentration, fulfillment, seller, and new-product filters. */
-    "sellersprite_mcp.market_research": {
-      input: {
-        /** The Amazon marketplace code supported by SellerSprite. */
-        marketplace: "US" | "JP" | "UK" | "DE" | "FR" | "IT" | "ES" | "CA" | "IN";
-        /**
-         * The historical month in YYYYMM format; omit when the tool supports latest data.
-         * @minLength 6
-         * @maxLength 6
-         */
-        month?: string;
-        /** The top num value documented by SellerSprite for this MCP tool. */
-        topNum?: number;
-        /** The new product value documented by SellerSprite for this MCP tool. */
-        newProduct?: number;
-        /**
-         * The colon-separated Amazon category node path.
-         * @minLength 1
-         */
-        nodeIdPath?: string;
-        /**
-         * The department keyword value documented by SellerSprite for this MCP tool.
-         * @minLength 1
-         */
-        departmentKeyword?: string;
-        /** The min avg units value documented by SellerSprite for this MCP tool. */
-        minAvgUnits?: number;
-        /** The max avg units value documented by SellerSprite for this MCP tool. */
-        maxAvgUnits?: number;
-        /** The min avg revenue value documented by SellerSprite for this MCP tool. */
-        minAvgRevenue?: number;
-        /** The max avg revenue value documented by SellerSprite for this MCP tool. */
-        maxAvgRevenue?: number;
-        /** The min avg ratings value documented by SellerSprite for this MCP tool. */
-        minAvgRatings?: number;
-        /** The max avg ratings value documented by SellerSprite for this MCP tool. */
-        maxAvgRatings?: number;
-        /** The min avg rating value documented by SellerSprite for this MCP tool. */
-        minAvgRating?: number;
-        /** The max avg rating value documented by SellerSprite for this MCP tool. */
-        maxAvgRating?: number;
-        /** The min avg bsr value documented by SellerSprite for this MCP tool. */
-        minAvgBsr?: number;
-        /** The max avg bsr value documented by SellerSprite for this MCP tool. */
-        maxAvgBsr?: number;
-        /** The min avg price value documented by SellerSprite for this MCP tool. */
-        minAvgPrice?: number;
-        /** The max avg price value documented by SellerSprite for this MCP tool. */
-        maxAvgPrice?: number;
-        /** The min weight value documented by SellerSprite for this MCP tool. */
-        minWeight?: number;
-        /** The max weight value documented by SellerSprite for this MCP tool. */
-        maxWeight?: number;
-        /** The min volume value documented by SellerSprite for this MCP tool. */
-        minVolume?: number;
-        /** The max volume value documented by SellerSprite for this MCP tool. */
-        maxVolume?: number;
-        /** The min avg profit value documented by SellerSprite for this MCP tool. */
-        minAvgProfit?: number;
-        /** The max avg profit value documented by SellerSprite for this MCP tool. */
-        maxAvgProfit?: number;
-        /** The min top avg units value documented by SellerSprite for this MCP tool. */
-        minTopAvgUnits?: number;
-        /** The max top avg units value documented by SellerSprite for this MCP tool. */
-        maxTopAvgUnits?: number;
-        /** The min top avg revenue value documented by SellerSprite for this MCP tool. */
-        minTopAvgRevenue?: number;
-        /** The max top avg revenue value documented by SellerSprite for this MCP tool. */
-        maxTopAvgRevenue?: number;
-        /** The min top avg bsr value documented by SellerSprite for this MCP tool. */
-        minTopAvgBsr?: number;
-        /** The max top avg bsr value documented by SellerSprite for this MCP tool. */
-        maxTopAvgBsr?: number;
-        /** The min goods count value documented by SellerSprite for this MCP tool. */
-        minGoodsCount?: number;
-        /** The max goods count value documented by SellerSprite for this MCP tool. */
-        maxGoodsCount?: number;
-        /** The min brands value documented by SellerSprite for this MCP tool. */
-        minBrands?: number;
-        /** The max brands value documented by SellerSprite for this MCP tool. */
-        maxBrands?: number;
-        /** The min sellers value documented by SellerSprite for this MCP tool. */
-        minSellers?: number;
-        /** The max sellers value documented by SellerSprite for this MCP tool. */
-        maxSellers?: number;
-        /** The min avg sellers value documented by SellerSprite for this MCP tool. */
-        minAvgSellers?: number;
-        /** The max avg sellers value documented by SellerSprite for this MCP tool. */
-        maxAvgSellers?: number;
-        /** The min goods crn value documented by SellerSprite for this MCP tool. */
-        minGoodsCrn?: number;
-        /** The max goods crn value documented by SellerSprite for this MCP tool. */
-        maxGoodsCrn?: number;
-        /** The min brand crn value documented by SellerSprite for this MCP tool. */
-        minBrandCrn?: number;
-        /** The max brand crn value documented by SellerSprite for this MCP tool. */
-        maxBrandCrn?: number;
-        /** The max seller crn value documented by SellerSprite for this MCP tool. */
-        maxSellerCrn?: number;
-        /** The min seller crn value documented by SellerSprite for this MCP tool. */
-        minSellerCrn?: number;
-        /** The min ebc proportion value documented by SellerSprite for this MCP tool. */
-        minEbcProportion?: number;
-        /** The max ebc proportion value documented by SellerSprite for this MCP tool. */
-        maxEbcProportion?: number;
-        /** The min fba proportion value documented by SellerSprite for this MCP tool. */
-        minFbaProportion?: number;
-        /** The max fba proportion value documented by SellerSprite for this MCP tool. */
-        maxFbaProportion?: number;
-        /** The min fbm proportion value documented by SellerSprite for this MCP tool. */
-        minFbmProportion?: number;
-        /** The max fbm proportion value documented by SellerSprite for this MCP tool. */
-        maxFbmProportion?: number;
-        /** The min amazon self proportion value documented by SellerSprite for this MCP tool. */
-        minAmazonSelfProportion?: number;
-        /** The max amazon self proportion value documented by SellerSprite for this MCP tool. */
-        maxAmazonSelfProportion?: number;
-        /**
-         * The seller location value documented by SellerSprite for this MCP tool.
-         * @minLength 1
-         */
-        sellerLocation?: string;
-        /** The min new proportion value documented by SellerSprite for this MCP tool. */
-        minNewProportion?: number;
-        /** The max new proportion value documented by SellerSprite for this MCP tool. */
-        maxNewProportion?: number;
-        /** The min new count value documented by SellerSprite for this MCP tool. */
-        minNewCount?: number;
-        /** The max new count value documented by SellerSprite for this MCP tool. */
-        maxNewCount?: number;
-        /** The min new avg ratings value documented by SellerSprite for this MCP tool. */
-        minNewAvgRatings?: number;
-        /** The max new avg ratings value documented by SellerSprite for this MCP tool. */
-        maxNewAvgRatings?: number;
-        /** The min new avg price value documented by SellerSprite for this MCP tool. */
-        minNewAvgPrice?: number;
-        /** The max new avg price value documented by SellerSprite for this MCP tool. */
-        maxNewAvgPrice?: number;
-        /** The min new avg rating value documented by SellerSprite for this MCP tool. */
-        minNewAvgRating?: number;
-        /** The max new avg rating value documented by SellerSprite for this MCP tool. */
-        maxNewAvgRating?: number;
-        /** The min new avg units value documented by SellerSprite for this MCP tool. */
-        minNewAvgUnits?: number;
-        /** The max new avg units value documented by SellerSprite for this MCP tool. */
-        maxNewAvgUnits?: number;
-        /** The min new avg revenue value documented by SellerSprite for this MCP tool. */
-        minNewAvgRevenue?: number;
-        /** The max new avg revenue value documented by SellerSprite for this MCP tool. */
-        maxNewAvgRevenue?: number;
-        /**
-         * The one-based result page number.
-         * @minimum 1
-         */
-        page?: number;
-        /**
-         * The number of results requested per page.
-         * @minimum 1
-         * @maximum 200
-         */
-        size?: number;
-        /** SellerSprite result sorting settings. */
-        order?: {
-          /**
-           * The SellerSprite field used to sort the results.
-           * @minLength 1
-           */
-          field?: string;
-          /** Whether to sort the results in descending order. */
-          desc?: boolean;
-          [key: string]: unknown;
-        };
-        /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
-         */
-        returnFields?: string;
-      };
-      output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
-        result: unknown;
-      };
-    };
-    /** Retrieve summary statistics for one Amazon category market. */
-    "sellersprite_mcp.market_research_statistics": {
-      input: {
-        /** The Amazon marketplace code supported by SellerSprite. */
-        marketplace: "US" | "JP" | "UK" | "DE" | "FR" | "IT" | "ES" | "CA" | "IN";
-        /**
-         * The historical month in YYYYMM format; omit when the tool supports latest data.
-         * @minLength 6
-         * @maxLength 6
-         */
-        month?: string;
-        /** The top n value documented by SellerSprite for this MCP tool. */
-        topN?: number;
-        /** The new product value documented by SellerSprite for this MCP tool. */
-        newProduct?: number;
-        /**
-         * The colon-separated Amazon category node path.
-         * @minLength 1
-         */
-        nodeIdPath: string;
-        /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
-         */
-        returnFields?: string;
-      };
-      output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
-        result: unknown;
-      };
-    };
-    /** Retrieve seller concentration for one Amazon category market. */
-    "sellersprite_mcp.market_seller_concentration": {
-      input: {
-        /** The Amazon marketplace code supported by SellerSprite. */
-        marketplace: "US" | "JP" | "UK" | "DE" | "FR" | "IT" | "ES" | "CA" | "IN";
-        /**
-         * The historical month in YYYYMM format; omit when the tool supports latest data.
-         * @minLength 6
-         * @maxLength 6
-         */
-        month?: string;
-        /** The top n value documented by SellerSprite for this MCP tool. */
-        topN?: number;
-        /** The new product value documented by SellerSprite for this MCP tool. */
-        newProduct?: number;
-        /**
-         * The colon-separated Amazon category node path.
-         * @minLength 1
-         */
-        nodeIdPath: string;
-        /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
-         */
-        returnFields?: string;
-      };
-      output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
-        result: unknown;
-      };
-    };
-    /** Retrieve the seller-country distribution for one Amazon category market. */
-    "sellersprite_mcp.market_seller_country_distribution": {
-      input: {
-        /** The Amazon marketplace code supported by SellerSprite. */
-        marketplace: "US" | "JP" | "UK" | "DE" | "FR" | "IT" | "ES" | "CA" | "IN";
-        /**
-         * The historical month in YYYYMM format; omit when the tool supports latest data.
-         * @minLength 6
-         * @maxLength 6
-         */
-        month?: string;
-        /** The top n value documented by SellerSprite for this MCP tool. */
-        topN?: number;
-        /** The new product value documented by SellerSprite for this MCP tool. */
-        newProduct?: number;
-        /**
-         * The colon-separated Amazon category node path.
-         * @minLength 1
-         */
-        nodeIdPath: string;
-        /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
-         */
-        returnFields?: string;
-      };
-      output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
-        result: unknown;
-      };
-    };
-    /** Retrieve the fulfillment and seller-type distribution for one Amazon category market. */
-    "sellersprite_mcp.market_seller_type_concentration": {
-      input: {
-        /** The Amazon marketplace code supported by SellerSprite. */
-        marketplace: "US" | "JP" | "UK" | "DE" | "FR" | "IT" | "ES" | "CA" | "IN";
-        /**
-         * The historical month in YYYYMM format; omit when the tool supports latest data.
-         * @minLength 6
-         * @maxLength 6
-         */
-        month?: string;
-        /** The top n value documented by SellerSprite for this MCP tool. */
-        topN?: number;
-        /** The new product value documented by SellerSprite for this MCP tool. */
-        newProduct?: number;
-        /**
-         * The colon-separated Amazon category node path.
-         * @minLength 1
-         */
-        nodeIdPath: string;
-        /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
-         */
-        returnFields?: string;
-      };
-      output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
-        result: unknown;
-      };
-    };
-    /** Find Amazon category nodes by marketplace, category path, keyword, or historical month. */
-    "sellersprite_mcp.product_node": {
-      input: {
-        /** The Amazon marketplace code supported by SellerSprite. */
-        marketplace: "US" | "JP" | "UK" | "DE" | "FR" | "IT" | "ES" | "CA" | "IN";
-        /**
-         * The colon-separated Amazon category node path.
-         * @minLength 1
-         */
-        nodeIdPath?: string;
-        /**
-         * The Amazon search keyword.
-         * @minLength 1
-         */
-        keyword?: string;
-        /**
-         * The historical month in YYYYMM format; omit when the tool supports latest data.
-         * @minLength 6
-         * @maxLength 6
-         */
-        month?: string;
-        /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
-         */
-        returnFields?: string;
-      };
-      output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
-        result: unknown;
-      };
-    };
-    /** Research Amazon products using sales, revenue, price, ranking, review, fulfillment, brand, seller, and category filters. */
-    "sellersprite_mcp.product_research": {
-      input: {
-        /** The Amazon marketplace code supported by SellerSprite. */
-        marketplace: "US" | "JP" | "UK" | "DE" | "FR" | "IT" | "ES" | "CA" | "IN";
-        /**
-         * The historical month in YYYYMM format; omit when the tool supports latest data.
-         * @minLength 6
-         * @maxLength 6
-         */
-        month?: string;
-        /**
-         * The Amazon search keyword.
-         * @minLength 1
-         */
-        keyword?: string;
-        /**
-         * The include sellers value documented by SellerSprite for this MCP tool.
-         * @minLength 1
-         */
-        includeSellers?: string;
-        /**
-         * The exclude sellers value documented by SellerSprite for this MCP tool.
-         * @minLength 1
-         */
-        excludeSellers?: string;
-        /** Keyword match type: 1 for phrase, 2 for broad, or 3 for exact. */
-        matchType?: 1 | 2 | 3;
-        /**
-         * Keywords that results must exclude.
-         * @minLength 1
-         */
-        excludeKeywords?: string;
-        /** The min price value documented by SellerSprite for this MCP tool. */
-        minPrice?: number;
-        /** The max price value documented by SellerSprite for this MCP tool. */
-        maxPrice?: number;
-        /** The min rating value documented by SellerSprite for this MCP tool. */
-        minRating?: number;
-        /** The max rating value documented by SellerSprite for this MCP tool. */
-        maxRating?: number;
-        /** The min ratings value documented by SellerSprite for this MCP tool. */
-        minRatings?: number;
-        /** The max ratings value documented by SellerSprite for this MCP tool. */
-        maxRatings?: number;
-        /** The min ratings cv value documented by SellerSprite for this MCP tool. */
-        minRatingsCv?: number;
-        /** The max ratings cv value documented by SellerSprite for this MCP tool. */
-        maxRatingsCv?: number;
-        /** The min sellers value documented by SellerSprite for this MCP tool. */
-        minSellers?: number;
-        /** The max sellers value documented by SellerSprite for this MCP tool. */
-        maxSellers?: number;
-        /** The min profit value documented by SellerSprite for this MCP tool. */
-        minProfit?: number;
-        /** The max profit value documented by SellerSprite for this MCP tool. */
-        maxProfit?: number;
-        /** The min bsr value documented by SellerSprite for this MCP tool. */
-        minBsr?: number;
-        /** The max bsr value documented by SellerSprite for this MCP tool. */
-        maxBsr?: number;
-        /** The min bsr cv value documented by SellerSprite for this MCP tool. */
-        minBsrCv?: number;
-        /** The max bsr cv value documented by SellerSprite for this MCP tool. */
-        maxBsrCv?: number;
-        /** The min bsr cr value documented by SellerSprite for this MCP tool. */
-        minBsrCr?: number;
-        /** The max bsr cr value documented by SellerSprite for this MCP tool. */
-        maxBsrCr?: number;
-        /** The min units value documented by SellerSprite for this MCP tool. */
-        minUnits?: number;
-        /** The max units value documented by SellerSprite for this MCP tool. */
-        maxUnits?: number;
-        /** The min amz unit value documented by SellerSprite for this MCP tool. */
-        minAmzUnit?: number;
-        /** The max amz unit value documented by SellerSprite for this MCP tool. */
-        maxAmzUnit?: number;
-        /** The min revenue value documented by SellerSprite for this MCP tool. */
-        minRevenue?: number;
-        /** The max revenue value documented by SellerSprite for this MCP tool. */
-        maxRevenue?: number;
-        /** The min revenue cr value documented by SellerSprite for this MCP tool. */
-        minRevenueCr?: number;
-        /** The max revenue cr value documented by SellerSprite for this MCP tool. */
-        maxRevenueCr?: number;
-        /** The min units cr value documented by SellerSprite for this MCP tool. */
-        minUnitsCr?: number;
-        /** The max units cr value documented by SellerSprite for this MCP tool. */
-        maxUnitsCr?: number;
-        /**
-         * The weight unit value documented by SellerSprite for this MCP tool.
-         * @minLength 1
-         */
-        weightUnit?: string;
-        /** The min weights value documented by SellerSprite for this MCP tool. */
-        minWeights?: number;
-        /** The max weights value documented by SellerSprite for this MCP tool. */
-        maxWeights?: number;
-        /** The min variations value documented by SellerSprite for this MCP tool. */
-        minVariations?: number;
-        /** The max variations value documented by SellerSprite for this MCP tool. */
-        maxVariations?: number;
-        /**
-         * The filter sub value documented by SellerSprite for this MCP tool.
-         * @minLength 1
-         */
-        filterSub?: string;
-        /** The min sub bsr rank value documented by SellerSprite for this MCP tool. */
-        minSubBsrRank?: number;
-        /** The max sub bsr rank value documented by SellerSprite for this MCP tool. */
-        maxSubBsrRank?: number;
-        /**
-         * The include brands value documented by SellerSprite for this MCP tool.
-         * @minLength 1
-         */
-        includeBrands?: string;
-        /**
-         * The exclude brands value documented by SellerSprite for this MCP tool.
-         * @minLength 1
-         */
-        excludeBrands?: string;
-        /**
-         * Amazon category node paths used by the query.
-         * @minItems 1
-         */
-        nodeIdPaths?: Array<string>;
-        /** The node id path equal value documented by SellerSprite for this MCP tool. */
-        nodeIdPathEqual?: boolean;
-        /** The available month value documented by SellerSprite for this MCP tool. */
-        availableMonth?: number;
-        /**
-         * The dimension type value documented by SellerSprite for this MCP tool.
-         * @minLength 1
-         */
-        dimensionType?: string;
-        /** The min fba value documented by SellerSprite for this MCP tool. */
-        minFba?: number;
-        /** The max fba value documented by SellerSprite for this MCP tool. */
-        maxFba?: number;
-        /** The min lqs value documented by SellerSprite for this MCP tool. */
-        minLqs?: number;
-        /** The max lqs value documented by SellerSprite for this MCP tool. */
-        maxLqs?: number;
-        /**
-         * The seller nation value documented by SellerSprite for this MCP tool.
-         * @minLength 1
-         */
-        sellerNation?: string;
-        /**
-         * The badge b s value documented by SellerSprite for this MCP tool.
-         * @minLength 1
-         */
-        badgeBS?: string;
-        /**
-         * The badge a c value documented by SellerSprite for this MCP tool.
-         * @minLength 1
-         */
-        badgeAC?: string;
-        /**
-         * The badge n r value documented by SellerSprite for this MCP tool.
-         * @minLength 1
-         */
-        badgeNR?: string;
-        /**
-         * The fulfillment value documented by SellerSprite for this MCP tool.
-         * @minLength 1
-         */
-        fulfillment?: string;
-        /** Variation handling: N includes variation ASINs and Y excludes them. */
-        variation?: "N" | "Y";
-        /**
-         * The one-based result page number.
-         * @minimum 1
-         */
-        page?: number;
-        /**
-         * The number of results requested per page.
-         * @minimum 1
-         * @maximum 100
-         */
-        size?: number;
-        /** SellerSprite result sorting settings. */
-        order?: {
-          /**
-           * The SellerSprite field used to sort the results.
-           * @minLength 1
-           */
-          field?: string;
-          /** Whether to sort the results in descending order. */
-          desc?: boolean;
-          [key: string]: unknown;
-        };
-        /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
-         */
-        returnFields?: string;
-      };
-      output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
-        result: unknown;
-      };
-    };
-    /** Retrieve Amazon reviews for one ASIN with optional star-rating and review-type filters. */
-    "sellersprite_mcp.review": {
-      input: {
-        /** The Amazon marketplace code supported by SellerSprite. */
-        marketplace: "US" | "JP" | "UK" | "DE" | "FR" | "IT" | "ES" | "CA" | "IN";
-        /**
-         * The ten-character Amazon ASIN.
-         * @minLength 10
-         * @maxLength 10
-         */
-        asin: string;
-        /**
-         * Review star ratings to include, from 1 through 5.
-         * @minItems 1
-         */
-        starList?: Array<1 | 2 | 3 | 4 | 5>;
-        /**
-         * Review types: 1 for image, 2 for video, 3 for verified purchase, or 4 for Vine.
-         * @minItems 1
-         */
-        typeList?: Array<1 | 2 | 3 | 4>;
-        /**
-         * The one-based result page number.
-         * @minimum 1
-         */
-        page?: number;
-        /**
-         * The number of results requested per page.
-         * @minimum 1
-         * @maximum 10
-         */
-        size?: number;
-        /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
-         */
-        returnFields?: string;
-      };
-      output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
-        result: unknown;
-      };
-    };
-    /** Retrieve the countries and trademark offices covered by SellerSprite's global trademark database. */
-    "sellersprite_mcp.trademark_country_list": {
-      input: {
-        /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
-         */
-        returnFields?: string;
-      };
-      output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
-        result: unknown;
-      };
-    };
-    /** Retrieve one global trademark record by trademark office and SellerSprite brand ID. */
-    "sellersprite_mcp.trademark_detail": {
-      input: {
-        /**
-         * Trademark registry office or country codes.
-         * @minLength 1
-         */
-        office: string;
-        /**
-         * The SellerSprite global trademark identifier.
-         * @minLength 1
-         */
-        brandId: string;
-        /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
-         */
-        returnFields?: string;
-      };
-      output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
-        result: unknown;
-      };
-    };
-    /** Search SellerSprite's global trademark records by text, office, brand, status, applicant, class, and year filters. */
-    "sellersprite_mcp.trademark_list": {
-      input: {
-        /**
-         * Trademark registry office or country codes.
-         * @minItems 1
-         */
-        office?: Array<string>;
-        /**
-         * Text used to search the global trademark database.
-         * @minLength 1
-         */
-        text: string;
-        /**
-         * The brand name value documented by SellerSprite for this MCP tool.
-         * @minItems 1
-         */
-        brandName?: Array<string>;
-        /**
-         * The status value documented by SellerSprite for this MCP tool.
-         * @minItems 1
-         */
-        status?: Array<string>;
-        /**
-         * The applicant value documented by SellerSprite for this MCP tool.
-         * @minItems 1
-         */
-        applicant?: Array<string>;
-        /**
-         * The nice class value documented by SellerSprite for this MCP tool.
-         * @minItems 1
-         */
-        niceClass?: Array<number>;
-        /**
-         * The application year value documented by SellerSprite for this MCP tool.
-         * @minItems 1
-         */
-        applicationYear?: Array<string>;
-        /**
-         * The expiry year value documented by SellerSprite for this MCP tool.
-         * @minItems 1
-         */
-        expiryYear?: Array<string>;
-        /**
-         * The one-based result page number.
-         * @minimum 1
-         */
-        page?: number;
-        /**
-         * The number of results requested per page.
-         * @minimum 1
-         * @maximum 100
-         */
-        size?: number;
-        /** SellerSprite result sorting settings. */
-        order?: {
-          /**
-           * The SellerSprite field used to sort the results.
-           * @minLength 1
-           */
-          field?: string;
-          /** Whether to sort the results in descending order. */
-          desc?: boolean;
-          [key: string]: unknown;
-        };
-        /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
-         */
-        returnFields?: string;
-      };
-      output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
-        result: unknown;
-      };
-    };
-    /** Retrieve aggregate global trademark statistics for search text and selected trademark offices. */
-    "sellersprite_mcp.trademark_stats": {
-      input: {
-        /**
-         * Trademark registry office or country codes.
-         * @minItems 1
-         */
-        office: Array<string>;
-        /**
-         * Text used to search the global trademark database.
-         * @minLength 1
-         */
-        text: string;
-        /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
-         */
-        returnFields?: string;
-      };
-      output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
-        result: unknown;
-      };
-    };
-    /** Expand the traffic keywords shared by a set of Amazon ASINs using search, purchase, competition, and conversion filters. */
-    "sellersprite_mcp.traffic_extend": {
-      input: {
-        /** The Amazon marketplace code supported by SellerSprite. */
-        marketplace: "US" | "JP" | "UK" | "DE" | "FR" | "IT" | "ES" | "CA" | "IN";
-        /** The historical month in YYYYMM format; omit for the latest period. */
-        historyDate?: string;
-        /**
-         * Amazon ASINs to query, with at most 20 values.
-         * @minItems 1
-         * @maxItems 20
-         */
-        asinList: Array<string>;
-        /**
-         * Variation query mode: 0 for all variations, 1 for the best-selling variation, or 2 for the current variation; defaults to 2.
-         * @default 2
-         */
-        queryType?: 0 | 1 | 2;
-        /** The min searches value documented by SellerSprite for this MCP tool. */
-        minSearches?: number;
-        /** The max searches value documented by SellerSprite for this MCP tool. */
-        maxSearches?: number;
-        /** The min search rank value documented by SellerSprite for this MCP tool. */
-        minSearchRank?: number;
-        /** The max search rank value documented by SellerSprite for this MCP tool. */
-        maxSearchRank?: number;
-        /** The min purchases value documented by SellerSprite for this MCP tool. */
-        minPurchases?: number;
-        /** The max purchases value documented by SellerSprite for this MCP tool. */
-        maxPurchases?: number;
-        /** The min purchase rate value documented by SellerSprite for this MCP tool. */
-        minPurchaseRate?: number;
-        /** The max purchase rate value documented by SellerSprite for this MCP tool. */
-        maxPurchaseRate?: number;
-        /** The min products value documented by SellerSprite for this MCP tool. */
-        minProducts?: number;
-        /** The max products value documented by SellerSprite for this MCP tool. */
-        maxProducts?: number;
-        /** The min supply demand ratio value documented by SellerSprite for this MCP tool. */
-        minSupplyDemandRatio?: number;
-        /** The max supply demand ratio value documented by SellerSprite for this MCP tool. */
-        maxSupplyDemandRatio?: number;
-        /** The min bid value documented by SellerSprite for this MCP tool. */
-        minBid?: number;
-        /** The max bid value documented by SellerSprite for this MCP tool. */
-        maxBid?: number;
-        /** The min ad products value documented by SellerSprite for this MCP tool. */
-        minAdProducts?: number;
-        /** The max ad products value documented by SellerSprite for this MCP tool. */
-        maxAdProducts?: number;
-        /** The min avg price value documented by SellerSprite for this MCP tool. */
-        minAvgPrice?: number;
-        /** The max avg price value documented by SellerSprite for this MCP tool. */
-        maxAvgPrice?: number;
-        /** The min word count value documented by SellerSprite for this MCP tool. */
-        minWordCount?: number;
-        /** The max word count value documented by SellerSprite for this MCP tool. */
-        maxWordCount?: number;
-        /**
-         * Keywords that results must include.
-         * @minItems 1
-         */
-        includeKeywords?: Array<string>;
-        /**
-         * Keywords that results must exclude.
-         * @minItems 1
-         */
-        excludeKeywords?: Array<string>;
-        /** The min s p r value documented by SellerSprite for this MCP tool. */
-        minSPR?: number;
-        /** The max s p r value documented by SellerSprite for this MCP tool. */
-        maxSPR?: number;
-        /** The min title density value documented by SellerSprite for this MCP tool. */
-        minTitleDensity?: number;
-        /** The max title density value documented by SellerSprite for this MCP tool. */
-        maxTitleDensity?: number;
-        /** The min monopoly click rate value documented by SellerSprite for this MCP tool. */
-        minMonopolyClickRate?: number;
-        /** The max monopoly click rate value documented by SellerSprite for this MCP tool. */
-        maxMonopolyClickRate?: number;
-        /** The min traffic percentage value documented by SellerSprite for this MCP tool. */
-        minTrafficPercentage?: number;
-        /** The max traffic percentage value documented by SellerSprite for this MCP tool. */
-        maxTrafficPercentage?: number;
-        /** The min conversion rate value documented by SellerSprite for this MCP tool. */
-        minConversionRate?: number;
-        /** The max conversion rate value documented by SellerSprite for this MCP tool. */
-        maxConversionRate?: number;
-        /** The min competitors value documented by SellerSprite for this MCP tool. */
-        minCompetitors?: number;
-        /** The max competitors value documented by SellerSprite for this MCP tool. */
-        maxCompetitors?: number;
-        /** The amazon choice value documented by SellerSprite for this MCP tool. */
-        amazonChoice?: boolean;
-        /**
-         * The one-based result page number.
-         * @minimum 1
-         */
-        page?: number;
-        /**
-         * The number of results requested per page.
-         * @minimum 1
-         * @maximum 50
-         */
-        size?: number;
-        /** SellerSprite result sorting settings. */
-        order?: {
-          /**
-           * The SellerSprite field used to sort the results.
-           * @minLength 1
-           */
-          field?: string;
-          /** Whether to sort the results in descending order. */
-          desc?: boolean;
-          [key: string]: unknown;
-        };
-        /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
-         */
-        returnFields?: string;
-      };
-      output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
-        result: unknown;
-      };
-    };
-    /** Retrieve the search and conversion keywords that drive traffic to one Amazon ASIN. */
-    "sellersprite_mcp.traffic_keyword": {
-      input: {
-        /** The Amazon marketplace code supported by SellerSprite. */
-        marketplace: "US" | "JP" | "UK" | "DE" | "FR" | "IT" | "ES" | "CA" | "IN";
-        /**
-         * The ten-character Amazon ASIN.
-         * @minLength 10
-         * @maxLength 10
-         */
-        asin: string;
-        /**
-         * The Amazon search keyword.
-         * @minLength 1
-         */
-        keyword?: string;
-        /**
-         * The historical month in YYYYMM format; omit when the tool supports latest data.
-         * @minLength 6
-         * @maxLength 6
-         */
-        month?: string;
-        /**
-         * The badges value documented by SellerSprite for this MCP tool.
-         * @minItems 1
-         */
-        badges?: Array<string>;
-        /**
-         * The traffic keyword types value documented by SellerSprite for this MCP tool.
-         * @minItems 1
-         */
-        trafficKeywordTypes?: Array<string>;
-        /**
-         * The conversion keyword types value documented by SellerSprite for this MCP tool.
-         * @minItems 1
-         */
-        conversionKeywordTypes?: Array<string>;
-        /**
-         * The one-based result page number.
-         * @minimum 1
-         */
-        page?: number;
-        /**
-         * The number of results requested per page.
-         * @minimum 1
-         * @maximum 100
-         */
-        size?: number;
-        /** SellerSprite result sorting settings. */
-        order?: {
-          /**
-           * The SellerSprite field used to sort the results.
-           * @minLength 1
-           */
-          field?: string;
-          /** Whether to sort the results in descending order. */
-          desc?: boolean;
-          [key: string]: unknown;
-        };
-        /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
-         */
-        returnFields?: string;
-      };
-      output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
-        result: unknown;
-      };
-    };
-    /** Retrieve aggregate traffic-keyword statistics for one Amazon ASIN. */
-    "sellersprite_mcp.traffic_keyword_stat": {
-      input: {
-        /** The Amazon marketplace code supported by SellerSprite. */
-        marketplace: "US" | "JP" | "UK" | "DE" | "FR" | "IT" | "ES" | "CA" | "IN";
-        /**
-         * The ten-character Amazon ASIN.
-         * @minLength 10
-         * @maxLength 10
-         */
-        asin: string;
-        /**
-         * The historical month in YYYYMM format; omit when the tool supports latest data.
-         * @minLength 6
-         * @maxLength 6
-         */
-        month?: string;
-        /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
-         */
-        returnFields?: string;
-      };
-      output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
-        result: unknown;
-      };
-    };
-    /** Retrieve Amazon listings related to selected ASINs by the requested traffic relationship types. */
-    "sellersprite_mcp.traffic_listing": {
-      input: {
-        /** The Amazon marketplace code supported by SellerSprite. */
-        marketplace: "US" | "JP" | "UK" | "DE" | "FR" | "IT" | "ES" | "CA" | "IN";
-        /**
-         * Amazon ASINs used by the query.
-         * @minItems 1
-         */
-        asinList: Array<string>;
-        /**
-         * The relations value documented by SellerSprite for this MCP tool.
-         * @minItems 1
-         */
-        relations: Array<string>;
-        /** The variations value documented by SellerSprite for this MCP tool. */
-        variations?: boolean;
-        /**
-         * The one-based result page number.
-         * @minimum 1
-         */
-        page?: number;
-        /**
-         * The number of results requested per page.
-         * @minimum 1
-         */
-        size?: number;
-        /** SellerSprite result sorting settings. */
-        order?: {
-          /**
-           * The SellerSprite field used to sort the results.
-           * @minLength 1
-           */
-          field?: string;
-          /** Whether to sort the results in descending order. */
-          desc?: boolean;
-          [key: string]: unknown;
-        };
-        /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
-         */
-        returnFields?: string;
-      };
-      output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
-        result: unknown;
-      };
-    };
-    /** Retrieve aggregate related-listing traffic statistics for selected Amazon ASINs. */
-    "sellersprite_mcp.traffic_listing_stat": {
-      input: {
-        /** The Amazon marketplace code supported by SellerSprite. */
-        marketplace: "US" | "JP" | "UK" | "DE" | "FR" | "IT" | "ES" | "CA" | "IN";
-        /**
-         * Amazon ASINs used by the query.
-         * @minItems 1
-         */
-        asinList?: Array<string>;
-        /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
-         */
-        returnFields?: string;
-      };
-      output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
-        result: unknown;
-      };
-    };
-    /** Trace Amazon keyword traffic from a query to the listings receiving that traffic. */
-    "sellersprite_mcp.traffic_source": {
-      input: {
-        /** The Amazon marketplace code supported by SellerSprite. */
-        marketplace: "US" | "JP" | "UK" | "DE" | "FR" | "IT" | "ES" | "CA" | "IN";
-        /**
-         * The q value documented by SellerSprite for this MCP tool.
-         * @minLength 1
-         */
-        q: string;
-        /**
-         * The historical month in YYYYMM format; omit when the tool supports latest data.
-         * @minLength 6
-         * @maxLength 6
-         */
-        month: string;
-        /**
-         * The one-based result page number.
-         * @minimum 1
-         */
-        page?: number;
-        /**
-         * The number of results requested per page.
-         * @minimum 1
-         * @maximum 100
-         */
-        size?: number;
-        /** SellerSprite result sorting settings. */
-        order?: {
-          /**
-           * The SellerSprite field used to sort the results.
-           * @minLength 1
-           */
-          field?: string;
-          /** Whether to sort the results in descending order. */
-          desc?: boolean;
-          [key: string]: unknown;
-        };
-        /**
-         * Comma-separated response field names to reduce SellerSprite MCP result size and token usage.
-         * @minLength 1
-         */
-        returnFields?: string;
-      };
-      output: {
-        /** The SellerSprite MCP result, preserving the provider-defined structured response. */
-        result: unknown;
       };
     };
   }

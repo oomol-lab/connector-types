@@ -28,6 +28,12 @@ declare module "@oomol-lab/connector" {
           id?: string;
           /** Attachment name. */
           name?: string;
+          /** Original filename of an uploaded attachment. */
+          fileName?: string;
+          /** MIME type of an uploaded attachment. */
+          mimeType?: string;
+          /** Whether the attachment is an uploaded file. */
+          isUpload?: boolean;
           /**
            * Attachment URL.
            * @format uri
@@ -165,6 +171,8 @@ declare module "@oomol-lab/connector" {
           boardId?: string;
           /** Trello list ID that contains the card. */
           listId?: string;
+          /** IDs of the members assigned to the card. */
+          memberIds?: Array<string>;
           /** Card name. */
           name?: string;
           /** Card description. */
@@ -300,6 +308,8 @@ declare module "@oomol-lab/connector" {
           boardId?: string;
           /** Trello list ID that contains the card. */
           listId?: string;
+          /** IDs of the members assigned to the card. */
+          memberIds?: Array<string>;
           /** Card name. */
           name?: string;
           /** Card description. */
@@ -399,6 +409,37 @@ declare module "@oomol-lab/connector" {
         };
       };
     };
+    /** Download a file uploaded to a Trello card into temporary file storage. For external links, use get_card_attachment. */
+    "trello.download_card_attachment": {
+      input: {
+        /**
+         * Trello card ID or short link.
+         * @minLength 1
+         */
+        cardId: string;
+        /**
+         * Trello attachment ID.
+         * @minLength 1
+         */
+        attachmentId: string;
+      };
+      output: {
+        /**
+         * Temporary URL to retrieve the downloaded file.
+         * @format uri
+         */
+        transitUrl: string;
+        /** Attachment filename. */
+        name: string;
+        /** Attachment MIME type. */
+        mimeType: string;
+        /**
+         * File size in bytes.
+         * @minimum 0
+         */
+        sizeBytes: number;
+      };
+    };
     /** Get a Trello board by ID. */
     "trello.get_board": {
       input: {
@@ -461,6 +502,8 @@ declare module "@oomol-lab/connector" {
           boardId?: string;
           /** Trello list ID that contains the card. */
           listId?: string;
+          /** IDs of the members assigned to the card. */
+          memberIds?: Array<string>;
           /** Card name. */
           name?: string;
           /** Card description. */
@@ -484,6 +527,49 @@ declare module "@oomol-lab/connector" {
           due?: string | null;
           /** Whether the card due date is marked complete. */
           dueComplete?: boolean;
+          [key: string]: unknown;
+        };
+      };
+    };
+    /** Get metadata for one attachment on a Trello card. */
+    "trello.get_card_attachment": {
+      input: {
+        /**
+         * Trello card ID or short link.
+         * @minLength 1
+         */
+        cardId: string;
+        /**
+         * Trello attachment ID.
+         * @minLength 1
+         */
+        attachmentId: string;
+      };
+      output: {
+        /** A Trello card attachment returned by the REST API. */
+        attachment: {
+          /** Trello attachment ID. */
+          id?: string;
+          /** Attachment name. */
+          name?: string;
+          /** Original filename of an uploaded attachment. */
+          fileName?: string;
+          /** MIME type of an uploaded attachment. */
+          mimeType?: string;
+          /** Whether the attachment is an uploaded file. */
+          isUpload?: boolean;
+          /**
+           * Attachment URL.
+           * @format uri
+           */
+          url?: string;
+          /** Attachment size in bytes. */
+          bytes?: number | null;
+          /**
+           * Attachment creation timestamp in ISO 8601 format.
+           * @format date-time
+           */
+          date?: string;
           [key: string]: unknown;
         };
       };
@@ -540,6 +626,8 @@ declare module "@oomol-lab/connector" {
           boardId?: string;
           /** Trello list ID that contains the card. */
           listId?: string;
+          /** IDs of the members assigned to the card. */
+          memberIds?: Array<string>;
           /** Card name. */
           name?: string;
           /** Card description. */
@@ -632,6 +720,82 @@ declare module "@oomol-lab/connector" {
           username?: string;
           /** Display name for the Trello member. */
           fullName?: string;
+          [key: string]: unknown;
+        }>;
+      };
+    };
+    /** List activity on a Trello card, newest first. Pass the last action ID as before to read the next page. */
+    "trello.list_card_activity": {
+      input: {
+        /**
+         * Trello card ID or short link.
+         * @minLength 1
+         */
+        cardId: string;
+        /**
+         * Maximum number of actions per page. Defaults to 50.
+         * @minimum 1
+         * @maximum 1000
+         */
+        limit?: number;
+        /**
+         * Return actions older than this action ID.
+         * @minLength 1
+         */
+        before?: string;
+      };
+      output: {
+        /** Card actions, newest first. */
+        actions: Array<{
+          /** Trello action ID. */
+          id?: string;
+          /** Trello action type. */
+          type?: string;
+          /** Action data returned by Trello. */
+          data?: Record<string, unknown>;
+          /**
+           * Action creation timestamp in ISO 8601 format.
+           * @format date-time
+           */
+          date?: string;
+          [key: string]: unknown;
+        }>;
+      };
+    };
+    /** List uploaded files and external links attached to a Trello card. */
+    "trello.list_card_attachments": {
+      input: {
+        /**
+         * Trello card ID or short link.
+         * @minLength 1
+         */
+        cardId: string;
+      };
+      output: {
+        /** Card attachments. */
+        attachments: Array<{
+          /** Trello attachment ID. */
+          id?: string;
+          /** Attachment name. */
+          name?: string;
+          /** Original filename of an uploaded attachment. */
+          fileName?: string;
+          /** MIME type of an uploaded attachment. */
+          mimeType?: string;
+          /** Whether the attachment is an uploaded file. */
+          isUpload?: boolean;
+          /**
+           * Attachment URL.
+           * @format uri
+           */
+          url?: string;
+          /** Attachment size in bytes. */
+          bytes?: number | null;
+          /**
+           * Attachment creation timestamp in ISO 8601 format.
+           * @format date-time
+           */
+          date?: string;
           [key: string]: unknown;
         }>;
       };
@@ -769,6 +933,8 @@ declare module "@oomol-lab/connector" {
           boardId?: string;
           /** Trello list ID that contains the card. */
           listId?: string;
+          /** IDs of the members assigned to the card. */
+          memberIds?: Array<string>;
           /** Card name. */
           name?: string;
           /** Card description. */
@@ -922,6 +1088,8 @@ declare module "@oomol-lab/connector" {
           boardId?: string;
           /** Trello list ID that contains the card. */
           listId?: string;
+          /** IDs of the members assigned to the card. */
+          memberIds?: Array<string>;
           /** Card name. */
           name?: string;
           /** Card description. */
@@ -974,6 +1142,8 @@ declare module "@oomol-lab/connector" {
           boardId?: string;
           /** Trello list ID that contains the card. */
           listId?: string;
+          /** IDs of the members assigned to the card. */
+          memberIds?: Array<string>;
           /** Card name. */
           name?: string;
           /** Card description. */
