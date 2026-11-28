@@ -107,6 +107,57 @@ declare module "@oomol-lab/connector" {
           };
         } | {
           /** Task engine. */
+          taskType: "BING";
+          /** Bing monitoring parameters. */
+          payload: {
+            /**
+             * Number of search result pages to retrieve (1-10).
+             * @minimum 1
+             * @maximum 10
+             */
+            pages?: number;
+            /**
+             * One-based index of the first search result.
+             * @minimum 1
+             */
+            first?: number;
+            /**
+             * The search query to execute on Bing. Bing limits the URL-encoded query to 3,500 characters, so non-Latin scripts allow fewer characters.
+             * @minLength 1
+             * @maxLength 3500
+             */
+            query: string;
+            /** ISO 3166-1 alpha-2 country code for localized search results. The country selects the Bing market. See [List of countries](/api-reference/endpoint/countries) for the codes each provider supports. */
+            country: "AD" | "AE" | "AF" | "AG" | "AI" | "AL" | "AM" | "AO" | "AQ" | "AR" | "AS" | "AT" | "AU" | "AW" | "AX" | "AZ" | "BA" | "BB" | "BD" | "BE" | "BF" | "BG" | "BH" | "BI" | "BJ" | "BL" | "BM" | "BN" | "BO" | "BQ" | "BR" | "BS" | "BT" | "BV" | "BW" | "BY" | "BZ" | "CA" | "CC" | "CD" | "CF" | "CG" | "CH" | "CI" | "CK" | "CL" | "CM" | "CN" | "CO" | "CR" | "CU" | "CV" | "CW" | "CX" | "CY" | "CZ" | "DE" | "DJ" | "DK" | "DM" | "DO" | "DZ" | "EC" | "EE" | "EG" | "EH" | "ER" | "ES" | "ET" | "FI" | "FJ" | "FK" | "FM" | "FO" | "FR" | "GA" | "GB" | "GD" | "GE" | "GF" | "GG" | "GH" | "GI" | "GL" | "GM" | "GN" | "GP" | "GQ" | "GR" | "GS" | "GT" | "GU" | "GW" | "GY" | "HK" | "HM" | "HN" | "HR" | "HT" | "HU" | "ID" | "IE" | "IL" | "IM" | "IN" | "IO" | "IQ" | "IR" | "IS" | "IT" | "JE" | "JM" | "JO" | "JP" | "KE" | "KG" | "KH" | "KI" | "KM" | "KN" | "KP" | "KR" | "KW" | "KY" | "KZ" | "LA" | "LB" | "LC" | "LI" | "LK" | "LR" | "LS" | "LT" | "LU" | "LV" | "LY" | "MA" | "MC" | "MD" | "ME" | "MF" | "MG" | "MH" | "MK" | "ML" | "MM" | "MN" | "MO" | "MP" | "MQ" | "MR" | "MS" | "MT" | "MU" | "MV" | "MW" | "MX" | "MY" | "MZ" | "NA" | "NC" | "NE" | "NF" | "NG" | "NI" | "NL" | "NO" | "NP" | "NR" | "NU" | "NZ" | "OM" | "PA" | "PE" | "PF" | "PG" | "PH" | "PK" | "PL" | "PM" | "PN" | "PR" | "PS" | "PT" | "PW" | "PY" | "QA" | "RE" | "RO" | "RS" | "RU" | "RW" | "SA" | "SB" | "SC" | "SD" | "SE" | "SG" | "SH" | "SI" | "SJ" | "SK" | "SL" | "SM" | "SN" | "SO" | "SR" | "SS" | "ST" | "SV" | "SX" | "SY" | "SZ" | "TC" | "TD" | "TF" | "TG" | "TH" | "TJ" | "TK" | "TL" | "TM" | "TN" | "TO" | "TR" | "TT" | "TV" | "TW" | "TZ" | "UA" | "UG" | "UM" | "US" | "UY" | "UZ" | "VA" | "VC" | "VE" | "VG" | "VI" | "VN" | "VU" | "WF" | "WS" | "XK" | "YE" | "YT" | "ZA" | "ZM" | "ZW";
+            /** Optional flags for including additional response data */
+            include?: {
+              /** Include raw HTML response from Bing search */
+              html?: boolean;
+              /** Include the Bing AI summary at the top of the results page, returned as `aioverview`. Paid add-on: +2 credits. */
+              aioverview?: {
+                /** Include AI Overview formatted as markdown */
+                markdown?: boolean;
+              };
+            };
+          };
+          /**
+           * Priority from 1 to 10; higher runs first. Defaults to 1. Use high priority for product tokens that expire after five minutes.
+           * @minimum 1
+           * @maximum 10
+           */
+          priority?: number;
+          /** Account-wide unique key to prevent duplicate task submission. Reuse returns a conflict rather than creating another task. */
+          idempotencyKey?: string;
+          /** Optional completion webhook delivered by Cloro. */
+          webhook?: {
+            /**
+             * Webhook destination URL.
+             * @format uri
+             */
+            url: string;
+          };
+        } | {
+          /** Task engine. */
           taskType: "AIMODE";
           /** AiMode monitoring parameters. */
           payload: Record<string, unknown>;
@@ -265,6 +316,57 @@ declare module "@oomol-lab/connector" {
         taskType: "GOOGLE_NEWS";
         /** GoogleNews monitoring parameters. */
         payload: Record<string, unknown>;
+        /**
+         * Priority from 1 to 10; higher runs first. Defaults to 1. Use high priority for product tokens that expire after five minutes.
+         * @minimum 1
+         * @maximum 10
+         */
+        priority?: number;
+        /** Account-wide unique key to prevent duplicate task submission. Reuse returns a conflict rather than creating another task. */
+        idempotencyKey?: string;
+        /** Optional completion webhook delivered by Cloro. */
+        webhook?: {
+          /**
+           * Webhook destination URL.
+           * @format uri
+           */
+          url: string;
+        };
+      } | {
+        /** Task engine. */
+        taskType: "BING";
+        /** Bing monitoring parameters. */
+        payload: {
+          /**
+           * Number of search result pages to retrieve (1-10).
+           * @minimum 1
+           * @maximum 10
+           */
+          pages?: number;
+          /**
+           * One-based index of the first search result.
+           * @minimum 1
+           */
+          first?: number;
+          /**
+           * The search query to execute on Bing. Bing limits the URL-encoded query to 3,500 characters, so non-Latin scripts allow fewer characters.
+           * @minLength 1
+           * @maxLength 3500
+           */
+          query: string;
+          /** ISO 3166-1 alpha-2 country code for localized search results. The country selects the Bing market. See [List of countries](/api-reference/endpoint/countries) for the codes each provider supports. */
+          country: "AD" | "AE" | "AF" | "AG" | "AI" | "AL" | "AM" | "AO" | "AQ" | "AR" | "AS" | "AT" | "AU" | "AW" | "AX" | "AZ" | "BA" | "BB" | "BD" | "BE" | "BF" | "BG" | "BH" | "BI" | "BJ" | "BL" | "BM" | "BN" | "BO" | "BQ" | "BR" | "BS" | "BT" | "BV" | "BW" | "BY" | "BZ" | "CA" | "CC" | "CD" | "CF" | "CG" | "CH" | "CI" | "CK" | "CL" | "CM" | "CN" | "CO" | "CR" | "CU" | "CV" | "CW" | "CX" | "CY" | "CZ" | "DE" | "DJ" | "DK" | "DM" | "DO" | "DZ" | "EC" | "EE" | "EG" | "EH" | "ER" | "ES" | "ET" | "FI" | "FJ" | "FK" | "FM" | "FO" | "FR" | "GA" | "GB" | "GD" | "GE" | "GF" | "GG" | "GH" | "GI" | "GL" | "GM" | "GN" | "GP" | "GQ" | "GR" | "GS" | "GT" | "GU" | "GW" | "GY" | "HK" | "HM" | "HN" | "HR" | "HT" | "HU" | "ID" | "IE" | "IL" | "IM" | "IN" | "IO" | "IQ" | "IR" | "IS" | "IT" | "JE" | "JM" | "JO" | "JP" | "KE" | "KG" | "KH" | "KI" | "KM" | "KN" | "KP" | "KR" | "KW" | "KY" | "KZ" | "LA" | "LB" | "LC" | "LI" | "LK" | "LR" | "LS" | "LT" | "LU" | "LV" | "LY" | "MA" | "MC" | "MD" | "ME" | "MF" | "MG" | "MH" | "MK" | "ML" | "MM" | "MN" | "MO" | "MP" | "MQ" | "MR" | "MS" | "MT" | "MU" | "MV" | "MW" | "MX" | "MY" | "MZ" | "NA" | "NC" | "NE" | "NF" | "NG" | "NI" | "NL" | "NO" | "NP" | "NR" | "NU" | "NZ" | "OM" | "PA" | "PE" | "PF" | "PG" | "PH" | "PK" | "PL" | "PM" | "PN" | "PR" | "PS" | "PT" | "PW" | "PY" | "QA" | "RE" | "RO" | "RS" | "RU" | "RW" | "SA" | "SB" | "SC" | "SD" | "SE" | "SG" | "SH" | "SI" | "SJ" | "SK" | "SL" | "SM" | "SN" | "SO" | "SR" | "SS" | "ST" | "SV" | "SX" | "SY" | "SZ" | "TC" | "TD" | "TF" | "TG" | "TH" | "TJ" | "TK" | "TL" | "TM" | "TN" | "TO" | "TR" | "TT" | "TV" | "TW" | "TZ" | "UA" | "UG" | "UM" | "US" | "UY" | "UZ" | "VA" | "VC" | "VE" | "VG" | "VI" | "VN" | "VU" | "WF" | "WS" | "XK" | "YE" | "YT" | "ZA" | "ZM" | "ZW";
+          /** Optional flags for including additional response data */
+          include?: {
+            /** Include raw HTML response from Bing search */
+            html?: boolean;
+            /** Include the Bing AI summary at the top of the results page, returned as `aioverview`. Paid add-on: +2 credits. */
+            aioverview?: {
+              /** Include AI Overview formatted as markdown */
+              markdown?: boolean;
+            };
+          };
+        };
         /**
          * Priority from 1 to 10; higher runs first. Defaults to 1. Use high priority for product tokens that expire after five minutes.
          * @minimum 1
@@ -489,6 +591,47 @@ declare module "@oomol-lab/connector" {
     /** Retrieve Google AI Mode results synchronously. For long-running or bulk work, use create_task or create_batch_tasks. Sync calls include a credit surcharge; Google product tokens expire after five minutes. */
     "cloro.monitor_aimode": {
       input: Record<string, unknown>;
+      output: {
+        /** Whether the request succeeded. */
+        success: boolean;
+        /** Structured result, or one result per ChatGPT conversation turn. */
+        result: Record<string, unknown> | Array<Record<string, unknown>>;
+        [key: string]: unknown;
+      };
+    };
+    /** Retrieve Bing Search results synchronously. For long-running or bulk work, use create_task or create_batch_tasks. Sync calls include a credit surcharge; Google product tokens expire after five minutes. */
+    "cloro.monitor_bing": {
+      input: {
+        /**
+         * Number of search result pages to retrieve (1-10).
+         * @minimum 1
+         * @maximum 10
+         */
+        pages?: number;
+        /**
+         * One-based index of the first search result.
+         * @minimum 1
+         */
+        first?: number;
+        /**
+         * The search query to execute on Bing. Bing limits the URL-encoded query to 3,500 characters, so non-Latin scripts allow fewer characters.
+         * @minLength 1
+         * @maxLength 3500
+         */
+        query: string;
+        /** ISO 3166-1 alpha-2 country code for localized search results. The country selects the Bing market. See [List of countries](/api-reference/endpoint/countries) for the codes each provider supports. */
+        country: "AD" | "AE" | "AF" | "AG" | "AI" | "AL" | "AM" | "AO" | "AQ" | "AR" | "AS" | "AT" | "AU" | "AW" | "AX" | "AZ" | "BA" | "BB" | "BD" | "BE" | "BF" | "BG" | "BH" | "BI" | "BJ" | "BL" | "BM" | "BN" | "BO" | "BQ" | "BR" | "BS" | "BT" | "BV" | "BW" | "BY" | "BZ" | "CA" | "CC" | "CD" | "CF" | "CG" | "CH" | "CI" | "CK" | "CL" | "CM" | "CN" | "CO" | "CR" | "CU" | "CV" | "CW" | "CX" | "CY" | "CZ" | "DE" | "DJ" | "DK" | "DM" | "DO" | "DZ" | "EC" | "EE" | "EG" | "EH" | "ER" | "ES" | "ET" | "FI" | "FJ" | "FK" | "FM" | "FO" | "FR" | "GA" | "GB" | "GD" | "GE" | "GF" | "GG" | "GH" | "GI" | "GL" | "GM" | "GN" | "GP" | "GQ" | "GR" | "GS" | "GT" | "GU" | "GW" | "GY" | "HK" | "HM" | "HN" | "HR" | "HT" | "HU" | "ID" | "IE" | "IL" | "IM" | "IN" | "IO" | "IQ" | "IR" | "IS" | "IT" | "JE" | "JM" | "JO" | "JP" | "KE" | "KG" | "KH" | "KI" | "KM" | "KN" | "KP" | "KR" | "KW" | "KY" | "KZ" | "LA" | "LB" | "LC" | "LI" | "LK" | "LR" | "LS" | "LT" | "LU" | "LV" | "LY" | "MA" | "MC" | "MD" | "ME" | "MF" | "MG" | "MH" | "MK" | "ML" | "MM" | "MN" | "MO" | "MP" | "MQ" | "MR" | "MS" | "MT" | "MU" | "MV" | "MW" | "MX" | "MY" | "MZ" | "NA" | "NC" | "NE" | "NF" | "NG" | "NI" | "NL" | "NO" | "NP" | "NR" | "NU" | "NZ" | "OM" | "PA" | "PE" | "PF" | "PG" | "PH" | "PK" | "PL" | "PM" | "PN" | "PR" | "PS" | "PT" | "PW" | "PY" | "QA" | "RE" | "RO" | "RS" | "RU" | "RW" | "SA" | "SB" | "SC" | "SD" | "SE" | "SG" | "SH" | "SI" | "SJ" | "SK" | "SL" | "SM" | "SN" | "SO" | "SR" | "SS" | "ST" | "SV" | "SX" | "SY" | "SZ" | "TC" | "TD" | "TF" | "TG" | "TH" | "TJ" | "TK" | "TL" | "TM" | "TN" | "TO" | "TR" | "TT" | "TV" | "TW" | "TZ" | "UA" | "UG" | "UM" | "US" | "UY" | "UZ" | "VA" | "VC" | "VE" | "VG" | "VI" | "VN" | "VU" | "WF" | "WS" | "XK" | "YE" | "YT" | "ZA" | "ZM" | "ZW";
+        /** Optional flags for including additional response data */
+        include?: {
+          /** Include raw HTML response from Bing search */
+          html?: boolean;
+          /** Include the Bing AI summary at the top of the results page, returned as `aioverview`. Paid add-on: +2 credits. */
+          aioverview?: {
+            /** Include AI Overview formatted as markdown */
+            markdown?: boolean;
+          };
+        };
+      };
       output: {
         /** Whether the request succeeded. */
         success: boolean;

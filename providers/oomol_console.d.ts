@@ -470,7 +470,7 @@ declare module "@oomol-lab/connector" {
         affectedMemberIds: Array<string>;
       };
     };
-    /** Return every available balance lot owned by the current OOMOL team creator. This account balance may be shared by multiple teams. */
+    /** Return every available balance lot owned by the current OOMOL team creator. User-facing amounts are in *Points fields (1 raw internal credit = 200 points); present *Points directly to users without multiplying again. *Credit and deficit fields are raw internal settlement credits. This account balance may be shared by multiple teams. */
     "oomol_console.get_balance": {
       input: Record<string, never>;
       output: {
@@ -488,6 +488,8 @@ declare module "@oomol-lab/connector" {
          * @pattern \S
          */
         balanceOwnerUserId: string;
+        /** The fixed conversion factor from raw internal credits to user-facing display points (200 points per credit). */
+        displayPointsPerCredit: 200;
         /** All available balance lots across every upstream page. */
         items: Array<{
           /**
@@ -504,10 +506,14 @@ declare module "@oomol-lab/connector" {
           paymentAmount: number | null;
           /** The payment currency associated with the lot. */
           currency: string | null;
-          /** The remaining credit represented as an exact decimal string. */
+          /** The remaining raw internal settlement credit as an exact decimal string (1 credit = 200 user-facing points; use currentPoints for user-facing display). */
           currentCredit: string;
-          /** The original credit represented as an exact decimal string. */
+          /** The remaining user-facing balance in display points as an exact decimal string (currentCredit * 200). Present this value directly to users without multiplying again. */
+          currentPoints: string;
+          /** The original raw internal settlement credit as an exact decimal string (1 credit = 200 user-facing points; use originalPoints for user-facing display). */
           originalCredit: string;
+          /** The original user-facing balance in display points as an exact decimal string (originalCredit * 200). Present this value directly to users without multiplying again. */
+          originalPoints: string;
           /** Whether the balance lot is currently available. */
           available: boolean;
           /** The billing order number associated with the lot. */
@@ -523,16 +529,22 @@ declare module "@oomol-lab/connector" {
         nextToken: string | null;
         /** The aggregate credit totals returned by OOMOL Insight. */
         total: {
-          /** The original aggregate credit as an exact decimal string. */
+          /** The original aggregate raw internal credit as an exact decimal string (1 credit = 200 user-facing points; use originalPoints for display). */
           originalCredit: string;
-          /** The remaining aggregate credit as an exact decimal string. */
+          /** The original aggregate user-facing balance in display points as an exact decimal string (originalCredit * 200). */
+          originalPoints: string;
+          /** The remaining aggregate raw internal credit as an exact decimal string (1 credit = 200 user-facing points; use currentPoints for display). */
           currentCredit: string;
+          /** The remaining aggregate user-facing balance in display points as an exact decimal string (currentCredit * 200). */
+          currentPoints: string;
         } | null;
-        /** The account deficit as an exact decimal string. */
+        /** The account deficit in raw internal credits as an exact decimal string (1 credit = 200 user-facing points; use deficitPoints for display). */
         deficit: string | null;
+        /** The account deficit in user-facing display points as an exact decimal string (deficit * 200). */
+        deficitPoints: string | null;
       };
     };
-    /** Return current-team billing and usage metrics together with the team creator account balance. */
+    /** Return current-team billing and usage metrics together with the team creator account balance. User-facing amounts are in *Points fields (1 raw internal credit = 200 points); present *Points directly to users without multiplying again. *Credit and deficit fields are raw internal settlement credits. */
     "oomol_console.get_billing_summary": {
       input: {
         /**
@@ -565,6 +577,8 @@ declare module "@oomol-lab/connector" {
          * @pattern \S
          */
         balanceOwnerUserId: string;
+        /** The fixed conversion factor from raw internal credits to user-facing display points (200 points per credit). */
+        displayPointsPerCredit: 200;
         /** The requested billing summary period. */
         period: {
           /** The number of trailing days included in the summary. */
@@ -576,14 +590,22 @@ declare module "@oomol-lab/connector" {
           /** The UTC offset used for daily boundaries. */
           utcOffset: number;
         };
-        /** The remaining GENERAL credit as an exact decimal string. */
+        /** The remaining GENERAL raw internal credit as an exact decimal string (1 credit = 200 user-facing points; use generalBalancePoints for display). */
         generalBalanceCredit: string;
-        /** The remaining non-general visible allowance as an exact decimal string. */
+        /** The remaining GENERAL user-facing balance in display points as an exact decimal string (generalBalanceCredit * 200). */
+        generalBalancePoints: string;
+        /** The remaining non-general visible allowance in raw internal credits as an exact decimal string (1 credit = 200 user-facing points; use scopedAllowancePoints for display). */
         scopedAllowanceCredit: string;
-        /** The account deficit as an exact decimal string. */
+        /** The remaining non-general visible allowance in user-facing display points as an exact decimal string (scopedAllowanceCredit * 200). */
+        scopedAllowancePoints: string;
+        /** The account deficit in raw internal credits as an exact decimal string (1 credit = 200 user-facing points; use deficitPoints for display). */
         deficit: string | null;
-        /** The credit spent during the period as an exact decimal string. */
+        /** The account deficit in user-facing display points as an exact decimal string (deficit * 200). */
+        deficitPoints: string | null;
+        /** The raw internal credit spent during the period as an exact decimal string (1 credit = 200 user-facing points; use spentPoints for display). */
         spentCredit: string;
+        /** The user-facing display points spent during the period as an exact decimal string (spentCredit * 200). */
+        spentPoints: string;
         /**
          * The number of metered events during the period.
          * @minimum 0
